@@ -47,3 +47,93 @@ y: 456
 ```
 In little Bobby's kit's instructions booklet (provided as your puzzle input), what signal is ultimately provided to wire a?
 */
+
+using value = std::tuple<std::string, std::string, std::string>;
+
+uint16_t resolve(std::unordered_map<std::string, value>& hash, std::unordered_map<std::string, uint16_t>& cache, const std::string& key) {
+    if (std::isdigit(static_cast<unsigned char>(key[0]))) {
+        return static_cast<uint16_t>(std::stoi(key));
+    }
+    if (cache.count(key)) {
+        return cache[key];
+    }
+    auto& [lhs, opr, rhs] = hash[key];
+    uint16_t left = 0, right = 0;
+
+    if (!lhs.empty()) {
+        left = resolve(hash, cache, lhs);
+    }
+    right = resolve(hash, cache, rhs);
+
+    uint16_t result;
+    if (opr == "NOT") {
+        result = static_cast<uint16_t>(~right);
+    } else if (opr == "AND") {
+        result = static_cast<uint16_t>(left & right);
+    } else if (opr == "OR") {
+        result = static_cast<uint16_t>(left | right);
+    } else if (opr == "LSHIFT") {
+        result = static_cast<uint16_t>(left << right);
+    } else if (opr == "RSHIFT") {
+        result = static_cast<uint16_t>(left >> right);
+    } else if (opr == "=") {
+        result = right;
+    } else {
+        throw std::runtime_error("Unknown operator: " + opr);
+    }
+
+    cache[key] = result;
+    return result;
+}
+
+std::unordered_map<std::string, value> parse() {
+    std::unordered_map<std::string, value> hash;
+    std::stringstream sss(input7);
+    std::string token, arrow, res, opr, rhs, line;
+
+    while (std::getline(sss, line)) {
+        std::stringstream ss(line);
+        ss >> token;
+
+        if (token[0] == 'N') {
+            ss >> rhs >> arrow >> res;
+            hash[res] = {"", token, rhs};
+        } else {
+            ss >> opr;
+            if (opr == "->") {
+                ss >> res;
+                hash[res] = {"", "=", token};
+            } else {
+                ss >> rhs >> arrow >> res;
+                hash[res] = {token, opr, rhs};
+            }
+        }
+    }
+
+    return hash;
+}
+
+int part1() {
+    std::unordered_map<std::string, value> hash = parse();
+    std::unordered_map<std::string, uint16_t> cache;
+    return resolve(hash, cache, "a");
+}
+
+/*
+--- Part Two ---
+Now, take the signal you got on wire a, override wire b to that signal, and reset the other wires (including wire a). What new signal is ultimately
+provided to wire a?
+*/
+
+int part2() {
+    std::unordered_map<std::string, value> hash = parse();
+    std::unordered_map<std::string, uint16_t> cache;
+    hash["b"] = {"", "=", std::to_string(part1())};
+    cache.clear();
+    return resolve(hash, cache, "a");
+}
+
+int main() {
+    std::cout << part1() << std::endl << part2() << std::endl;
+    return 0;
+}
