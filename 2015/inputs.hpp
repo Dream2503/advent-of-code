@@ -2983,3 +2983,5 @@ Straylight to Tristram = 27
 Straylight to Arbre = 81
 Tristram to Arbre = 90
 )";
+
+constexpr char input10[] = "1113222113";
