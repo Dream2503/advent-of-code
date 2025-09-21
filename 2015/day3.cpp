@@ -1,4 +1,3 @@
-#include <fstream>
 #include <iostream>
 #include <unordered_set>
 #include "inputs.hpp"
@@ -23,7 +22,6 @@ For example:
 int part1() {
     auto hash = [](const std::pair<int, int>& p) -> int { return p.first ^ p.second << 1; };
     auto eq = [](const std::pair<int, int>& a, const std::pair<int, int>& b) -> bool { return a.first == b.first && a.second == b.second; };
-
     int x = 0, y = 0, i = 0;
     std::unordered_set<std::pair<int, int>, decltype(hash), decltype(eq)> seen(10, hash, eq);
     seen.emplace(x, y);
@@ -72,7 +70,6 @@ For example:
 int part2() {
     auto hash = [](const std::pair<int, int>& p) -> int { return p.first ^ p.second << 1; };
     auto eq = [](const std::pair<int, int>& a, const std::pair<int, int>& b) -> bool { return a.first == b.first && a.second == b.second; };
-
     int x1 = 0, y1 = 0, x2 = 0, y2 = 0, i = 0;
     std::unordered_set<std::pair<int, int>, decltype(hash), decltype(eq)> seen(10, hash, eq);
     seen.emplace(0, 0);

@@ -52,4 +52,7 @@ Now, starting again with the digits in your puzzle input, apply this process 50 
 
 int part2() { return part1(50); }
 
-int main() { std::cout << part1() << std::endl << part2() << std::endl; }
+int main() {
+    std::cout << part1() << std::endl << part2() << std::endl;
+    return 0;
+}

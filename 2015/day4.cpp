@@ -1,4 +1,3 @@
-#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <openssl/evp.h>
@@ -16,11 +15,10 @@ puzzle input, given below) followed by a number in decimal. To mine AdventCoins,
 
 For example:
     - If your secret key is abcdef, the answer is 609043, because the MD5 hash of abcdef609043 starts with five zeroes (000001dbbfa...), and it is the
-lowest such number to do so.
+      lowest such number to do so.
     - If your secret key is pqrstuv, the lowest number it combines with to make an MD5 hash starting with five zeroes is 1048970; that is, the MD5
-hash of pqrstuv1048970 looks like 000006136ef....
+      hash of pqrstuv1048970 looks like 000006136ef....
 */
-
 
 // Compute MD5 hash of a string and return hex representation
 std::string md5(const std::string& input) {

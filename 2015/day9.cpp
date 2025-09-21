@@ -1,5 +1,4 @@
 #include <iostream>
-#include <sstream>
 #include "inputs.hpp"
 
 /*
@@ -30,4 +29,13 @@ What is the distance of the shortest route?
 
 int part1() { return 0; }
 
-int main() { std::cout << part1() << std::endl; } // << part2() << std::endl; }
+/*
+--- Part Two ---
+*/
+
+int part2() { return 0; }
+
+int main() {
+    std::cout << part1() << std::endl << part2() << std::endl;
+    return 0;
+}

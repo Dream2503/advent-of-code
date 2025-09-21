@@ -87,4 +87,7 @@ int part2() {
     return total;
 }
 
-int main() { std::cout << part1() << std::endl << part2() << std::endl; }
+int main() {
+    std::cout << part1() << std::endl << part2() << std::endl;
+    return 0;
+}
