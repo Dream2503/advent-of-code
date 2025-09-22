@@ -8,12 +8,6 @@ Click on a day number in the tree below to open its problem page on the AoC webs
 
 ---
 
-<main>
-<style>
-.calendar a.calendar-complete, .calendar a.calendar-verycomplete {
-  color: #009900;
-}
-</style>
 <pre class="calendar"><a aria-label="Day 25" href="https://adventofcode.com/2015/day/25" class="calendar-day25">                        *                          <span class="calendar-day">25</span> <span class="calendar-mark-complete">*</span><span class="calendar-mark-verycomplete">*</span></a>
 <a aria-label="Day 24" href="https://adventofcode.com/2015/day/24" class="calendar-day24">                       &gt;<span class="calendar-ornament1">o</span>&lt;                         <span class="calendar-day">24</span> <span class="calendar-mark-complete">*</span><span class="calendar-mark-verycomplete">*</span></a>
 <a aria-label="Day 23" href="https://adventofcode.com/2015/day/23" class="calendar-day23">                      &gt;<span class="calendar-ornament1">o</span>&lt;&lt;&lt;                        <span class="calendar-day">23</span> <span class="calendar-mark-complete">*</span><span class="calendar-mark-verycomplete">*</span></a>
@@ -43,4 +37,3 @@ Click on a day number in the tree below to open its problem page on the AoC webs
                       |   |                             
            _  _ __ ___|___|___ __ _  _           </span>       
 </pre>
-</main>
