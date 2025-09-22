@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <bitset>
 #include <iostream>
 #include <numeric>
@@ -25,9 +26,10 @@ For example:
 After following the instructions, how many lights are lit?
 */
 
+constexpr int size = 1000;
+
 int part1() {
-    constexpr size_t size = 1000;
-    std::bitset<size * size> lights;
+    std::array<std::bitset<size>, size> lights;
     std::string line;
     std::stringstream file(input6);
 
@@ -35,7 +37,7 @@ int part1() {
         bool is_on = false, is_toggle = false;
         char delimiter;
         int x1, y1, x2, y2;
-        std::string instruction;
+        std::string instruction, word;
         std::stringstream ss(line);
         ss >> instruction;
 
@@ -45,21 +47,15 @@ int part1() {
         } else {
             is_toggle = true;
         }
-        ss >> x1 >> delimiter >> y1 >> instruction >> x2 >> delimiter >> y2;
+        ss >> x1 >> delimiter >> y1 >> word >> x2 >> delimiter >> y2;
 
         for (int i = x1; i <= x2; i++) {
             for (int j = y1; j <= y2; j++) {
-                const int idx = i * size + j;
-
-                if (is_toggle) {
-                    lights.flip(idx);
-                } else {
-                    lights.set(idx, is_on);
-                }
+                lights[i][j] = is_toggle ? !lights[i][j] : is_on;
             }
         }
     }
-    return lights.count();
+    return std::transform_reduce(lights.begin(), lights.end(), 0, std::plus<>(), [](const std::bitset<size>& row) -> int { return row.count(); });
 }
 
 /*
@@ -82,8 +78,7 @@ For example:
 */
 
 int part2() {
-    constexpr size_t size = 1000;
-    uint8_t lights[size * size] = {};
+    std::array<std::array<uint8_t, size>, size> lights = {};
     std::string line;
     std::stringstream file(input6);
 
@@ -91,7 +86,7 @@ int part2() {
         bool is_on = false, is_toggle = false;
         char delimiter;
         int x1, y1, x2, y2;
-        std::string instruction;
+        std::string instruction, word;
         std::stringstream ss(line);
         ss >> instruction;
 
@@ -101,21 +96,16 @@ int part2() {
         } else {
             is_toggle = true;
         }
-        ss >> x1 >> delimiter >> y1 >> instruction >> x2 >> delimiter >> y2;
+        ss >> x1 >> delimiter >> y1 >> word >> x2 >> delimiter >> y2;
 
         for (int i = x1; i <= x2; i++) {
             for (int j = y1; j <= y2; j++) {
-                const int idx = i * size + j;
-
-                if (is_toggle) {
-                    lights[idx] += 2;
-                } else {
-                    lights[idx] += is_on ? 1 : lights[idx] != 0 ? -1 : 0;
-                }
+                lights[i][j] += is_toggle ? 2 : is_on ? 1 : lights[i][j] != 0 ? -1 : 0;
             }
         }
     }
-    return std::reduce(lights, lights + size * size, 0);
+    return std::transform_reduce(lights.begin(), lights.end(), 0, std::plus<>(),
+                                 [](const std::array<uint8_t, size>& row) -> int { return std::reduce(row.begin(), row.end(), 0); });
 }
 
 int main() {

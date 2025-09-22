@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <bitset>
 #include <iostream>
+#include <numeric>
 #include <sstream>
 #include "inputs.hpp"
 
@@ -78,8 +79,9 @@ After 4 steps, this example has four lights on.
 In your grid of 100x100 lights, given your initial configuration, how many lights are on after 100 steps?
 */
 
-int part1(const int steps = 100) {
-    constexpr int grid_size = 100;
+constexpr int grid_size = 100, steps = 100;
+
+int part1(const bool conner_condition = false) {
     std::string line;
     std::stringstream file(input18);
     std::array<std::bitset<grid_size>, grid_size> actual_state, temp_state;
@@ -94,6 +96,10 @@ int part1(const int steps = 100) {
     for (int t = 0; t < steps; t++) {
         for (i = 0; i < grid_size; i++) {
             for (int j = 0; j < grid_size; j++) {
+                if (conner_condition &&
+                    (i == 0 && j == 0 || i == 0 && j == grid_size - 1 || i == grid_size - 1 && j == 0 || i == grid_size - 1 && j == grid_size - 1)) {
+                    continue;
+                }
                 int on = 0;
 
                 if (i - 1 >= 0) {
@@ -129,12 +135,8 @@ int part1(const int steps = 100) {
         }
         std::swap(actual_state, temp_state);
     }
-    int count = 0;
-
-    for (const std::bitset<grid_size>& row : actual_state) {
-        count += row.count();
-    }
-    return count;
+    return std::transform_reduce(actual_state.begin(), actual_state.end(), 0, std::plus<int>(),
+                                 [](const std::bitset<grid_size>& row) -> int { return row.count(); });
 }
 
 /*
@@ -195,69 +197,7 @@ In your grid of 100x100 lights, given your initial configuration, but with the f
 steps?
 */
 
-int part2(const int steps = 100) {
-    constexpr int grid_size = 100;
-    std::string line;
-    std::stringstream file(input18);
-    std::array<std::bitset<grid_size>, grid_size> actual_state;
-    int i = 0;
-
-    while (std::getline(file, line)) {
-        for (int j = 0; j < grid_size; j++) {
-            actual_state[i][j] = line[j] == '#';
-        }
-        i++;
-    }
-    std::array<std::bitset<grid_size>, grid_size> temp_state(actual_state);
-
-    for (int t = 0; t < steps; t++) {
-        for (i = 0; i < grid_size; i++) {
-            for (int j = 0; j < grid_size; j++) {
-                if (i == 0 && j == 0 || i == 0 && j == grid_size - 1 || i == grid_size - 1 && j == 0 || i == grid_size - 1 && j == grid_size - 1) {
-                    continue;
-                }
-                int on = 0;
-
-                if (i - 1 >= 0) {
-                    if (j - 1 >= 0) {
-                        on += actual_state[i - 1][j - 1];
-                    }
-                    if (j + 1 < grid_size) {
-                        on += actual_state[i - 1][j + 1];
-                    }
-                    on += actual_state[i - 1][j];
-                }
-                if (i + 1 < grid_size) {
-                    if (j - 1 >= 0) {
-                        on += actual_state[i + 1][j - 1];
-                    }
-                    if (j + 1 < grid_size) {
-                        on += actual_state[i + 1][j + 1];
-                    }
-                    on += actual_state[i + 1][j];
-                }
-                if (j - 1 >= 0) {
-                    on += actual_state[i][j - 1];
-                }
-                if (j + 1 < grid_size) {
-                    on += actual_state[i][j + 1];
-                }
-                if (actual_state[i][j]) {
-                    temp_state[i][j] = on == 2 || on == 3;
-                } else {
-                    temp_state[i][j] = on == 3;
-                }
-            }
-        }
-        std::swap(actual_state, temp_state);
-    }
-    int count = 0;
-
-    for (const std::bitset<grid_size>& row : actual_state) {
-        count += row.count();
-    }
-    return count;
-}
+int part2() { return part1(true); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

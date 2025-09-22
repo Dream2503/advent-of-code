@@ -19,35 +19,40 @@ For example:
     - ^v^v^v^v^v delivers a bunch of presents to some very lucky children at only 2 houses.
 */
 
+constexpr auto hash = [](const std::pair<int, int>& p) -> int { return p.first ^ p.second << 1; };
+constexpr auto eq = [](const std::pair<int, int>& a, const std::pair<int, int>& b) -> bool { return a.first == b.first && a.second == b.second; };
+
+void update(std::unordered_set<std::pair<int, int>, decltype(hash), decltype(eq)>& seen, const char ch, int& x, int& y) {
+    switch (ch) {
+    case '^':
+        y++;
+        break;
+
+    case 'v':
+        y--;
+        break;
+
+    case '>':
+        x++;
+        break;
+
+    case '<':
+        x--;
+        break;
+
+    default:
+        break;
+    }
+    seen.emplace(x, y);
+}
+
 int part1() {
-    auto hash = [](const std::pair<int, int>& p) -> int { return p.first ^ p.second << 1; };
-    auto eq = [](const std::pair<int, int>& a, const std::pair<int, int>& b) -> bool { return a.first == b.first && a.second == b.second; };
     int x = 0, y = 0, i = 0;
-    std::unordered_set<std::pair<int, int>, decltype(hash), decltype(eq)> seen(10, hash, eq);
+    std::unordered_set<std::pair<int, int>, decltype(hash), decltype(eq)> seen(32, hash, eq);
     seen.emplace(x, y);
 
     while (input3[i]) {
-        switch (input3[i++]) {
-        case '^':
-            y++;
-            break;
-
-        case 'v':
-            y--;
-            break;
-
-        case '>':
-            x++;
-            break;
-
-        case '<':
-            x--;
-            break;
-
-        default:
-            break;
-        }
-        seen.emplace(x, y);
+        update(seen, input3[i++], x, y);
     }
     return seen.size();
 }
@@ -68,38 +73,14 @@ For example:
 */
 
 int part2() {
-    auto hash = [](const std::pair<int, int>& p) -> int { return p.first ^ p.second << 1; };
-    auto eq = [](const std::pair<int, int>& a, const std::pair<int, int>& b) -> bool { return a.first == b.first && a.second == b.second; };
     int x1 = 0, y1 = 0, x2 = 0, y2 = 0, i = 0;
-    std::unordered_set<std::pair<int, int>, decltype(hash), decltype(eq)> seen(10, hash, eq);
+    std::unordered_set<std::pair<int, int>, decltype(hash), decltype(eq)> seen(32, hash, eq);
     seen.emplace(0, 0);
 
     while (input3[i]) {
         int& x = i % 2 ? x1 : x2;
         int& y = i % 2 ? y1 : y2;
-
-        switch (input3[i++]) {
-        case '^':
-            y++;
-            break;
-
-        case 'v':
-            y--;
-            break;
-
-        case '>':
-            x++;
-            break;
-
-        case '<':
-            x--;
-            break;
-
-        default:
-            break;
-        }
-
-        seen.emplace(x, y);
+        update(seen, input3[i++], x, y);
     }
     return seen.size();
 }

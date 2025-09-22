@@ -64,8 +64,8 @@ uint16_t resolve(std::unordered_map<std::string, value>& hash, std::unordered_ma
         left = resolve(hash, cache, lhs);
     }
     right = resolve(hash, cache, rhs);
-
     uint16_t result;
+
     if (opr == "NOT") {
         result = static_cast<uint16_t>(~right);
     } else if (opr == "AND") {
@@ -81,7 +81,6 @@ uint16_t resolve(std::unordered_map<std::string, value>& hash, std::unordered_ma
     } else {
         throw std::runtime_error("Unknown operator: " + opr);
     }
-
     cache[key] = result;
     return result;
 }
@@ -100,6 +99,7 @@ std::unordered_map<std::string, value> parse() {
             hash[res] = {"", token, rhs};
         } else {
             ss >> opr;
+
             if (opr == "->") {
                 ss >> res;
                 hash[res] = {"", "=", token};
@@ -109,7 +109,6 @@ std::unordered_map<std::string, value> parse() {
             }
         }
     }
-
     return hash;
 }
 

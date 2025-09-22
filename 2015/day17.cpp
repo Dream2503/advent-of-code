@@ -17,16 +17,23 @@ For example, suppose you have containers of size 20, 15, 10, 5, and 5 liters. If
 Filling all containers entirely, how many different combinations of containers can exactly fit all 150 liters of eggnog?
 */
 
-int part1(const int liters = 150) {
+constexpr int liters = 150;
+
+std::vector<int> parse_input(const char* input) {
     std::string line;
-    std::stringstream file(input17);
+    std::stringstream file(input);
     std::vector<int> containers;
 
     while (std::getline(file, line)) {
         containers.push_back(std::stoi(line));
     }
-    int res = 0;
+    return containers;
+}
+
+int part1() {
+    const std::vector<int> containers = parse_input(input17);
     const int size = containers.size();
+    int res = 0;
 
     for (int mask = 0; mask < 1 << size; mask++) {
         int sum = 0;
@@ -54,16 +61,10 @@ and still hold exactly 150 litres?
 In the example above, the minimum number of containers was two. There were three ways to use that many containers, and so the answer there would be 3.
 */
 
-int part2(const int liters = 150) {
-    std::string line;
-    std::stringstream file(input17);
-    std::vector<int> containers;
-
-    while (std::getline(file, line)) {
-        containers.push_back(std::stoi(line));
-    }
-    int min_count = INT32_MAX;
+int part2() {
+    const std::vector<int> containers = parse_input(input17);
     const int size = containers.size();
+    int min_count = INT32_MAX;
 
     for (int mask = 0; mask < 1 << size; mask++) {
         int sum = 0;

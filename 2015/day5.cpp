@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "inputs.hpp"
 
 /*
@@ -21,11 +22,12 @@ How many strings are nice?
 */
 
 int part1() {
-    constexpr size_t size = 16, cnt = 1000;
-    const char* line = input5;
+    std::stringstream file(input5);
+    std::string line;
     int res = 0;
 
-    for (int i = 0; i < cnt; i++) {
+    while (std::getline(file, line)) {
+        const int size = line.length();
         int vowels = 0, twice = 0, not_valid = 0;
 
         for (int j = 0; j < size; j++) {
@@ -48,13 +50,13 @@ as they are all clearly ridiculous.
 
 Now, a nice string is one with all of the following properties:
     - It contains a pair of any two letters that appears at least twice in the string without overlapping, like xyxy (xy) or aabcdefgaa (aa), but not
-like aaa (aa, but it overlaps).
+      like aaa (aa, but it overlaps).
     - It contains at least one letter which repeats with exactly one letter between them, like xyx, abcdefeghi (efe), or even aaa.
 
 For example:
     - qjhvhtzxzqqjkmpb is nice because is has a pair that appears twice (qj) and a letter that repeats with exactly one letter between them (zxz).
     - xxyxx is nice because it has a pair that appears twice and a letter that repeats with one between, even though the letters used by each rule
-overlap.
+      overlap.
     - uurcxstgmygtbstg is naughty because it has a pair (tg) but no repeat with a single letter between them.
     - ieodomkazucvgmuy is naughty because it has a repeating letter with one between (odo), but no pair that appears twice.
 
@@ -62,12 +64,13 @@ How many strings are nice under these new rules?
 */
 
 int part2() {
-    constexpr size_t size = 16, cnt = 1000;
-    const char* line = input5;
+    std::stringstream file(input5);
+    std::string line;
     int res = 0;
 
-    for (int k = 0; k < cnt; k++) {
+    while (std::getline(file, line)) {
         bool twice = false;
+        const int size = line.length();
         int repeat = 0;
 
         for (int i = 0; i < size; i++) {

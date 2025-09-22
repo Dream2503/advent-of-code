@@ -36,13 +36,13 @@ std::string md5(const std::string& input) {
     return oss.str();
 }
 
-int part1() {
+int part1(const std::string& target = "00000") {
     int i = 1;
 
     while (true) {
         std::string hash = md5(input4 + std::to_string(i));
 
-        if (hash.rfind("00000", 0) == 0) {
+        if (hash.rfind(target, 0) == 0) {
             return i;
         }
         i++;
@@ -54,18 +54,7 @@ int part1() {
 Now find one that starts with six zeroes.
 */
 
-int part2() {
-    int i = 1;
-
-    while (true) {
-        std::string hash = md5(input4 + std::to_string(i));
-
-        if (hash.rfind("000000", 0) == 0) {
-            return i;
-        }
-        i++;
-    }
-}
+int part2() { return part1("000000"); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

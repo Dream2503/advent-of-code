@@ -3730,3 +3730,9 @@ Ti => TiTi
 e => HF
 e => NAl
 e => OMg)";
+
+constexpr char input20[] = "34000000";
+
+constexpr char input21[] = R"(Hit Points: 103
+Damage: 9
+Armor: 2)";

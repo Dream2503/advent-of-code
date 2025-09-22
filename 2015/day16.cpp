@@ -42,16 +42,10 @@ You make a list of the things you can remember about each Aunt Sue. Things missi
 What is the number of the Sue that got you the gift?
 */
 
-int part1(const std::unordered_map<std::string, int>& signature = {{"children:", 3},
-                                                                   {"cats:", 7},
-                                                                   {"samoyeds:", 2},
-                                                                   {"pomeranians:", 3},
-                                                                   {"akitas:", 0},
-                                                                   {"vizslas:", 0},
-                                                                   {"goldfish:", 5},
-                                                                   {"trees:", 3},
-                                                                   {"cars:", 2},
-                                                                   {"perfumes:", 1}}) {
+const std::unordered_map<std::string, int>& signature = {{"children:", 3}, {"cats:", 7},     {"samoyeds:", 2}, {"pomeranians:", 3}, {"akitas:", 0},
+                                                         {"vizslas:", 0},  {"goldfish:", 5}, {"trees:", 3},    {"cars:", 2},        {"perfumes:", 1}};
+
+int part1() {
     std::string line;
     std::stringstream file(input16);
 
@@ -81,16 +75,7 @@ magnetoreluctance).
 What is the number of the real Aunt Sue?
 */
 
-int part2(const std::unordered_map<std::string, int>& signature = {{"children:", 3},
-                                                                   {"cats:", 7},
-                                                                   {"samoyeds:", 2},
-                                                                   {"pomeranians:", 3},
-                                                                   {"akitas:", 0},
-                                                                   {"vizslas:", 0},
-                                                                   {"goldfish:", 5},
-                                                                   {"trees:", 3},
-                                                                   {"cars:", 2},
-                                                                   {"perfumes:", 1}}) {
+int part2() {
     std::string line;
     std::stringstream file(input16);
 

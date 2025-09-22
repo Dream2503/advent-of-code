@@ -38,24 +38,30 @@ Your puzzle input describes all of the possible replacements and, at the bottom,
 How many distinct molecules can be created after all the different ways you can do one replacement on the medicine molecule?
 */
 
-int part1() {
+std::pair<std::string, std::vector<std::pair<std::string, std::string>>> parse_input(const char* input, bool reverse = false) {
     std::string initial_molecule, line;
     std::vector<std::pair<std::string, std::string>> replacements;
-    std::unordered_set<std::string> seen;
-    std::stringstream file(input19);
+    std::stringstream file(input);
     std::getline(file, initial_molecule);
 
     while (std::getline(file, line)) {
         std::string key, arrow, value;
         std::stringstream ss(line);
         ss >> key >> arrow >> value;
-        replacements.emplace_back(key, value);
+        replacements.emplace_back(reverse ? value : key, reverse ? key : value);
     }
+    return {initial_molecule, replacements};
+}
+
+int part1() {
+    const auto& [initial_molecule, replacements] = parse_input(input19);
+    std::unordered_set<std::string> seen;
+
     for (const auto& [key, value] : replacements) {
         size_t i = 0;
 
         while (true) {
-            size_t idx = initial_molecule.find(key, i);
+            const size_t idx = initial_molecule.find(key, i);
 
             if (idx != std::string::npos) {
                 seen.insert(std::string(initial_molecule).replace(idx, key.length(), value));
@@ -93,23 +99,13 @@ of steps to go from e to the medicine molecule?
 */
 
 int part2() {
-    std::string initial_molecule, line;
-    std::vector<std::pair<std::string, std::string>> replacements;
-    std::stringstream file(input19);
-    std::getline(file, initial_molecule);
-
-    while (std::getline(file, line)) {
-        std::string key, arrow, value;
-        std::stringstream ss(line);
-        ss >> value >> arrow >> key;
-        replacements.emplace_back(key, value);
-    }
+    auto [initial_molecule, replacements] = parse_input(input19, true);
     int replacement_count = 0;
     bool broke = false;
 
     while (!broke) {
         for (const auto& [key, value] : replacements) {
-            size_t idx = initial_molecule.find(key);
+            const size_t idx = initial_molecule.find(key);
 
             if (idx != std::string::npos) {
                 initial_molecule.replace(idx, key.length(), value);
