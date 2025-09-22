@@ -32,9 +32,9 @@ int part1(const int time_limit = 2503) {
 
     while (std::getline(file, line)) {
         int speed, speed_time, rest_time, time = 0, distance = 0;
-        std::string name, word;
+        std::string word;
         std::stringstream ss(line);
-        ss >> name >> word >> word >> speed >> word >> word >> speed_time >> word >> word >> word >> word >> word >> word >> rest_time >> word;
+        ss >> word >> word >> word >> speed >> word >> word >> speed_time >> word >> word >> word >> word >> word >> word >> rest_time;
 
         while (time < time_limit) {
             distance += speed * std::clamp((time_limit - time), 0, speed_time);
@@ -69,51 +69,44 @@ int part2(const int time_limit = 2503) {
     };
     std::string line;
     std::stringstream file(input14);
-    std::vector<reindeer> data;
+    std::vector<reindeer> reindeers;
 
     while (std::getline(file, line)) {
         int speed, move_time, rest_time;
-        std::string name, word;
+        std::string word;
         std::stringstream ss(line);
-        ss >> name >> word >> word >> speed >> word >> word >> move_time >> word >> word >> word >> word >> word >> word >> rest_time >> word;
-        data.push_back({0, speed, move_time, 0, rest_time, 0, 0, true});
+        ss >> word >> word >> word >> speed >> word >> word >> move_time >> word >> word >> word >> word >> word >> word >> rest_time;
+        reindeers.push_back({0, speed, move_time, 0, rest_time, 0, 0, true});
     }
     for (int t = 0; t < time_limit; t++) {
-        for (reindeer& deer : data) {
-            if (deer.is_moving) {
-                if (deer.time_moved < deer.move_time) {
-                    deer.distance_travelled += deer.speed;
-                    deer.time_moved++;
-                } else {
+        for (reindeer& deer : reindeers) {
+            if (deer.is_moving && deer.time_moved < deer.move_time) {
+                deer.distance_travelled += deer.speed;
+                deer.time_moved++;
+
+                if (deer.time_moved == deer.move_time) {
                     deer.time_moved = 0;
                     deer.is_moving = false;
-                    deer.time_rested++;
                 }
-            } else {
-                if (deer.time_rested < deer.rest_time) {
-                    deer.time_rested++;
-                } else {
+            } else if (deer.time_rested < deer.rest_time) {
+                deer.time_rested++;
+
+                if (deer.time_rested == deer.rest_time) {
                     deer.time_rested = 0;
                     deer.is_moving = true;
-                    deer.distance_travelled += deer.speed;
-                    deer.time_moved++;
                 }
             }
         }
-        int max_distance = 0;
-
-        for (reindeer& deer : data) {
-            if (deer.distance_travelled > max_distance) {
-                max_distance = deer.distance_travelled;
-            }
-        }
-        for (reindeer& deer : data) {
+        int max_distance = std::max_element(reindeers.begin(), reindeers.end(), [](const reindeer& deer1, const reindeer& deer2) -> bool {
+                               return deer1.distance_travelled < deer2.distance_travelled;
+                           })->distance_travelled;
+        std::for_each(reindeers.begin(), reindeers.end(), [&max_distance](reindeer& deer) -> void {
             if (deer.distance_travelled == max_distance) {
                 deer.points_scored++;
             }
-        }
+        });
     }
-    return std::max_element(data.begin(), data.end(),
+    return std::max_element(reindeers.begin(), reindeers.end(),
                             [](const reindeer& deer1, const reindeer& deer2) -> bool { return deer1.points_scored < deer2.points_scored; })
         ->points_scored;
 }
