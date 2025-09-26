@@ -91,14 +91,13 @@ bool simulate_battle(Character player, Character boss) {
 }
 
 int part1(const std::function<int(int, int)>& func = [](const int x, const int y) { return std::min(x, y); }, const bool lose = false) {
-    std::stringstream file(input21);
-    std::string word;
     int hp, damage, armour, cost = lose ? INT32_MIN : INT32_MAX;
-    file >> word >> word >> hp >> word >> damage >> word >> armour;
+    std::string word;
+    std::stringstream(input21) >> word >> word >> hp >> word >> damage >> word >> armour;
     const Character boss = {hp, damage, armour};
 
-    for (const auto& weapon : weapons) {
-        for (const auto& armor : armors) {
+    for (const Item& weapon : weapons) {
+        for (const Item& armor : armors) {
             for (size_t i = 0; i < rings.size(); ++i) {
                 for (size_t j = i; j < rings.size(); ++j) {
                     const Character player = {100, weapon.damage + rings[i].damage + (i != j ? rings[j].damage : 0),
