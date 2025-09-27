@@ -17,23 +17,18 @@ For example, suppose you have containers of size 20, 15, 10, 5, and 5 liters. If
 Filling all containers entirely, how many different combinations of containers can exactly fit all 150 liters of eggnog?
 */
 
-constexpr int liters = 150;
 
-std::vector<int> parse_input(const char* input) {
+int part1(const bool min = false) {
+    constexpr int liters = 150;
     std::string line;
-    std::stringstream file(input);
     std::vector<int> containers;
+    std::stringstream file(input17);
 
     while (std::getline(file, line)) {
         containers.push_back(std::stoi(line));
     }
-    return containers;
-}
-
-int part1() {
-    const std::vector<int> containers = parse_input(input17);
     const int size = containers.size();
-    int res = 0;
+    int res = 0, min_count = INT32_MAX;
 
     for (int mask = 0; mask < 1 << size; mask++) {
         int sum = 0;
@@ -44,7 +39,25 @@ int part1() {
             }
         }
         if (sum == 150) {
-            res++;
+            if (min) {
+                min_count = std::min(min_count, __builtin_popcount(mask));
+            } else {
+                res++;
+            }
+        }
+    }
+    if (min) {
+        for (int mask = 0; mask < 1 << size; mask++) {
+            int sum = 0;
+
+            for (int i = 0; i < size; i++) {
+                if (mask & 1 << i) {
+                    sum += containers[i];
+                }
+            }
+            if (sum == 150 && __builtin_popcount(mask) == min_count) {
+                res++;
+            }
         }
     }
     return res;
@@ -61,39 +74,7 @@ and still hold exactly 150 litres?
 In the example above, the minimum number of containers was two. There were three ways to use that many containers, and so the answer there would be 3.
 */
 
-int part2() {
-    const std::vector<int> containers = parse_input(input17);
-    const int size = containers.size();
-    int min_count = INT32_MAX;
-
-    for (int mask = 0; mask < 1 << size; mask++) {
-        int sum = 0;
-
-        for (int i = 0; i < size; i++) {
-            if (mask & 1 << i) {
-                sum += containers[i];
-            }
-        }
-        if (sum == 150) {
-            min_count = std::min(min_count, __builtin_popcount(mask));
-        }
-    }
-    int res = 0;
-
-    for (int mask = 0; mask < 1 << size; mask++) {
-        int sum = 0;
-
-        for (int i = 0; i < size; i++) {
-            if (mask & 1 << i) {
-                sum += containers[i];
-            }
-        }
-        if (sum == 150 && __builtin_popcount(mask) == min_count) {
-            res++;
-        }
-    }
-    return res;
-}
+int part2() { return part1(true); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

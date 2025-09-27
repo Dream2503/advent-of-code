@@ -19,8 +19,10 @@ For example:
     - ^v^v^v^v^v delivers a bunch of presents to some very lucky children at only 2 houses.
 */
 
-constexpr auto hash = [](const std::pair<int, int>& p) -> int { return p.first ^ p.second << 1; };
-constexpr auto eq = [](const std::pair<int, int>& a, const std::pair<int, int>& b) -> bool { return a.first == b.first && a.second == b.second; };
+constexpr auto hash = [](const std::pair<int, int>& pair) -> int { return pair.first ^ pair.second << 1; };
+constexpr auto eq = [](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) -> bool {
+    return lhs.first == rhs.first && lhs.second == rhs.second;
+};
 
 void update(std::unordered_set<std::pair<int, int>, decltype(hash), decltype(eq)>& seen, const char ch, int& x, int& y) {
     switch (ch) {

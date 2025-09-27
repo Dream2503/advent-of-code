@@ -1,4 +1,7 @@
+#include <algorithm>
 #include <iostream>
+#include <sstream>
+#include <unordered_set>
 #include "inputs.hpp"
 
 /*
@@ -27,13 +30,54 @@ The shortest of these is London -> Dublin -> Belfast = 605, and so the answer is
 What is the distance of the shortest route?
 */
 
-int part1() { return 0; }
+void search(const std::unordered_map<std::string, std::unordered_map<std::string, int>>& graph, std::unordered_set<std::string>& seen,
+            const std::string& current, const int current_distance, int& best, const bool max) {
+    if (graph.size() == seen.size() + 1) {
+        best = max ? std::max(best, current_distance) : std::min(best, current_distance);
+        return;
+    }
+    for (const auto& [next, distance] : graph.at(current)) {
+        if (!seen.count(next)) {
+            seen.insert(next);
+            search(graph, seen, next, current_distance + distance, best, max);
+            seen.erase(next);
+        }
+    }
+}
+
+int part1(const bool max = false) {
+    std::string line;
+    std::unordered_map<std::string, std::unordered_map<std::string, int>> graph;
+    std::stringstream file(input9);
+
+    while (std::getline(file, line)) {
+        int distance;
+        std::string lhs, word, rhs;
+        std::stringstream(line) >> lhs >> word >> rhs >> word >> distance;
+        graph[lhs][rhs] = graph[rhs][lhs] = distance;
+    }
+    int best = max ? INT32_MIN : INT32_MAX;
+
+    for (const auto& [name, _] : graph) {
+        std::unordered_set<std::string> seen;
+        seen.insert(name);
+        search(graph, seen, name, 0, best, max);
+    }
+    return best;
+}
 
 /*
 --- Part Two ---
+The next year, just to show off, Santa decides to take the route with the longest distance instead.
+
+He can still start and end at any two (different) locations he wants, and he still must visit each location exactly once.
+
+For example, given the distances above, the longest route would be 982 via (for example) Dublin -> London -> Belfast.
+
+What is the distance of the longest route?
 */
 
-int part2() { return 0; }
+int part2() { return part1(true); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

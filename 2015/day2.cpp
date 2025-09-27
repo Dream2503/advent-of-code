@@ -21,17 +21,18 @@ For example:
 All numbers in the elves' list are in feet. How many total square feet of wrapping paper should they order?
 */
 
-int part1() {
-    char delimiter;
-    int l, b, h, lb, bh, hl, res = 0;
+int part1(const bool ribbon = false) {
+    int res = 0;
     std::string line;
     std::stringstream file(input2);
 
     while (std::getline(file, line)) {
+        char delimiter;
+        int l, b, h;
         std::stringstream ss(line);
         ss >> l >> delimiter >> b >> delimiter >> h;
-        lb = l * b, bh = b * h, hl = h * l;
-        res += 2 * (lb + bh + hl) + std::min({lb, bh, hl});
+        const int lb = l * b, bh = b * h, hl = h * l;
+        res += ribbon ? 2 * std::min({l + b, b + h, h + l}) + l * b * h : 2 * (lb + bh + hl) + std::min({lb, bh, hl});
     }
     return res;
 }
@@ -54,19 +55,7 @@ For example:
 How many total feet of ribbon should they order?
 */
 
-int part2() {
-    char delimiter;
-    int l, b, h, res = 0;
-    std::string line;
-    std::stringstream file(input2);
-
-    while (std::getline(file, line)) {
-        std::stringstream ss(line);
-        ss >> l >> delimiter >> b >> delimiter >> h;
-        res += 2 * std::min({l + b, b + h, h + l}) + l * b * h;
-    }
-    return res;
-}
+int part2() { return part1(true); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

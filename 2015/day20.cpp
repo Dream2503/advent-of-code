@@ -31,27 +31,31 @@ visited by Elves 1, 2, and 4, for a total of 10 + 20 + 40 = 70 presents.
 What is the lowest house number of the house to get at least as many presents as the number in your puzzle input?
 */
 
-int part1() {
+int part1(const int multiplier = 10, const int limit = INT32_MAX) {
     const int input = std::atoi(input20);
+    int i = 1;
 
-    for (int i = 1; i < input; i++) {
+    while (true) {
         int sum = 0;
 
         for (int j = 1; j * j <= i; j++) {
             if (i % j == 0) {
                 const int other = i / j;
-                sum += j;
 
-                if (other != j) {
+                if (other <= limit) {
+                    sum += j;
+                }
+                if (j <= limit && other != j) {
                     sum += other;
                 }
             }
         }
-        if (sum * 10 >= input) {
+
+        if (sum * multiplier >= input) {
             return i;
         }
+        i++;
     }
-    return -1;
 }
 
 /*
@@ -62,30 +66,7 @@ for it, they decide to deliver presents equal to eleven times their number at ea
 With these changes, what is the new lowest house number of the house to get at least as many presents as the number in your puzzle input?
 */
 
-int part2() {
-    const int input = std::atoi(input20);
-
-    for (int i = 1;; i++) {
-        int sum = 0;
-
-        for (int j = 1; j * j <= i; j++) {
-            if (i % j == 0) {
-                const int other = i / j;
-
-                if (other <= 50) {
-                    sum += j;
-                }
-                if (j <= 50 && other != j) {
-                    sum += other;
-                }
-            }
-        }
-
-        if (sum * 11 >= input) {
-            return i;
-        }
-    }
-}
+int part2() { return part1(11, 50); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

@@ -23,8 +23,8 @@ int part1(const int repeat = 40) {
     std::string input(input10), res;
 
     for (int k = 0; k < repeat; k++) {
-        int i = 0;
         const size_t size = input.size();
+        int i = 0;
 
         while (i < size) {
             const char ch = input[i];

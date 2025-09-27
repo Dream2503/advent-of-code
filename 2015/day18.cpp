@@ -79,12 +79,12 @@ After 4 steps, this example has four lights on.
 In your grid of 100x100 lights, given your initial configuration, how many lights are on after 100 steps?
 */
 
-constexpr int grid_size = 100, steps = 100;
 
 int part1(const bool conner_condition = false) {
+    constexpr int grid_size = 100, steps = 100;
     std::string line;
-    std::stringstream file(input18);
     std::array<std::bitset<grid_size>, grid_size> actual_state, temp_state;
+    std::stringstream file(input18);
     int i = 0;
 
     while (std::getline(file, line)) {

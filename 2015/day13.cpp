@@ -1,4 +1,7 @@
 #include <iostream>
+#include <sstream>
+#include <unordered_map>
+#include <unordered_set>
 #include "inputs.hpp"
 
 /*
@@ -42,13 +45,62 @@ happiness of 330.
 What is the total change in happiness for the optimal seating arrangement of the actual guest list?
 */
 
-int part1() { return 0; }
+void search(const std::unordered_map<std::string, std::unordered_map<std::string, int>>& graph, std::unordered_set<std::string>& seen,
+            const std::string& start, const std::string& current, const int current_distance, int& best) {
+    if (seen.size() == graph.size()) {
+        best = std::max(best, current_distance + graph.at(current).at(start) + graph.at(start).at(current));
+        return;
+    }
+    for (const auto& [next, happiness] : graph.at(current)) {
+        if (!seen.count(next)) {
+            seen.insert(next);
+            search(graph, seen, start, next, current_distance + happiness + graph.at(next).at(current), best);
+            seen.erase(next);
+        }
+    }
+}
+
+int part1(const bool add_me = false) {
+    std::string line;
+    std::unordered_map<std::string, std::unordered_map<std::string, int>> graph;
+    std::stringstream file(input13);
+
+    while (std::getline(file, line)) {
+        int happiness;
+        std::string lhs, word, sign, rhs;
+        std::stringstream(line) >> lhs >> word >> sign >> happiness >> word >> word >> word >> word >> word >> word >> rhs;
+        graph[lhs][rhs.substr(0, rhs.length() - 1)] = sign == "gain" ? happiness : -happiness;
+    }
+    if (add_me) {
+        std::unordered_map<std::string, int> my_detail;
+
+        for (auto& [name, detail] : graph) {
+            detail.emplace("me", 0);
+            my_detail.emplace(name, 0);
+        }
+        graph.emplace("me", my_detail);
+    }
+    int best = 0;
+
+    for (const auto& [name, _] : graph) {
+        std::unordered_set<std::string> seen;
+        seen.insert(name);
+        search(graph, seen, name, name, 0, best);
+    }
+    return best;
+}
 
 /*
 --- Part Two ---
+In all the commotion, you realize that you forgot to seat yourself. At this point, you're pretty apathetic toward the whole thing, and your happiness
+wouldn't really go up or down regardless of who you sit next to. You assume everyone else would be just as ambivalent about sitting next to you, too.
+
+So, add yourself to the list, and give all happiness relationships that involve you a score of 0.
+
+What is the total change in happiness for the optimal seating arrangement that actually includes yourself?
 */
 
-int part2() { return 0; }
+int part2() { return part1(true); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

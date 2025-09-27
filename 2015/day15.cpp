@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <iostream>
-#include <numeric>
 #include <sstream>
 #include "inputs.hpp"
 
@@ -38,42 +37,68 @@ multiply to zero.
 Given the ingredients in your kitchen and their properties, what is the total score of the highest-scoring cookie you can make?
 */
 
-int part1(const int teaspoon = 100) {
+struct Ingredient {
+    int capacity, durability, flavor, texture, calories;
+};
+
+void search(const std::vector<Ingredient>& ingredients, std::vector<int>& teaspoons, const int idx, const int remaining, int& best,
+            const bool check_calories) {
+    if (idx == ingredients.size() - 1) {
+        int capacity = 0, durability = 0, flavor = 0, texture = 0, calories = 0, score;
+        teaspoons[idx] = remaining;
+
+        for (size_t i = 0; i < ingredients.size(); i++) {
+            capacity += ingredients[i].capacity * teaspoons[i];
+            durability += ingredients[i].durability * teaspoons[i];
+            flavor += ingredients[i].flavor * teaspoons[i];
+            texture += ingredients[i].texture * teaspoons[i];
+            calories += ingredients[i].calories * teaspoons[i];
+        }
+        if (capacity > 0 && durability > 0 && flavor > 0 && texture > 0 && (!check_calories || calories == 500)) {
+            best = std::max(best, capacity * durability * flavor * texture);
+        }
+    } else {
+        for (int i = 0; i <= remaining; i++) {
+            teaspoons[idx] = i;
+            search(ingredients, teaspoons, idx + 1, remaining - i, best, check_calories);
+        }
+    }
+}
+
+int part1(const bool check_calories = false) {
     std::string line;
     std::stringstream file(input15);
-    std::vector<std::array<int, 4>> ingredients;
+    std::vector<Ingredient> ingredients;
 
     while (std::getline(file, line)) {
         char comma;
-        int capacity, durability, flavor, texture;
+        int capacity, durability, flavor, texture, calories;
         std::string word;
         std::stringstream ss(line);
-        ss >> word >> word >> capacity >> comma >> word >> durability >> comma >> word >> flavor >> comma >> word >> texture;
-        ingredients.push_back({capacity, durability, flavor, texture});
+        ss >> word >> word >> capacity >> comma >> word >> durability >> comma >> word >> flavor >> comma >> word >> texture >> comma >> word >>
+            calories;
+        ingredients.push_back({capacity, durability, flavor, texture, calories});
     }
-    std::array<int, 4> max_ingredient = *std::max_element(
-        ingredients.begin(), ingredients.end(), [](const std::array<int, 4>& ingredient1, const std::array<int, 4>& ingredient2) -> bool {
-            return *std::max_element(ingredient1.begin(), ingredient1.end()) < *std::max_element(ingredient2.begin(), ingredient2.end());
-        });
-
-    for (int i = 1; i < teaspoon; i++) {
-        int min_idx = std::min_element(max_ingredient.begin(), max_ingredient.end()) - max_ingredient.begin();
-        int max_idx = std::max_element(ingredients.begin(), ingredients.end(),
-                                       [&min_idx](const std::array<int, 4>& ingredient1, const std::array<int, 4>& ingredient2) -> bool {
-                                           return ingredient1[min_idx] < ingredient2[min_idx];
-                                       }) -
-            ingredients.begin();
-        std::transform(max_ingredient.begin(), max_ingredient.end(), ingredients[max_idx].begin(), max_ingredient.begin(),
-                       [](const int x, const int y) -> int { return x + y; });
-    }
-    return std::reduce(max_ingredient.begin(), max_ingredient.end(), 1, std::multiplies<int>());
+    int best = 0;
+    std::vector teaspoons(ingredients.size(), 0);
+    search(ingredients, teaspoons, 0, 100, best, check_calories);
+    return best;
 }
 
 /*
 --- Part Two ---
+Your cookie recipe becomes wildly popular! Someone asks if you can make another recipe that has exactly 500 calories per cookie (so they can use it as
+a meal replacement). Keep the rest of your award-winning process the same (100 teaspoons, same ingredients, same scoring system).
+
+For example, given the ingredients above, if you had instead selected 40 teaspoons of butterscotch and 60 teaspoons of cinnamon (which still adds to
+100), the total calorie count would be 40*8 + 60*3 = 500. The total score would go down, though: only 57600000, the best you can do in such trying
+circumstances.
+
+Given the ingredients in your kitchen and their properties, what is the total score of the highest-scoring cookie you can make with a calorie total of
+500?
 */
 
-int part2() { return 0; }
+int part2() { return part1(true); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

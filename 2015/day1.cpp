@@ -20,11 +20,15 @@ For example:
 To what floor do the instructions take Santa?
 */
 
-int part1() {
+int part1(const bool first = false) {
     int res = 0, i = 0;
 
     while (input1[i]) {
         res += (input1[i++] == '(') * 2 - 1;
+
+        if (first && res < 0) {
+            return i;
+        }
     }
     return res;
 }
@@ -42,16 +46,7 @@ What is the position of the character that causes Santa to first enter the basem
 */
 
 int part2() {
-    int res = 0, i = 0;
-
-    while (input1[i]) {
-        res += (input1[i++] == '(') * 2 - 1;
-
-        if (res < 0) {
-            return i;
-        }
-    }
-    return -1;
+    return part1(true);
 }
 
 int main() {

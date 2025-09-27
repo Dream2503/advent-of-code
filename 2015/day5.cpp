@@ -22,9 +22,9 @@ How many strings are nice?
 */
 
 int part1() {
-    std::stringstream file(input5);
-    std::string line;
     int res = 0;
+    std::string line;
+    std::stringstream file(input5);
 
     while (std::getline(file, line)) {
         const int size = line.length();
@@ -64,9 +64,9 @@ How many strings are nice under these new rules?
 */
 
 int part2() {
-    std::stringstream file(input5);
-    std::string line;
     int res = 0;
+    std::string line;
+    std::stringstream file(input5);
 
     while (std::getline(file, line)) {
         bool twice = false;

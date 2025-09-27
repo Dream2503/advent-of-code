@@ -48,16 +48,18 @@ y: 456
 In little Bobby's kit's instructions booklet (provided as your puzzle input), what signal is ultimately provided to wire a?
 */
 
-using value = std::tuple<std::string, std::string, std::string>;
+struct Instruction {
+    std::string lhs, opr, rhs;
+};
 
-uint16_t resolve(std::unordered_map<std::string, value>& hash, std::unordered_map<std::string, uint16_t>& cache, const std::string& key) {
+uint16_t resolve(const std::unordered_map<std::string, Instruction>& hash, std::unordered_map<std::string, uint16_t>& cache, const std::string& key) {
     if (std::isdigit(static_cast<unsigned char>(key[0]))) {
         return static_cast<uint16_t>(std::stoi(key));
     }
     if (cache.count(key)) {
         return cache[key];
     }
-    auto& [lhs, opr, rhs] = hash[key];
+    auto& [lhs, opr, rhs] = hash.at(key);
     uint16_t left = 0, right = 0;
 
     if (!lhs.empty()) {
@@ -85,36 +87,36 @@ uint16_t resolve(std::unordered_map<std::string, value>& hash, std::unordered_ma
     return result;
 }
 
-std::unordered_map<std::string, value> parse() {
-    std::unordered_map<std::string, value> hash;
-    std::stringstream sss(input7);
-    std::string token, arrow, res, opr, rhs, line;
+int part1(const bool override = false) {
+    std::string line;
+    std::unordered_map<std::string, Instruction> hash;
+    std::unordered_map<std::string, uint16_t> cache;
+    std::stringstream file(input7);
 
-    while (std::getline(sss, line)) {
+    while (std::getline(file, line)) {
+        std::string token, arrow, res, opr, rhs;
         std::stringstream ss(line);
         ss >> token;
 
         if (token[0] == 'N') {
             ss >> rhs >> arrow >> res;
-            hash[res] = {"", token, rhs};
+            hash.emplace(res, Instruction{"", token, rhs});
         } else {
             ss >> opr;
 
             if (opr == "->") {
                 ss >> res;
-                hash[res] = {"", "=", token};
+                hash.emplace(res, Instruction{"", "=", token});
             } else {
                 ss >> rhs >> arrow >> res;
-                hash[res] = {token, opr, rhs};
+                hash.emplace(res, Instruction{token, opr, rhs});
             }
         }
     }
-    return hash;
-}
-
-int part1() {
-    std::unordered_map<std::string, value> hash = parse();
-    std::unordered_map<std::string, uint16_t> cache;
+    if (override) {
+        hash["b"] = {"", "=", std::to_string(resolve(hash, cache, "a"))};
+        cache.clear();
+    }
     return resolve(hash, cache, "a");
 }
 
@@ -124,13 +126,7 @@ Now, take the signal you got on wire a, override wire b to that signal, and rese
 provided to wire a?
 */
 
-int part2() {
-    std::unordered_map<std::string, value> hash = parse();
-    std::unordered_map<std::string, uint16_t> cache;
-    hash["b"] = {"", "=", std::to_string(part1())};
-    cache.clear();
-    return resolve(hash, cache, "a");
-}
+int part2() { return part1(true); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

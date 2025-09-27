@@ -25,7 +25,9 @@ point). So, in this situation, Comet would win (if the race ended at 1000 second
 Given the descriptions of each reindeer (in your puzzle input), after exactly 2503 seconds, what distance has the winning reindeer traveled?
 */
 
-int part1(const int time_limit = 2503) {
+constexpr int time_limit = 2503;
+
+int part1() {
     int max = 0;
     std::string line;
     std::stringstream file(input14);
@@ -62,14 +64,15 @@ would win (if the race ended at 1000 seconds).
 Again given the descriptions of each reindeer (in your puzzle input), after exactly 2503 seconds, how many points does the winning reindeer have?
 */
 
-int part2(const int time_limit = 2503) {
-    struct reindeer {
-        int distance_travelled, speed, move_time, time_moved, rest_time, time_rested, points_scored;
-        bool is_moving;
-    };
+struct Reindeer {
+    int distance, speed, move_time, time_moved, rest_time, time_rested, points;
+    bool is_moving;
+};
+
+int part2() {
     std::string line;
     std::stringstream file(input14);
-    std::vector<reindeer> reindeers;
+    std::vector<Reindeer> reindeers;
 
     while (std::getline(file, line)) {
         int speed, move_time, rest_time;
@@ -79,9 +82,9 @@ int part2(const int time_limit = 2503) {
         reindeers.push_back({0, speed, move_time, 0, rest_time, 0, 0, true});
     }
     for (int t = 0; t < time_limit; t++) {
-        for (reindeer& deer : reindeers) {
+        for (Reindeer& deer : reindeers) {
             if (deer.is_moving && deer.time_moved < deer.move_time) {
-                deer.distance_travelled += deer.speed;
+                deer.distance += deer.speed;
                 deer.time_moved++;
 
                 if (deer.time_moved == deer.move_time) {
@@ -97,18 +100,18 @@ int part2(const int time_limit = 2503) {
                 }
             }
         }
-        int max_distance = std::max_element(reindeers.begin(), reindeers.end(), [](const reindeer& deer1, const reindeer& deer2) -> bool {
-                               return deer1.distance_travelled < deer2.distance_travelled;
-                           })->distance_travelled;
-        std::for_each(reindeers.begin(), reindeers.end(), [&max_distance](reindeer& deer) -> void {
-            if (deer.distance_travelled == max_distance) {
-                deer.points_scored++;
+        int max_distance = std::max_element(reindeers.begin(), reindeers.end(), [](const Reindeer& deer1, const Reindeer& deer2) -> bool {
+                               return deer1.distance < deer2.distance;
+                           })->distance;
+        std::for_each(reindeers.begin(), reindeers.end(), [&max_distance](Reindeer& deer) -> void {
+            if (deer.distance == max_distance) {
+                deer.points++;
             }
         });
     }
     return std::max_element(reindeers.begin(), reindeers.end(),
-                            [](const reindeer& deer1, const reindeer& deer2) -> bool { return deer1.points_scored < deer2.points_scored; })
-        ->points_scored;
+                            [](const Reindeer& deer1, const Reindeer& deer2) -> bool { return deer1.points < deer2.points; })
+        ->points;
 }
 
 int main() {

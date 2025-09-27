@@ -117,76 +117,103 @@ Player casts Magic Missile, dealing 4 damage.
 - Player has 1 hit point, 0 armor, 114 mana
 - Boss has 2 hit points
 Poison deals 3 damage. This kills the boss, and the player wins.
-You start with 50 hit points and 500 mana points. The boss's actual stats are in your puzzle input. What is the least amount of mana you can spend and still win the fight? (Do not include mana recharge effects as "spending" negative mana.)
+You start with 50 hit points and 500 mana points. The boss's actual stats are in your puzzle input. What is the least amount of mana you can spend and
+still win the fight? (Do not include mana recharge effects as "spending" negative mana.)
 */
 
-struct Item {
-    std::string name;
-    int cost, damage, armor;
+struct State {
+    int player_hp, player_mana, boss_hp, boss_damage, shield_timer, poison_timer, recharge_timer, mana_spent;
 };
 
-struct Character {
-    int hp, damage, armor;
-};
+void simulate(State state, const bool player_turn, int& best, const bool hard) {
+    int armor = 0;
 
-const std::vector<Item> weapons = {
-    {"Dagger", 8, 4, 0}, {"Shortsword", 10, 5, 0}, {"Warhammer", 25, 6, 0}, {"Longsword", 40, 7, 0}, {"Greataxe", 74, 8, 0}};
-const std::vector<Item> armors = {{"None", 0, 0, 0},        {"Leather", 13, 0, 1},    {"Chainmail", 31, 0, 2},
-                                  {"Splintmail", 53, 0, 3}, {"Bandedmail", 75, 0, 4}, {"Platemail", 102, 0, 5}};
-const std::vector<Item> rings = {{"None", 0, 0, 0},        {"Damage +1", 25, 1, 0},  {"Damage +2", 50, 2, 0}, {"Damage +3", 100, 3, 0},
-                                 {"Defense +1", 20, 0, 1}, {"Defense +2", 40, 0, 2}, {"Defense +3", 80, 0, 3}};
-
-
-bool simulate_battle(Character player, Character boss) {
-    while (player.hp > 0 && boss.hp > 0) {
-        boss.hp -= std::max(1, player.damage - boss.armor);
-
-        if (boss.hp <= 0) {
-            return true;
+    if (player_turn && hard) {
+        state.player_hp--;
+    }
+    if (state.mana_spent >= best || !state.player_hp) {
+        return;
+    }
+    if (state.shield_timer > 0) {
+        armor = 7;
+        state.shield_timer--;
+    }
+    if (state.poison_timer > 0) {
+        state.boss_hp -= 3;
+        state.poison_timer--;
+    }
+    if (state.recharge_timer > 0) {
+        state.player_mana += 101;
+        state.recharge_timer--;
+    }
+    if (state.boss_hp <= 0) {
+        best = std::min(best, state.mana_spent);
+        return;
+    }
+    if (player_turn) {
+        if (state.player_mana >= 53) {
+            State temp_state = state;
+            temp_state.player_mana -= 53;
+            temp_state.boss_hp -= 4;
+            temp_state.mana_spent += 53;
+            simulate(temp_state, false, best, hard);
         }
-        player.hp -= std::max(1, boss.damage - player.armor);
+        if (state.player_mana >= 73) {
+            State temp_state = state;
+            temp_state.player_mana -= 73;
+            temp_state.boss_hp -= 2;
+            temp_state.player_hp += 2;
+            temp_state.mana_spent += 73;
+            simulate(temp_state, false, best, hard);
+        }
+        if (state.player_mana >= 113 && !state.shield_timer) {
+            State temp_state = state;
+            temp_state.player_mana -= 113;
+            temp_state.shield_timer = 6;
+            temp_state.mana_spent += 113;
+            simulate(temp_state, false, best, hard);
+        }
+        if (state.player_mana >= 173 && !state.poison_timer) {
+            State temp_state = state;
+            temp_state.player_mana -= 173;
+            temp_state.poison_timer = 6;
+            temp_state.mana_spent += 173;
+            simulate(temp_state, false, best, hard);
+        }
+        if (state.player_mana >= 229 && !state.recharge_timer) {
+            State temp_state = state;
+            temp_state.player_mana -= 229;
+            temp_state.recharge_timer = 5;
+            temp_state.mana_spent += 229;
+            simulate(temp_state, false, best, hard);
+        }
+    } else {
+        state.player_hp -= std::max(1, state.boss_damage - armor);
 
-        if (player.hp <= 0) {
-            return false;
+        if (state.player_hp > 0) {
+            simulate(state, true, best, hard);
         }
     }
-    return false;
 }
 
-int part1(const std::function<int(int, int)>& func = [](const int x, const int y) { return std::min(x, y); }, const bool lose = false) {
-    int hp, damage, armour, cost = lose ? INT32_MIN : INT32_MAX;
+int part1(const bool hard = false) {
+    int hp = 0, damage = 0, best = INT32_MAX;
     std::string word;
-    std::stringstream(input21) >> word >> word >> hp >> word >> damage >> word >> armour;
-    const Character boss = {hp, damage, armour};
-
-    for (const Item& weapon : weapons) {
-        for (const Item& armor : armors) {
-            for (size_t i = 0; i < rings.size(); ++i) {
-                for (size_t j = i; j < rings.size(); ++j) {
-                    const Character player = {100, weapon.damage + rings[i].damage + (i != j ? rings[j].damage : 0),
-                                              armor.armor + rings[i].armor + (i != j ? rings[j].armor : 0)};
-
-                    if (lose ^ simulate_battle(player, boss)) {
-                        cost = func(cost, weapon.cost + armor.cost + rings[i].cost + (i != j ? rings[j].cost : 0));
-                    }
-                }
-            }
-        }
-    }
-    return cost;
+    std::stringstream(input22) >> word >> word >> hp >> word >> damage;
+    simulate({50, 500, hp, damage, 0, 0, 0, 0}, true, best, hard);
+    return best;
 }
 
 /*
 --- Part Two ---
-Turns out the shopkeeper is working with the boss, and can persuade you to buy whatever items he wants. The other rules still apply, and he still only
-has one of each item.
+On the next run through the game, you increase the difficulty to hard.
 
-What is the most amount of gold you can spend and still lose the fight?
+At the start of each player turn (before any other effects apply), you lose 1 hit point. If this brings you to or below 0 hit points, you lose.
+
+With the same starting stats for you and the boss, what is the least amount of mana you can spend and still win the fight?
 */
 
-int part2() {
-    return part1([](const int x, const int y) { return std::max(x, y); }, true);
-}
+int part2() { return part1(true); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

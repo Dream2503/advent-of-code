@@ -48,7 +48,25 @@ configurations with only two packages in the first group, the one with the small
 What is the quantum entanglement of the first group of packages in the ideal configuration?
 */
 
-size_t part1(const int groups = 3) {
+void search(const std::vector<int>& packages, const int index, const int groups, const int split, const uint64_t sum, const int count,
+            const uint64_t QE, int& min_count, uint64_t& best) {
+
+    if (sum > split || count > min_count) {
+        return;
+    }
+    if (sum == split) {
+        if (count < min_count || (count == min_count && QE < best)) {
+            min_count = count;
+            best = QE;
+        }
+        return;
+    }
+    for (size_t i = index; i < packages.size(); i++) {
+        search(packages, i + 1, groups, split, sum + packages[i], count + 1, QE * packages[i], min_count, best);
+    }
+}
+
+uint64_t part1(const int groups = 3) {
     std::string line;
     std::vector<int> packages;
     std::stringstream file(input24);
@@ -56,25 +74,11 @@ size_t part1(const int groups = 3) {
     while (std::getline(file, line)) {
         packages.push_back(std::stoi(line));
     }
-    const int split = std::reduce(packages.begin(), packages.end(), 0) / groups, size = packages.size(), total = 1 << size;
-    size_t ideal_QE = UINT64_MAX, min_count = size;
-
-    for (int mask = 0; mask < total; mask++) {
-        size_t sum = 0, QE = 1, count = 0;
-
-        for (size_t i = 0; i < size && sum <= split; i++) {
-            if (mask & 1 << i) {
-                sum += packages[i];
-                QE *= packages[i];
-                count++;
-            }
-        }
-        if (sum == split && (count < min_count || (count == min_count && QE < ideal_QE))) {
-            min_count = count;
-            ideal_QE = QE;
-        }
-    }
-    return ideal_QE;
+    const int split = std::accumulate(packages.begin(), packages.end(), 0) / groups;
+    int min_count = packages.size();
+    uint64_t best = UINT64_MAX;
+    search(packages, 0, groups, split, 0, 0, 1, min_count, best);
+    return best;
 }
 
 /*

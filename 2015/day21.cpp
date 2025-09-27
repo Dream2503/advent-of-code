@@ -91,7 +91,7 @@ bool simulate_battle(Character player, Character boss) {
 }
 
 int part1(const std::function<int(int, int)>& func = [](const int x, const int y) { return std::min(x, y); }, const bool lose = false) {
-    int hp, damage, armour, cost = lose ? INT32_MIN : INT32_MAX;
+    int hp = 0, damage = 0, armour = 0, cost = lose ? INT32_MIN : INT32_MAX;
     std::string word;
     std::stringstream(input21) >> word >> word >> hp >> word >> damage >> word >> armour;
     const Character boss = {hp, damage, armour};
@@ -100,10 +100,10 @@ int part1(const std::function<int(int, int)>& func = [](const int x, const int y
         for (const Item& armor : armors) {
             for (size_t i = 0; i < rings.size(); ++i) {
                 for (size_t j = i; j < rings.size(); ++j) {
-                    const Character player = {100, weapon.damage + rings[i].damage + (i != j ? rings[j].damage : 0),
-                                              armor.armor + rings[i].armor + (i != j ? rings[j].armor : 0)};
-
-                    if (lose ^ simulate_battle(player, boss)) {
+                    if (lose ^
+                        simulate_battle({100, weapon.damage + rings[i].damage + (i != j ? rings[j].damage : 0),
+                                         armor.armor + rings[i].armor + (i != j ? rings[j].armor : 0)},
+                                        boss)) {
                         cost = func(cost, weapon.cost + armor.cost + rings[i].cost + (i != j ? rings[j].cost : 0));
                     }
                 }
