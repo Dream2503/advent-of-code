@@ -19,12 +19,7 @@ For example:
     - ^v^v^v^v^v delivers a bunch of presents to some very lucky children at only 2 houses.
 */
 
-constexpr auto hash = [](const std::pair<int, int>& pair) -> int { return pair.first ^ pair.second << 1; };
-constexpr auto eq = [](const std::pair<int, int>& lhs, const std::pair<int, int>& rhs) -> bool {
-    return lhs.first == rhs.first && lhs.second == rhs.second;
-};
-
-void update(std::unordered_set<std::pair<int, int>, decltype(hash), decltype(eq)>& seen, const char ch, int& x, int& y) {
+void update(std::unordered_set<std::string>& seen, const char ch, int& x, int& y) {
     switch (ch) {
     case '^':
         y++;
@@ -45,13 +40,13 @@ void update(std::unordered_set<std::pair<int, int>, decltype(hash), decltype(eq)
     default:
         break;
     }
-    seen.emplace(x, y);
+    seen.emplace(std::to_string(x) + ',' + std::to_string(y));
 }
 
 int part1() {
     int x = 0, y = 0, i = 0;
-    std::unordered_set<std::pair<int, int>, decltype(hash), decltype(eq)> seen(32, hash, eq);
-    seen.emplace(x, y);
+    std::unordered_set<std::string> seen;
+    seen.emplace("0,0");
 
     while (input3[i]) {
         update(seen, input3[i++], x, y);
@@ -76,8 +71,8 @@ For example:
 
 int part2() {
     int x1 = 0, y1 = 0, x2 = 0, y2 = 0, i = 0;
-    std::unordered_set<std::pair<int, int>, decltype(hash), decltype(eq)> seen(32, hash, eq);
-    seen.emplace(0, 0);
+    std::unordered_set<std::string> seen;
+    seen.emplace("0,0");
 
     while (input3[i]) {
         int& x = i % 2 ? x1 : x2;

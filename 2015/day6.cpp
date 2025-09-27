@@ -25,7 +25,6 @@ For example:
 After following the instructions, how many lights are lit?
 */
 
-
 int part1(const bool brightness = false) {
     constexpr int size = 1000;
     std::string line;
