@@ -1,6 +1,7 @@
-#include <array>
+#include <algorithm>
 #include <bitset>
 #include <iostream>
+#include <numeric>
 #include <sstream>
 #include "inputs.hpp"
 
@@ -49,22 +50,23 @@ There seems to be an intermediate check of the voltage used by the display: afte
 be lit?
 */
 
-int part1() {
+int part1(const bool is_print = false) {
+    constexpr int width = 50, high = 6;
     std::string line;
-    std::array<std::bitset<50>, 6> screen;
-    std::bitset<50> rotate_row;
-    std::bitset<6> rotate_col;
+    std::array<std::bitset<width>, high> screen;
+    std::bitset<width> rotate_row;
+    std::bitset<high> rotate_col;
     std::stringstream file(input8);
 
     while (std::getline(file, line)) {
         char x;
-        int row, col;
-        std::string instruction;
+        int row, col, k, n;
+        std::string instruction, word;
         std::stringstream ss(line);
         ss >> instruction;
 
         if (instruction == "rect") {
-            ss >> row >> x >> col;
+            ss >> col >> x >> row;
 
             for (int i = 0; i < row; i++) {
                 for (int j = 0; j < col; j++) {
@@ -72,23 +74,49 @@ int part1() {
                 }
             }
         } else {
-            ss >> instruction;
+            ss >> instruction >> x >> x >> k >> word >> n;
 
             if (instruction == "row") {
-                ss >> x >> x >> row;
+                for (int i = 0; i < width; i++) {
+                    rotate_row[(n + i) % width] = screen[k][i];
+                }
+                for (int i = 0; i < width; i++) {
+                    screen[k][i] = rotate_row[i];
+                }
+            } else {
+                for (int i = 0; i < high; i++) {
+                    rotate_col[(n + i) % high] = screen[i][k];
+                }
+                for (int i = 0; i < high; i++) {
+                    screen[i][k] = rotate_col[i];
+                }
             }
         }
     }
-    return 0;
+    if (is_print) {
+        for (int i = 0; i < high; i++) {
+            for (int j = 0; j < width; j++) {
+                std::cout << (screen[i][j] ? '#' : ' ');
+            }
+            std::cout << std::endl;
+        }
+    }
+    return std::transform_reduce(screen.begin(), screen.end(), 0, std::plus(), [](const std::bitset<width>& row) -> int { return row.count(); });
 }
 
 /*
 --- Part Two ---
+You notice that the screen is only capable of displaying capital letters; in the font it uses, each letter is 5 pixels wide and 6 tall.
+
+After you swipe your card, what code is the screen trying to display?
 */
 
-int part2() { return 0; }
+char part2() {
+    part1(true);
+    return ' ';
+}
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;;
+    std::cout << part1() << std::endl << part2() << std::endl;
     return 0;
 }
