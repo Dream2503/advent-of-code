@@ -5787,3 +5787,9 @@ bot 83 gives low to bot 155 and high to bot 44
 bot 123 gives low to bot 33 and high to bot 195
 bot 183 gives low to bot 83 and high to bot 90
 bot 71 gives low to bot 152 and high to bot 121)";
+
+constexpr char input11[] =
+    R"(The first floor contains a thulium generator, a thulium-compatible microchip, a plutonium generator, and a strontium generator.
+The second floor contains a plutonium-compatible microchip and a strontium-compatible microchip.
+The third floor contains a promethium generator, a promethium-compatible microchip, a ruthenium generator, and a ruthenium-compatible microchip.
+The fourth floor contains nothing relevant.)";

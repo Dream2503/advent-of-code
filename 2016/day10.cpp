@@ -41,54 +41,57 @@ struct Bot {
     int left = 0, right = 0, low = 0, high = 0;
 };
 
-int resolve(std::unordered_map<int, Bot>& hash, int bot, std::unordered_map<int, int>& outputs) {
-    auto& b = hash[bot];
+int resolve(std::unordered_map<int, Bot>& hash, const int bot, std::unordered_map<int, int>& outputs, const bool find_terminate) {
+    auto& [left, right, low, high] = hash[bot];
 
-    if (b.low && b.high && b.left && b.right) {
-        auto [min, max] = std::minmax(b.left, b.right);
+    if (left && right) {
+        auto [min_val, max_val] = std::minmax(left, right);
 
-        if (min == terminate.first && max == terminate.second) {
+        if (find_terminate && min_val == terminate.first && max_val == terminate.second) {
             return bot;
         }
-        if (b.low < 0) {
-            outputs[-b.low - 1] = min;
+        if (low < 0) {
+            outputs[-low - 1] = min_val;
         } else {
-            auto& target = hash[b.low];
+            Bot& target = hash[low];
 
             if (!target.left) {
-                target.left = min;
+                target.left = min_val;
             } else {
-                target.right = min;
+                target.right = min_val;
+            }
+            const int res = resolve(hash, low, outputs, find_terminate);
+
+            if (find_terminate && res != -1) {
+                return res;
             }
         }
-        if (b.high < 0) {
-            outputs[-b.high - 1] = max;
+        if (high < 0) {
+            outputs[-high - 1] = max_val;
         } else {
-            auto& target = hash[b.high];
+            Bot& target = hash[high];
 
             if (!target.left) {
-                target.left = max;
+                target.left = max_val;
             } else {
-                target.right = max;
+                target.right = max_val;
+            }
+            const int res = resolve(hash, high, outputs, find_terminate);
+
+            if (find_terminate && res != -1) {
+                return res;
             }
         }
-        b.left = b.right = 0;
-        const int res = b.low > 0 ? resolve(hash, b.low, outputs) : -1;
-
-        if (res != -1) {
-            return res;
-        }
-        return b.high > 0 ? resolve(hash, b.high, outputs) : -1;
+        left = right = 0;
     }
     return -1;
 }
 
-
 int part1(const bool output = false) {
-    std::string line;
     std::unordered_map<int, Bot> hash;
     std::unordered_map<int, int> outputs;
     std::stringstream file(input10);
+    std::string line;
 
     while (std::getline(file, line)) {
         std::stringstream ss(line);
@@ -97,33 +100,33 @@ int part1(const bool output = false) {
 
         if (word == "bot") {
             int bot, low, high;
-            std::string lowType, highType;
-            ss >> bot >> word >> word >> word >> lowType >> low >> word >> word >> word >> highType >> high;
+            std::string low_type, high_type;
+            ss >> bot >> word >> word >> word >> low_type >> low >> word >> word >> word >> high_type >> high;
 
-            if (lowType == "output") {
+            if (low_type == "output") {
                 low = -(low + 1);
             }
-            if (highType == "output") {
+            if (high_type == "output") {
                 high = -(high + 1);
             }
             hash[bot].low = low;
             hash[bot].high = high;
         } else {
-            int value, bot;
-            ss >> value >> word >> word >> word >> bot;
-            auto& b = hash[bot];
+            int value, bot_num;
+            ss >> value >> word >> word >> word >> bot_num;
+            Bot& bot = hash[bot_num];
 
-            if (!b.left) {
-                b.left = value;
+            if (!bot.left) {
+                bot.left = value;
             } else {
-                b.right = value;
+                bot.right = value;
             }
         }
     }
     for (const int bot : hash | std::views::keys) {
-        int res = resolve(hash, bot, outputs);
+        const int res = resolve(hash, bot, outputs, !output);
 
-        if (res != -1 && !output) {
+        if (!output && res != -1) {
             return res;
         }
     }
