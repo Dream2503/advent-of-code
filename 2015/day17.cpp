@@ -38,7 +38,7 @@ int part1(const bool min = false) {
                 sum += containers[i];
             }
         }
-        if (sum == 150) {
+        if (sum == liters) {
             if (min) {
                 min_count = std::min(min_count, __builtin_popcount(mask));
             } else {
@@ -55,7 +55,7 @@ int part1(const bool min = false) {
                     sum += containers[i];
                 }
             }
-            if (sum == 150 && __builtin_popcount(mask) == min_count) {
+            if (sum == liters && __builtin_popcount(mask) == min_count) {
                 res++;
             }
         }

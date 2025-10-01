@@ -71,11 +71,8 @@ int part1(const bool check_calories = false) {
     std::vector<Ingredient> ingredients;
 
     while (std::getline(file, line)) {
-        char comma;
         int capacity, durability, flavor, texture, calories;
-        std::string word;
-        std::stringstream ss(line);
-        ss >> word >> word >> capacity >> comma >> word >> durability >> comma >> word >> flavor >> comma >> word >> texture >> comma >> word >>
+        ((((std::stringstream(line).ignore(16) >> capacity).ignore(13) >> durability).ignore(9) >> flavor).ignore(10) >> texture).ignore(11) >>
             calories;
         ingredients.push_back({capacity, durability, flavor, texture, calories});
     }

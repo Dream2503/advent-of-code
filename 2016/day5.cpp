@@ -34,22 +34,22 @@ std::string md5(const std::string& input) {
     EVP_DigestUpdate(ctx, input.c_str(), input.size());
     EVP_DigestFinal_ex(ctx, digest, nullptr);
     EVP_MD_CTX_free(ctx);
-    std::ostringstream oss;
+    std::stringstream ss;
 
     for (int i = 0; i < MD5_DIGEST_LENGTH; i++) {
-        oss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(digest[i]);
+        ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(digest[i]);
     }
-    return oss.str();
+    return ss.str();
 }
 
 std::string part1() {
     std::string password;
-    int i = 1;
+    int i = 0;
 
     while (password.length() != 8) {
         std::string hash = md5(input5 + std::to_string(i));
 
-        if (hash.rfind("00000", 0) == 0) {
+        if (hash.starts_with("00000")) {
             password.push_back(hash[5]);
         }
         i++;
@@ -86,7 +86,7 @@ std::string part2() {
     while (count < 8) {
         std::string hash = md5(input5 + std::to_string(i));
 
-        if (hash.rfind("00000", 0) == 0 && hash[5] >= '0' && hash[5] <= '7' && !password[hash[5] - '0']) {
+        if (hash.starts_with("00000") && hash[5] >= '0' && hash[5] <= '7' && !password[hash[5] - '0']) {
             password[hash[5] - '0'] = hash[6];
             count++;
         }

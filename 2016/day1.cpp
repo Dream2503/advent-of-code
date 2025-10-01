@@ -28,17 +28,29 @@ For example:
 How many blocks away is Easter Bunny HQ?
 */
 
-bool update(std::unordered_set<std::string>& seen, int& i, int& j, const int destination_i, const int destination_j, const bool twice) {
+template <>
+struct std::hash<std::pair<int, int>> {
+    size_t operator()(const std::pair<int, int>& pair) const noexcept {
+        size_t hash = 31;
+        hash = hash * 31 + std::hash<int>()(pair.first);
+        hash = hash * 31 + std::hash<int>()(pair.second);
+        return hash;
+    }
+};
+
+bool update(std::unordered_set<std::pair<int, int>>& seen, int& i, int& j, const int destination_i, const int destination_j, const bool twice) {
     if (twice) {
-        for (; i != destination_i; destination_i > i ? i++ : i--) {
-            if (!seen.emplace(std::to_string(i) + ',' + std::to_string(j)).second) {
+        while (i != destination_i) {
+            if (!seen.emplace(i, j).second) {
                 return true;
             }
+            i += destination_i > i ? 1 : -1;
         }
-        for (; j != destination_j; destination_j > j ? j++ : j--) {
-            if (!seen.emplace(std::to_string(i) + ',' + std::to_string(j)).second) {
+        while (j != destination_j) {
+            if (!seen.emplace(i, j).second) {
                 return true;
             }
+            j += destination_j > j ? 1 : -1;
         }
     } else {
         i = destination_i;
@@ -48,10 +60,9 @@ bool update(std::unordered_set<std::string>& seen, int& i, int& j, const int des
 }
 
 int part1(const bool twice = false) {
-    enum Face { N, E, S, W };
-    Face facing = N;
+    enum Face { N, E, S, W } facing = N;
     int i = 0, j = 0;
-    std::unordered_set<std::string> seen;
+    std::unordered_set<std::pair<int, int>> seen;
     std::stringstream ss(input1);
 
     while (!ss.eof()) {
@@ -59,7 +70,7 @@ int part1(const bool twice = false) {
         char direction;
         int distance;
         std::string delimiter;
-        ss >> direction >> distance >> delimiter;
+        (ss >> direction >> distance).ignore(2);
 
         if (direction == 'R') {
             facing = static_cast<Face>((facing + 1) % 4);

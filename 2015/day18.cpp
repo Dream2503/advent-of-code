@@ -80,7 +80,7 @@ In your grid of 100x100 lights, given your initial configuration, how many light
 */
 
 
-int part1(const bool conner_condition = false) {
+int part1(const bool conner = false) {
     constexpr int grid_size = 100, steps = 100;
     std::string line;
     std::array<std::bitset<grid_size>, grid_size> actual_state, temp_state;
@@ -96,7 +96,7 @@ int part1(const bool conner_condition = false) {
     for (int t = 0; t < steps; t++) {
         for (i = 0; i < grid_size; i++) {
             for (int j = 0; j < grid_size; j++) {
-                if (conner_condition &&
+                if (conner &&
                     (i == 0 && j == 0 || i == 0 && j == grid_size - 1 || i == grid_size - 1 && j == 0 || i == grid_size - 1 && j == grid_size - 1)) {
                     continue;
                 }

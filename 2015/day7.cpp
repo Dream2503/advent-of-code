@@ -56,7 +56,7 @@ uint16_t resolve(const std::unordered_map<std::string, Instruction>& hash, std::
     if (std::isdigit(static_cast<unsigned char>(key[0]))) {
         return static_cast<uint16_t>(std::stoi(key));
     }
-    if (cache.count(key)) {
+    if (cache.contains(key)) {
         return cache[key];
     }
     auto& [lhs, opr, rhs] = hash.at(key);
@@ -94,12 +94,12 @@ int part1(const bool override = false) {
     std::stringstream file(input7);
 
     while (std::getline(file, line)) {
-        std::string token, arrow, res, opr, rhs;
+        std::string token, res, opr, rhs;
         std::stringstream ss(line);
         ss >> token;
 
         if (token[0] == 'N') {
-            ss >> rhs >> arrow >> res;
+            (ss >> rhs).ignore(4) >> res;
             hash.emplace(res, Instruction{"", token, rhs});
         } else {
             ss >> opr;
@@ -108,7 +108,7 @@ int part1(const bool override = false) {
                 ss >> res;
                 hash.emplace(res, Instruction{"", "=", token});
             } else {
-                ss >> rhs >> arrow >> res;
+                (ss >> rhs).ignore(4) >> res;
                 hash.emplace(res, Instruction{token, opr, rhs});
             }
         }

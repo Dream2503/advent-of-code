@@ -35,7 +35,9 @@ error-corrected message, easter.
 Given the recording in your puzzle input, what is the error-corrected version of the message being sent?
 */
 
-std::string part1(const bool min = false) {
+std::string part1(const std::function<int(const std::array<int, 26>&)>& func = [](const std::array<int, 26>& array) -> int {
+    return std::ranges::max_element(array) - array.begin();
+}) {
     std::string line, message;
     std::array<std::array<int, 26>, 8> hash = {};
     std::stringstream file(input6);
@@ -46,7 +48,7 @@ std::string part1(const bool min = false) {
         }
     }
     for (const std::array<int, 26>& array : hash) {
-        message.push_back('a' + (min ? std::ranges::min_element(array) : std::ranges::max_element(array)) - array.begin());
+        message.push_back('a' + func(array));
     }
     return message;
 }
@@ -58,14 +60,16 @@ Of course, that would be the message - if you hadn't agreed to use a modified re
 In this modified code, the sender instead transmits what looks like random data, but for each character, the character they actually want to send is
 slightly less likely than the others. Even after signal-jamming noise, you can look at the letter distributions in each column and choose the least
 common letter to reconstruct the original message.
-
+F
 In the above example, the least common character in the first column is a; in the second, d, and so on. Repeating this process for the remaining
 characters produces the original message, advent.
 
 Given the recording in your puzzle input and this new decoding methodology, what is the original message that Santa is trying to send?
 */
 
-std::string part2() { return part1(true); }
+std::string part2() {
+    return part1([](const std::array<int, 26>& array) -> int { return std::ranges::min_element(array) - array.begin(); });
+}
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

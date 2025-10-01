@@ -38,17 +38,16 @@ Your puzzle input describes all of the possible replacements and, at the bottom,
 How many distinct molecules can be created after all the different ways you can do one replacement on the medicine molecule?
 */
 
-std::pair<std::string, std::vector<std::pair<std::string, std::string>>> parse_input(const char* input, bool reverse = false) {
+std::pair<std::string, std::vector<std::pair<std::string, std::string>>> parse_input(const char* input, const bool inverse = false) {
     std::string initial_molecule, line;
     std::vector<std::pair<std::string, std::string>> replacements;
     std::stringstream file(input);
     std::getline(file, initial_molecule);
 
     while (std::getline(file, line)) {
-        std::string key, arrow, value;
-        std::stringstream ss(line);
-        ss >> key >> arrow >> value;
-        replacements.emplace_back(reverse ? value : key, reverse ? key : value);
+        std::string key, value;
+        (std::stringstream(line) >> key).ignore(4) >> value;
+        replacements.emplace_back(inverse ? value : key, inverse ? key : value);
     }
     return {initial_molecule, replacements};
 }

@@ -28,21 +28,21 @@ std::string md5(const std::string& input) {
     EVP_DigestUpdate(ctx, input.c_str(), input.size());
     EVP_DigestFinal_ex(ctx, digest, nullptr);
     EVP_MD_CTX_free(ctx);
-    std::ostringstream oss;
+    std::stringstream ss;
 
     for (int i = 0; i < MD5_DIGEST_LENGTH; i++) {
-        oss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(digest[i]);
+        ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(digest[i]);
     }
-    return oss.str();
+    return ss.str();
 }
 
 int part1(const std::string& target = "00000") {
-    int i = 1;
+    int i = 0;
 
     while (true) {
         std::string hash = md5(input4 + std::to_string(i));
 
-        if (hash.rfind(target, 0) == 0) {
+        if (hash.starts_with(target)) {
             return i;
         }
         i++;

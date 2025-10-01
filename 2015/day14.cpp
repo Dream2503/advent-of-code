@@ -33,14 +33,12 @@ int part1() {
     std::stringstream file(input14);
 
     while (std::getline(file, line)) {
-        int speed, speed_time, rest_time, time = 0, distance = 0;
-        std::string word;
-        std::stringstream ss(line);
-        ss >> word >> word >> word >> speed >> word >> word >> speed_time >> word >> word >> word >> word >> word >> word >> rest_time;
+        int speed, move_time, rest_time, time = 0, distance = 0;
+        ((std::stringstream(line).ignore(14) >> speed).ignore(10) >> move_time).ignore(33) >> rest_time;
 
         while (time < time_limit) {
-            distance += speed * std::clamp((time_limit - time), 0, speed_time);
-            time += speed_time + rest_time;
+            distance += speed * std::clamp(time_limit - time, 0, move_time);
+            time += move_time + rest_time;
         }
         max = std::max(max, distance);
     }
@@ -76,9 +74,8 @@ int part2() {
 
     while (std::getline(file, line)) {
         int speed, move_time, rest_time;
-        std::string word;
         std::stringstream ss(line);
-        ss >> word >> word >> word >> speed >> word >> word >> move_time >> word >> word >> word >> word >> word >> word >> rest_time;
+        ((std::stringstream(line).ignore(14) >> speed).ignore(10) >> move_time).ignore(33) >> rest_time;
         reindeers.push_back({0, speed, move_time, 0, rest_time, 0, 0, true});
     }
     for (int t = 0; t < time_limit; t++) {
@@ -100,17 +97,16 @@ int part2() {
                 }
             }
         }
-        int max_distance = std::max_element(reindeers.begin(), reindeers.end(), [](const Reindeer& deer1, const Reindeer& deer2) -> bool {
+        int max_distance = std::ranges::max_element(reindeers, [](const Reindeer& deer1, const Reindeer& deer2) -> bool {
                                return deer1.distance < deer2.distance;
                            })->distance;
-        std::for_each(reindeers.begin(), reindeers.end(), [&max_distance](Reindeer& deer) -> void {
+        std::ranges::for_each(reindeers, [&max_distance](Reindeer& deer) -> void {
             if (deer.distance == max_distance) {
                 deer.points++;
             }
         });
     }
-    return std::max_element(reindeers.begin(), reindeers.end(),
-                            [](const Reindeer& deer1, const Reindeer& deer2) -> bool { return deer1.points < deer2.points; })
+    return std::ranges::max_element(reindeers, [](const Reindeer& deer1, const Reindeer& deer2) -> bool { return deer1.points < deer2.points; })
         ->points;
 }
 

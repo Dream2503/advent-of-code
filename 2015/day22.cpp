@@ -199,7 +199,7 @@ void simulate(State state, const bool player_turn, int& best, const bool hard) {
 int part1(const bool hard = false) {
     int hp = 0, damage = 0, best = INT32_MAX;
     std::string word;
-    std::stringstream(input22) >> word >> word >> hp >> word >> damage;
+    (std::stringstream(input22).ignore(13) >> hp).ignore(8) >> damage;
     simulate({50, 500, hp, damage, 0, 0, 0, 0}, true, best, hard);
     return best;
 }

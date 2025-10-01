@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <ranges>
 #include <sstream>
 #include <unordered_set>
 #include "inputs.hpp"
@@ -37,7 +38,7 @@ void search(const std::unordered_map<std::string, std::unordered_map<std::string
         return;
     }
     for (const auto& [next, distance] : graph.at(current)) {
-        if (!seen.count(next)) {
+        if (!seen.contains(next)) {
             seen.insert(next);
             search(graph, seen, next, current_distance + distance, best, max);
             seen.erase(next);
@@ -52,13 +53,13 @@ int part1(const bool max = false) {
 
     while (std::getline(file, line)) {
         int distance;
-        std::string lhs, word, rhs;
-        std::stringstream(line) >> lhs >> word >> rhs >> word >> distance;
+        std::string lhs, rhs;
+        ((std::stringstream(line) >> lhs).ignore(4) >> rhs).ignore(3) >> distance;
         graph[lhs][rhs] = graph[rhs][lhs] = distance;
     }
     int best = max ? INT32_MIN : INT32_MAX;
 
-    for (const auto& [name, _] : graph) {
+    for (const auto& name : graph | std::views::keys) {
         std::unordered_set<std::string> seen;
         seen.insert(name);
         search(graph, seen, name, 0, best, max);

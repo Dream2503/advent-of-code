@@ -33,12 +33,9 @@ int part1() {
     std::stringstream ss(input9);
 
     while (!ss.eof()) {
-        char ch;
-        ss >> ch;
-
-        if (ch == '(') {
+        if (ss.peek() == '(') {
             int offset, times;
-            ss >> offset >> ch >> times >> ch;
+            ((ss.ignore(1) >> offset).ignore(1) >> times).ignore(1);
             res += offset * times;
             ss.ignore(offset);
         }
@@ -73,10 +70,9 @@ uint64_t count(const std::string& str, const size_t repeat) {
         uint64_t res = 0;
 
         while (start != std::string::npos) {
-            char x;
             const int split = str.find(')', start);
             int offset, times;
-            std::stringstream(str.substr(start + 1, split)) >> offset >> x >> times;
+            (std::stringstream(str.substr(start + 1, split)) >> offset).ignore(1) >> times;
             res += count(str.substr(split + 1, offset), repeat * times);
             start = str.find('(', split + offset);
         }

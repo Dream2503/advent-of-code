@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ranges>
 #include <sstream>
 #include <unordered_map>
 #include <unordered_set>
@@ -52,7 +53,7 @@ void search(const std::unordered_map<std::string, std::unordered_map<std::string
         return;
     }
     for (const auto& [next, happiness] : graph.at(current)) {
-        if (!seen.count(next)) {
+        if (!seen.contains(next)) {
             seen.insert(next);
             search(graph, seen, start, next, current_distance + happiness + graph.at(next).at(current), best);
             seen.erase(next);
@@ -67,8 +68,8 @@ int part1(const bool add_me = false) {
 
     while (std::getline(file, line)) {
         int happiness;
-        std::string lhs, word, sign, rhs;
-        std::stringstream(line) >> lhs >> word >> sign >> happiness >> word >> word >> word >> word >> word >> word >> rhs;
+        std::string lhs, sign, rhs;
+        ((std::stringstream(line) >> lhs).ignore(7) >> sign >> happiness).ignore(36) >> rhs;
         graph[lhs][rhs.substr(0, rhs.length() - 1)] = sign == "gain" ? happiness : -happiness;
     }
     if (add_me) {
@@ -82,7 +83,7 @@ int part1(const bool add_me = false) {
     }
     int best = 0;
 
-    for (const auto& [name, _] : graph) {
+    for (const auto& name : graph | std::views::keys) {
         std::unordered_set<std::string> seen;
         seen.insert(name);
         search(graph, seen, name, name, 0, best);

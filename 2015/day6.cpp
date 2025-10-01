@@ -33,9 +33,8 @@ int part1(const bool brightness = false) {
 
     while (std::getline(file, line)) {
         bool is_on = false, is_toggle = false;
-        char delimiter;
         int x1, y1, x2, y2;
-        std::string instruction, word;
+        std::string instruction;
         std::stringstream ss(line);
         ss >> instruction;
 
@@ -45,7 +44,7 @@ int part1(const bool brightness = false) {
         } else {
             is_toggle = true;
         }
-        ss >> x1 >> delimiter >> y1 >> word >> x2 >> delimiter >> y2;
+        (((ss >> x1).ignore(1) >> y1).ignore(9) >> x2).ignore(1) >> y2;
 
         for (int i = x1; i <= x2; i++) {
             for (int j = y1; j <= y2; j++) {
@@ -57,7 +56,7 @@ int part1(const bool brightness = false) {
             }
         }
     }
-    return std::transform_reduce(lights.begin(), lights.end(), 0, std::plus<>(),
+    return std::transform_reduce(lights.begin(), lights.end(), 0, std::plus(),
                                  [](const std::array<uint8_t, size>& row) -> int { return std::reduce(row.begin(), row.end(), 0); });
 }
 

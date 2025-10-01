@@ -95,13 +95,11 @@ int part1(const bool output = false) {
 
     while (std::getline(file, line)) {
         std::stringstream ss(line);
-        std::string word;
-        ss >> word;
 
-        if (word == "bot") {
+        if (ss.peek() == 'b') {
             int bot, low, high;
             std::string low_type, high_type;
-            ss >> bot >> word >> word >> word >> low_type >> low >> word >> word >> word >> high_type >> high;
+            ((ss.ignore(4) >> bot).ignore(14) >> low_type >> low).ignore(13) >> high_type >> high;
 
             if (low_type == "output") {
                 low = -(low + 1);
@@ -113,7 +111,7 @@ int part1(const bool output = false) {
             hash[bot].high = high;
         } else {
             int value, bot_num;
-            ss >> value >> word >> word >> word >> bot_num;
+            (ss.ignore(6) >> value).ignore(13) >> bot_num;
             Bot& bot = hash[bot_num];
 
             if (!bot.left) {

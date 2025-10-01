@@ -93,13 +93,13 @@ bool simulate_battle(Character player, Character boss) {
 int part1(const std::function<int(int, int)>& func = [](const int x, const int y) { return std::min(x, y); }, const bool lose = false) {
     int hp = 0, damage = 0, armour = 0, cost = lose ? INT32_MIN : INT32_MAX;
     std::string word;
-    std::stringstream(input21) >> word >> word >> hp >> word >> damage >> word >> armour;
+    ((std::stringstream(input21).ignore(12) >> hp).ignore(9) >> damage).ignore(8) >> armour;
     const Character boss = {hp, damage, armour};
 
     for (const Item& weapon : weapons) {
         for (const Item& armor : armors) {
-            for (size_t i = 0; i < rings.size(); ++i) {
-                for (size_t j = i; j < rings.size(); ++j) {
+            for (int i = 0; i < rings.size(); i++) {
+                for (int j = i; j < rings.size(); j++) {
                     if (lose ^
                         simulate_battle({100, weapon.damage + rings[i].damage + (i != j ? rings[j].damage : 0),
                                          armor.armor + rings[i].armor + (i != j ? rings[j].armor : 0)},
@@ -122,7 +122,7 @@ What is the most amount of gold you can spend and still lose the fight?
 */
 
 int part2() {
-    return part1([](const int x, const int y) { return std::max(x, y); }, true);
+    return part1([](const int x, const int y) -> int { return std::max(x, y); }, true);
 }
 
 int main() {

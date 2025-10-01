@@ -59,14 +59,13 @@ int part1(const bool is_print = false) {
     std::stringstream file(input8);
 
     while (std::getline(file, line)) {
-        char x;
         int row, col, k, n;
-        std::string instruction, word;
+        std::string instruction;
         std::stringstream ss(line);
         ss >> instruction;
 
         if (instruction == "rect") {
-            ss >> col >> x >> row;
+            (ss >> col).ignore(1) >> row;
 
             for (int i = 0; i < row; i++) {
                 for (int j = 0; j < col; j++) {
@@ -74,7 +73,7 @@ int part1(const bool is_print = false) {
                 }
             }
         } else {
-            ss >> instruction >> x >> x >> k >> word >> n;
+            ((ss >> instruction).ignore(2) >> k).ignore(4) >> n;
 
             if (instruction == "row") {
                 for (int i = 0; i < width; i++) {

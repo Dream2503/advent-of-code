@@ -95,7 +95,7 @@ Using the same instructions in your puzzle input, what is the correct bathroom c
 std::string part2() {
     int i = 2, j = 0;
     std::string line, password;
-    const std::array<std::array<char, 5>, 5> keypad = {
+    constexpr std::array<std::array<char, 5>, 5> keypad = {
         std::array<char, 5>{0, 0, '1', 0, 0}, {0, '2', '3', '4', 0}, {'5', '6', '7', '8', '9'}, {0, 'A', 'B', 'C', 0}, {0, 0, 'D', 0, 0}};
     std::stringstream file(input2);
 

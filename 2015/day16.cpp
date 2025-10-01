@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <ranges>
 #include <sstream>
 #include "inputs.hpp"
 
@@ -42,22 +43,19 @@ You make a list of the things you can remember about each Aunt Sue. Things missi
 What is the number of the Sue that got you the gift?
 */
 
-const std::unordered_map<std::string, int>& signature = {{"children", 3}, {"cats", 7},     {"samoyeds", 2}, {"pomeranians", 3}, {"akitas", 0},
-                                                         {"vizslas", 0},  {"goldfish", 5}, {"trees", 3},    {"cars", 2},        {"perfumes", 1}};
+const std::unordered_map<std::string, int>& signature = {{"children:", 3}, {"cats:", 7},     {"samoyeds:", 2}, {"pomeranians:", 3}, {"akitas:", 0},
+                                                         {"vizslas:", 0},  {"goldfish:", 5}, {"trees:", 3},    {"cars:", 2},        {"perfumes:", 1}};
 
 int part1() {
     std::string line;
     std::stringstream file(input16);
 
     while (std::getline(file, line)) {
-        char delimiter;
         int number, value1, value2, value3;
-        std::string param1, param2, param3, name;
-        std::stringstream ss(line);
-        ss >> name >> number >> delimiter >> param1 >> value1 >> delimiter >> param2 >> value2 >> delimiter >> param3 >> value3;
+        std::string param1, param2, param3;
+        (((std::stringstream(line).ignore(4) >> number).ignore(1) >> param1 >> value1).ignore(1) >> param2 >> value2).ignore(1) >> param3 >> value3;
 
-        if (signature.at(param1.substr(0, param1.length() - 1)) == value1 && signature.at(param2.substr(0, param2.length() - 1)) == value2 &&
-            signature.at(param3.substr(0, param3.length() - 1)) == value3) {
+        if (signature.at(param1) == value1 && signature.at(param2) == value2 && signature.at(param3) == value3) {
             return number;
         }
     }
@@ -81,22 +79,18 @@ int part2() {
     std::stringstream file(input16);
 
     while (std::getline(file, line)) {
-        char delimiter;
-        int number, value1, value2, value3;
-        std::string param1, param2, param3, name;
-        std::stringstream ss(line);
-        ss >> name >> number >> delimiter >> param1 >> value1 >> delimiter >> param2 >> value2 >> delimiter >> param3 >> value3;
-        const std::unordered_map<std::string, int> params({{param1.substr(0, param1.length() - 1), value1},
-                                                           {param2.substr(0, param2.length() - 1), value2},
-                                                           {param3.substr(0, param3.length() - 1), value3}});
         bool broke = false;
+        int number, value1, value2, value3;
+        std::string param1, param2, param3;
+        (((std::stringstream(line).ignore(4) >> number).ignore(1) >> param1 >> value1).ignore(1) >> param2 >> value2).ignore(1) >> param3 >> value3;
+        const std::unordered_map<std::string, int> params({{param1, value1}, {param2, value2}, {param3, value3}});
 
-        for (const auto& [key, value] : params) {
-            if ((params.count("cats") && params.at("cats") <= signature.at("cats")) ||
-                (params.count("trees") && params.at("trees") <= signature.at("trees")) ||
-                (params.count("pomeranians") && params.at("pomeranians") >= signature.at("pomeranians")) ||
-                (params.count("goldfish") && params.at("goldfish") >= signature.at("goldfish")) ||
-                (key != "cats" && key != "trees" && key != "pomeranians" && key != "goldfish" && signature.at(key) != params.at(key))) {
+        for (const auto& key : params | std::views::keys) {
+            if ((params.contains("cats:") && params.at("cats:") <= signature.at("cats:")) ||
+                (params.contains("trees:") && params.at("trees:") <= signature.at("trees:")) ||
+                (params.contains("pomeranians:") && params.at("pomeranians:") >= signature.at("pomeranians:")) ||
+                (params.contains("goldfish:") && params.at("goldfish:") >= signature.at("goldfish:")) ||
+                (key != "cats:" && key != "trees:" && key != "pomeranians:" && key != "goldfish:" && signature.at(key) != params.at(key))) {
                 broke = true;
                 break;
             }
