@@ -40,9 +40,9 @@ the jnz a 2 skips it), leaving register a at 42. When you move past the last ins
 After executing the assembunny code in your puzzle input, what value is left in register a?
 */
 
-int part1(const bool init_c = false) {
+int part1(const int init_c = 0) {
     std::string line;
-    std::array<int, 4> registers = {0, 0, init_c, 0};
+    std::array registers = {0, 0, init_c, 0};
     std::vector<std::string> code;
     std::stringstream file(input12);
 
@@ -60,7 +60,7 @@ int part1(const bool init_c = false) {
         ss >> instruction;
 
         if (instruction == "cpy") {
-            ss.get();
+            ss.ignore(1);
             ch = ss.peek();
 
             if (ch >= 'a' && ch <= 'd') {
@@ -74,7 +74,7 @@ int part1(const bool init_c = false) {
             ss >> reg;
             registers[reg - 'a'] += instruction == "inc" ? 1 : -1;
         } else {
-            ss.get();
+            ss.ignore(1);
             ch = ss.peek();
 
             if (ch >= 'a' && ch <= 'd') {
@@ -105,7 +105,7 @@ As you head down the fire escape to the monorail, you notice it didn't start; re
 If you instead initialize register c to be 1, what value is now left in register a?
 */
 
-int part2() { return part1(true); }
+int part2() { return part1(1); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

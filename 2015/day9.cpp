@@ -33,6 +33,9 @@ What is the distance of the shortest route?
 
 void search(const std::unordered_map<std::string, std::unordered_map<std::string, int>>& graph, std::unordered_set<std::string>& seen,
             const std::string& current, const int current_distance, int& best, const bool max) {
+    if (!max && current_distance >= best) {
+        return;
+    }
     if (graph.size() == seen.size() + 1) {
         best = max ? std::max(best, current_distance) : std::min(best, current_distance);
         return;
@@ -59,7 +62,7 @@ int part1(const bool max = false) {
     }
     int best = max ? INT32_MIN : INT32_MAX;
 
-    for (const auto& name : graph | std::views::keys) {
+    for (const std::string& name : graph | std::views::keys) {
         std::unordered_set<std::string> seen;
         seen.insert(name);
         search(graph, seen, name, 0, best, max);

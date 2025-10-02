@@ -1,4 +1,7 @@
+#include <algorithm>
+#include <array>
 #include <iostream>
+#include <sstream>
 #include "inputs.hpp"
 
 /*
@@ -36,7 +39,79 @@ What is the lowest positive integer that can be used to initialize register a an
 forever?
 */
 
-int part1() { return 0; }
+int part1(const int init_c = 0) {
+    constexpr int threshold = 7;
+    std::string line;
+    std::vector<std::string> code;
+    std::stringstream file(input25);
+
+    while (std::getline(file, line)) {
+        code.push_back(line);
+    }
+    const int size = code.size();
+    int k = 0;
+
+    while (true) {
+        std::array registers = {k, 0, 0, 0};
+        int i = 0, j = 0;
+
+        while (i < size) {
+            char ch, reg;
+            int value;
+            std::string instruction;
+            std::stringstream ss(code[i]);
+            ss >> instruction;
+
+            if (instruction == "cpy") {
+                ss.ignore(1);
+                ch = ss.peek();
+
+                if (ch >= 'a' && ch <= 'd') {
+                    ss >> ch >> reg;
+                    registers[reg - 'a'] = registers[ch - 'a'];
+                } else {
+                    ss >> value >> reg;
+                    registers[reg - 'a'] = value;
+                }
+            } else if (instruction == "inc" || instruction == "dec") {
+                ss >> reg;
+                registers[reg - 'a'] += instruction == "inc" ? 1 : -1;
+            } else if (instruction == "jnz") {
+                ss.ignore(1);
+                ch = ss.peek();
+
+                if (ch >= 'a' && ch <= 'd') {
+                    ss >> reg;
+
+                    if (registers[reg - 'a']) {
+                        ss >> value;
+                        i += value - 1;
+                    }
+                } else {
+                    ss >> value;
+
+                    if (value) {
+                        ss >> value;
+                        i += value - 1;
+                    }
+                }
+            } else {
+                ss >> reg;
+
+                if (j % 2 != registers[reg - 'a']) {
+                    break;
+                }
+                if (j >= threshold) {
+                    return k;
+                }
+                j++;
+            }
+            i++;
+        }
+        k++;
+    }
+    return -1;
+}
 
 /*
 --- Part Two ---
