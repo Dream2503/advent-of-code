@@ -73,7 +73,7 @@ int part1(const bool is_print = false) {
                 }
             }
         } else {
-            ((ss >> instruction).ignore(2) >> k).ignore(4) >> n;
+            ((ss >> instruction).ignore(3) >> k).ignore(4) >> n;
 
             if (instruction == "row") {
                 for (int i = 0; i < width; i++) {

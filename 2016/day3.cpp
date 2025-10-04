@@ -26,8 +26,7 @@ int part1() {
 
     while (std::getline(file, line)) {
         int a, b, c;
-        std::stringstream(line) >> a >> b >> c;
-
+        std::sscanf(line.c_str(), "%d %d %d", &a, &b, &c);
         if (a + b > c && b + c > a && c + a > b) {
             count++;
         }

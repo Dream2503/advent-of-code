@@ -74,10 +74,9 @@ uint64_t part1(const int groups = 3) {
     while (std::getline(file, line)) {
         packages.push_back(std::stoi(line));
     }
-    const int split = std::accumulate(packages.begin(), packages.end(), 0) / groups;
     int min_count = packages.size();
     uint64_t best = UINT64_MAX;
-    search(packages, 0, groups, split, 0, 0, 1, min_count, best);
+    search(packages, 0, groups, std::reduce(packages.begin(), packages.end(), 0) / groups, 0, 0, 1, min_count, best);
     return best;
 }
 

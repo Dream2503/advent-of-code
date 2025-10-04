@@ -3,7 +3,6 @@
 #include <queue>
 #include <ranges>
 #include <sstream>
-#include <unordered_map>
 #include <unordered_set>
 #include "inputs.hpp"
 
@@ -42,8 +41,7 @@ least once?
 */
 
 struct Path {
-    int x, y, steps;
-
+    int x, y, steps = 0;
     bool operator==(const Path& other) const { return x == other.x && y == other.y; }
 };
 
@@ -59,7 +57,7 @@ struct std::hash<Path> {
 
 int compute_distance(const std::vector<std::string>& map, const int i, const int j, const int terminate) {
     std::queue<Path> queue;
-    std::unordered_set<Path> seen = {{i, j, 0}};
+    std::unordered_set<Path> seen = {{i, j}};
     queue.emplace(i, j, 0);
 
     while (!queue.empty()) {
@@ -70,29 +68,21 @@ int compute_distance(const std::vector<std::string>& map, const int i, const int
             return steps;
         }
         if (map[x][y] != '#') {
-            if (!seen.contains({x - 1, y, steps + 1})) {
-                queue.emplace(x - 1, y, steps + 1);
-                seen.emplace(x - 1, y, steps + 1);
-            }
-            if (!seen.contains({x, y - 1, steps + 1})) {
-                queue.emplace(x, y - 1, steps + 1);
-                seen.emplace(x, y - 1, steps + 1);
-            }
-            if (!seen.contains({x + 1, y, steps + 1})) {
-                queue.emplace(x + 1, y, steps + 1);
-                seen.emplace(x + 1, y, steps + 1);
-            }
-            if (!seen.contains({x, y + 1, steps + 1})) {
-                queue.emplace(x, y + 1, steps + 1);
-                seen.emplace(x, y + 1, steps + 1);
+            for (const auto [i, j] : {std::pair(-1, 0), {0, -1}, {1, 0}, {0, 1}}) {
+                const Path path = {x + i, y + j, steps + 1};
+
+                if (!seen.contains(path)) {
+                    queue.push(path);
+                    seen.insert(path);
+                }
             }
         }
     }
     return -1;
 }
 
-void search(const std::unordered_map<int, std::unordered_map<int, int>>& graph, std::unordered_set<int>& seen, const int current,
-            const int current_distance, int& best, const bool complete) {
+void search(const std::vector<std::vector<int>>& graph, std::unordered_set<int>& seen, const int current, const int current_distance, int& best,
+            const bool complete) {
     if (current_distance >= best) {
         return;
     }
@@ -100,32 +90,37 @@ void search(const std::unordered_map<int, std::unordered_map<int, int>>& graph, 
         best = std::min(best, current_distance + complete * graph.at(current).at(0));
         return;
     }
-    for (const auto& [next, distance] : graph.at(current)) {
-        if (!seen.contains(next)) {
-            seen.insert(next);
-            search(graph, seen, next, current_distance + distance, best, complete);
-            seen.erase(next);
+    const std::vector<int>& row = graph[current];
+    const int size = row.size();
+
+    for (int i = 0; i < size; i++) {
+        if (!seen.contains(i)) {
+            seen.insert(i);
+            search(graph, seen, i, current_distance + row[i], best, complete);
+            seen.erase(i);
         }
     }
 }
 
 int part1(const bool complete = false) {
+    int max = 0;
     std::string line;
     std::vector<std::string> map;
-    std::unordered_map<int, std::unordered_map<int, int>> graph;
     std::stringstream file(input24);
 
     while (std::getline(file, line)) {
         map.push_back(line);
+        max = std::max(max, *std::ranges::max_element(line) - '0');
     }
     const int size = map.size();
+    std::vector graph(max + 1, std::vector(max + 1, 0));
 
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i <= max; i++) {
         for (int k = 0; k < size; k++) {
             const int start = map[k].find(i + '0');
 
             if (start != std::string::npos) {
-                for (int j = i + 1; j < 8; j++) {
+                for (int j = i + 1; j <= max; j++) {
                     graph[i][j] = graph[j][i] = compute_distance(map, k, start, j);
                 }
                 break;

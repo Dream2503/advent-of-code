@@ -35,11 +35,11 @@ this configuration, bot number 2 is responsible for comparing value-5 microchips
 Based on your instructions, what is the number of the bot that is responsible for comparing value-61 microchips with value-17 microchips?
 */
 
-constexpr std::pair terminate(17, 61);
-
 struct Bot {
     int left = 0, right = 0, low = 0, high = 0;
 };
+
+constexpr Bot terminate(17, 61);
 
 int resolve(std::unordered_map<int, Bot>& hash, const int bot, std::unordered_map<int, int>& outputs, const bool find_terminate) {
     auto& [left, right, low, high] = hash[bot];
@@ -47,7 +47,7 @@ int resolve(std::unordered_map<int, Bot>& hash, const int bot, std::unordered_ma
     if (left && right) {
         auto [min_val, max_val] = std::minmax(left, right);
 
-        if (find_terminate && min_val == terminate.first && max_val == terminate.second) {
+        if (find_terminate && min_val == terminate.left && max_val == terminate.right) {
             return bot;
         }
         if (low < 0) {
@@ -88,10 +88,10 @@ int resolve(std::unordered_map<int, Bot>& hash, const int bot, std::unordered_ma
 }
 
 int part1(const bool output = false) {
+    std::string line;
     std::unordered_map<int, Bot> hash;
     std::unordered_map<int, int> outputs;
     std::stringstream file(input10);
-    std::string line;
 
     while (std::getline(file, line)) {
         std::stringstream ss(line);

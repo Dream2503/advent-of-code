@@ -1,12 +1,9 @@
-#include <algorithm>
 #include <deque>
-#include <iomanip>
 #include <iostream>
-#include <openssl/evp.h>
-#include <openssl/md5.h>
 #include <set>
 #include <sstream>
 #include <unordered_map>
+#include "../md5.hpp"
 #include "inputs.hpp"
 
 /*
@@ -36,22 +33,6 @@ So, using our example salt of abc, index 22728 produces the 64th key.
 
 Given the actual salt in your puzzle input, what index produces your 64th one-time pad key?
 */
-
-// Compute MD5 hash of a string and return hex representation
-std::string md5(const std::string& input) {
-    unsigned char digest[MD5_DIGEST_LENGTH];
-    EVP_MD_CTX* ctx = EVP_MD_CTX_new();
-    EVP_DigestInit_ex(ctx, EVP_md5(), nullptr);
-    EVP_DigestUpdate(ctx, input.c_str(), input.size());
-    EVP_DigestFinal_ex(ctx, digest, nullptr);
-    EVP_MD_CTX_free(ctx);
-    std::stringstream ss;
-
-    for (int i = 0; i < MD5_DIGEST_LENGTH; i++) {
-        ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(digest[i]);
-    }
-    return ss.str();
-}
 
 int part1(const int stretch = 1) {
     int i = 0;

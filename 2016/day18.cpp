@@ -60,26 +60,25 @@ In ten rows, this larger example has 38 safe tiles.
 Starting with the map in your puzzle input, in a total of 40 rows (including the starting row), how many safe tiles are there?
 */
 
+/*
+Simplifying the boolean logic using K-Map
+A -> left (i - 1)
+B -> center (i)
+C -> right (i + 1)
+0 -> '.'
+1 -> '^'
+
+    K-Map
+A BC 00 01 11 10
+0     0  1  1  0
+1     1  0  0  1
+
+=> Y = A'C + AC'
+=> Y = A ^ C
+*/
 char determine_tile(const std::string& row, const int i) {
-    /*
-        Simplifying the boolean logic using K-Map
-
-        0 -> '.'
-        1 -> '^'
-
-                K-Map
-            BC 00 01 11 10
-          A
-          0         1  1
-          1      1        1
-
-        => Y = A'C + AC'
-        => Y = A ^ C
-    */
-    const bool A = (i > 0 ? row[i - 1] : '.') == '^', C = (i < row.length() - 1 ? row[i + 1] : '.') == '^';
-    return A ^ C ? '^' : '.';
+    return (i > 0 ? row[i - 1] : '.') ^ (i < row.length() - 1 ? row[i + 1] : '.') ? '^' : '.';
 }
-
 
 int part1(const int rows = 40) {
     std::string prev_row(input18);

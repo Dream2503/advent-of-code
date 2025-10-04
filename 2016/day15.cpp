@@ -51,10 +51,10 @@ int part1(const bool new_disc = false) {
 
     while (std::getline(file, line)) {
         int positions, start;
-        (std::stringstream(line).ignore(12) >> positions).ignore(41) >> start;
+        std::sscanf(line.c_str(), "Disc #%*d has %d positions; at time=0, it is at position %d.", &positions, &start);
         discs.emplace_back(positions, start);
     }
-    if (new_disc) {
+    if (new_disc) { 
         discs.emplace_back(11, 0);
     }
     const int size = discs.size();

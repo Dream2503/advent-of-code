@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <iostream>
-#include <sstream>
 #include "inputs.hpp"
 
 /*
@@ -58,7 +57,6 @@ You have 100 hit points. The boss's actual stats are in your puzzle input. What 
 */
 
 struct Item {
-    std::string name;
     int cost, damage, armor;
 };
 
@@ -66,13 +64,9 @@ struct Character {
     int hp, damage, armor;
 };
 
-const std::vector<Item> weapons = {
-    {"Dagger", 8, 4, 0}, {"Shortsword", 10, 5, 0}, {"Warhammer", 25, 6, 0}, {"Longsword", 40, 7, 0}, {"Greataxe", 74, 8, 0}};
-const std::vector<Item> armors = {{"None", 0, 0, 0},        {"Leather", 13, 0, 1},    {"Chainmail", 31, 0, 2},
-                                  {"Splintmail", 53, 0, 3}, {"Bandedmail", 75, 0, 4}, {"Platemail", 102, 0, 5}};
-const std::vector<Item> rings = {{"None", 0, 0, 0},        {"Damage +1", 25, 1, 0},  {"Damage +2", 50, 2, 0}, {"Damage +3", 100, 3, 0},
-                                 {"Defense +1", 20, 0, 1}, {"Defense +2", 40, 0, 2}, {"Defense +3", 80, 0, 3}};
-
+const std::vector<Item> weapons = {{8, 4, 0}, {10, 5, 0}, {25, 6, 0}, {40, 7, 0}, {74, 8, 0}};
+const std::vector<Item> armors = {{0, 0, 0}, {13, 0, 1}, {31, 0, 2}, {53, 0, 3}, {75, 0, 4}, {102, 0, 5}};
+const std::vector<Item> rings = {{0, 0, 0}, {25, 1, 0}, {50, 2, 0}, {100, 3, 0}, {20, 0, 1}, {40, 0, 2}, {80, 0, 3}};
 
 bool simulate_battle(Character player, Character boss) {
     while (player.hp > 0 && boss.hp > 0) {
@@ -91,9 +85,8 @@ bool simulate_battle(Character player, Character boss) {
 }
 
 int part1(const std::function<int(int, int)>& func = [](const int x, const int y) { return std::min(x, y); }, const bool lose = false) {
-    int hp = 0, damage = 0, armour = 0, cost = lose ? INT32_MIN : INT32_MAX;
-    std::string word;
-    ((std::stringstream(input21).ignore(12) >> hp).ignore(9) >> damage).ignore(8) >> armour;
+    int hp, damage, armour, cost = lose ? INT32_MIN : INT32_MAX;
+    std::sscanf(input21, "Hit Points: %d\nDamage: %d\nArmor: %d", &hp, &damage, &armour);
     const Character boss = {hp, damage, armour};
 
     for (const Item& weapon : weapons) {

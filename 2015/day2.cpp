@@ -28,8 +28,7 @@ int part1(const bool ribbon = false) {
 
     while (std::getline(file, line)) {
         int l, b, h;
-        std::stringstream ss(line);
-        ((ss >> l).ignore(1) >> b).ignore(1) >> h;
+        std::sscanf(line.c_str(), "%dx%dx%d", &l, &b, &h);
         const int lb = l * b, bh = b * h, hl = h * l;
         res += ribbon ? 2 * std::min({l + b, b + h, h + l}) + l * b * h : 2 * (lb + bh + hl) + std::min({lb, bh, hl});
     }

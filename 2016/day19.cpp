@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <deque>
 #include <iostream>
+#include <ranges>
 #include "inputs.hpp"
 
 /*
@@ -31,10 +32,8 @@ int part1() {
     const int elves = std::atoi(input19);
     std::vector<int> elfs;
     elfs.reserve(elves);
+    std::ranges::copy(std::ranges::views::iota(1, elves + 1), std::back_inserter(elfs));
 
-    for (int i = 0; i < elves; i++) {
-        elfs.push_back(i + 1);
-    }
     while (elfs.size() > 1) {
         int i;
         const int size = elfs.size();

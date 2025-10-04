@@ -72,8 +72,8 @@ int part1(const bool check_calories = false) {
 
     while (std::getline(file, line)) {
         int capacity, durability, flavor, texture, calories;
-        ((((std::stringstream(line).ignore(16) >> capacity).ignore(13) >> durability).ignore(9) >> flavor).ignore(10) >> texture).ignore(11) >>
-            calories;
+        std::sscanf(line.c_str(), "%*s capacity %d, durability %d, flavor %d, texture %d, calories %d", &capacity, &durability, &flavor, &texture,
+                    &calories);
         ingredients.push_back({capacity, durability, flavor, texture, calories});
     }
     int best = 0;

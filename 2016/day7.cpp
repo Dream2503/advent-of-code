@@ -21,11 +21,10 @@ ioxxoj[asdfgh]zxcvbn supports TLS (oxxo is outside square brackets, even though 
 How many IPs in your puzzle input support TLS?
 */
 
+bool is_abba(const std::string& line, const int i) { return line[i] == line[i - 3] && line[i - 1] == line[i - 2] && line[i] != line[i - 1]; }
+
 int part1() {
-    auto is_abba = [](const std::string& line, const int i) -> bool {
-        return line[i] == line[i - 3] && line[i - 1] == line[i - 2] && line[i] != line[i - 1];
-    };
-    int count = 0;
+    int res = 0;
     std::string line;
     std::stringstream file(input7);
 
@@ -52,10 +51,10 @@ int part1() {
             i++;
         }
         if (valid) {
-            count++;
+            res++;
         }
     }
-    return count;
+    return res;
 }
 
 /*
@@ -76,9 +75,10 @@ different). zazbz[bzb]cdb supports SSL (zaz has no corresponding aza, but zbz ha
 in your puzzle input support SSL?
 */
 
+bool is_aba(const std::string& line, const int i) { return line[i] == line[i - 2] && line[i] != line[i - 1]; }
+
 int part2() {
-    auto is_aba = [](const std::string& line, const int i) -> bool { return line[i] == line[i - 2] && line[i] != line[i - 1]; };
-    int count = 0;
+    int res = 0;
     std::string line;
     std::stringstream file(input7);
 
@@ -121,10 +121,10 @@ int part2() {
             i++;
         }
         if (valid) {
-            count++;
+            res++;
         }
     }
-    return count;
+    return res;
 }
 
 int main() {

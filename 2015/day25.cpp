@@ -55,12 +55,11 @@ Then, divide that by 33554393, which leaves a remainder of 31916031. That remain
 Santa looks nervous. Your puzzle input contains the message on the machine's console. What code do you give the machine?
 */
 
-int part1(const int first_code = 20151125, const int multiply_factor = 252533, const int modulus_factor = 33554393) {
-    char comma;
+int part1() {
+    constexpr int first_code = 20151125, multiply_factor = 252533, modulus_factor = 33554393;
     int row, column, i = 2, j = 1, next_row = i + 1;
     size_t value = first_code;
-    std::string word;
-    (std::stringstream(input25).ignore(4) >> row).ignore(9) >> column;
+    std::sscanf(input25, "row %d, column %d", &row, &column);
 
     while (true) {
         value = value * multiply_factor % modulus_factor;

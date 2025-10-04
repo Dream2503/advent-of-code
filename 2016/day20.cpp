@@ -30,7 +30,7 @@ uint32_t part1(const bool all = false) {
 
     while (std::getline(file, line)) {
         uint32_t low, high;
-        (std::stringstream(line) >> low).ignore(1) >> high;
+        std::sscanf(line.c_str(), "%udx%ud", &low, &high);
         ranges.emplace_back(low, high);
     }
     std::ranges::sort(ranges);

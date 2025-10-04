@@ -39,7 +39,7 @@ What is the lowest positive integer that can be used to initialize register a an
 forever?
 */
 
-int part1(const int init_c = 0) {
+int part1() {
     constexpr int threshold = 7;
     std::string line;
     std::vector<std::string> code;

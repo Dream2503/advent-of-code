@@ -34,7 +34,7 @@ int part1() {
 
     while (std::getline(file, line)) {
         int speed, move_time, rest_time, time = 0, distance = 0;
-        ((std::stringstream(line).ignore(14) >> speed).ignore(10) >> move_time).ignore(33) >> rest_time;
+        std::sscanf(line.c_str(), "%*s can fly %d km/s for %d seconds, but then must rest for %d seconds.", &speed, &move_time, &rest_time);
 
         while (time < time_limit) {
             distance += speed * std::clamp(time_limit - time, 0, move_time);
@@ -74,8 +74,7 @@ int part2() {
 
     while (std::getline(file, line)) {
         int speed, move_time, rest_time;
-        std::stringstream ss(line);
-        ((std::stringstream(line).ignore(14) >> speed).ignore(10) >> move_time).ignore(33) >> rest_time;
+        sscanf(line.c_str(), "%*s can fly %d km/s for %d seconds, but then must rest for %d seconds.", &speed, &move_time, &rest_time);
         reindeers.push_back({0, speed, move_time, 0, rest_time, 0, 0, true});
     }
     for (int t = 0; t < time_limit; t++) {

@@ -1,8 +1,5 @@
-#include <iomanip>
 #include <iostream>
-#include <openssl/evp.h>
-#include <openssl/md5.h>
-#include <sstream>
+#include "../md5.hpp"
 #include "inputs.hpp"
 
 /*
@@ -19,22 +16,6 @@ For example:
     - If your secret key is pqrstuv, the lowest number it combines with to make an MD5 hash starting with five zeroes is 1048970; that is, the MD5
       hash of pqrstuv1048970 looks like 000006136ef....
 */
-
-// Compute MD5 hash of a string and return hex representation
-std::string md5(const std::string& input) {
-    unsigned char digest[MD5_DIGEST_LENGTH];
-    EVP_MD_CTX* ctx = EVP_MD_CTX_new();
-    EVP_DigestInit_ex(ctx, EVP_md5(), nullptr);
-    EVP_DigestUpdate(ctx, input.c_str(), input.size());
-    EVP_DigestFinal_ex(ctx, digest, nullptr);
-    EVP_MD_CTX_free(ctx);
-    std::stringstream ss;
-
-    for (int i = 0; i < MD5_DIGEST_LENGTH; i++) {
-        ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(digest[i]);
-    }
-    return ss.str();
-}
 
 int part1(const std::string& target = "00000") {
     int i = 0;

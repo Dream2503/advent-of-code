@@ -53,13 +53,13 @@ struct Instruction {
 };
 
 uint16_t resolve(const std::unordered_map<std::string, Instruction>& hash, std::unordered_map<std::string, uint16_t>& cache, const std::string& key) {
-    if (std::isdigit(static_cast<unsigned char>(key[0]))) {
-        return static_cast<uint16_t>(std::stoi(key));
+    if (std::isdigit(key[0])) {
+        return std::stoi(key);
     }
     if (cache.contains(key)) {
         return cache[key];
     }
-    auto& [lhs, opr, rhs] = hash.at(key);
+    const auto& [lhs, opr, rhs] = hash.at(key);
     uint16_t left = 0, right = 0;
 
     if (!lhs.empty()) {
@@ -69,19 +69,20 @@ uint16_t resolve(const std::unordered_map<std::string, Instruction>& hash, std::
     uint16_t result;
 
     if (opr == "NOT") {
-        result = static_cast<uint16_t>(~right);
+        result = ~right;
     } else if (opr == "AND") {
-        result = static_cast<uint16_t>(left & right);
+        result = left & right;
     } else if (opr == "OR") {
-        result = static_cast<uint16_t>(left | right);
+        result = left | right;
     } else if (opr == "LSHIFT") {
-        result = static_cast<uint16_t>(left << right);
+        result = left << right;
     } else if (opr == "RSHIFT") {
-        result = static_cast<uint16_t>(left >> right);
+        result = left >> right;
     } else if (opr == "=") {
         result = right;
     } else {
-        throw std::runtime_error("Unknown operator: " + opr);
+        std::cout << ("Unknown operator: " + opr);
+        std::exit(0);
     }
     cache[key] = result;
     return result;

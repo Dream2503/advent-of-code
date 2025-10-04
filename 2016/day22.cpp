@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <queue>
 #include <sstream>
 #include "inputs.hpp"
 
@@ -135,6 +136,34 @@ So, after 7 steps, we've accessed the data we want. Unfortunately, each of these
 What is the fewest number of steps required to move your goal data to node-x0-y0?
 */
 
+struct Node {
+    int x, y, size, used, avail, steps;
+};
+
+int search(const std::vector<std::vector<Node>>& graph, const std::pair<int, int>& empty, const std::pair<int, int>& target) {
+    const int size_x = graph.size(), size_y = graph[0].size();
+    std::queue<Node> queue;
+    std::vector distance(size_x, std::vector(size_y, -1));
+    queue.push({empty.first, empty.second, 0, 0, 0, 0});
+    distance[empty.first][empty.second] = 0;
+
+    while (!queue.empty()) {
+        auto& [x, y, size, used, avail, steps] = queue.front();
+        queue.pop();
+
+        if (x == target.first && y == target.second) {
+            return steps;
+        }
+        for (auto [i, j] : {std::pair{1, 0}, {-1, 0}, {0, 1}, {0, -1}}) {
+            const int x_i = x + i, y_j = y + j;
+
+            if (x_i >= 0 && y_j >= 0 && x_i < size_x && y_j < size_y && distance[x_i][y_j] == -1 && graph[x_i][y_j].used <= graph[x][y].size) {
+                distance[x_i][y_j] = steps + 1;
+            }
+        }
+    }
+    return -1;
+}
 int part2() { return 0; }
 
 int main() {

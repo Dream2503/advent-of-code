@@ -1111,7 +1111,7 @@ constexpr char input3[] =
     "<v^^>v<<<<v^v<<>>vv<v<<<v>v>>v<^v>>v>v^<<<>^>^>^<>v<^^vv><^v<<^v<vvv^vv>v<^<<^^vv^^>vv<^>v>^^<<v^<<^^v<>^>v<<^^<^>^^^v^^<v<^<^>>>v^vv^<^v>^<>^<^"
     "<v<^v>>>^<^v<><v<^vv<v>v><v^v^^v<vv><^^<><>^>v<^<^vv>><^v><v<>^<>^^>^<><<<v^>>^<>><<><v>vvv^<<^<vv<v><v<^<<<^>^>>v<^>>vv>^v^^^v<>v<>><>^vv^>vv^";
 
-constexpr char input4[] = "iwrupvqbD";
+constexpr char input4[] = "iwrupvqb";
 
 constexpr char input5[] = R"(uxcplgxnkwbdwhrp
 suerykeptdsutidb

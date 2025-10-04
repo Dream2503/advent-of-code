@@ -48,8 +48,7 @@ What is the fewest number of steps required for you to reach 31,39?
 */
 
 struct Path {
-    int x, y, steps;
-
+    int x, y, steps = 0;
     bool operator==(const Path& other) const { return x == other.x && y == other.y; }
 };
 
@@ -83,17 +82,12 @@ int part1(const int max_steps = INT32_MAX) {
         if (is_path(x, y, dfn)) {
             seen.emplace(x, y, steps);
 
-            if (x > 0 && !seen.contains({x - 1, y, steps + 1}) && steps <= max_steps) {
-                queue.emplace(x - 1, y, steps + 1);
-            }
-            if (y > 0 && !seen.contains({x, y - 1, steps + 1}) && steps <= max_steps) {
-                queue.emplace(x, y - 1, steps + 1);
-            }
-            if (!seen.contains({x + 1, y, steps + 1}) && steps <= max_steps) {
-                queue.emplace(x + 1, y, steps + 1);
-            }
-            if (!seen.contains({x, y + 1, steps + 1}) && steps <= max_steps) {
-                queue.emplace(x, y + 1, steps + 1);
+            for (const auto [i, j] : {std::pair(-1, 0), {0, -1}, {1, 0}, {0, 1}}) {
+                const Path path = {x + i, y + j, steps + 1};
+
+                if (path.x >= 0 && path.y >= 0 && !seen.contains(path) && steps < max_steps) {
+                    queue.push(path);
+                }
             }
         }
     }
