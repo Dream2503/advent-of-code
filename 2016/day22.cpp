@@ -31,21 +31,21 @@ How many viable pairs of nodes are there?
 
 int part1() {
     std::string line;
-    std::vector<std::pair<int, int>> infos;
+    std::vector<std::pair<int, int>> informations;
     std::stringstream file(input22);
     file.ignore(76);
 
     while (std::getline(file, line)) {
         int used, avail;
-        (std::stringstream(line).ignore(31) >> used).ignore(5) >> avail;
-        infos.emplace_back(used, avail);
+        std::sscanf(line.c_str(), "/dev/grid/node-x%*d-y%*d %*dT %dT %dT %*d%%", &used, &avail);
+        informations.emplace_back(used, avail);
     }
-    const int size = infos.size();
+    const int size = informations.size();
     int res = 0;
 
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
-            if (i != j && infos[i].first && infos[i].first <= infos[j].second) {
+            if (i != j && informations[i].first && informations[i].first <= informations[j].second) {
                 res++;
             }
         }
@@ -140,31 +140,58 @@ struct Node {
     int x, y, size, used, avail, steps;
 };
 
-int search(const std::vector<std::vector<Node>>& graph, const std::pair<int, int>& empty, const std::pair<int, int>& target) {
+constexpr std::pair target = {0, 0};
+
+int search(const std::vector<std::vector<Node>>& graph, const std::pair<int, int>& start, const std::pair<int, int>& end) {
     const int size_x = graph.size(), size_y = graph[0].size();
-    std::queue<Node> queue;
+    std::queue<std::pair<int, int>> queue;
     std::vector distance(size_x, std::vector(size_y, -1));
-    queue.push({empty.first, empty.second, 0, 0, 0, 0});
-    distance[empty.first][empty.second] = 0;
+    queue.push(start);
+    distance[start.first][start.second] = 0;
 
     while (!queue.empty()) {
-        auto& [x, y, size, used, avail, steps] = queue.front();
+        const auto [x, y] = queue.front();
         queue.pop();
 
-        if (x == target.first && y == target.second) {
-            return steps;
+        if (std::pair(x, y) == end) {
+            return distance[x][y];
         }
-        for (auto [i, j] : {std::pair{1, 0}, {-1, 0}, {0, 1}, {0, -1}}) {
-            const int x_i = x + i, y_j = y + j;
+        for (auto [dx, dy] : {std::pair(1, 0), {-1, 0}, {0, 1}, {0, -1}}) {
+            int nx = x + dx, ny = y + dy;
 
-            if (x_i >= 0 && y_j >= 0 && x_i < size_x && y_j < size_y && distance[x_i][y_j] == -1 && graph[x_i][y_j].used <= graph[x][y].size) {
-                distance[x_i][y_j] = steps + 1;
+            if (nx < 0 || ny < 0 || nx >= size_x || ny >= size_y || distance[nx][ny] != -1 || graph[nx][ny].used > graph[x][y].size) {
+                continue;
             }
+            distance[nx][ny] = distance[x][y] + 1;
+            queue.emplace(nx, ny);
         }
     }
     return -1;
 }
-int part2() { return 0; }
+
+int part2() {
+    std::vector<std::vector<Node>> graph;
+    std::pair<int, int> empty;
+    std::string line;
+    std::stringstream file(input22);
+    file.ignore(76);
+
+    while (getline(file, line)) {
+        int x, y, size, used, avail;
+        sscanf(line.c_str(), "/dev/grid/node-x%d-y%d %dT %dT %dT %*d%%", &x, &y, &size, &used, &avail);
+
+        if (x == graph.size()) {
+            graph.emplace_back();
+        }
+        if (used == 0) {
+            empty = {x, y};
+        }
+        graph[x].emplace_back(Node{x, y, size, used, avail, 0});
+    }
+    std::pair<int, int> goal = {graph.size() - 1, 0};
+    const std::pair empty_target = {goal.first - 1, goal.second};
+    return search(graph, empty, empty_target) + 5 * (goal.first - 1) + 1;
+}
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;
