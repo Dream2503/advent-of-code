@@ -140,8 +140,6 @@ struct Node {
     int x, y, size, used, avail, steps;
 };
 
-constexpr std::pair target = {0, 0};
-
 int search(const std::vector<std::vector<Node>>& graph, const std::pair<int, int>& start, const std::pair<int, int>& end) {
     const int size_x = graph.size(), size_y = graph[0].size();
     std::queue<std::pair<int, int>> queue;
@@ -159,20 +157,19 @@ int search(const std::vector<std::vector<Node>>& graph, const std::pair<int, int
         for (auto [dx, dy] : {std::pair(1, 0), {-1, 0}, {0, 1}, {0, -1}}) {
             int nx = x + dx, ny = y + dy;
 
-            if (nx < 0 || ny < 0 || nx >= size_x || ny >= size_y || distance[nx][ny] != -1 || graph[nx][ny].used > graph[x][y].size) {
-                continue;
+            if (nx >= 0 && ny >= 0 && nx < size_x && ny < size_y && distance[nx][ny] == -1 && graph[nx][ny].used <= graph[x][y].size) {
+                distance[nx][ny] = distance[x][y] + 1;
+                queue.emplace(nx, ny);
             }
-            distance[nx][ny] = distance[x][y] + 1;
-            queue.emplace(nx, ny);
         }
     }
     return -1;
 }
 
 int part2() {
-    std::vector<std::vector<Node>> graph;
     std::pair<int, int> empty;
     std::string line;
+    std::vector<std::vector<Node>> graph;
     std::stringstream file(input22);
     file.ignore(76);
 
@@ -189,8 +186,7 @@ int part2() {
         graph[x].emplace_back(Node{x, y, size, used, avail, 0});
     }
     std::pair<int, int> goal = {graph.size() - 1, 0};
-    const std::pair empty_target = {goal.first - 1, goal.second};
-    return search(graph, empty, empty_target) + 5 * (goal.first - 1) + 1;
+    return search(graph, empty, {goal.first - 1, goal.second}) + 5 * (goal.first - 1) + 1;
 }
 
 int main() {
