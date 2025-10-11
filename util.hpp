@@ -22,15 +22,17 @@ inline std::string md5_hash(const std::string& input) noexcept {
 
 inline std::string knot_hash(const std::string& input) noexcept {
     constexpr int size = 0x100, rounds = 0x40, blocks = 0x10;
+    constexpr std::array add_on = {0x11, 0x1f, 0x49, 0x2f, 0x17};
     int i = 0, skip = 0;
     std::array<uint8_t, size> list, temp;
-    std::vector<uint8_t> jumps;
     std::iota(list.begin(), list.end(), 0);
+    std::vector<uint8_t> jumps;
+    jumps.reserve(input.length() + 5);
 
     for (const uint8_t ch : input) {
         jumps.push_back(ch);
     }
-    for (const uint8_t element : {0x11, 0x1f, 0x49, 0x2f, 0x17}) {
+    for (const uint8_t element : add_on) {
         jumps.push_back(element);
     }
     for (int j = 0; j < rounds; j++) {
@@ -46,14 +48,14 @@ inline std::string knot_hash(const std::string& input) noexcept {
             i = (i + jump + skip++) % size;
         }
     }
-    i = 0;
+    int k = 0;
     std::array<uint8_t, blocks> sparse_hash;
 
     for (int j = 0; j < blocks; j++) {
-        sparse_hash[j] = list[i++];
+        sparse_hash[j] = list[k++];
 
         for (int _ = 1; _ < blocks; _++) {
-            sparse_hash[j] ^= list[i++];
+            sparse_hash[j] ^= list[k++];
         }
     }
     std::stringstream ss;
@@ -64,16 +66,14 @@ inline std::string knot_hash(const std::string& input) noexcept {
     return ss.str();
 }
 
-constexpr size_t FNV_offset_basic = 0xcbf29ce484222325;
-constexpr size_t FNV_prime = 0x00000100000001b3;
+constexpr size_t FNV_offset_basic = 0xcbf29ce484222325, FNV_prime = 0x00000100000001b3;
 
 // FNV-1a hash function algo - https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function
 constexpr size_t fnv1a_hash_bytes(const uint8_t* data, const size_t size) noexcept {
     size_t hash = FNV_offset_basic;
 
     for (size_t i = 0; i < size; i++) {
-        hash ^= static_cast<size_t>(data[i]);
-        hash *= FNV_prime;
+        hash = (hash ^ static_cast<size_t>(data[i])) * FNV_prime;
     }
     return hash;
 }
