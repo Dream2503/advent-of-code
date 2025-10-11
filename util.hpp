@@ -14,8 +14,8 @@ inline std::string md5_hash(const std::string& input) noexcept {
     EVP_MD_CTX_free(ctx);
     std::stringstream ss;
 
-    for (uint8_t i = 0; i < MD5_DIGEST_LENGTH; i++) {
-        ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(digest[i]);
+    for (const int value : digest) {
+        ss << std::hex << std::setw(2) << std::setfill('0') << value;
     }
     return ss.str();
 }
