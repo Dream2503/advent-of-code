@@ -4,6 +4,7 @@
 #include <ranges>
 #include <sstream>
 #include <unordered_set>
+#include "../util.hpp"
 #include "inputs.hpp"
 
 /*
@@ -47,12 +48,7 @@ struct Path {
 
 template <>
 struct std::hash<Path> {
-    size_t operator()(const Path& path) const noexcept {
-        size_t hash = 31;
-        hash = hash * 31 + std::hash<int>()(path.x);
-        hash = hash * 31 + std::hash<int>()(path.y);
-        return hash;
-    }
+    size_t operator()(const Path& path) const noexcept { return fnv1a_hash_bytes(reinterpret_cast<const uint8_t*>(&path), sizeof(path)); }
 };
 
 int compute_distance(const std::vector<std::string>& map, const int i, const int j, const int terminate) {

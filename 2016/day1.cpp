@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <unordered_set>
+#include "../util.hpp"
 #include "inputs.hpp"
 
 /*
@@ -27,16 +28,6 @@ For example:
 
 How many blocks away is Easter Bunny HQ?
 */
-
-template <>
-struct std::hash<std::pair<int, int>> {
-    size_t operator()(const std::pair<int, int>& pair) const noexcept {
-        size_t hash = 31;
-        hash = hash * 31 + std::hash<int>()(pair.first);
-        hash = hash * 31 + std::hash<int>()(pair.second);
-        return hash;
-    }
-};
 
 bool update(std::unordered_set<std::pair<int, int>>& seen, int& i, int& j, const int destination_i, const int destination_j, const bool twice) {
     if (twice) {

@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+#include "../util.hpp"
 #include "inputs.hpp"
 
 /*
@@ -88,16 +89,6 @@ Once a square is written, its value does not change. Therefore, the first few sq
 
 What is the first value written that is larger than your puzzle input?
 */
-
-template <>
-struct std::hash<std::pair<int, int>> {
-    size_t operator()(const std::pair<int, int>& pair) const noexcept {
-        size_t hash = 31;
-        hash = hash * 31 + std::hash<int>()(pair.first);
-        hash = hash * 31 + std::hash<int>()(pair.second);
-        return hash;
-    }
-};
 
 int part2() {
     enum Direction { UP, LEFT, DOWN, RIGHT };

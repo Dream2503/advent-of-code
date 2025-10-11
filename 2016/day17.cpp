@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <iostream>
-#include "../md5.hpp"
+#include "../util.hpp"
 #include "inputs.hpp"
 
 /*
