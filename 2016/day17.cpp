@@ -56,7 +56,7 @@ void search(const std::string& passcode, const int i, const int j, std::string& 
         path = passcode.substr(8);
         return;
     }
-    const std::string hash = md5(passcode);
+    const std::string hash = md5_hash(passcode);
 
     if (i > 0 && possible(hash[0])) {
         search(passcode + 'U', i - 1, j, path);

@@ -31,7 +31,7 @@ std::string part1() {
     int i = 0;
 
     while (password.length() != 8) {
-        std::string hash = md5(input5 + std::to_string(i));
+        std::string hash = md5_hash(input5 + std::to_string(i));
 
         if (hash.starts_with("00000")) {
             password.push_back(hash[5]);

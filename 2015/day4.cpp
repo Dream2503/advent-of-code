@@ -21,7 +21,7 @@ int part1(const std::string& target = "00000") {
     int i = 0;
 
     while (true) {
-        std::string hash = md5(input4 + std::to_string(i));
+        std::string hash = md5_hash(input4 + std::to_string(i));
 
         if (hash.starts_with(target)) {
             return i;

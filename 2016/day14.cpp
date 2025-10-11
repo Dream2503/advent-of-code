@@ -43,7 +43,7 @@ int part1(const int stretch = 1) {
         std::string hash = input14 + std::to_string(i);
 
         for (int j = 0; j < stretch; j++) {
-            hash = md5(hash);
+            hash = md5_hash(hash);
         }
         const int size = hash.length();
 
