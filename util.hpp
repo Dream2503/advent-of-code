@@ -67,7 +67,7 @@ inline std::string knot_hash(const std::string& input) noexcept {
 constexpr size_t FNV_offset_basic = 0xcbf29ce484222325;
 constexpr size_t FNV_prime = 0x00000100000001b3;
 
-// FNV-1a hash function algo & impl - https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function
+// FNV-1a hash function algo - https://en.wikipedia.org/wiki/Fowler–Noll–Vo_hash_function
 constexpr size_t fnv1a_hash_bytes(const uint8_t* data, const size_t size) noexcept {
     size_t hash = FNV_offset_basic;
 
