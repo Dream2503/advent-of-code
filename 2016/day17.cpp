@@ -95,7 +95,7 @@ std::string search(const std::string& passcode, const int i, const int j) {
     if (i == terminate.first && j == terminate.second) {
         return passcode.substr(8);
     }
-    const std::string hash = md5(passcode);
+    const std::string hash = md5_hash(passcode);
     std::array<std::string, 4> paths;
 
     if (i > 0 && possible(hash[0])) {

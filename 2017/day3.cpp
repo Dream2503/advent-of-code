@@ -30,8 +30,7 @@ How many steps are required to carry the data from the square identified in your
 */
 
 int part1() {
-    enum Direction { UP, LEFT, DOWN, RIGHT };
-    Direction current_direction = UP;
+    enum Direction { UP, LEFT, DOWN, RIGHT } current = UP;
     const int target = std::atoi(input3);
     int i = 1, area = 0;
     std::pair position = {0, 0};
@@ -45,7 +44,7 @@ int part1() {
             int k = 0;
 
             while (i < target && k < area / 4) {
-                switch (current_direction) {
+                switch (current) {
                 case UP:
                     position.second++;
                     break;
@@ -62,7 +61,7 @@ int part1() {
                 i++;
                 k++;
             }
-            current_direction = static_cast<Direction>((current_direction + 1) % 4);
+            current = static_cast<Direction>((current + 1) % 4);
         }
     }
     return std::abs(position.first) + std::abs(position.second);

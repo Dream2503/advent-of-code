@@ -68,7 +68,7 @@ std::string part2() {
     int i = 1, count = 0;
 
     while (count < 8) {
-        std::string hash = md5(input5 + std::to_string(i));
+        std::string hash = md5_hash(input5 + std::to_string(i));
 
         if (hash.starts_with("00000") && hash[5] >= '0' && hash[5] <= '7' && !password[hash[5] - '0']) {
             password[hash[5] - '0'] = hash[6];

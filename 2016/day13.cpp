@@ -55,7 +55,7 @@ struct Path {
 
 template <>
 struct std::hash<Path> {
-    size_t operator()(const Path& path) const noexcept { return fnv1a_hash_bytes(reinterpret_cast<const uint8_t*>(&path), sizeof(path)); }
+    size_t operator()(const Path& path) const noexcept { return std::hash<std::pair<int, int>>()({path.x, path.y}); }
 };
 
 constexpr Path terminate(31, 39, 0);
