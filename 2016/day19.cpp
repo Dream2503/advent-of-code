@@ -1,7 +1,3 @@
-#include <algorithm>
-#include <deque>
-#include <iostream>
-#include <ranges>
 #include "inputs.hpp"
 
 /*

@@ -52,9 +52,9 @@ register a to the safe.
 What value should be sent to the safe?
 */
 
-int part1(const int init_a = 7) {
+int part1() {
     std::string line;
-    std::array registers = {init_a, 0, 0, 0};
+    std::array<int, 4> registers = {7};
     std::vector<std::string> code;
     std::stringstream file(input23);
 
@@ -151,7 +151,15 @@ instruction more powerful than "add one" has anything to do with it. Don't bunni
 Anyway, what value should actually be sent to the safe?
 */
 
-int part2() { return part1(12); }
+int part2() {
+    constexpr int a = 12;
+    int factorial = 1;
+
+    for (int i = 2; i <= a; i++) {
+        factorial *= i;
+    }
+    return factorial + 95 * 95;
+}
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

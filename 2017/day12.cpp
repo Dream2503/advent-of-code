@@ -1,10 +1,4 @@
-#include <algorithm>
-#include <iostream>
-#include <ranges>
-#include <sstream>
-#include <unordered_set>
 #include "inputs.hpp"
-
 /*
 --- Day 12: Digital Plumber ---
 Walking along the memory banks of the stream, you find a small village that is experiencing a little confusion: some programs can't communicate with

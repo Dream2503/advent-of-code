@@ -1,8 +1,3 @@
-#include <algorithm>
-#include <bitset>
-#include <iostream>
-#include <numeric>
-#include <sstream>
 #include "inputs.hpp"
 
 /*

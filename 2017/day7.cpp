@@ -1,9 +1,3 @@
-#include <algorithm>
-#include <iostream>
-#include <numeric>
-#include <ranges>
-#include <sstream>
-#include "../util.hpp"
 #include "inputs.hpp"
 
 /*

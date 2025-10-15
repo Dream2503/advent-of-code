@@ -1,9 +1,15 @@
 #pragma once
 #include <algorithm>
+#include <bitset>
 #include <cstring>
 #include <iomanip>
+#include <iostream>
 #include <numeric>
 #include <openssl/evp.h>
+#include <queue>
+#include <ranges>
+#include <sstream>
+#include <unordered_set>
 
 inline std::string md5_hash(const std::string& input) noexcept {
     uint8_t digest[0x10];
@@ -21,7 +27,7 @@ inline std::string md5_hash(const std::string& input) noexcept {
 }
 
 // MD5 hash function algo - https://en.wikipedia.org/wiki/MD5
-inline std::string md5_hash(const std::string& input, const bool enable) noexcept {
+inline std::string md5_hash(const std::string& input, [[maybe_unused]] const bool enable) noexcept {
     constexpr std::array<uint32_t, 0x40> s = {0x07, 0x0c, 0x11, 0x16, 0x07, 0x0c, 0x11, 0x16, 0x07, 0x0c, 0x11, 0x16, 0x07, 0x0c, 0x11, 0x16,
                                               0x05, 0x09, 0x0e, 0x14, 0x05, 0x09, 0x0e, 0x14, 0x05, 0x09, 0x0e, 0x14, 0x05, 0x09, 0x0e, 0x14,
                                               0x04, 0x0b, 0x10, 0x17, 0x04, 0x0b, 0x10, 0x17, 0x04, 0x0b, 0x10, 0x17, 0x04, 0x0b, 0x10, 0x17,

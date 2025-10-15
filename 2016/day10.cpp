@@ -1,7 +1,3 @@
-#include <algorithm>
-#include <iostream>
-#include <ranges>
-#include <sstream>
 #include "inputs.hpp"
 
 /*
