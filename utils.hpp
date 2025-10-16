@@ -4,6 +4,7 @@
 #include <cstring>
 #include <iomanip>
 #include <iostream>
+#include <list>
 #include <numeric>
 #include <openssl/evp.h>
 #include <queue>
