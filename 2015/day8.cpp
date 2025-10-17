@@ -35,16 +35,17 @@ int part1() {
     int total = 0;
 
     while (std::getline(file, line)) {
+        const int size = line.length();
         int i = 0, res = 0;
 
-        while (i < line.size()) {
+        while (i < size) {
             if (line[i] == '\\' && line[++i] == 'x') {
                 i += 2;
             }
             res++;
             i++;
         }
-        total += line.size() - res + 2;
+        total += size - res + 2;
     }
     return total;
 }
@@ -71,16 +72,17 @@ int part2() {
     int total = 0;
 
     while (std::getline(file, line)) {
+        const int size = line.length();
         int i = 0, res = 4;
 
-        while (i < line.size()) {
+        while (i < size) {
             if (line[i] == '\\' || line[i] == '\"') {
                 res++;
             }
             res++;
             i++;
         }
-        total += res - line.size() - 2;
+        total += res - size - 2;
     }
     return total;
 }

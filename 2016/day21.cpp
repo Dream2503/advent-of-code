@@ -98,7 +98,7 @@ std::string part1(std::string password = "abcdefgh", const bool unscramble = fal
                 int steps;
                 ss >> steps;
                 steps %= password.length();
-                std::ranges::rotate(password, unscramble ^ instruction == "left" ? password.begin() + steps : password.end() - steps);
+                std::ranges::rotate(password, unscramble ^ (instruction == "left") ? password.begin() + steps : password.end() - steps);
             }
         } else if (instruction == "reverse") {
             int lhs, rhs;

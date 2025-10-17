@@ -55,8 +55,6 @@ struct std::hash<Path> {
 
 constexpr Path terminate(31, 39, 0);
 
-bool is_path(const int i, const int j, const int dfn) { return __builtin_popcount(i * i + 3 * i + 2 * i * j + j + j * j + dfn) % 2 == 0; }
-
 int part1(const int max_steps = INT32_MAX) {
     const int dfn = std::stoi(input13);
     std::queue<Path> queue;
@@ -70,10 +68,10 @@ int part1(const int max_steps = INT32_MAX) {
         if (x == terminate.x && y == terminate.y && max_steps == INT32_MAX) {
             return steps;
         }
-        if (is_path(x, y, dfn)) {
+        if (__builtin_popcount(x * x + 3 * x + 2 * x * y + y + y * y + dfn) % 2 == 0) {
             seen.emplace(x, y, steps);
 
-            for (const auto [i, j] : {std::pair(-1, 0), {0, -1}, {1, 0}, {0, 1}}) {
+            for (const auto& [i, j] : {std::pair(-1, 0), {0, -1}, {1, 0}, {0, 1}}) {
                 const Path path = {x + i, y + j, steps + 1};
 
                 if (path.x >= 0 && path.y >= 0 && !seen.contains(path) && steps < max_steps) {

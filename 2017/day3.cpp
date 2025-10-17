@@ -99,7 +99,7 @@ int part2() {
         position.first++;
         area += 8;
 
-        for (int j = 0; j < 4; j++) {
+        for (int i = 0; i < 4; i++) {
             int k = 0;
 
             while (map[position] < target && k < area / 4) {
@@ -119,8 +119,8 @@ int part2() {
                 }
                 int& value = map[position];
 
-                for (const auto [i, j] : {std::pair(1, 0), {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}}) {
-                    value += map[{position.first + i, position.second + j}];
+                for (const auto& [x, y] : {std::pair(1, 0), {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}}) {
+                    value += map[{position.first + x, position.second + y}];
                 }
                 k++;
             }

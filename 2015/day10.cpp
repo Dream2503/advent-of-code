@@ -22,7 +22,7 @@ int part1(const int repeat = 40) {
     std::string input(input10), res;
 
     for (int k = 0; k < repeat; k++) {
-        const size_t size = input.size();
+        const int size = input.length();
         int i = 0;
 
         while (i < size) {
@@ -39,7 +39,7 @@ int part1(const int repeat = 40) {
         input = res;
         res.clear();
     }
-    return input.size();
+    return input.length();
 }
 
 /*

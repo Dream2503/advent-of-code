@@ -57,8 +57,8 @@ int compute_distance(const std::vector<std::string>& map, const int i, const int
             return steps;
         }
         if (map[x][y] != '#') {
-            for (const auto [i, j] : {std::pair(-1, 0), {0, -1}, {1, 0}, {0, 1}}) {
-                const Path path = {x + i, y + j, steps + 1};
+            for (const auto& [dx, dy] : {std::pair(-1, 0), {0, -1}, {1, 0}, {0, 1}}) {
+                const Path path = {x + dx, y + dy, steps + 1};
 
                 if (!seen.contains(path)) {
                     queue.push(path);

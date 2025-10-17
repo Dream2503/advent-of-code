@@ -41,7 +41,7 @@ struct Ingredient {
 void search(const std::vector<Ingredient>& ingredients, std::vector<int>& teaspoons, const int idx, const int remaining, int& best,
             const bool check_calories) {
     if (idx == ingredients.size() - 1) {
-        int capacity = 0, durability = 0, flavor = 0, texture = 0, calories = 0, score;
+        int capacity = 0, durability = 0, flavor = 0, texture = 0, calories = 0;
         teaspoons[idx] = remaining;
 
         for (size_t i = 0; i < ingredients.size(); i++) {

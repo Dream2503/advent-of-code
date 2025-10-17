@@ -32,8 +32,8 @@ int part1() {
             vowels += line[j] == 'a' || line[j] == 'e' || line[j] == 'i' || line[j] == 'o' || line[j] == 'u';
             twice += j < size - 1 && line[j] == line[j + 1];
             not_valid += j < size - 1 &&
-                (line[j] == 'a' && line[j + 1] == 'b' || line[j] == 'c' && line[j + 1] == 'd' || line[j] == 'p' && line[j + 1] == 'q' ||
-                 line[j] == 'x' && line[j + 1] == 'y');
+                ((line[j] == 'a' && line[j + 1] == 'b') || (line[j] == 'c' && line[j + 1] == 'd') || (line[j] == 'p' && line[j + 1] == 'q') ||
+                 (line[j] == 'x' && line[j + 1] == 'y'));
         }
         line += size + 1;
         res += vowels >= 3 && twice && !not_valid;

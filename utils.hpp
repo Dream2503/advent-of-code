@@ -9,6 +9,7 @@
 #include <openssl/evp.h>
 #include <queue>
 #include <ranges>
+#include <set>
 #include <sstream>
 #include <unordered_set>
 
@@ -67,10 +68,10 @@ inline std::string md5_hash(const std::string& input, [[maybe_unused]] const boo
             uint32_t F, g;
 
             if (i < 0x10) {
-                F = B & C | ~B & D;
+                F = (B & C) | (~B & D);
                 g = i;
             } else if (i < 0x20) {
-                F = D & B | ~D & C;
+                F = (D & B) | (~D & C);
                 g = (0x5 * i + 1) % 0x10;
             } else if (i < 0x30) {
                 F = B ^ C ^ D;
@@ -157,7 +158,7 @@ template <typename T, typename U>
 struct std::hash<std::pair<T, U>> {
     size_t operator()(const std::pair<T, U>& pair) const noexcept {
         const size_t hash1 = std::hash<T>()(pair.first), hash2 = std::hash<U>()(pair.second);
-        return hash1 ^ hash2 + 0x9e3779b97f4a7c15 + (hash1 << 6) + (hash1 >> 2);
+        return hash1 ^ ((hash2 + 0x9e3779b97f4a7c15) + (hash1 << 6) + (hash1 >> 2));
     }
 };
 

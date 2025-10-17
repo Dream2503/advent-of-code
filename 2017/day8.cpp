@@ -40,13 +40,12 @@ int part1(const bool max = false) {
         int& current = hash[reg1];
         const int check = hash[reg2];
 
-        if (opr == ">" && check > condition || opr == "==" && check == condition || opr == "<" && check < condition ||
-            opr == ">=" && check >= condition || opr == "!=" && check != condition || opr == "<=" && check <= condition) {
+        if ((opr == ">" && check > condition) || (opr == "==" && check == condition) || (opr == "<" && check < condition) ||
+            (opr == ">=" && check >= condition) || (opr == "!=" && check != condition) || (opr == "<=" && check <= condition)) {
             current += instruction == "inc" ? value : -value;
             res = std::max(res, current);
         }
     }
-
     return max ? res : std::ranges::max_element(hash, {}, &std::pair<const std::string, int>::second)->second;
 }
 

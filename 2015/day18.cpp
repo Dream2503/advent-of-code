@@ -92,7 +92,8 @@ int part1(const bool conner = false) {
         for (i = 0; i < grid_size; i++) {
             for (int j = 0; j < grid_size; j++) {
                 if (conner &&
-                    (i == 0 && j == 0 || i == 0 && j == grid_size - 1 || i == grid_size - 1 && j == 0 || i == grid_size - 1 && j == grid_size - 1)) {
+                    ((i == 0 && j == 0) || (i == 0 && j == grid_size - 1) || (i == grid_size - 1 && j == 0) ||
+                     (i == grid_size - 1 && j == grid_size - 1))) {
                     continue;
                 }
                 int on = 0;

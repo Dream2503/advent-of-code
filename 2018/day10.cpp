@@ -163,7 +163,7 @@ Point minmax_coordinates(const std::vector<Point>& points) {
         y_min = std::min(y_min, y);
         y_max = std::max(y_max, y);
     }
-    return {x_min, ++x_max, y_min, ++y_max};
+    return {x_min, x_max + 1, y_min, y_max + 1};
 }
 
 std::string part1(const bool time = false) {
@@ -179,7 +179,7 @@ std::string part1(const bool time = false) {
         (std::stringstream(line).ignore(10) >> point.x >> comma >> point.y).ignore(12) >> point.del_x >> comma >> point.del_y;
         points.push_back(point);
     }
-    for (int i = 0; i < 20000; i++) {
+    for (int i = 0; i < 10012; i++) {
         auto [x_min, x_max, y_min, y_max] = minmax_coordinates(points);
         const uint64_t area = 1ull * (x_max - x_min) * (y_max - y_min);
 

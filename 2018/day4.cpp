@@ -64,7 +64,7 @@ What is the ID of the guard you chose multiplied by the minute you chose? (In th
 */
 
 int part1(const bool strategy2 = false) {
-    int current_id = -1, start, end;
+    int current_id = -1, start = 0;
     std::string line;
     std::vector<std::string> input;
     std::unordered_map<int, std::array<int, 60>> details;

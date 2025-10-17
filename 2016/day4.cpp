@@ -99,7 +99,7 @@ int part2() {
             const int size = name.length();
 
             for (int i = 0; i < size; i++) {
-                if (name[i] == '-' && target[i] != ' ' || std::isalpha(name[i]) && (name[i] - 'a' + sector_id) % 26 != target[i] - 'a') {
+                if ((name[i] == '-' && target[i] != ' ') || (std::isalpha(name[i]) && (name[i] - 'a' + sector_id) % 26 != target[i] - 'a')) {
                     valid = false;
                     break;
                 }
