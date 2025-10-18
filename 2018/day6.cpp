@@ -59,42 +59,41 @@ What is the size of the largest area that isn't infinite?
 int part1(const bool safe = false) {
     int res = 0, i = 1;
     std::string line;
-    std::unordered_map<int, std::pair<int, int>> area;
+    std::unordered_map<int, Vec2<int>> area;
     std::stringstream file(input6);
-    int x_min = INT32_MAX, x_max = 0, y_min = INT32_MAX, y_max = 0;
+    Vec2 max = {0, 0}, min = {INT32_MAX, INT32_MAX};
 
     while (std::getline(file, line)) {
         auto& [x, y] = area[i++];
         std::sscanf(line.c_str(), "%d, %d", &y, &x);
-        x_min = std::min(x_min, x);
-        x_max = std::max(x_max, x);
-        y_min = std::min(y_min, y);
-        y_max = std::max(y_max, y);
+        max.x = std::max(max.x, x);
+        min.x = std::min(min.x, x);
+        max.y = std::max(max.y, y);
+        min.y = std::min(min.y, y);
     }
-    std::vector map(++x_max - x_min, std::vector(++y_max - y_min, 0));
-    std::vector<std::pair<int, int>> manhattan_distances(area.size());
+    Vec2 range = max - min;
+    std::vector map(range.x, std::vector(range.y, 0));
+    std::vector<Vec2<int>> manhattan_distances(area.size());
 
-    for (i = x_min; i < x_max; i++) {
-        for (int j = y_min; j < y_max; j++) {
-            std::ranges::transform(area, manhattan_distances.begin(),
-                                   [i, j](const std::pair<int, std::pair<int, int>>& element) -> std::pair<int, int> {
-                                       return {element.first, std::abs(element.second.first - i) + std::abs(element.second.second - j)};
-                                   });
-            const std::pair<int, int> min1 = *std::ranges::min_element(manhattan_distances, {}, &std::pair<int, int>::second);
-            const std::pair<int, int> min2 = *std::ranges::min_element(manhattan_distances, {}, [&min1](const std::pair<int, int>& element) -> int {
-                return element.second == min1.second ? INT32_MAX : element.second;
+    for (i = min.x; i < max.x; i++) {
+        for (int j = min.y; j < max.y; j++) {
+            std::ranges::transform(area, manhattan_distances.begin(), [i, j](const std::pair<int, Vec2<int>>& element) -> Vec2<int> {
+                return {element.first, std::abs(element.second.x - i) + std::abs(element.second.y - j)};
             });
-            map[i - x_min][j - y_min] = min1.second != min2.second ? min1.first : 0;
+            const Vec2 min1 = *std::ranges::min_element(manhattan_distances, {}, &Vec2<int>::y);
+            const Vec2 min2 = *std::ranges::min_element(
+                manhattan_distances, {}, [&min1](const Vec2<int>& element) -> int { return element.y == min1.y ? INT32_MAX : element.y; });
+            map[i - min.x][j - min.y] = min1.y != min2.y ? min1.x : 0;
             res += std::transform_reduce(manhattan_distances.begin(), manhattan_distances.end(), 0, std::plus(),
-                                         [](const std::pair<int, int>& element) -> int { return element.second; }) < 10'000;
+                                         [](const Vec2<int>& element) -> int { return element.y; }) < 10'000;
         }
     }
     std::unordered_set reject{0};
 
-    for (i = 0; i < x_max - x_min; i++) {
+    for (i = 0; i < range.x; i++) {
         reject.insert({map[i].front(), map[i].back()});
     }
-    for (i = 0; i < y_max - y_min; i++) {
+    for (i = 0; i < range.y; i++) {
         reject.insert({map.front()[i], map.back()[i]});
     }
     std::unordered_map<int, int> frequency;

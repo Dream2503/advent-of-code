@@ -39,29 +39,16 @@ At this point, particle 1 will never be closer to <0,0,0> than particle 0, and s
 Which particle will stay closest to position <0,0,0> in the long term?
 */
 
-struct Vec3 {
-    int x = 0, y = 0, z = 0;
-
-    constexpr Vec3& operator+=(const Vec3& vec3) noexcept {
-        x += vec3.x;
-        y += vec3.y;
-        z += vec3.z;
-        return *this;
-    }
-
-    constexpr bool operator==(const Vec3& vec3) const noexcept { return x == vec3.x && y == vec3.y && z == vec3.z; }
-    constexpr bool operator<(const Vec3& vec3) const noexcept { return distance() < vec3.distance(); }
-
-    constexpr int distance() const noexcept { return std::abs(x) + std::abs(y) + std::abs(z); }
-};
 
 struct Particle {
-    Vec3 position, velocity, acceleration;
+    Vec3<int> position, velocity, acceleration;
 
     constexpr bool operator==(const Particle& particle) const noexcept {
         return position == particle.position && velocity == particle.velocity && acceleration == particle.acceleration;
     }
 };
+
+int distance(const Vec3<int>& vec3) { return std::abs(vec3.x) + std::abs(vec3.y) + std::abs(vec3.z); }
 
 int part1(const bool collide = false) {
     constexpr int ticks = 320;
@@ -83,7 +70,7 @@ int part1(const bool collide = false) {
             particles[j].position += particles[j].velocity += particles[j].acceleration;
         }
         if (collide) {
-            std::ranges::sort(particles, [](const Particle& lhs, const Particle& rhs) -> bool { return lhs.position < rhs.position; });
+            std::ranges::sort(particles, {}, [](const Particle& particle) -> int { return distance(particle.position); });
             bool collision = false;
 
             for (int k = 0; k < size - 1; k++) {
@@ -103,8 +90,7 @@ int part1(const bool collide = false) {
     return collide
         ? std::transform_reduce(particles.begin(), particles.end(), 0, std::plus(),
                                 [](const Particle& particle) -> int { return particle != Particle(); })
-        : std::ranges::min_element(particles, [](const Particle& lhs, const Particle& rhs) -> bool { return lhs.position < rhs.position; }) -
-            particles.begin();
+        : std::ranges::min_element(particles, {}, [](const Particle& particle) -> int { return distance(particle.position); }) - particles.begin();
 }
 
 /*

@@ -51,25 +51,27 @@ If the Elves all proceed with their own plans, none of them will have enough fab
 int part1(const bool distinct = false) {
     std::string line;
     std::array<std::array<int, 1000>, 1000> fabric = {};
-    std::vector<std::tuple<int, int, int, int, int>> coordinates;
+    std::vector<std::tuple<int, Vec2<int>, Vec2<int>>> coordinates;
     std::stringstream file(input3);
 
     while (std::getline(file, line)) {
-        int id, y, x, j, i;
-        std::sscanf(line.c_str(), "#%d @ %d,%d: %dx%d", &id, &y, &x, &j, &i);
-        coordinates.emplace_back(id, x, y, x + i, y + j);
+        int id;
+        Vec2<int> start, end;
+        std::sscanf(line.c_str(), "#%d @ %d,%d: %dx%d", &id, &start.y, &start.x, &end.y, &end.x);
 
-        for (int l = x; l < x + i; l++) {
-            for (int k = y; k < y + j; k++) {
+        coordinates.emplace_back(id, start, end += start);
+
+        for (int l = start.x; l < end.x; l++) {
+            for (int k = start.y; k < end.y; k++) {
                 fabric[l][k]++;
             }
         }
     }
-    for (const auto& [id, x_start, y_start, x_end, y_end] : coordinates) {
+    for (const auto& [id, start, end] : coordinates) {
         bool unique = true;
 
-        for (int i = x_start; i < x_end; i++) {
-            for (int j = y_start; j < y_end; j++) {
+        for (int i = start.x; i < end.x; i++) {
+            for (int j = start.y; j < end.y; j++) {
                 if (fabric[i][j] > 1) {
                     unique = false;
                     break;

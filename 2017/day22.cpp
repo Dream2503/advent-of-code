@@ -101,21 +101,21 @@ int part1(const int iteration = 10'000, const bool evolve = false) {
     enum Condition { CLEAN, WEAKENED, INFECTED, FLAGGED };
     enum Direction { UP, RIGHT, DOWN, LEFT } current = UP;
     int i = 0, j = 0, total = 0;
-    std::unordered_map<std::pair<int, int>, Condition> graph;
     std::string line;
+    std::unordered_map<Vec2<int>, Condition> graph;
     std::stringstream file(input22);
 
     while (std::getline(file, line)) {
         for (const char ch : line) {
-            graph.emplace(std::pair{i, j++}, ch == '#' ? INFECTED : CLEAN);
+            graph.emplace(Vec2{i, j++}, ch == '#' ? INFECTED : CLEAN);
         }
         j = 0;
         i++;
     }
-    int x = i / 2, y = x;
+    Vec2 vec2 = {i / 2, i / 2};
 
     for (i = 0; i < iteration; i++) {
-        Condition& condition = graph[{x, y}];
+        Condition& condition = graph[vec2];
 
         switch (condition) {
         case CLEAN:
@@ -138,16 +138,19 @@ int part1(const int iteration = 10'000, const bool evolve = false) {
 
         switch (current) {
         case UP:
-            x--;
+            vec2.x--;
             break;
+
         case LEFT:
-            y--;
+            vec2.y--;
             break;
+
         case DOWN:
-            x++;
+            vec2.x++;
             break;
+
         case RIGHT:
-            y++;
+            vec2.y++;
             break;
         }
     }

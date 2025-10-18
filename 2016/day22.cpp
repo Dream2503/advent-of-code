@@ -133,29 +133,30 @@ What is the fewest number of steps required to move your goal data to node-x0-y0
 */
 
 struct Node {
-    int x, y, size, used, avail, steps;
+    Vec2<int> position;
+    int size, used, avail, steps;
 };
 
-int search(const std::vector<std::vector<Node>>& graph, const std::pair<int, int>& start, const std::pair<int, int>& end) {
-    const int size_x = graph.size(), size_y = graph[0].size();
-    std::queue<std::pair<int, int>> queue;
-    std::vector distance(size_x, std::vector(size_y, -1));
+int search(const std::vector<std::vector<Node>>& graph, const Vec2<int>& start, const Vec2<int>& end) {
+    const Vec2 size = {graph.size(), graph[0].size()};
+    std::queue<Vec2<int>> queue;
+    std::vector distance(size.x, std::vector(size.y, -1));
     queue.push(start);
-    distance[start.first][start.second] = 0;
+    distance[start.x][start.y] = 0;
 
     while (!queue.empty()) {
         const auto [x, y] = queue.front();
         queue.pop();
 
-        if (std::pair(x, y) == end) {
+        if (Vec2(x, y) == end) {
             return distance[x][y];
         }
-        for (auto [dx, dy] : {std::pair(1, 0), {-1, 0}, {0, 1}, {0, -1}}) {
-            int nx = x + dx, ny = y + dy;
+        for (auto [dx, dy] : directions_basic) {
+            Vec2 vec2 = {x + dx, y + dy};
 
-            if (nx >= 0 && ny >= 0 && nx < size_x && ny < size_y && distance[nx][ny] == -1 && graph[nx][ny].used <= graph[x][y].size) {
-                distance[nx][ny] = distance[x][y] + 1;
-                queue.emplace(nx, ny);
+            if (vec2 >= 0 && vec2 < size && distance[vec2.x][vec2.y] == -1 && graph[vec2.x][vec2.y].used <= graph[x][y].size) {
+                distance[vec2.x][vec2.y] = distance[x][y] + 1;
+                queue.push(vec2);
             }
         }
     }
@@ -163,7 +164,7 @@ int search(const std::vector<std::vector<Node>>& graph, const std::pair<int, int
 }
 
 int part2() {
-    std::pair<int, int> empty;
+    Vec2<int> empty;
     std::string line;
     std::vector<std::vector<Node>> graph;
     std::stringstream file(input22);
@@ -179,10 +180,10 @@ int part2() {
         if (used == 0) {
             empty = {x, y};
         }
-        graph[x].emplace_back(Node{x, y, size, used, avail, 0});
+        graph[x].emplace_back(Node{Vec2{x, y}, size, used, avail, 0});
     }
-    std::pair<int, int> goal = {graph.size() - 1, 0};
-    return search(graph, empty, {goal.first - 1, goal.second}) + 5 * (goal.first - 1) + 1;
+    const Vec2 goal = {static_cast<int>(graph.size() - 1), 0};
+    return search(graph, empty, {goal.x - 1, goal.y}) + 5 * (goal.x - 1) + 1;
 }
 
 int main() {

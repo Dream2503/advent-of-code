@@ -35,34 +35,28 @@ least once?
 */
 
 struct Path {
-    int x, y, steps = 0;
-    bool operator==(const Path& other) const { return x == other.x && y == other.y; }
+    Vec2<int> position;
+    int steps = 0;
 };
 
-template <>
-struct std::hash<Path> {
-    size_t operator()(const Path& path) const noexcept { return fnv1a_hash_bytes(reinterpret_cast<const uint8_t*>(&path), sizeof(path)); }
-};
-
-int compute_distance(const std::vector<std::string>& map, const int i, const int j, const int terminate) {
+int compute_distance(const std::vector<std::string>& map, const Vec2<int>& coordinates, const int terminate) {
     std::queue<Path> queue;
-    std::unordered_set<Path> seen = {{i, j}};
-    queue.emplace(i, j, 0);
+    std::unordered_set seen = {coordinates};
+    queue.emplace(coordinates, 0);
 
     while (!queue.empty()) {
-        const auto [x, y, steps] = queue.front();
+        const auto [position, steps] = queue.front();
         queue.pop();
 
-        if (map[x][y] == terminate + '0') {
+        if (map[position.x][position.y] == terminate + '0') {
             return steps;
         }
-        if (map[x][y] != '#') {
-            for (const auto& [dx, dy] : {std::pair(-1, 0), {0, -1}, {1, 0}, {0, 1}}) {
-                const Path path = {x + dx, y + dy, steps + 1};
+        if (map[position.x][position.y] != '#') {
+            for (const auto& [dx, dy] : directions_basic) {
+                const Vec2 vec2 = {position.x + dx, position.y + dy};
 
-                if (!seen.contains(path)) {
-                    queue.push(path);
-                    seen.insert(path);
+                if (seen.insert(vec2).second) {
+                    queue.emplace(vec2, steps + 1);
                 }
             }
         }
@@ -83,8 +77,7 @@ void search(const std::vector<std::vector<int>>& graph, std::unordered_set<int>&
     const int size = row.size();
 
     for (int i = 0; i < size; i++) {
-        if (!seen.contains(i)) {
-            seen.insert(i);
+        if (seen.insert(i).second) {
             search(graph, seen, i, current_distance + row[i], best, complete);
             seen.erase(i);
         }
@@ -110,15 +103,14 @@ int part1(const bool complete = false) {
 
             if (start != std::string::npos) {
                 for (int j = i + 1; j <= max; j++) {
-                    graph[i][j] = graph[j][i] = compute_distance(map, k, start, j);
+                    graph[i][j] = graph[j][i] = compute_distance(map, Vec2{k, start}, j);
                 }
                 break;
             }
         }
     }
     int best = INT32_MAX;
-    std::unordered_set<int> seen;
-    seen.insert(0);
+    std::unordered_set seen = {0};
     search(graph, seen, 0, 0, best, complete);
     return best;
 }

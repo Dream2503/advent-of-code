@@ -29,11 +29,11 @@ int part1() {
     enum Direction { UP, LEFT, DOWN, RIGHT } current = UP;
     const int target = std::atoi(input3);
     int i = 1, area = 0;
-    std::pair position = {0, 0};
+    Vec2 position = {0, 0};
 
     while (i < target) {
-        position.second--;
-        position.first++;
+        position.y--;
+        position.x++;
         area += 8;
 
         for (int j = 0; j < 4; j++) {
@@ -42,16 +42,16 @@ int part1() {
             while (i < target && k < area / 4) {
                 switch (current) {
                 case UP:
-                    position.second++;
+                    position.y++;
                     break;
                 case LEFT:
-                    position.first--;
+                    position.x--;
                     break;
                 case DOWN:
-                    position.second--;
+                    position.y--;
                     break;
                 case RIGHT:
-                    position.first++;
+                    position.x++;
                     break;
                 }
                 i++;
@@ -60,7 +60,7 @@ int part1() {
             current = static_cast<Direction>((current + 1) % 4);
         }
     }
-    return std::abs(position.first) + std::abs(position.second);
+    return std::abs(position.x) + std::abs(position.y);
 }
 
 /*
@@ -86,45 +86,47 @@ What is the first value written that is larger than your puzzle input?
 */
 
 int part2() {
-    enum Direction { UP, LEFT, DOWN, RIGHT };
-    Direction current_direction = UP;
+    enum Direction { UP, LEFT, DOWN, RIGHT } current = UP;
     const int target = std::atoi(input3);
     int area = 0;
-    std::pair position = {0, 0};
-    std::unordered_map<std::pair<int, int>, int> map;
+    Vec2 position = {0, 0};
+    std::unordered_map<Vec2<int>, int> map;
     map[{0, 0}] = 1;
 
     while (map[position] < target) {
-        position.second--;
-        position.first++;
+        position.y--;
+        position.x++;
         area += 8;
 
         for (int i = 0; i < 4; i++) {
             int k = 0;
 
             while (map[position] < target && k < area / 4) {
-                switch (current_direction) {
+                switch (current) {
                 case UP:
-                    position.second++;
+                    position.y++;
                     break;
+
                 case LEFT:
-                    position.first--;
+                    position.x--;
                     break;
+
                 case DOWN:
-                    position.second--;
+                    position.y--;
                     break;
+
                 case RIGHT:
-                    position.first++;
+                    position.x++;
                     break;
                 }
                 int& value = map[position];
 
-                for (const auto& [x, y] : {std::pair(1, 0), {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}}) {
-                    value += map[{position.first + x, position.second + y}];
+                for (const auto& [x, y] : directions_complete) {
+                    value += map[{position.x + x, position.y + y}];
                 }
                 k++;
             }
-            current_direction = static_cast<Direction>((current_direction + 1) % 4);
+            current = static_cast<Direction>((current + 1) % 4);
         }
     }
     return map[position];

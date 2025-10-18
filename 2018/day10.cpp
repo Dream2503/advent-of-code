@@ -151,13 +151,13 @@ What message will eventually appear in the sky?
 */
 
 struct Point {
-    int x, y, del_x, del_y;
+    Vec2<int> position, velocity;
 };
 
-Point minmax_coordinates(const std::vector<Point>& points) {
+std::tuple<int, int, int, int> minmax_coordinates(const std::vector<Point>& points) {
     int x_min = INT32_MAX, x_max = INT32_MIN, y_min = INT32_MAX, y_max = INT32_MIN;
 
-    for (const auto& [x, y] : points | std::views::transform([](const Point& point) -> std::pair<int, int> { return {point.x, point.y}; })) {
+    for (const auto& [x, y] : points | std::views::transform(&Point::position)) {
         x_min = std::min(x_min, x);
         x_max = std::max(x_max, x);
         y_min = std::min(y_min, y);
@@ -167,7 +167,8 @@ Point minmax_coordinates(const std::vector<Point>& points) {
 }
 
 std::string part1(const bool time = false) {
-    int min_index = 0;
+    const int threshold = 2;
+    int i = 0, min_index = 0, last_min = 0;
     uint64_t min_area = UINT64_MAX;
     std::string line;
     std::vector<Point> points, min_points;
@@ -176,10 +177,11 @@ std::string part1(const bool time = false) {
     while (std::getline(file, line)) {
         char comma;
         Point point;
-        (std::stringstream(line).ignore(10) >> point.x >> comma >> point.y).ignore(12) >> point.del_x >> comma >> point.del_y;
+        (std::stringstream(line).ignore(10) >> point.position.x >> comma >> point.position.y).ignore(12) >> point.velocity.x >> comma >>
+            point.velocity.y;
         points.push_back(point);
     }
-    for (int i = 0; i < 10012; i++) {
+    while (last_min < threshold) {
         auto [x_min, x_max, y_min, y_max] = minmax_coordinates(points);
         const uint64_t area = 1ull * (x_max - x_min) * (y_max - y_min);
 
@@ -187,11 +189,11 @@ std::string part1(const bool time = false) {
             min_points = points;
             min_area = area;
             min_index = i;
+            last_min = 0;
         }
-        for (auto& [x, y, del_x, del_y] : points) {
-            x += del_x;
-            y += del_y;
-        }
+        std::ranges::for_each(points, [](Point& point) -> void { point.position += point.velocity; });
+        last_min++;
+        i++;
     }
     points = std::move(min_points);
 
@@ -199,7 +201,7 @@ std::string part1(const bool time = false) {
         auto [x_min, x_max, y_min, y_max] = minmax_coordinates(points);
         std::vector sky(y_max - y_min, std::vector(x_max - x_min, false));
 
-        for (const auto& [x, y] : points | std::views::transform([](const Point& point) -> std::pair<int, int> { return {point.x, point.y}; })) {
+        for (const auto& [x, y] : points | std::views::transform(&Point::position)) {
             sky[y - y_min][x - x_min] = true;
         }
         for (const std::vector<bool>& row : sky) {

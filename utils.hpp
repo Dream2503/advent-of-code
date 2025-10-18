@@ -168,3 +168,62 @@ struct std::hash<std::vector<T>> {
         return fnv1a_hash_bytes(reinterpret_cast<const uint8_t*>(vec.data()), vec.size() * sizeof(T));
     }
 };
+
+
+template <typename T>
+struct Vec2 {
+    T x, y;
+
+    constexpr bool operator==(const Vec2& vec2) const noexcept { return x == vec2.x && y == vec2.y; }
+    constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value; }
+    constexpr Vec2 operator+(const Vec2& vec2) const noexcept { return {x + vec2.x, y + vec2.y}; }
+    constexpr Vec2 operator-(const Vec2& vec2) const noexcept { return {x - vec2.x, y - vec2.y}; }
+
+    constexpr Vec2& operator+=(const Vec2& vec2) noexcept {
+        x += vec2.x;
+        y += vec2.y;
+        return *this;
+    }
+
+    template <typename U>
+    constexpr bool operator<(const Vec2<U>& vec2) const noexcept {
+        return x < vec2.x && y < vec2.y;
+    }
+};
+
+template <typename T>
+struct std::hash<Vec2<T>> {
+    size_t operator()(const Vec2<T>& vec2) const noexcept { return std::hash<std::pair<T, T>>()({vec2.x, vec2.y}); }
+};
+
+constexpr std::initializer_list<Vec2<int>> directions_basic = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
+constexpr std::initializer_list<Vec2<int>> directions_complete = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+
+template <typename T>
+struct Vec3 {
+    T x, y, z = 0;
+
+    constexpr bool operator==(const Vec3& vec3) const noexcept { return x == vec3.x && y == vec3.y && z == vec3.z; }
+    constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value && z >= value; }
+    constexpr Vec3 operator+(const Vec3& vec3) const noexcept { return {x + vec3.x, y + vec3.y, z + vec3.z}; }
+    constexpr Vec3 operator-(const Vec3& vec3) const noexcept { return {x - vec3.x, y - vec3.y, z - vec3.z}; }
+
+    constexpr Vec3& operator+=(const Vec3& vec3) noexcept {
+        x += vec3.x;
+        y += vec3.y;
+        z += vec3.x;
+        return *this;
+    }
+
+    template <typename U>
+    constexpr bool operator<(const Vec3<U>& vec3) const noexcept {
+        return x < vec3.x && y < vec3.y && z < vec3.z;
+    }
+};
+
+template <typename T>
+struct std::hash<Vec3<T>> {
+    size_t operator()(const Vec3<T>& vec3) const noexcept {
+        return std::hash<std::pair<size_t, T>>()({std::hash<std::pair<T, T>>()({vec3.x, vec3.y}), vec3.z});
+    }
+};

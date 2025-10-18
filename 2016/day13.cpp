@@ -44,38 +44,34 @@ What is the fewest number of steps required for you to reach 31,39?
 */
 
 struct Path {
-    int x, y, steps = 0;
-    bool operator==(const Path& other) const { return x == other.x && y == other.y; }
+    Vec2<int> position;
+    int steps;
 };
 
-template <>
-struct std::hash<Path> {
-    size_t operator()(const Path& path) const noexcept { return std::hash<std::pair<int, int>>()({path.x, path.y}); }
-};
-
-constexpr Path terminate(31, 39, 0);
+constexpr Vec2 terminate = {31, 39};
 
 int part1(const int max_steps = INT32_MAX) {
     const int dfn = std::stoi(input13);
     std::queue<Path> queue;
-    std::unordered_set<Path> seen;
-    queue.emplace(1, 1, 0);
+    std::unordered_set<Vec2<int>> seen;
+    queue.emplace(Vec2{1, 1}, 0);
 
     while (!queue.empty()) {
-        const auto [x, y, steps] = queue.front();
+        const auto [position, steps] = queue.front();
+        const auto& [x, y] = position;
         queue.pop();
 
-        if (x == terminate.x && y == terminate.y && max_steps == INT32_MAX) {
+        if (position == terminate && max_steps == INT32_MAX) {
             return steps;
         }
         if (__builtin_popcount(x * x + 3 * x + 2 * x * y + y + y * y + dfn) % 2 == 0) {
-            seen.emplace(x, y, steps);
+            seen.insert(position);
 
-            for (const auto& [i, j] : {std::pair(-1, 0), {0, -1}, {1, 0}, {0, 1}}) {
-                const Path path = {x + i, y + j, steps + 1};
+            for (const auto& [i, j] : directions_basic) {
+                const Vec2 vec2 = {x + i, y + j};
 
-                if (path.x >= 0 && path.y >= 0 && !seen.contains(path) && steps < max_steps) {
-                    queue.push(path);
+                if (vec2 >= 0 && !seen.contains(vec2) && steps < max_steps) {
+                    queue.emplace(vec2, steps + 1);
                 }
             }
         }
