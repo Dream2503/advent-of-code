@@ -189,6 +189,11 @@ struct Vec2 {
     constexpr bool operator<(const Vec2<U>& vec2) const noexcept {
         return x < vec2.x && y < vec2.y;
     }
+
+    template <typename U>
+    bool lexicographically_less(const Vec2<U>& vec2) const noexcept {
+        return x < vec2.x || (x == vec2.x && y < vec2.y);
+    }
 };
 
 template <typename T>
