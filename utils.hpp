@@ -12,6 +12,7 @@
 #include <ranges>
 #include <set>
 #include <sstream>
+#include <stack>
 #include <unordered_set>
 
 inline std::string md5_hash(const std::string& input) noexcept {
