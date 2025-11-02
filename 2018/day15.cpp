@@ -311,123 +311,182 @@ struct Unit {
     int hp;
 };
 
-int part1() {
-    bool end = false;
-    int i = 0, j, rounds = 0;
+struct Target {
+    int distance;
+    Vec2<int> position;
+};
+
+int simulation(int elf_attack, bool& elves_survived) {
+    elves_survived = true;
+    int i = 0, rounds = 0;
     std::string line;
-    std::vector<std::string> map;
     std::vector<Unit> units;
+    std::vector<std::string> map;
     std::stringstream file(input15);
 
-
     while (std::getline(file, line)) {
-        const int size = line.length();
-
-        for (j = 0; j < size; j++) {
+        for (int j = 0; j < line.length(); j++) {
             if (isalpha(line[j])) {
                 units.emplace_back(line[j] == 'G' ? Unit::GOBLIN : Unit::ELF, Vec2(i, j), 200);
                 line[j] = '.';
             }
         }
-        map.push_back(line);z
+        map.push_back(line);
         i++;
     }
-    while (!end) {
-        for (auto& [type, position, hp] : units) {
-            if (hp <= 0) {
+
+    while (true) {
+        std::ranges::sort(units, [](const Unit& lhs, const Unit& rhs) -> bool { return lhs.position.lexicographically_less(rhs.position); });
+
+        for (int j = 0; j < units.size(); ++j) {
+            Unit& current = units[j];
+
+            if (current.hp <= 0) {
                 continue;
             }
-            if (std::ranges::all_of(units, [](const Unit& unit) { return unit.type != Unit::ELF || unit.hp <= 0; }) ||
-                std::ranges::all_of(units, [](const Unit& unit) { return unit.type != Unit::GOBLIN || unit.hp <= 0; })) {
-                end = true;
-                break;
-            }
-            std::vector<std::tuple<int, bool, int>> moves(4);
-            i = 0;
+            bool any_goblin = false, any_elf = false;
 
-            for (const Vec2<int>& direction : directions_basic) {
-                Vec2 coordinate = position + direction;
-                std::queue<std::pair<Vec2<int>, int>> queue;
-                std::unordered_set seen{position, coordinate};
-                moves[i] = {i, false, 0};
-                queue.emplace(coordinate, 1);
+            for (const Unit& unit : units) {
+                if (unit.hp > 0) {
+                    (unit.type == Unit::GOBLIN ? any_goblin : any_elf) = true;
 
-                while (!queue.empty()) {
-                    const auto [coord, distance] = queue.front();
-                    queue.pop();
-
-                    if (std::ranges::find_if(units, [&type, &coord](const Unit& unit) -> bool {
-                            return unit.type != type && unit.position == coord && unit.hp > 0;
-                        }) != units.end()) {
-                        moves[i] = {i, true, distance - 1};
+                    if (any_goblin && any_elf) {
                         break;
                     }
-                    if (map[coord.x][coord.y] != '#' && std::ranges::find_if(units, [&coord](const Unit& unit) -> bool {
-                                                            return unit.position == coord && unit.hp > 0;
-                                                        }) == units.end()) {
-                        for (const Vec2<int>& dir : directions_basic) {
-                            Vec2 coords = coord + dir;
+                }
+            }
+            if (!any_goblin || !any_elf) {
+                return rounds *
+                    std::transform_reduce(units.begin(), units.end(), 0, std::plus(), [](const Unit& unit) -> int { return std::max(0, unit.hp); });
+            }
+            int row = map.size(), col = map[0].size();
+            std::vector distances(row, std::vector(col, INT32_MAX));
+            std::queue<std::pair<Vec2<int>, int>> bfs_queue;
+            distances[current.position.x][current.position.y] = 0;
+            bfs_queue.emplace(current.position, 0);
 
-                            if (!seen.contains(coords)) {
-                                queue.emplace(coords, distance + 1);
-                                seen.insert(coords);
-                            }
+            auto blocked = [&](const Vec2<int>& vec2) -> bool {
+                if (vec2.x < 0 || vec2.x >= row || vec2.y < 0 || vec2.y >= col || map[vec2.x][vec2.y] == '#') {
+                    return true;
+                }
+                for (const Unit& unit : units) {
+                    if (&unit != &current && unit.hp > 0 && unit.position == vec2) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            while (!bfs_queue.empty()) {
+                auto [position, distance] = bfs_queue.front();
+                bfs_queue.pop();
+
+                for (const Vec2<int>& direction : directions_basic) {
+                    Vec2 next = position + direction;
+
+                    if (!blocked(next) && distances[next.x][next.y] == INT32_MAX) {
+                        distances[next.x][next.y] = distance + 1;
+                        bfs_queue.emplace(next, distance + 1);
+                    }
+                }
+            }
+            std::vector<Target> targets;
+
+            for (const auto& [type, position, hp] : units) {
+                if (hp > 0 && type != current.type) {
+                    for (const Vec2<int>& direction : directions_basic) {
+                        Vec2 adj = position + direction;
+
+                        if (!blocked(adj)) {
+                            targets.emplace_back(distances[adj.x][adj.y], adj);
                         }
                     }
                 }
-                i++;
             }
-            std::ranges::stable_sort(moves, {}, [](const std::tuple<int, bool, int>& element) -> int { return std::get<2>(element); });
+            std::erase_if(targets, [](const Target& target) -> bool { return target.distance == INT32_MAX; });
 
-            for (const auto& [idx, valid, distance] : moves) {
-                if (valid) {
-                    if (distance) {
-                        position += *(directions_basic.begin() + idx);
+            if (!targets.empty()) {
+                std::ranges::sort(targets, [](const Target& lhs, const Target& rhs) -> bool {
+                    if (lhs.distance != rhs.distance) {
+                        return lhs.distance < rhs.distance;
                     }
-                    break;
+                    return lhs.position.lexicographically_less(rhs.position);
+                });
+
+                if (targets[0].distance > 0) {
+                    Vec2<int> goal = targets[0].position;
+                    std::vector back(row, std::vector(col, INT32_MAX));
+                    std::queue<std::pair<Vec2<int>, int>> queue_back;
+                    back[goal.x][goal.y] = 0;
+                    queue_back.emplace(goal, 0);
+
+                    while (!queue_back.empty()) {
+                        auto [position, distance] = queue_back.front();
+                        queue_back.pop();
+
+                        for (const Vec2<int>& direction : directions_basic) {
+                            Vec2 next = position + direction;
+
+                            if (next.x >= 0 && next.x < row && next.y >= 0 && next.y < col &&
+                                distances[next.x][next.y] == distances[goal.x][goal.y] - distance - 1 && back[next.x][next.y] == INT32_MAX) {
+                                back[next.x][next.y] = distance + 1;
+                                queue_back.emplace(next, distance + 1);
+                            }
+                        }
+                    }
+                    std::vector<Vec2<int>> options;
+
+                    for (const Vec2<int>& direction : directions_basic) {
+                        Vec2 candidate = current.position + direction;
+
+                        if (candidate.x >= 0 && candidate.x < row && candidate.y >= 0 && candidate.y < col &&
+                            back[candidate.x][candidate.y] != INT32_MAX) {
+                            options.push_back(candidate);
+                        }
+                    }
+                    std::ranges::sort(options, [](const Vec2<int>& lhs, const Vec2<int>& rhs) -> bool { return lhs.lexicographically_less(rhs); });
+
+                    if (!options.empty()) {
+                        current.position = options[0];
+                    }
                 }
             }
-            std::vector<std::pair<std::vector<Unit>::iterator, int>> attacks(4);
-            j = 0;
+            std::vector<std::pair<Unit*, int>> adjacent;
 
             for (const Vec2<int>& direction : directions_basic) {
-                Vec2 pos = position + direction;
-                auto itr = std::ranges::find_if(
-                    units, [&type, &pos](const Unit& unit) -> bool { return unit.type != type && unit.position == pos && unit.hp > 0; });
-                attacks[j++] = {itr, itr != units.end() ? itr->hp : 0};
-            }
-            std::ranges::stable_sort(attacks, {}, &std::pair<std::vector<Unit>::iterator, int>::second);
+                Vec2 target = current.position + direction;
 
-            for (const std::vector<Unit>::iterator& itr : attacks | std::views::keys) {
-                if (itr != units.end()) {
-                    itr->hp -= type == Unit::GOBLIN ? 3 : 20;
-                    break;
+                for (Unit& unit : units) {
+                    if (unit.hp > 0 && unit.type != current.type && unit.position == target) {
+                        adjacent.emplace_back(&unit, unit.hp);
+                    }
+                }
+            }
+            if (!adjacent.empty()) {
+                std::ranges::sort(adjacent, [](const std::pair<Unit*, int>& lhs, const std::pair<Unit*, int>& rhs) -> bool {
+                    if (lhs.second != rhs.second) {
+                        return lhs.second < rhs.second;
+                    }
+                    return lhs.first->position.lexicographically_less(rhs.first->position);
+                });
+                Unit* victim = adjacent[0].first;
+                victim->hp -= current.type == Unit::ELF ? elf_attack : 3;
+
+                if (victim->hp <= 0) {
+                    if (victim->type == Unit::ELF) {
+                        elves_survived = false;
+                    }
                 }
             }
         }
         std::erase_if(units, [](const Unit& unit) -> bool { return unit.hp <= 0; });
-        std::ranges::sort(units, [](const Vec2<int>& lhs, const Vec2<int>& rhs) -> bool { return lhs.lexicographically_less(rhs); }, &Unit::position);
-        rounds += !end;
-        {
-            std::cout << "Round:" << rounds << std::endl;
-            std::vector copy(map);
-
-            for (const Unit& unit : units) {
-                copy[unit.position.x][unit.position.y] = unit.type == Unit::ELF ? 'E' : 'G';
-            }
-            for (i = 0; i < copy.size(); i++) {
-                std::cout << copy[i] << "\t\t";
-
-                for (const Unit& unit : units | std::views::filter([i](const Unit& u) -> bool { return u.position.x == i; })) {
-                    std::cout << (unit.type == Unit::ELF ? 'E' : 'G') << '(' << unit.hp << ") ";
-                }
-                std::cout << std::endl;
-            }
-            std::cout << std::endl << std::endl;
-        }
+        rounds++;
     }
-    std::cout << rounds << std::endl;
-    return rounds * std::transform_reduce(units.begin(), units.end(), 0, std::plus(), [](const Unit& unit) -> int { return unit.hp; });
+}
+
+int part1(const int elf_attack = 3) {
+    bool elves_survived;
+    const int score = simulation(elf_attack, elves_survived);
+    return score;
 }
 
 /*
@@ -513,7 +572,16 @@ After increasing the Elves' attack power until it is just barely enough for them
 described in your puzzle input?
 */
 
-int part2() { return 0; }
+int part2() {
+    for (int attack = 4;; attack++) {
+        bool elves_survived;
+        const int score = simulation(attack, elves_survived);
+
+        if (elves_survived) {
+            return score;
+        }
+    }
+}
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;
