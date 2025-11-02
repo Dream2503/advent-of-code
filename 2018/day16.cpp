@@ -170,13 +170,12 @@ void run_instruction(std::array<int, 4>& registers, const OpCode op, const int l
 
 int solve_opcodes(std::stringstream& file, std::array<OpCode, OPC>& final_map, const bool only_count3 = false) {
     std::vector<std::pair<int, std::vector<OpCode>>> table(OPC);
+    int result = 0;
+    std::string line;
 
     for (int i = 0; i < OPC; i++) {
         table[i] = {i, std::vector(ALL_OPS.begin(), ALL_OPS.end())};
     }
-    int result = 0;
-    std::string line;
-
     while (std::getline(file, line) && !line.empty()) {
         std::array<int, 4> before, after;
         int opcode, lhs, rhs, res, matches = 0;
@@ -205,7 +204,6 @@ int solve_opcodes(std::stringstream& file, std::array<OpCode, OPC>& final_map, c
     if (only_count3) {
         return result;
     }
-
     for (int i = 0; i < 16; i++) {
         const auto itr = std::ranges::find_if(table, [](const std::pair<int, std::vector<OpCode>>& codes) { return codes.second.size() == 1; });
         const int idx = itr->first;
@@ -239,12 +237,13 @@ What value is contained in register 0 after executing the test program?
 */
 
 int part2() {
+    std::array<int, 4> registers = {};
     std::array<OpCode, OPC> map;
+    std::string line;
     std::stringstream file(input16);
     solve_opcodes(file, map, false);
-    std::string line;
     std::getline(file, line);
-    std::array<int, 4> registers = {};
+
     while (std::getline(file, line)) {
         int opcode, lhs, rhs, res;
         std::sscanf(line.c_str(), "%d %d %d %d", &opcode, &lhs, &rhs, &res);
