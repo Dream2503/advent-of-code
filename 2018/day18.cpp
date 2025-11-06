@@ -164,43 +164,10 @@ What will the total resource value of the lumber collection area be after 10 min
 
 constexpr int size = 50;
 
-std::tuple<int, int, int> surrounding(const std::array<std::string, size>& graph, const int i, const int j) {
-    int ground = 0, tree = 0, lumberyard = 0;
-
-    for (const auto& [dx, dy] : directions_complete) {
-        int x = i + dx, y = j + dy;
-
-        if (x >= 0 && y >= 0 && x < size && y < size) {
-            switch (graph[x][y]) {
-            case '.':
-                ground++;
-                break;
-
-            case '|':
-                tree++;
-                break;
-
-            case '#':
-                lumberyard++;
-                break;
-
-            default:
-                break;
-            }
-        }
-    }
-    return {ground, tree, lumberyard};
-}
-
-std::string serialize(const std::array<std::string, size>& graph) {
-    std::string res;
-    res.reserve(size * size);
-    return std::reduce(graph.begin(), graph.end(), std::move(res));
-}
+std::string serialize(const std::array<std::string, size>& graph) {}
 
 int part1(const int iteration = 10) {
     int i = 0, cycle_start = -1, cycle_len = -1;
-    std::string line;
     std::array<std::string, size> graph;
     std::vector<int> values;
     std::unordered_map<std::string, int> seen;
@@ -211,7 +178,7 @@ int part1(const int iteration = 10) {
     }
 
     for (int k = 0; k < iteration; k++) {
-        std::string key = serialize(graph);
+        std::string key = std::reduce(graph.begin(), graph.end(), std::string());
 
         if (seen.contains(key)) {
             cycle_start = seen[key];
@@ -223,7 +190,26 @@ int part1(const int iteration = 10) {
 
         for (i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                const auto [ground, tree, lumberyard] = surrounding(graph, i, j);
+                int tree = 0, lumberyard = 0;
+
+                for (const auto& [dx, dy] : directions_complete) {
+                    const int x = i + dx, y = j + dy;
+
+                    if (x >= 0 && y >= 0 && x < size && y < size) {
+                        switch (graph[x][y]) {
+                        case '|':
+                            tree++;
+                            break;
+
+                        case '#':
+                            lumberyard++;
+                            break;
+
+                        default:
+                            break;
+                        }
+                    }
+                }
                 switch (graph[i][j]) {
                 case '.':
                     if (tree >= 3) {
