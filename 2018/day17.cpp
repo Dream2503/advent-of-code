@@ -160,10 +160,9 @@ water can reach is 57.
 How many tiles can the water reach within the range of y values in your scan?
 */
 
-int part1() {
-    enum Tile { SAND, CLAY, FLOW, STILL };
-    Vec2 min(INT32_MAX, INT32_MAX);
-    Vec2 max(0, 0);
+int part1(const bool dry = false) {
+    enum Tile { SAND = '.', CLAY = '#', FLOW = '|', STILL = '~' };
+    Vec2 min(INT32_MAX, INT32_MAX), max(0, 0);
     std::string line;
     std::vector<Vec2<Vec2<int>>> data;
     std::stringstream file(input17);
@@ -183,9 +182,11 @@ int part1() {
         min.y = std::min(min.y, data.back().y.x);
         max.y = std::max(max.y, data.back().y.y);
     }
-    min.x -= 5;
-    max.x += 5;
-    std::vector graph(max.y - min.y, std::vector(max.x - min.x, SAND));
+    min.x--;
+    max.x++;
+    const auto [size_x, size_y] = max - min;
+    std::vector graph(size_y, std::vector(size_x, SAND));
+    std::vector pending(size_y, std::vector(size_x, false));
 
     for (const auto& [wide, high] : data) {
         for (int i = high.x; i < high.y; i++) {
@@ -195,79 +196,108 @@ int part1() {
         }
     }
     std::stack<Vec2<int>> sources;
-    sources.emplace(500, 0);
+    sources.emplace(500 - min.x, 0);
+    pending[0][500 - min.x] = true;
 
-    for (int j = 0; j < 123; j++) {
-        Vec2 source = sources.top();
+    while (!sources.empty()) {
+        auto [x, y] = sources.top();
         sources.pop();
+        pending[y][x] = false;
 
-        while (source.y < max.y - min.y && graph[source.y][source.x - min.x] == SAND) {
-            graph[source.y++][source.x - min.x] = FLOW;
+        while (y + 1 < size_y && (graph[y][x] == SAND || graph[y][x] == FLOW) && (graph[y + 1][x] == SAND || graph[y + 1][x] == FLOW)) {
+            graph[y][x] = FLOW;
+            y++;
         }
-        if (source.y >= max.y - min.y || graph[source.y][source.x - min.x] == FLOW) {
+        if (y >= size_y) {
             continue;
         }
+        if (graph[y][x] == SAND) {
+            graph[y][x] = FLOW;
+        }
+        if (y + 1 >= size_y) {
+            continue;
+        }
+        if (graph[y + 1][x] == SAND || graph[y + 1][x] == FLOW) {
+            if (y + 1 < size_y && !pending[y + 1][x]) {
+                sources.emplace(x, y + 1);
+                pending[y + 1][x] = true;
+            }
+            continue;
+        }
+        bool left_wall = false, left_spill = false;
+        int left = x;
+
         while (true) {
-            bool flag = false;
-            source.y--;
-            Vec2 layer = source;
-            graph[layer.y][layer.x-- - min.x] = STILL;
-
-            while ((graph[layer.y][layer.x - min.x] == SAND || graph[layer.y][layer.x - min.x] == FLOW) &&
-                   graph[layer.y + 1][layer.x - min.x] != SAND) {
-                graph[layer.y][layer.x-- - min.x] = STILL;
-            }
-            if (graph[layer.y + 1][layer.x - min.x] == SAND) {
-                sources.push(layer);
-                flag = true;
-            }
-            layer = source;
-            layer.x++;
-
-            while ((graph[layer.y][layer.x - min.x] == SAND || graph[layer.y][layer.x - min.x] == FLOW) &&
-                   graph[layer.y + 1][layer.x - min.x] != SAND) {
-                graph[layer.y][layer.x++ - min.x] = STILL;
-            }
-            if (graph[layer.y + 1][layer.x - min.x] == SAND) {
-                sources.push(layer);
-                flag = true;
-            }
-            if (flag) {
+            if (left - 1 < 0) {
+                left_spill = true;
                 break;
+            }
+            if (graph[y][left - 1] == CLAY) {
+                left_wall = true;
+                break;
+            }
+            if (graph[y + 1][left - 1] == SAND || graph[y + 1][left - 1] == FLOW) {
+                left_spill = true;
+                left -= 1;
+                break;
+            }
+            left -= 1;
+        }
+        bool right_wall = false, right_spill = false;
+        int right = x;
+
+        while (true) {
+            if (right + 1 >= size_x) {
+                right_spill = true;
+                break;
+            }
+            if (graph[y][right + 1] == CLAY) {
+                right_wall = true;
+                break;
+            }
+            if (graph[y + 1][right + 1] == SAND || graph[y + 1][right + 1] == FLOW) {
+                right_spill = true;
+                right += 1;
+                break;
+            }
+            right += 1;
+        }
+
+        if (left_wall && right_wall) {
+            for (int i = left; i <= right; i++) {
+                graph[y][i] = STILL;
+            }
+            if (y - 1 >= 0 && !pending[y - 1][x]) {
+                sources.emplace(x, y - 1);
+                pending[y - 1][x] = true;
+            }
+        } else {
+            for (int i = left; i <= right; i++) {
+                graph[y][i] = FLOW;
+            }
+            if (left_spill && left >= 0 && y >= 0 && left < size_x && y + 1 < size_y && !pending[y][left]) {
+                sources.emplace(left, y);
+                pending[y][left] = true;
+            }
+            if (right_spill && right >= 0 && y >= 0 && right < size_x && y + 1 < size_y && !pending[y][right]) {
+                sources.emplace(right, y);
+                pending[y][right] = true;
             }
         }
     }
-
-    for (const std::vector<Tile>& row : graph) {
-        for (const Tile tile : row) {
-            switch (tile) {
-            case SAND:
-                std::cout << '.';
-                break;
-
-            case CLAY:
-                std::cout << '#';
-                break;
-
-            case FLOW:
-                std::cout << '|';
-                break;
-
-            case STILL:
-                std::cout << '~';
-                break;
-            }
-        }
-        std::cout << std::endl;
-    }
-    return 0;
+    return std::ranges::count_if(graph | std::views::join, [dry](const Tile tile) -> bool { return (!dry && tile == FLOW) || tile == STILL; });
 }
 
 /*
 --- Part Two ---
+After a very long time, the water spring will run dry. How much water will be retained?
+
+In the example above, water that won't eventually drain out is shown as ~, a total of 29 tiles.
+
+How many water tiles are left after the water spring stops producing water and all remaining water not at rest has drained?
 */
 
-int part2() { return 0; }
+int part2() { return part1(true); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;
