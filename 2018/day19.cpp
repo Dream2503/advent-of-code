@@ -94,6 +94,14 @@ int part1(const int start = 0) {
             registers[res] = registers[lhs] * registers[rhs];
         } else if (op == "muli") {
             registers[res] = registers[lhs] * rhs;
+        } else if (op == "banr") {
+            registers[res] = registers[lhs] & registers[rhs];
+        } else if (op == "bani") {
+            registers[res] = registers[lhs] & rhs;
+        } else if (op == "borr") {
+            registers[res] = registers[lhs] | registers[rhs];
+        } else if (op == "bori") {
+            registers[res] = registers[lhs] | rhs;
         } else if (op == "setr") {
             registers[res] = registers[lhs];
         } else if (op == "seti") {
