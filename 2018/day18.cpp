@@ -175,7 +175,6 @@ int part1(const int iteration = 10) {
     while (std::getline(file, line)) {
         graph[i++] = line;
     }
-
     for (int k = 0; k < iteration; k++) {
         std::string key = std::reduce(graph.begin(), graph.end(), std::string());
 
