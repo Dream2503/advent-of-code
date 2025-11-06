@@ -164,8 +164,6 @@ What will the total resource value of the lumber collection area be after 10 min
 
 constexpr int size = 50;
 
-std::string serialize(const std::array<std::string, size>& graph) {}
-
 int part1(const int iteration = 10) {
     int i = 0, cycle_start = -1, cycle_len = -1;
     std::string line;
