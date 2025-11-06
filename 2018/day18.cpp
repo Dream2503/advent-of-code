@@ -168,6 +168,7 @@ std::string serialize(const std::array<std::string, size>& graph) {}
 
 int part1(const int iteration = 10) {
     int i = 0, cycle_start = -1, cycle_len = -1;
+    std::string line;
     std::array<std::string, size> graph;
     std::vector<int> values;
     std::unordered_map<std::string, int> seen;
