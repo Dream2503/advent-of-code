@@ -10,13 +10,11 @@ if [[ $1 == "-optimize" ]]; then
     optimization=true
     shift
 fi
-
 if [[ $# -eq 0 ]]; then
     echo "Error: No year directories provided."
     echo "Usage: $0 [-debug] <year1> [year2] [year3] ..."
     exit 1
 fi
-
 executables=()
 total_compile_time=0
 total_run_time=0
@@ -24,7 +22,8 @@ compile_start=$(date +%s.%N)
 
 for year in "$@"; do
     echo "==== Processing year $year ===="
-    for file in "$year"/day{1..25}.cpp; do
+    
+	for file in "$year"/day{1..25}.cpp; do
         if [[ -f "$file" ]]; then
             exe="${file%.cpp}"
             echo "Compiling $file ..."
@@ -42,7 +41,6 @@ for year in "$@"; do
         fi
     done
 done
-
 echo "---------------------------------"
 compile_end=$(date +%s.%N)
 total_compile_time=$(echo "$compile_end - $compile_start" | bc)
@@ -53,10 +51,8 @@ for exe in "${executables[@]}"; do
     ./"$exe"
     echo "---------------------------------"
 done
-
 run_end=$(date +%s.%N)
 total_run_time=$(echo "$run_end - $run_start" | bc)
-
 echo "Total compilation time: $total_compile_time seconds"
 echo "Total execution time:   $total_run_time seconds"
 
@@ -93,5 +89,4 @@ echo "All compiled files removed."
 #    done
 #    echo "---------------------------------"
 #done
-#
 #echo "Total matches found: $total_matches"

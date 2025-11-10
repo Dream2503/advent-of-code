@@ -16,11 +16,11 @@
 #include <unordered_set>
 
 inline std::string md5_hash(const std::string& input) noexcept {
-    uint8_t digest[0x10];
+	std::array<uint8_t, 0x10> digest;
     EVP_MD_CTX* ctx = EVP_MD_CTX_new();
     EVP_DigestInit_ex(ctx, EVP_md5(), nullptr);
     EVP_DigestUpdate(ctx, input.c_str(), input.size());
-    EVP_DigestFinal_ex(ctx, digest, nullptr);
+    EVP_DigestFinal_ex(ctx, digest.begin(), nullptr);
     EVP_MD_CTX_free(ctx);
     std::stringstream ss;
 
