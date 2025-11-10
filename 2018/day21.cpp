@@ -32,7 +32,7 @@ What is the lowest non-negative integer value for register 0 that causes the pro
 same instruction multiple times counts as multiple instructions executed.)
 */
 
-int part1(bool upper_bound = false) {
+int part1(const bool upper_bound = false) {
     std::unordered_set<uint64_t> seen;
     uint64_t last = 0, r5 = 0;
 
