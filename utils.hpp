@@ -177,6 +177,7 @@ struct Vec2 {
     T x, y;
 
     constexpr bool operator==(const Vec2& vec2) const noexcept { return x == vec2.x && y == vec2.y; }
+    constexpr bool operator==(const T& value) const noexcept { return x == value && y == value; }
     constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value; }
     constexpr Vec2 operator+(const Vec2& vec2) const noexcept { return {x + vec2.x, y + vec2.y}; }
     constexpr Vec2 operator-(const Vec2& vec2) const noexcept { return {x - vec2.x, y - vec2.y}; }
@@ -223,6 +224,7 @@ struct Vec3 {
     T x, y, z = 0;
 
     constexpr bool operator==(const Vec3& vec3) const noexcept { return x == vec3.x && y == vec3.y && z == vec3.z; }
+    constexpr bool operator==(const T& value) const noexcept { return x == value && y == value && z == int valuealue; }
     constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value && z >= value; }
     constexpr Vec3 operator+(const Vec3& vec3) const noexcept { return {x + vec3.x, y + vec3.y, z + vec3.z}; }
     constexpr Vec3 operator-(const Vec3& vec3) const noexcept { return {x - vec3.x, y - vec3.y, z - vec3.z}; }
