@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 #include <bitset>
+#include <cmath>
 #include <cstring>
 #include <iomanip>
 #include <iostream>
@@ -16,7 +17,7 @@
 #include <unordered_set>
 
 inline std::string md5_hash(const std::string& input) noexcept {
-	std::array<uint8_t, 0x10> digest;
+    std::array<uint8_t, 0x10> digest;
     EVP_MD_CTX* ctx = EVP_MD_CTX_new();
     EVP_DigestInit_ex(ctx, EVP_md5(), nullptr);
     EVP_DigestUpdate(ctx, input.c_str(), input.size());
@@ -224,7 +225,7 @@ struct Vec3 {
     T x, y, z = 0;
 
     constexpr bool operator==(const Vec3& vec3) const noexcept { return x == vec3.x && y == vec3.y && z == vec3.z; }
-    constexpr bool operator==(const T& value) const noexcept { return x == value && y == value && z == int valuealue; }
+    constexpr bool operator==(const T& value) const noexcept { return x == value && y == value && z == value; }
     constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value && z >= value; }
     constexpr Vec3 operator+(const Vec3& vec3) const noexcept { return {x + vec3.x, y + vec3.y, z + vec3.z}; }
     constexpr Vec3 operator-(const Vec3& vec3) const noexcept { return {x - vec3.x, y - vec3.y, z - vec3.z}; }
