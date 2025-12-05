@@ -108,7 +108,38 @@ Adding up all the invalid IDs in this example produces 4174379265.
 What do you get if you add up all of the invalid IDs using these new rules?
 */
 
-uint64_t part2() { return 0; }
+uint64_t part2() {
+    uint64_t res = 0;
+    std::string line;
+    std::stringstream file(input2);
+
+    while (std::getline(file, line, ',')) {
+        uint64_t start, end;
+        (std::stringstream(line) >> start).ignore(1) >> end;
+
+        for (int i = start; i<= end; i++) {
+            std::string current = std::to_string(i);
+            const int size = current.size();
+            
+            for (int j = 1; j <= size / 2; j++) {
+                bool match = true;
+                std::string check = current.substr(0, j);
+
+                for (int k = j; k < size; k += j) {
+                    if (current.substr(k, j) != check) {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) {
+                   res += i;
+                   break;
+                }
+            }
+        }
+    }
+    return res;
+}
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;
