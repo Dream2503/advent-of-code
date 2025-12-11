@@ -1,20 +1,9 @@
 #pragma once
-#include <algorithm>
-#include <bitset>
-#include <cmath>
-#include <cstring>
-#include <iomanip>
-#include <iostream>
-#include <list>
-#include <map>
-#include <numeric>
+#include <bits/stdc++.h>
 #include <openssl/evp.h>
-#include <queue>
-#include <ranges>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <unordered_set>
+
+typedef __int128 int128_t;
+typedef __uint128_t uint128_t;
 
 inline std::string md5_hash(const std::string& input) noexcept {
     std::array<uint8_t, 0x10> digest;
@@ -172,7 +161,6 @@ struct std::hash<std::vector<T>> {
     }
 };
 
-
 template <typename T>
 struct Vec2 {
     T x, y;
@@ -180,8 +168,16 @@ struct Vec2 {
     constexpr bool operator==(const Vec2& vec2) const noexcept { return x == vec2.x && y == vec2.y; }
     constexpr bool operator==(const T& value) const noexcept { return x == value && y == value; }
     constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value; }
-    constexpr Vec2 operator+(const Vec2& vec2) const noexcept { return {x + vec2.x, y + vec2.y}; }
-    constexpr Vec2 operator-(const Vec2& vec2) const noexcept { return {x - vec2.x, y - vec2.y}; }
+
+    template <typename U>
+    constexpr auto operator+(const Vec2<U>& vec2) const noexcept {
+        return Vec2(x + vec2.x, y + vec2.y);
+    }
+
+    template <typename U>
+    constexpr auto operator-(const Vec2<U>& vec2) const noexcept {
+        return Vec2(x - vec2.x, y - vec2.y);
+    }
 
     constexpr Vec2& operator+=(const Vec2& vec2) noexcept {
         x += vec2.x;
@@ -210,6 +206,12 @@ struct Vec2 {
     bool lexicographically_less(const Vec2<U>& vec2) const noexcept {
         return x < vec2.x || (x == vec2.x && y < vec2.y);
     }
+
+    template <typename U>
+    auto manhattan_distance(const Vec2<U> vec2) const noexcept {
+        auto difference = *this - vec2;
+        return std::abs(difference.x) + std::abs(difference.y);
+    }
 };
 
 template <typename T>
@@ -222,13 +224,21 @@ constexpr std::initializer_list<Vec2<int>> directions_complete = {{-1, -1}, {-1,
 
 template <typename T>
 struct Vec3 {
-    T x, y, z = 0;
+    T x, y, z;
 
     constexpr bool operator==(const Vec3& vec3) const noexcept { return x == vec3.x && y == vec3.y && z == vec3.z; }
     constexpr bool operator==(const T& value) const noexcept { return x == value && y == value && z == value; }
     constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value && z >= value; }
-    constexpr Vec3 operator+(const Vec3& vec3) const noexcept { return {x + vec3.x, y + vec3.y, z + vec3.z}; }
-    constexpr Vec3 operator-(const Vec3& vec3) const noexcept { return {x - vec3.x, y - vec3.y, z - vec3.z}; }
+
+    template <typename U>
+    constexpr auto operator+(const Vec3<U>& vec3) const noexcept {
+        return Vec3(x + vec3.x, y + vec3.y, z + vec3.z);
+    }
+
+    template <typename U>
+    constexpr auto operator-(const Vec3<U>& vec3) const noexcept {
+        return Vec3(x - vec3.x, y - vec3.y, z - vec3.z);
+    }
 
     constexpr Vec3& operator+=(const Vec3& vec3) noexcept {
         x += vec3.x;
@@ -240,6 +250,12 @@ struct Vec3 {
     template <typename U>
     constexpr bool operator<(const Vec3<U>& vec3) const noexcept {
         return x < vec3.x && y < vec3.y && z < vec3.z;
+    }
+
+    template <typename U>
+    auto manhattan_distance(const Vec3<U> vec3) const noexcept {
+        auto difference = *this - vec3;
+        return std::abs(difference.x) + std::abs(difference.y) + std::abs(difference.z);
     }
 };
 
