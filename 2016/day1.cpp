@@ -47,7 +47,7 @@ bool update(std::unordered_set<std::pair<int, int>>& seen, int& i, int& j, const
 }
 
 int part1(const bool twice = false) {
-    enum Face { N, E, S, W } facing = N;
+    enum class Face { N, E, S, W } facing = Face::N;
     int i = 0, j = 0;
     std::unordered_set<std::pair<int, int>> seen;
     std::stringstream ss(input1);
@@ -58,26 +58,22 @@ int part1(const bool twice = false) {
         int distance;
         std::string delimiter;
         (ss >> direction >> distance).ignore(2);
+        facing = static_cast<Face>((static_cast<int>(facing) + (direction == 'R' ? 1 : 3)) % 4);
 
-        if (direction == 'R') {
-            facing = static_cast<Face>((facing + 1) % 4);
-        } else {
-            facing = static_cast<Face>((facing + 3) % 4);
-        }
         switch (facing) {
-        case N:
+        case Face::N:
             state = update(seen, i, j, i + distance, j, twice);
             break;
 
-        case E:
+        case Face::E:
             state = update(seen, i, j, i, j + distance, twice);
             break;
 
-        case S:
+        case Face::S:
             state = update(seen, i, j, i - distance, j, twice);
             break;
 
-        case W:
+        case Face::W:
             state = update(seen, i, j, i, j - distance, twice);
             break;
         }

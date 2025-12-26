@@ -73,60 +73,31 @@ to 10 and a Y coordinate from 0 to 10, this total is 114.
 What is the total risk level for the smallest rectangle that includes 0,0 and the target's coordinates?
 */
 
-void resolve(std::vector<std::vector<int>>& map, const Vec2<int>& position, const int depth, const Vec2<int>& target) {
+inline void resolve(std::vector<std::vector<int>>& map, const Vec2<int>& position, const int depth) {
     if (map[position.y][position.x] == -1) {
-        if (position == 0) {
-            map[position.y][position.x] = 0;
-        } else if (!position.y) {
+        if (!position.y) {
             map[position.y][position.x] = position.x * 16807;
         } else if (!position.x) {
             map[position.y][position.x] = position.y * 48271;
         } else {
-            resolve(map, {position.x - 1, position.y}, depth, target);
-            resolve(map, {position.x, position.y - 1}, depth, target);
-
-            if (position == target) {
-                map[position.y][position.x] = 0;
-            } else {
-                map[position.y][position.x] = map[position.y][position.x - 1] * map[position.y - 1][position.x];
-            }
+            resolve(map, {position.x - 1, position.y}, depth);
+            resolve(map, {position.x, position.y - 1}, depth);
+            map[position.y][position.x] = map[position.y][position.x - 1] * map[position.y - 1][position.x];
         }
         map[position.y][position.x] = (map[position.y][position.x] + depth) % 20183;
     }
 }
 
 int part1() {
-    enum Tile { ROCK, WET, NARROW };
     int depth;
     Vec2<int> target;
     std::sscanf(input22, "depth: %d\ntarget: %d,%d", &depth, &target.x, &target.y);
-    depth = 510;
-    target = {10, 10};
     std::vector map(target.y + 1, std::vector(target.x + 1, -1));
-    std::vector grid(target.y + 1, std::vector(target.x + 1, ROCK));
-    resolve(map, target, depth, target);
-    map[0][0] = map[target.y][target.x];
-
-    for (int j = 0; j <= target.y; j++) {
-        for (int i = 0; i <= target.x; i++) {
-            switch (grid[j][i] = static_cast<Tile>(map[j][i] % 3)) {
-            case ROCK:
-                std::cout << '.';
-                break;
-
-            case WET:
-                std::cout << '=';
-                break;
-
-            case NARROW:
-                std::cout << '|';
-                break;
-            }
-        }
-        std::cout << std::endl;
-    }
-    return std::transform_reduce(grid.begin(), grid.end(), 0, std::plus(),
-                                 [](const std::vector<Tile>& row) -> int { return std::reduce(row.begin(), row.end(), 0); });
+    resolve(map, target, depth);
+    map[0][0] = map[target.y][target.x] = 0;
+    return std::transform_reduce(map.begin(), map.end(), 0, std::plus(), [](const std::vector<int>& row) -> int {
+        return std::transform_reduce(row.begin(), row.end(), 0, std::plus(), [](const int element) -> int { return element % 3; });
+    });
 }
 
 /*
@@ -414,7 +385,72 @@ minutes each) and the remaining 24 minutes are spent moving.
 What is the fewest number of minutes you can take to reach the target?
 */
 
-int part2() { return 0; }
+int part2() {
+    enum class Gear { NEITHER, TORCH, CLIMBING, SAME };
+
+    struct State {
+        Vec2<int> position;
+        Gear gear;
+        int time;
+    };
+    static constexpr std::array TRANSITION = {std::array{Gear::SAME, Gear::CLIMBING, Gear::TORCH},
+                                              std::array{Gear::CLIMBING, Gear::SAME, Gear::NEITHER},
+                                              std::array{Gear::TORCH, Gear::NEITHER, Gear::SAME}};
+    int depth;
+    Vec2<int> target;
+    std::sscanf(input22, "depth: %d\ntarget: %d,%d", &depth, &target.x, &target.y);
+    std::vector map(target.y + 1, std::vector(target.x + 1, -1));
+    std::priority_queue<State, std::vector<State>, decltype([](const State& lhs, const State& rhs) -> bool { return lhs.time > rhs.time; })> queue;
+    std::unordered_set<std::pair<Vec2<int>, Gear>> seen;
+    resolve(map, target, depth);
+    map[0][0] = map[target.y][target.x] = 0;
+    queue.emplace(Vec2(0, 0), Gear::TORCH, 0);
+
+    while (!queue.empty()) {
+        const auto [position, current_gear, time] = queue.top();
+        queue.pop();
+
+        if (position == target) {
+            if (current_gear == Gear::TORCH) {
+                return time;
+            }
+            queue.emplace(position, Gear::TORCH, time + 7);
+            continue;
+        }
+        if (seen.contains({position, current_gear})) {
+            continue;
+        }
+        const auto current_tile = map[position.y][position.x] % 3;
+        seen.insert({position, current_gear});
+
+        for (const auto& [dx, dy] : directions_basic) {
+            const int ny = position.y + dy, nx = position.x + dx;
+
+            if (ny < 0 || nx < 0) {
+                continue;
+            }
+            if (ny == map.size() || nx == map.front().size()) {
+                if (ny == map.size()) {
+                    map.emplace_back(map.front().size(), -1);
+                } else {
+                    for (int j = 0; j < map.size(); j++) {
+                        map[j].push_back(-1);
+                    }
+                }
+                resolve(map, {static_cast<int>(map.front().size()) - 1, static_cast<int>(map.size()) - 1}, depth);
+            }
+            const int next_tile = map[ny][nx] % 3;
+            Gear next_gear = TRANSITION[current_tile][next_tile];
+
+            if (next_gear == Gear::SAME || next_gear == current_gear) {
+                queue.emplace(Vec2(nx, ny), current_gear, time + 1);
+            } else {
+                queue.emplace(position, next_gear, time + 7);
+            }
+        }
+    }
+    return -1;
+}
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

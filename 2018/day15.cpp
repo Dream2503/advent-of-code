@@ -306,7 +306,7 @@ What is the outcome of the combat described in your puzzle input?
 */
 
 struct Unit {
-    enum Type { GOBLIN, ELF } type;
+    enum class Type { GOBLIN, ELF } type;
     Vec2<int> position;
     int hp;
 };
@@ -327,7 +327,7 @@ int simulation(int elf_attack, bool& elves_survived) {
     while (std::getline(file, line)) {
         for (int j = 0; j < line.length(); j++) {
             if (isalpha(line[j])) {
-                units.emplace_back(line[j] == 'G' ? Unit::GOBLIN : Unit::ELF, Vec2(i, j), 200);
+                units.emplace_back(line[j] == 'G' ? Unit::Type::GOBLIN : Unit::Type::ELF, Vec2(i, j), 200);
                 line[j] = '.';
             }
         }
@@ -348,7 +348,7 @@ int simulation(int elf_attack, bool& elves_survived) {
 
             for (const Unit& unit : units) {
                 if (unit.hp > 0) {
-                    (unit.type == Unit::GOBLIN ? any_goblin : any_elf) = true;
+                    (unit.type == Unit::Type::GOBLIN ? any_goblin : any_elf) = true;
 
                     if (any_goblin && any_elf) {
                         break;
@@ -469,10 +469,10 @@ int simulation(int elf_attack, bool& elves_survived) {
                     return lhs.first->position.lexicographically_less(rhs.first->position);
                 });
                 Unit* victim = adjacent[0].first;
-                victim->hp -= current.type == Unit::ELF ? elf_attack : 3;
+                victim->hp -= current.type == Unit::Type::ELF ? elf_attack : 3;
 
                 if (victim->hp <= 0) {
-                    if (victim->type == Unit::ELF) {
+                    if (victim->type == Unit::Type::ELF) {
                         elves_survived = false;
                     }
                 }

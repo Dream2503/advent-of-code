@@ -161,6 +161,17 @@ struct std::hash<std::vector<T>> {
     }
 };
 
+template <typename Enum, int size>
+requires std::is_enum_v<Enum>
+constexpr std::array<Enum, size> enum_to_array() {
+    std::array<Enum, size> values;
+
+    for (int i = 0; i < size; i++) {
+        values[i] = static_cast<Enum>(i);
+    }
+    return values;
+}
+
 template <typename T>
 struct Vec2 {
     T x, y;
@@ -170,12 +181,12 @@ struct Vec2 {
     constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value; }
 
     template <typename U>
-    constexpr auto operator+(const Vec2<U>& vec2) const noexcept {
-        return Vec2(x + vec2.x, y + vec2.y);
+    constexpr auto operator+(const Vec2<U>& vec2) const noexcept -> Vec2<decltype(x + vec2.x)> {
+        return {x + vec2.x, y + vec2.y};
     }
 
     template <typename U>
-    constexpr auto operator-(const Vec2<U>& vec2) const noexcept {
+    constexpr auto operator-(const Vec2<U>& vec2) const noexcept -> Vec2<decltype(x - vec2.x)> {
         return Vec2(x - vec2.x, y - vec2.y);
     }
 
@@ -231,12 +242,12 @@ struct Vec3 {
     constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value && z >= value; }
 
     template <typename U>
-    constexpr auto operator+(const Vec3<U>& vec3) const noexcept {
+    constexpr auto operator+(const Vec3<U>& vec3) const noexcept -> Vec3<decltype(x + vec3.x)> {
         return Vec3(x + vec3.x, y + vec3.y, z + vec3.z);
     }
 
     template <typename U>
-    constexpr auto operator-(const Vec3<U>& vec3) const noexcept {
+    constexpr auto operator-(const Vec3<U>& vec3) const noexcept -> Vec3<decltype(x - vec3.x)> {
         return Vec3(x - vec3.x, y - vec3.y, z - vec3.z);
     }
 
@@ -253,7 +264,7 @@ struct Vec3 {
     }
 
     template <typename U>
-    auto manhattan_distance(const Vec3<U> vec3) const noexcept {
+    auto manhattan_distance(const Vec3<U> vec3) const noexcept -> decltype(x - vec3.x) {
         auto difference = *this - vec3;
         return std::abs(difference.x) + std::abs(difference.y) + std::abs(difference.z);
     }
@@ -263,5 +274,17 @@ template <typename T>
 struct std::hash<Vec3<T>> {
     size_t operator()(const Vec3<T>& vec3) const noexcept {
         return std::hash<std::pair<size_t, T>>()({std::hash<std::pair<T, T>>()({vec3.x, vec3.y}), vec3.z});
+    }
+};
+
+template <typename T>
+struct Vec4 {
+    T x, y, z, t;
+};
+
+template <typename T>
+struct std::hash<Vec4<T>> {
+    size_t operator()(const Vec4<T>& vec4) const noexcept {
+        return std::hash<std::pair<Vec2<T>, Vec2<T>>>()({Vec2(vec4.x, vec4.y), Vec2(vec4.z, vec4.t)});
     }
 };

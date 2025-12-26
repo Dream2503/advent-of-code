@@ -161,7 +161,7 @@ How many tiles can the water reach within the range of y values in your scan?
 */
 
 int part1(const bool dry = false) {
-    enum Tile { SAND = '.', CLAY = '#', FLOW = '|', STILL = '~' };
+    enum class Tile { SAND = '.', CLAY = '#', FLOW = '|', STILL = '~' };
     Vec2 min(INT32_MAX, INT32_MAX), max(0, 0);
     std::string line;
     std::vector<Vec2<Vec2<int>>> data;
@@ -185,13 +185,13 @@ int part1(const bool dry = false) {
     min.x--;
     max.x++;
     const auto [size_x, size_y] = max - min;
-    std::vector graph(size_y, std::vector(size_x, SAND));
+    std::vector graph(size_y, std::vector(size_x, Tile::SAND));
     std::vector pending(size_y, std::vector(size_x, false));
 
     for (const auto& [wide, high] : data) {
         for (int i = high.x; i < high.y; i++) {
             for (int j = wide.x; j < wide.y; j++) {
-                graph[i - min.y][j - min.x] = CLAY;
+                graph[i - min.y][j - min.x] = Tile::CLAY;
             }
         }
     }
@@ -204,20 +204,21 @@ int part1(const bool dry = false) {
         sources.pop();
         pending[y][x] = false;
 
-        while (y + 1 < size_y && (graph[y][x] == SAND || graph[y][x] == FLOW) && (graph[y + 1][x] == SAND || graph[y + 1][x] == FLOW)) {
-            graph[y][x] = FLOW;
+        while (y + 1 < size_y && (graph[y][x] == Tile::SAND || graph[y][x] == Tile::FLOW) &&
+               (graph[y + 1][x] == Tile::SAND || graph[y + 1][x] == Tile::FLOW)) {
+            graph[y][x] = Tile::FLOW;
             y++;
         }
         if (y >= size_y) {
             continue;
         }
-        if (graph[y][x] == SAND) {
-            graph[y][x] = FLOW;
+        if (graph[y][x] == Tile::SAND) {
+            graph[y][x] = Tile::FLOW;
         }
         if (y + 1 >= size_y) {
             continue;
         }
-        if (graph[y + 1][x] == SAND || graph[y + 1][x] == FLOW) {
+        if (graph[y + 1][x] == Tile::SAND || graph[y + 1][x] == Tile::FLOW) {
             if (y + 1 < size_y && !pending[y + 1][x]) {
                 sources.emplace(x, y + 1);
                 pending[y + 1][x] = true;
@@ -232,11 +233,11 @@ int part1(const bool dry = false) {
                 left_spill = true;
                 break;
             }
-            if (graph[y][left - 1] == CLAY) {
+            if (graph[y][left - 1] == Tile::CLAY) {
                 left_wall = true;
                 break;
             }
-            if (graph[y + 1][left - 1] == SAND || graph[y + 1][left - 1] == FLOW) {
+            if (graph[y + 1][left - 1] == Tile::SAND || graph[y + 1][left - 1] == Tile::FLOW) {
                 left_spill = true;
                 left -= 1;
                 break;
@@ -251,11 +252,11 @@ int part1(const bool dry = false) {
                 right_spill = true;
                 break;
             }
-            if (graph[y][right + 1] == CLAY) {
+            if (graph[y][right + 1] == Tile::CLAY) {
                 right_wall = true;
                 break;
             }
-            if (graph[y + 1][right + 1] == SAND || graph[y + 1][right + 1] == FLOW) {
+            if (graph[y + 1][right + 1] == Tile::SAND || graph[y + 1][right + 1] == Tile::FLOW) {
                 right_spill = true;
                 right += 1;
                 break;
@@ -265,7 +266,7 @@ int part1(const bool dry = false) {
 
         if (left_wall && right_wall) {
             for (int i = left; i <= right; i++) {
-                graph[y][i] = STILL;
+                graph[y][i] = Tile::STILL;
             }
             if (y - 1 >= 0 && !pending[y - 1][x]) {
                 sources.emplace(x, y - 1);
@@ -273,7 +274,7 @@ int part1(const bool dry = false) {
             }
         } else {
             for (int i = left; i <= right; i++) {
-                graph[y][i] = FLOW;
+                graph[y][i] = Tile::FLOW;
             }
             if (left_spill && left >= 0 && y >= 0 && left < size_x && y + 1 < size_y && !pending[y][left]) {
                 sources.emplace(left, y);
@@ -285,7 +286,8 @@ int part1(const bool dry = false) {
             }
         }
     }
-    return std::ranges::count_if(graph | std::views::join, [dry](const Tile tile) -> bool { return (!dry && tile == FLOW) || tile == STILL; });
+    return std::ranges::count_if(graph | std::views::join,
+                                 [dry](const Tile tile) -> bool { return (!dry && tile == Tile::FLOW) || tile == Tile::STILL; });
 }
 
 /*

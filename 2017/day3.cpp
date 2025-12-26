@@ -25,9 +25,31 @@ For example:
 How many steps are required to carry the data from the square identified in your puzzle input all the way to the access port?
 */
 
+enum class Direction { UP, LEFT, DOWN, RIGHT };
+
+void update(Direction current, Vec2<int>& position) {
+    switch (current) {
+    case Direction::UP:
+        position.y++;
+        break;
+
+    case Direction::LEFT:
+        position.x--;
+        break;
+
+    case Direction::DOWN:
+        position.y--;
+        break;
+
+    case Direction::RIGHT:
+        position.x++;
+        break;
+    }
+}
+
 int part1() {
-    enum Direction { UP, LEFT, DOWN, RIGHT } current = UP;
     const int target = std::atoi(input3);
+    auto current = Direction::UP;
     int i = 1, area = 0;
     Vec2 position = {0, 0};
 
@@ -40,24 +62,11 @@ int part1() {
             int k = 0;
 
             while (i < target && k < area / 4) {
-                switch (current) {
-                case UP:
-                    position.y++;
-                    break;
-                case LEFT:
-                    position.x--;
-                    break;
-                case DOWN:
-                    position.y--;
-                    break;
-                case RIGHT:
-                    position.x++;
-                    break;
-                }
+                update(current, position);
                 i++;
                 k++;
             }
-            current = static_cast<Direction>((current + 1) % 4);
+            current = static_cast<Direction>((static_cast<int>(current) + 1) % 4);
         }
     }
     return std::abs(position.x) + std::abs(position.y);
@@ -86,8 +95,8 @@ What is the first value written that is larger than your puzzle input?
 */
 
 int part2() {
-    enum Direction { UP, LEFT, DOWN, RIGHT } current = UP;
     const int target = std::atoi(input3);
+    auto current = Direction::UP;
     int area = 0;
     Vec2 position = {0, 0};
     std::unordered_map<Vec2<int>, int> map;
@@ -102,23 +111,7 @@ int part2() {
             int k = 0;
 
             while (map[position] < target && k < area / 4) {
-                switch (current) {
-                case UP:
-                    position.y++;
-                    break;
-
-                case LEFT:
-                    position.x--;
-                    break;
-
-                case DOWN:
-                    position.y--;
-                    break;
-
-                case RIGHT:
-                    position.x++;
-                    break;
-                }
+                update(current, position);
                 int& value = map[position];
 
                 for (const auto& [x, y] : directions_complete) {
@@ -126,7 +119,7 @@ int part2() {
                 }
                 k++;
             }
-            current = static_cast<Direction>((current + 1) % 4);
+            current = static_cast<Direction>((static_cast<int>(current) + 1) % 4);
         }
     }
     return map[position];

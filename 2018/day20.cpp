@@ -151,7 +151,7 @@ What is the largest number of doors you would be required to pass through to rea
 your starting location to that room would require passing through the most doors; what is the fewest doors you can pass through to reach it?
 */
 
-enum State { START = 'X', ROOM = '.', WALL = '#', V_DOOR = '|', H_DOOR = '-' };
+enum class State { START = 'X', ROOM = '.', WALL = '#', V_DOOR = '|', H_DOOR = '-' };
 
 void resolve(const std::string& input, std::unordered_map<Vec2<int>, State>& graph, int& i, Vec2<int>& position) {
     static const int size = input.length();
@@ -161,30 +161,30 @@ void resolve(const std::string& input, std::unordered_map<Vec2<int>, State>& gra
         switch (input[++i]) {
         case 'N':
             position.y--;
-            graph[position] = H_DOOR;
+            graph[position] = State::H_DOOR;
             position.y--;
-            graph[position] = ROOM;
+            graph[position] = State::ROOM;
             break;
 
         case 'S':
             position.y++;
-            graph[position] = H_DOOR;
+            graph[position] = State::H_DOOR;
             position.y++;
-            graph[position] = ROOM;
+            graph[position] = State::ROOM;
             break;
 
         case 'E':
             position.x++;
-            graph[position] = V_DOOR;
+            graph[position] = State::V_DOOR;
             position.x++;
-            graph[position] = ROOM;
+            graph[position] = State::ROOM;
             break;
 
         case 'W':
             position.x--;
-            graph[position] = V_DOOR;
+            graph[position] = State::V_DOOR;
             position.x--;
-            graph[position] = ROOM;
+            graph[position] = State::ROOM;
             break;
 
         case '(':
@@ -219,8 +219,8 @@ int part1(const bool vicinity = false) {
     min -= 1;
     max += 2;
     const int height = max.y - min.y, width = max.x - min.x;
-    std::vector map(height, std::vector(width, WALL));
-    map[0 - min.y][0 - min.x] = START;
+    std::vector map(height, std::vector(width, State::WALL));
+    map[0 - min.y][0 - min.x] = State::START;
 
     for (const auto& [pos, state] : graph) {
         map[pos.y - min.y][pos.x - min.x] = state;
@@ -234,11 +234,11 @@ int part1(const bool vicinity = false) {
         const Vec2 current = queue.front();
         queue.pop();
 
-        for (const Vec2<int>& dir : directions_basic) {
-            Vec2 next = current + dir;
+        for (const Vec2<int>& direction : directions_basic) {
+            Vec2 next = current + direction;
 
-            if (map[next.y - min.y][next.x - min.x] != WALL) {
-                next += dir;
+            if (map[next.y - min.y][next.x - min.x] != State::WALL) {
+                next += direction;
 
                 if (!distance.contains(next)) {
                     distance[next] = distance[current] + 1;

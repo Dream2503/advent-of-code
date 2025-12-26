@@ -173,7 +173,7 @@ In this example, the location of the first crash is 7,3.
 */
 
 struct Cart {
-    enum Direction { LEFT, UP, RIGHT, DOWN } facing, next;
+    enum class Direction { LEFT, UP, RIGHT, DOWN } facing, next;
     int x, y;
 };
 
@@ -193,22 +193,22 @@ int part1(const bool remove = false) {
 
             switch (line[j]) {
             case '<':
-                facing = Cart::LEFT;
+                facing = Cart::Direction::LEFT;
                 is_cart = true;
                 break;
 
             case '^':
-                facing = Cart::UP;
+                facing = Cart::Direction::UP;
                 is_cart = true;
                 break;
 
             case '>':
-                facing = Cart::RIGHT;
+                facing = Cart::Direction::RIGHT;
                 is_cart = true;
                 break;
 
             case 'v':
-                facing = Cart::DOWN;
+                facing = Cart::Direction::DOWN;
                 is_cart = true;
                 break;
 
@@ -216,7 +216,7 @@ int part1(const bool remove = false) {
                 break;
             }
             if (is_cart) {
-                carts.emplace_back(facing, Cart::LEFT, i, j);
+                carts.emplace_back(facing, Cart::Direction::LEFT, i, j);
             }
         }
         map.push_back(line);
@@ -229,78 +229,78 @@ int part1(const bool remove = false) {
 
         for (auto& [facing, next, x, y] : carts) {
             switch (facing) {
-            case Cart::LEFT:
+            case Cart::Direction::LEFT:
                 y--;
                 break;
 
-            case Cart::UP:
+            case Cart::Direction::UP:
                 x--;
                 break;
 
-            case Cart::RIGHT:
+            case Cart::Direction::RIGHT:
                 y++;
                 break;
 
-            case Cart::DOWN:
+            case Cart::Direction::DOWN:
                 x++;
                 break;
             }
             switch (map[x][y]) {
             case '/':
                 switch (facing) {
-                case Cart::LEFT:
-                    facing = Cart::DOWN;
+                case Cart::Direction::LEFT:
+                    facing = Cart::Direction::DOWN;
                     break;
 
-                case Cart::UP:
-                    facing = Cart::RIGHT;
+                case Cart::Direction::UP:
+                    facing = Cart::Direction::RIGHT;
                     break;
 
-                case Cart::RIGHT:
-                    facing = Cart::UP;
+                case Cart::Direction::RIGHT:
+                    facing = Cart::Direction::UP;
                     break;
 
-                case Cart::DOWN:
-                    facing = Cart::LEFT;
+                case Cart::Direction::DOWN:
+                    facing = Cart::Direction::LEFT;
                     break;
                 }
                 break;
 
             case '\\':
                 switch (facing) {
-                case Cart::LEFT:
-                    facing = Cart::UP;
+                case Cart::Direction::LEFT:
+                    facing = Cart::Direction::UP;
                     break;
 
-                case Cart::UP:
-                    facing = Cart::LEFT;
+                case Cart::Direction::UP:
+                    facing = Cart::Direction::LEFT;
                     break;
 
-                case Cart::RIGHT:
-                    facing = Cart::DOWN;
+                case Cart::Direction::RIGHT:
+                    facing = Cart::Direction::DOWN;
                     break;
 
-                case Cart::DOWN:
-                    facing = Cart::RIGHT;
+                case Cart::Direction::DOWN:
+                    facing = Cart::Direction::RIGHT;
                     break;
                 }
                 break;
 
             case '+':
                 switch (next) {
-                case Cart::LEFT:
-                    facing = static_cast<Cart::Direction>((facing + 3) % 4);
+                case Cart::Direction::LEFT:
+                    facing = static_cast<Cart::Direction>((static_cast<int>(facing) + 3) % 4);
                     break;
 
-                case Cart::RIGHT:
-                    facing = static_cast<Cart::Direction>((facing + 1) % 4);
+                case Cart::Direction::RIGHT:
+                    facing = static_cast<Cart::Direction>((static_cast<int>(facing) + 1) % 4);
                     break;
 
-                case Cart::UP:
-                case Cart::DOWN:
+                case Cart::Direction::UP:
+                case Cart::Direction::DOWN:
                     break;
                 }
-                next = static_cast<Cart::Direction>((next + 1) % 3);
+                next = static_cast<Cart::Direction>((static_cast<int>(next) + 1) % 3);
                 break;
 
             default:

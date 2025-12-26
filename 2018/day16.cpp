@@ -76,7 +76,7 @@ puzzle input) - you can ignore it for now.
 Ignoring the opcode numbers, how many samples in your puzzle input behave like three or more opcodes?
 */
 
-enum OpCode {
+enum class OpCode {
     ADDR,
     ADDI,
     MULR,
@@ -95,83 +95,31 @@ enum OpCode {
     EQRR,
 };
 
-constexpr int OPC = 16;
-constexpr std::array ALL_OPS = {
-    ADDR, ADDI, MULR, MULI, BANR, BANI, BORR, BORI, SETR, SETI, GTIR, GTRI, GTRR, EQIR, EQRI, EQRR,
+constexpr std::array<int (*)(const std::array<int, 4>&, const int, const int), 16> ALL_OPR = {
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] + registers[rhs]; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] + rhs; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] * registers[rhs]; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] * rhs; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] & registers[rhs]; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] & rhs; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] | registers[rhs]; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] | rhs; },
+    [](const std::array<int, 4>& registers, const int lhs, [[maybe_unused]] const int rhs) -> int { return registers[lhs]; },
+    []([[maybe_unused]] const std::array<int, 4>& registers, const int lhs, [[maybe_unused]] const int rhs) -> int { return lhs; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return lhs > registers[rhs]; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] > rhs; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] > registers[rhs]; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return lhs == registers[rhs]; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] == rhs; },
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] == registers[rhs]; },
 };
+constexpr std::array ALL_OPS = enum_to_array<OpCode, 16>();
+constexpr int OPC = ALL_OPS.size();
 
-void run_instruction(std::array<int, 4>& registers, const OpCode op, const int lhs, const int rhs, const int res) {
-    switch (op) {
-    case ADDR:
-        registers[res] = registers[lhs] + registers[rhs];
-        break;
-
-    case ADDI:
-        registers[res] = registers[lhs] + rhs;
-        break;
-
-    case MULR:
-        registers[res] = registers[lhs] * registers[rhs];
-        break;
-
-    case MULI:
-        registers[res] = registers[lhs] * rhs;
-        break;
-
-    case BANR:
-        registers[res] = registers[lhs] & registers[rhs];
-        break;
-
-    case BANI:
-        registers[res] = registers[lhs] & rhs;
-        break;
-
-    case BORR:
-        registers[res] = registers[lhs] | registers[rhs];
-        break;
-
-    case BORI:
-        registers[res] = registers[lhs] | rhs;
-        break;
-
-    case SETR:
-        registers[res] = registers[lhs];
-        break;
-
-    case SETI:
-        registers[res] = lhs;
-        break;
-
-    case GTIR:
-        registers[res] = lhs > registers[rhs];
-        break;
-
-    case GTRI:
-        registers[res] = registers[lhs] > rhs;
-        break;
-
-    case GTRR:
-        registers[res] = registers[lhs] > registers[rhs];
-        break;
-
-    case EQIR:
-        registers[res] = lhs == registers[rhs];
-        break;
-
-    case EQRI:
-        registers[res] = registers[lhs] == rhs;
-        break;
-
-    case EQRR:
-        registers[res] = registers[lhs] == registers[rhs];
-        break;
-    }
-}
-
-int solve_opcodes(std::stringstream& file, std::array<OpCode, OPC>& final_map, const bool only_count3 = false) {
-    std::vector<std::pair<int, std::vector<OpCode>>> table(OPC);
+int resolve(std::stringstream& file, std::array<OpCode, OPC>& final_map, const bool only_count3 = false) {
     int result = 0;
     std::string line;
+    std::vector<std::pair<int, std::vector<OpCode>>> table(OPC);
 
     for (int i = 0; i < OPC; i++) {
         table[i] = {i, std::vector(ALL_OPS.begin(), ALL_OPS.end())};
@@ -188,10 +136,10 @@ int solve_opcodes(std::stringstream& file, std::array<OpCode, OPC>& final_map, c
 
         for (int i = table[opcode].second.size() - 1; i >= 0; i--) {
             const OpCode op = table[opcode].second[i];
-            std::array val = before;
-            run_instruction(val, op, lhs, rhs, res);
+            std::array current = before;
+            current[res] = ALL_OPR[static_cast<int>(op)](current, lhs, rhs);
 
-            if (val != after) {
+            if (current != after) {
                 table[opcode].second.erase(table[opcode].second.begin() + i);
             } else {
                 matches++;
@@ -226,7 +174,7 @@ int solve_opcodes(std::stringstream& file, std::array<OpCode, OPC>& final_map, c
 int part1() {
     std::array<OpCode, OPC> opcodes;
     std::stringstream file(input16);
-    return solve_opcodes(file, opcodes, true);
+    return resolve(file, opcodes, true);
 }
 
 /*
@@ -241,13 +189,13 @@ int part2() {
     std::array<OpCode, OPC> map;
     std::string line;
     std::stringstream file(input16);
-    solve_opcodes(file, map, false);
+    resolve(file, map, false);
     std::getline(file, line);
 
     while (std::getline(file, line)) {
         int opcode, lhs, rhs, res;
         std::sscanf(line.c_str(), "%d %d %d %d", &opcode, &lhs, &rhs, &res);
-        run_instruction(registers, map[opcode], lhs, rhs, res);
+        registers[res] = ALL_OPR[static_cast<int>(map[opcode])](registers, lhs, rhs);
     }
     return registers[0];
 }

@@ -98,8 +98,8 @@ Given your actual map, after 10000 bursts of activity, how many bursts cause a n
 */
 
 int part1(const int iteration = 10'000, const bool evolve = false) {
-    enum Condition { CLEAN, WEAKENED, INFECTED, FLAGGED };
-    enum Direction { UP, RIGHT, DOWN, LEFT } current = UP;
+    enum class Condition { CLEAN, WEAKENED, INFECTED, FLAGGED };
+    enum class Direction { UP, RIGHT, DOWN, LEFT } current = Direction::UP;
     int i = 0, j = 0, total = 0;
     std::string line;
     std::unordered_map<Vec2<int>, Condition> graph;
@@ -107,7 +107,7 @@ int part1(const int iteration = 10'000, const bool evolve = false) {
 
     while (std::getline(file, line)) {
         for (const char ch : line) {
-            graph.emplace(Vec2{i, j++}, ch == '#' ? INFECTED : CLEAN);
+            graph.emplace(Vec2{i, j++}, ch == '#' ? Condition::INFECTED : Condition::CLEAN);
         }
         j = 0;
         i++;
@@ -118,38 +118,38 @@ int part1(const int iteration = 10'000, const bool evolve = false) {
         Condition& condition = graph[vec2];
 
         switch (condition) {
-        case CLEAN:
-            current = static_cast<Direction>((current + 3) % 4);
+        case Condition::CLEAN:
+            current = static_cast<Direction>((static_cast<int>(current) + 3) % 4);
             break;
 
-        case WEAKENED:
+        case Condition::WEAKENED:
             break;
 
-        case INFECTED:
-            current = static_cast<Direction>((current + 1) % 4);
+        case Condition::INFECTED:
+            current = static_cast<Direction>((static_cast<int>(current) + 1) % 4);
             break;
 
-        case FLAGGED:
-            current = static_cast<Direction>((current + 2) % 4);
+        case Condition::FLAGGED:
+            current = static_cast<Direction>((static_cast<int>(current) + 2) % 4);
             break;
         }
-        condition = static_cast<Condition>((condition + 1 + !evolve) % 4);
-        total += condition == INFECTED;
+        condition = static_cast<Condition>((static_cast<int>(condition) + 1 + !evolve) % 4);
+        total += condition == Condition::INFECTED;
 
         switch (current) {
-        case UP:
+        case Direction::UP:
             vec2.x--;
             break;
 
-        case LEFT:
+        case Direction::LEFT:
             vec2.y--;
             break;
 
-        case DOWN:
+        case Direction::DOWN:
             vec2.x++;
             break;
 
-        case RIGHT:
+        case Direction::RIGHT:
             vec2.y++;
             break;
         }
