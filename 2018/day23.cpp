@@ -48,29 +48,136 @@ Find the nanobot with the largest signal radius. How many nanobots are in range 
 */
 
 struct Nanobot {
-    Vec3<int> pos;
+    Vec3<int> position;
     int range;
 };
 
-int part1() {
+std::vector<Nanobot> parse_input(const char* input) {
     std::string line;
     std::vector<Nanobot> nanobots;
-    std::stringstream file(input23);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int x, y, z, r;
         std::sscanf(line.c_str(), "pos=<%d,%d,%d>, r=%d", &x, &y, &z, &r);
         nanobots.emplace_back(Vec3(x, y, z), r);
     }
+    return nanobots;
+}
+
+int part1() {
+    const std::vector<Nanobot> nanobots = parse_input(input23);
     Nanobot bot = *std::ranges::max_element(nanobots, {}, &Nanobot::range);
-    return std::ranges::count_if(nanobots, [&bot](const Nanobot& nanobot) -> bool { return nanobot.pos.manhattan_distance(bot.pos) <= bot.range; });
+    return std::ranges::count_if(nanobots,
+                                 [&bot](const Nanobot& nanobot) -> bool { return nanobot.position.manhattan_distance(bot.position) <= bot.range; });
 }
 
 /*
 --- Part Two ---
+Now, you just need to figure out where to position yourself so that you're actually teleported when the nanobots activate.
+
+To increase the probability of success, you need to find the coordinate which puts you in range of the largest number of nanobots. If there are
+multiple, choose one closest to your position (0,0,0, measured by manhattan distance).
+
+For example, given the following nanobot formation:
+
+pos=<10,12,12>, r=2
+pos=<12,14,12>, r=2
+pos=<16,12,12>, r=4
+pos=<14,14,14>, r=6
+pos=<50,50,50>, r=200
+pos=<10,10,10>, r=5
+Many coordinates are in range of some of the nanobots in this formation. However, only the coordinate 12,12,12 is in range of the most nanobots: it is
+in range of the first five, but is not in range of the nanobot at 10,10,10. (All other coordinates are in range of fewer than five nanobots.) This
+coordinate's distance from 0,0,0 is 36.
+
+Find the coordinates that are in range of the largest number of nanobots. What is the shortest manhattan distance between any of those points and
+0,0,0?
 */
 
-int part2() { return 0; }
+struct Cube {
+    Vec3<int> position;
+    int size, bots, distance;
+};
+
+int distance_to_cube(const Vec3<int>& position, const Cube& cube) {
+    Vec3 difference = 0;
+
+    if (position.x < cube.position.x) {
+        difference.x = cube.position.x - position.x;
+    } else if (position.x > cube.position.x + cube.size - 1) {
+        difference.x = position.x - (cube.position.x + cube.size - 1);
+    }
+    if (position.y < cube.position.y) {
+        difference.y = cube.position.y - position.y;
+    } else if (position.y > cube.position.y + cube.size - 1) {
+        difference.y = position.y - (cube.position.y + cube.size - 1);
+    }
+    if (position.z < cube.position.z) {
+        difference.z = cube.position.z - position.z;
+    } else if (position.z > cube.position.z + cube.size - 1) {
+        difference.z = position.z - (cube.position.z + cube.size - 1);
+    }
+    return difference.manhattan_distance(Vec3(0));
+}
+
+int part2() {
+    auto comparator = [](const Cube& lhs, const Cube& rhs) -> bool {
+        if (lhs.bots != rhs.bots) {
+            return lhs.bots < rhs.bots;
+        }
+        if (lhs.distance != rhs.distance) {
+            return lhs.distance > rhs.distance;
+        }
+        return lhs.size > rhs.size;
+    };
+    const std::vector<Nanobot> nanobots = parse_input(input23);
+    Vec3 min_position = INT32_MAX, max_position = INT32_MIN;
+
+    for (const auto& [position, range] : nanobots) {
+        min_position = std::min(min_position, position);
+        max_position = std::max(max_position, position);
+    }
+    const int span = std::max(max_position - min_position), size = std::pow(2, std::ceil(std::log2(span)));
+
+    Cube root;
+    root.position = min_position;
+    root.size = size;
+    root.bots = std::ranges::count_if(nanobots,
+                                      [&root](const Nanobot& nanobot) -> bool { return distance_to_cube(nanobot.position, root) <= nanobot.range; });
+    root.distance = distance_to_cube(0, root);
+    std::priority_queue<Cube, std::vector<Cube>, decltype(comparator)> queue(comparator);
+    queue.push(root);
+
+    while (!queue.empty()) {
+        const auto [position, size, _, distance] = queue.top();
+        queue.pop();
+
+        if (size == 1) {
+            return distance;
+        }
+        const int half = size / 2;
+
+        for (int dx = 0; dx < 2; dx++) {
+            for (int dy = 0; dy < 2; dy++) {
+                for (int dz = 0; dz < 2; dz++) {
+                    Cube child;
+                    child.position = position + Vec3(dx, dy, dz) * half;
+                    child.size = half;
+                    child.bots = std::ranges::count_if(
+                        nanobots, [&child](const Nanobot& nanobot) -> bool { return distance_to_cube(nanobot.position, child) <= nanobot.range; });
+
+                    if (child.bots == 0) {
+                        continue;
+                    }
+                    child.distance = distance_to_cube(0, child);
+                    queue.push(child);
+                }
+            }
+        }
+    }
+    return -1;
+}
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

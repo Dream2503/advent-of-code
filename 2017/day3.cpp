@@ -51,7 +51,7 @@ int part1() {
     const int target = std::atoi(input3);
     auto current = Direction::UP;
     int i = 1, area = 0;
-    Vec2 position = {0, 0};
+    Vec2 position = 0;
 
     while (i < target) {
         position.y--;
@@ -98,9 +98,9 @@ int part2() {
     const int target = std::atoi(input3);
     auto current = Direction::UP;
     int area = 0;
-    Vec2 position = {0, 0};
+    Vec2 position = 0;
     std::unordered_map<Vec2<int>, int> map;
-    map[{0, 0}] = 1;
+    map[0] = 1;
 
     while (map[position] < target) {
         position.y--;

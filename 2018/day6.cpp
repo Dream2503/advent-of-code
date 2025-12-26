@@ -61,7 +61,7 @@ int part1(const bool safe = false) {
     std::string line;
     std::unordered_map<int, Vec2<int>> area;
     std::stringstream file(input6);
-    Vec2 max = {0, 0}, min = {INT32_MAX, INT32_MAX};
+    Vec2 max = 0, min = INT32_MAX;
 
     while (std::getline(file, line)) {
         auto& [x, y] = area[i++];

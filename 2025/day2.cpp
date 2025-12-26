@@ -116,11 +116,12 @@ uint64_t part2() {
     while (std::getline(file, line, ',')) {
         uint64_t start, end;
         (std::stringstream(line) >> start).ignore(1) >> end;
+        std::cout << start << ' ' << end << std::endl;
 
-        for (int i = start; i<= end; i++) {
+        for (int i = start; i <= end; i++) {
             std::string current = std::to_string(i);
             const int size = current.size();
-            
+
             for (int j = 1; j <= size / 2; j++) {
                 bool match = true;
                 std::string check = current.substr(0, j);
@@ -132,8 +133,8 @@ uint64_t part2() {
                     }
                 }
                 if (match) {
-                   res += i;
-                   break;
+                    res += i;
+                    break;
                 }
             }
         }

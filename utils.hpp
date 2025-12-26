@@ -2,7 +2,6 @@
 #include <bits/stdc++.h>
 #include <openssl/evp.h>
 
-typedef __int128 int128_t;
 typedef __uint128_t uint128_t;
 
 inline std::string md5_hash(const std::string& input) noexcept {
@@ -176,6 +175,10 @@ template <typename T>
 struct Vec2 {
     T x, y;
 
+    constexpr Vec2() = default;
+    constexpr Vec2(const T& value) : x(value), y(value) {}
+    constexpr Vec2(const T& x, const T& y) : x(x), y(y) {}
+
     constexpr bool operator==(const Vec2& vec2) const noexcept { return x == vec2.x && y == vec2.y; }
     constexpr bool operator==(const T& value) const noexcept { return x == value && y == value; }
     constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value; }
@@ -237,6 +240,10 @@ template <typename T>
 struct Vec3 {
     T x, y, z;
 
+    constexpr Vec3() = default;
+    constexpr Vec3(const T& value) : x(value), y(value), z(value) {}
+    constexpr Vec3(const T& x, const T& y, const T& z) : x(x), y(y), z(z) {}
+
     constexpr bool operator==(const Vec3& vec3) const noexcept { return x == vec3.x && y == vec3.y && z == vec3.z; }
     constexpr bool operator==(const T& value) const noexcept { return x == value && y == value && z == value; }
     constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value && z >= value; }
@@ -249,6 +256,11 @@ struct Vec3 {
     template <typename U>
     constexpr auto operator-(const Vec3<U>& vec3) const noexcept -> Vec3<decltype(x - vec3.x)> {
         return Vec3(x - vec3.x, y - vec3.y, z - vec3.z);
+    }
+
+    template <typename U>
+    constexpr auto operator*(const U value) const noexcept -> Vec3<decltype(x * value)> {
+        return Vec3(x * value, y * value, z * value);
     }
 
     constexpr Vec3& operator+=(const Vec3& vec3) noexcept {
@@ -288,3 +300,25 @@ struct std::hash<Vec4<T>> {
         return std::hash<std::pair<Vec2<T>, Vec2<T>>>()({Vec2(vec4.x, vec4.y), Vec2(vec4.z, vec4.t)});
     }
 };
+
+namespace std {
+    template <typename T>
+    constexpr T min(const Vec3<T>& vec3) {
+        return std::min({vec3.x, vec3.y, vec3.z});
+    }
+
+    template <typename T>
+    constexpr Vec3<T> min(const Vec3<T>& lhs, const Vec3<T>& rhs) {
+        return {std::min(lhs.x, rhs.x), std::min(lhs.y, rhs.y), std::min(lhs.z, rhs.z)};
+    }
+
+    template <typename T>
+    constexpr T max(const Vec3<T>& vec3) {
+        return std::max({vec3.x, vec3.y, vec3.z});
+    }
+
+    template <typename T>
+    constexpr Vec3<T> max(const Vec3<T>& lhs, const Vec3<T>& rhs) {
+        return {std::max(lhs.x, rhs.x), std::max(lhs.y, rhs.y), std::max(lhs.z, rhs.z)};
+    }
+} // namespace std
