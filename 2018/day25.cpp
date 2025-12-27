@@ -86,10 +86,41 @@ The portly man nervously strokes his white beard. It's time to get that hot choc
 How many constellations are formed by the fixed points in spacetime?
 */
 
-int part1() { return 0; }
+int part1() {
+    std::vector<Vec4<int>> points;
+    std::string line;
+    std::stringstream file(input25);
+
+    while (std::getline(file, line)) {
+        int x, y, z, t;
+        std::sscanf(line.c_str(), "%d,%d,%d,%d", &x, &y, &z, &t);
+        points.emplace_back(x, y, z, t);
+    }
+    const int size = points.size();
+    DSU dsu(size);
+
+    for (int i = 0; i < size; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (points[i].manhattan_distance(points[j]) <= 3) {
+                dsu.unite(i, j);
+            }
+        }
+    }
+    return dsu.get_components();
+}
+
 
 /*
 --- Part Two ---
+A small glowing portal opens above the mug you prepared and just enough hot chocolate streams in to fill it. You suspect the reindeer has never
+encountered hot chocolate before, but seems to enjoy it anyway. You hope it works.
+
+It's time to start worrying about that integer underflow in time itself you set up a few days ago. You check the status of the device: "Insufficient
+chronal energy for activation. Energy required: 50 stars."
+
+The reindeer bumps the device with its nose.
+
+"Energy required: 49 stars."
 */
 
 int part2() { return 0; }

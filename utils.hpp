@@ -2,8 +2,6 @@
 #include <bits/stdc++.h>
 #include <openssl/evp.h>
 
-typedef __uint128_t uint128_t;
-
 inline std::string md5_hash(const std::string& input) noexcept {
     std::array<uint8_t, 0x10> digest;
     EVP_MD_CTX* ctx = EVP_MD_CTX_new();
@@ -222,7 +220,7 @@ struct Vec2 {
     }
 
     template <typename U>
-    auto manhattan_distance(const Vec2<U> vec2) const noexcept {
+    constexpr auto manhattan_distance(const Vec2<U> vec2) const noexcept {
         auto difference = *this - vec2;
         return std::abs(difference.x) + std::abs(difference.y);
     }
@@ -276,7 +274,7 @@ struct Vec3 {
     }
 
     template <typename U>
-    auto manhattan_distance(const Vec3<U> vec3) const noexcept -> decltype(x - vec3.x) {
+    constexpr auto manhattan_distance(const Vec3<U> vec3) const noexcept -> decltype(x - vec3.x) {
         auto difference = *this - vec3;
         return std::abs(difference.x) + std::abs(difference.y) + std::abs(difference.z);
     }
@@ -292,6 +290,17 @@ struct std::hash<Vec3<T>> {
 template <typename T>
 struct Vec4 {
     T x, y, z, t;
+
+    template <typename U>
+    constexpr auto operator-(const Vec4<U>& vec4) const noexcept -> Vec4<decltype(x - vec4.x)> {
+        return Vec4(x - vec4.x, y - vec4.y, z - vec4.z, t - vec4.t);
+    }
+
+    template <typename U>
+    constexpr auto manhattan_distance(const Vec4<U> vec4) const noexcept -> decltype(x - vec4.x) {
+        auto difference = *this - vec4;
+        return std::abs(difference.x) + std::abs(difference.y) + std::abs(difference.z) + std::abs(difference.t);
+    }
 };
 
 template <typename T>
@@ -299,6 +308,47 @@ struct std::hash<Vec4<T>> {
     size_t operator()(const Vec4<T>& vec4) const noexcept {
         return std::hash<std::pair<Vec2<T>, Vec2<T>>>()({Vec2(vec4.x, vec4.y), Vec2(vec4.z, vec4.t)});
     }
+};
+
+class DSU {
+    int components;
+    std::vector<int> parent, rank, size;
+
+public:
+    explicit DSU(const int n) : components(n), parent(n), rank(n, 0), size(n, 1) { std::iota(parent.begin(), parent.end(), 0); }
+
+    constexpr int find(const int x) noexcept {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
+    }
+
+    bool unite(int a, int b) {
+        a = find(a);
+        b = find(b);
+
+        if (a == b) {
+            return false;
+        }
+        if (rank[a] < rank[b]) {
+            parent[a] = b;
+            size[b] += size[a];
+        } else if (rank[a] > rank[b]) {
+            parent[b] = a;
+            size[a] += size[b];
+        } else {
+            parent[b] = a;
+            ++rank[a];
+            size[a] += size[b];
+        }
+        components--;
+        return true;
+    }
+
+    int size_of(const int x) { return size[find(x)]; }
+
+    int get_components() const { return components; }
 };
 
 namespace std {
