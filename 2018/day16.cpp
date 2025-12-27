@@ -76,24 +76,7 @@ puzzle input) - you can ignore it for now.
 Ignoring the opcode numbers, how many samples in your puzzle input behave like three or more opcodes?
 */
 
-enum class OpCode {
-    ADDR,
-    ADDI,
-    MULR,
-    MULI,
-    BANR,
-    BANI,
-    BORR,
-    BORI,
-    SETR,
-    SETI,
-    GTIR,
-    GTRI,
-    GTRR,
-    EQIR,
-    EQRI,
-    EQRR,
-};
+enum class OpCode { ADDR, ADDI, MULR, MULI, BANR, BANI, BORR, BORI, SETR, SETI, GTIR, GTRI, GTRR, EQIR, EQRI, EQRR };
 
 constexpr std::array<int (*)(const std::array<int, 4>&, const int, const int), 16> ALL_OPR = {
     [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] + registers[rhs]; },
@@ -111,8 +94,7 @@ constexpr std::array<int (*)(const std::array<int, 4>&, const int, const int), 1
     [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] > registers[rhs]; },
     [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return lhs == registers[rhs]; },
     [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] == rhs; },
-    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] == registers[rhs]; },
-};
+    [](const std::array<int, 4>& registers, const int lhs, const int rhs) -> int { return registers[lhs] == registers[rhs]; }};
 constexpr std::array ALL_OPS = enum_to_array<OpCode, 16>();
 constexpr int OPC = ALL_OPS.size();
 
