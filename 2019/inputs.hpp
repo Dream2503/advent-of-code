@@ -1,6 +1,88 @@
 #pragma once
 #include "../utils.hpp"
 
+enum class Status { RUNNING, WAITING, HALTED, EXECUTE };
+
+[[nodiscard]] inline std::vector<int> parse_int_code(const char* input) {
+    std::vector<int> opcodes;
+    std::stringstream ss(input);
+
+    while (!ss.eof()) {
+        int opcode;
+        (ss >> opcode).ignore(1);
+        opcodes.push_back(opcode);
+    }
+    return opcodes;
+}
+
+inline std::vector<int> int_code_interpreter(std::vector<int>& opcodes,
+                                            const std::optional<std::reference_wrapper<std::queue<int>>>& input = std::nullopt,
+                                            const std::optional<std::reference_wrapper<int>>& pc_ = std::nullopt,
+                                            const std::optional<std::reference_wrapper<Status>>& status_ = std::nullopt) {
+    auto temp_status = Status::EXECUTE;
+    int i = 0, temp_pc = 0;
+    Status& status = status_.has_value() ? status_->get() : temp_status;
+    int& pc = pc_.has_value() ? pc_->get() : temp_pc;
+    std::vector<int> outputs;
+
+    while (status != Status::HALTED && status != Status::WAITING) {
+        int code = opcodes[pc] / 100;
+        const int opcode = opcodes[pc] % 100, param1 = code % 10;
+        code /= 10;
+        const int param2 = code % 10;
+
+        switch (opcode) {
+        case 1:
+            opcodes[opcodes[pc + 3]] = (param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]) + (param2 ? opcodes[pc + 2] : opcodes[opcodes[pc + 2]]);
+            pc += 4;
+            break;
+
+        case 2:
+            opcodes[opcodes[pc + 3]] = (param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]) * (param2 ? opcodes[pc + 2] : opcodes[opcodes[pc + 2]]);
+            pc += 4;
+            break;
+
+        case 3:
+            if (input->get().empty()) {
+                status = Status::WAITING;
+                break;
+            }
+            opcodes[opcodes[pc + 1]] = input->get().front();
+            input->get().pop();
+            pc += 2;
+            break;
+
+        case 4:
+            outputs.push_back(param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]);
+            pc += 2;
+            status = status == Status::EXECUTE ? status : Status::WAITING;
+            break;
+
+        case 5:
+            pc = (param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]) ? (param2 ? opcodes[pc + 2] : opcodes[opcodes[pc + 2]]) : pc + 3;
+            break;
+
+        case 6:
+            pc = (param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]) ? pc + 3 : (param2 ? opcodes[pc + 2] : opcodes[opcodes[pc + 2]]);
+            break;
+
+        case 7:
+            opcodes[opcodes[pc + 3]] = (param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]) < (param2 ? opcodes[pc + 2] : opcodes[opcodes[pc + 2]]);
+            pc += 4;
+            break;
+
+        case 8:
+            opcodes[opcodes[pc + 3]] = (param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]) == (param2 ? opcodes[pc + 2] : opcodes[opcodes[pc + 2]]);
+            pc += 4;
+            break;
+
+        default:
+            status = Status::HALTED;
+        }
+    }
+    return outputs;
+}
+
 constexpr char input1[] = R"(137569
 146535
 74662
@@ -1204,7 +1286,16 @@ BPX)2NW
 5LR)PYY
 VXL)6HL)";
 
-constexpr char input7[] = R"()";
+constexpr char input7[] =
+    "3,8,1001,8,10,8,105,1,0,0,21,34,47,72,93,110,191,272,353,434,99999,3,9,102,3,9,9,1001,9,3,9,4,9,99,3,9,102,4,9,9,1001,9,4,9,4,9,99,3,9,101,3,9,"
+    "9,1002,9,3,9,1001,9,2,9,1002,9,2,9,101,4,9,9,4,9,99,3,9,1002,9,3,9,101,5,9,9,102,4,9,9,1001,9,4,9,4,9,99,3,9,101,3,9,9,102,4,9,9,1001,9,3,9,4,9,"
+    "99,3,9,101,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,101,1,9,"
+    "9,4,9,3,9,1002,9,2,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,"
+    "1001,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,101,2,9,9,4,9,99,3,9,1001,9,1,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,2,9,9,"
+    "4,9,3,9,101,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,1,9,4,9,3,9,102,2,9,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,2,9,4,9,99,3,9,"
+    "1002,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,101,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,2,9,4,"
+    "9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,101,1,9,9,4,9,3,9,101,1,9,9,4,9,3,9,101,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,1,"
+    "9,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,99";
 
 constexpr char input8[] = R"()";
 

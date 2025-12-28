@@ -68,67 +68,11 @@ means the program finished. If all outputs were zero except the diagnostic code,
 After providing 1 to the only input instruction and passing all the tests, what diagnostic code does the program produce?
 */
 
-char part1() {
-    int pc = 0;
-    std::vector<int> opcodes;
-    std::stringstream ss(input5);
-
-    while (!ss.eof()) {
-        int opcode;
-        (ss >> opcode).ignore(1);
-        opcodes.push_back(opcode);
-    }
-    while (opcodes[pc] != 99) {
-        int code = opcodes[pc] / 100;
-        const int opcode = opcodes[pc] % 100, param1 = code % 10;
-        code /= 10;
-        const int param2 = code % 10;
-
-        switch (opcode) {
-        case 1:
-            opcodes[opcodes[pc + 3]] = (param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]) + (param2 ? opcodes[pc + 2] : opcodes[opcodes[pc + 2]]);
-            pc += 4;
-            break;
-
-        case 2:
-            opcodes[opcodes[pc + 3]] = (param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]) * (param2 ? opcodes[pc + 2] : opcodes[opcodes[pc + 2]]);
-            pc += 4;
-            break;
-
-        case 3:
-            std::print("Input: ");
-            std::cin >> opcodes[opcodes[pc + 1]];
-            pc += 2;
-            break;
-
-        case 4:
-            std::println("Output: {}", param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]);
-            pc += 2;
-            break;
-
-        case 5:
-            pc = (param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]) ? (param2 ? opcodes[pc + 2] : opcodes[opcodes[pc + 2]]) : pc + 3;
-            break;
-
-        case 6:
-            pc = (param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]) ? pc + 3 : (param2 ? opcodes[pc + 2] : opcodes[opcodes[pc + 2]]);
-            break;
-
-        case 7:
-            opcodes[opcodes[pc + 3]] = (param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]) < (param2 ? opcodes[pc + 2] : opcodes[opcodes[pc + 2]]);
-            pc += 4;
-            break;
-
-        case 8:
-            opcodes[opcodes[pc + 3]] = (param1 ? opcodes[pc + 1] : opcodes[opcodes[pc + 1]]) == (param2 ? opcodes[pc + 2] : opcodes[opcodes[pc + 2]]);
-            pc += 4;
-            break;
-
-        default:
-            break;
-        }
-    }
-    return '\b';
+int part1(const int input = 1) {
+    std::vector<int> opcodes = parse_int_code(input5);
+    std::queue<int> inputs;
+    inputs.push(input);
+    return int_code_interpreter(opcodes, inputs).back();
 }
 
 /*
@@ -178,7 +122,7 @@ thermal radiator controller. This diagnostic test suite only outputs one number,
 What is the diagnostic code for system ID 5?
 */
 
-char part2() { return part1(); }
+int part2() { return part1(5); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

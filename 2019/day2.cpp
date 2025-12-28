@@ -62,37 +62,12 @@ just before the last computer caught fire. To do this, before running the progra
 the value 2. What value is left at position 0 after the program halts?
 */
 
-std::vector<int> parse_input(const char* input) {
-    std::vector<int> opcodes;
-    std::stringstream ss(input);
-
-    while (!ss.eof()) {
-        int opcode;
-        (ss >> opcode).ignore(1);
-        opcodes.push_back(opcode);
-    }
-    return opcodes;
-}
-
-int resolve(std::vector<int>& opcodes) {
-    int pc = 0;
-
-    while (opcodes[pc] != 99) {
-        if (opcodes[pc] == 1) {
-            opcodes[opcodes[pc + 3]] = opcodes[opcodes[pc + 1]] + opcodes[opcodes[pc + 2]];
-        } else {
-            opcodes[opcodes[pc + 3]] = opcodes[opcodes[pc + 1]] * opcodes[opcodes[pc + 2]];
-        }
-        pc += 4;
-    }
-    return opcodes[0];
-}
-
 int part1() {
-    std::vector<int> opcodes = parse_input(input2);
+    std::vector<int> opcodes = parse_int_code(input2);
     opcodes[1] = 12;
     opcodes[2] = 2;
-    return resolve(opcodes);
+    int_code_interpreter(opcodes);
+    return opcodes[0];
 }
 
 /*
@@ -130,15 +105,16 @@ the answer would be 1202.)
 */
 
 int part2(const int target = 19690720) {
-    const std::vector<int> opcodes = parse_input(input2);
+    const std::vector<int> opcodes = parse_int_code(input2);
 
     for (int i = 0; i <= 99; i++) {
         for (int j = 0; j <= 99; j++) {
             std::vector<int> temp_codes = opcodes;
             temp_codes[1] = i;
             temp_codes[2] = j;
+            int_code_interpreter(temp_codes);
 
-            if (resolve(temp_codes) == target) {
+            if (temp_codes[0] == target) {
                 return i * 100 + j;
             }
         }
