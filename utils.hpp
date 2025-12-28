@@ -192,7 +192,13 @@ struct Vec2 {
 
     template <typename U>
     constexpr auto operator-(const Vec2<U>& vec2) const noexcept -> Vec2<decltype(x - vec2.x)> {
-        return Vec2(x - vec2.x, y - vec2.y);
+        return {x - vec2.x, y - vec2.y};
+    }
+
+
+    template <typename U>
+    constexpr auto operator/(const U& value) const noexcept -> Vec2<decltype(x / value)> {
+        return {x / value, y / value};
     }
 
     constexpr Vec2& operator+=(const Vec2& vec2) noexcept {
@@ -218,12 +224,19 @@ struct Vec2 {
         return x < vec2.x && y < vec2.y;
     }
 
+    friend std::ostream& operator<<(std::ostream& out, const Vec2& vec2) { return out << vec2.x << ',' << vec2.y; }
+
     bool lexicographically_less(const Vec2& vec2) const noexcept { return x < vec2.x || (x == vec2.x && y < vec2.y); }
 
     template <typename U>
     constexpr auto manhattan_distance(const Vec2<U> vec2) const noexcept {
         auto difference = *this - vec2;
         return std::abs(difference.x) + std::abs(difference.y);
+    }
+
+    template <typename U>
+    constexpr double euclidean_distance(const Vec2<U> vec2) const noexcept {
+        return std::sqrt(std::pow(x - vec2.x, 2) + std::pow(y - vec2.y, 2));
     }
 };
 
