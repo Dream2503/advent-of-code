@@ -142,8 +142,8 @@ int part1(const bool fastest = false) {
     std::getline(file, wire1);
     std::getline(file, wire2);
     std::vector<Vec2<int>> path1 = trace_path(wire1), path2 = trace_path(wire2), intersection;
-    std::ranges::set_intersection(path1, path2, std::back_inserter(intersection),
-                                  [](const Vec2<int>& lhs, const Vec2<int>& rhs) -> bool { return lhs.lexicographically_less(rhs); });
+    std::ranges::set_intersection(path1, path2, std::back_inserter(intersection), Vec2<int>::lexicographical_comparator());
+
     if (fastest) {
         std::vector<int> steps;
         steps.reserve(intersection.size());

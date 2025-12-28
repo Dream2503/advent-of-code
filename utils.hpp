@@ -173,6 +173,10 @@ template <typename T>
 struct Vec2 {
     T x, y;
 
+    struct lexicographical_comparator {
+        constexpr bool operator()(const Vec2& lhs, const Vec2& rhs) const noexcept { return lhs.lexicographically_less(rhs); }
+    };
+
     constexpr Vec2() = default;
     constexpr Vec2(const T& value) : x(value), y(value) {}
     constexpr Vec2(const T& x, const T& y) : x(x), y(y) {}
@@ -214,10 +218,7 @@ struct Vec2 {
         return x < vec2.x && y < vec2.y;
     }
 
-    template <typename U>
-    bool lexicographically_less(const Vec2<U>& vec2) const noexcept {
-        return x < vec2.x || (x == vec2.x && y < vec2.y);
-    }
+    bool lexicographically_less(const Vec2& vec2) const noexcept { return x < vec2.x || (x == vec2.x && y < vec2.y); }
 
     template <typename U>
     constexpr auto manhattan_distance(const Vec2<U> vec2) const noexcept {

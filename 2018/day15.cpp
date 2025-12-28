@@ -443,7 +443,7 @@ int simulation(int elf_attack, bool& elves_survived) {
                             options.push_back(candidate);
                         }
                     }
-                    std::ranges::sort(options, [](const Vec2<int>& lhs, const Vec2<int>& rhs) -> bool { return lhs.lexicographically_less(rhs); });
+                    std::ranges::sort(options, Vec2<int>::lexicographical_comparator());
 
                     if (!options.empty()) {
                         current.position = options[0];

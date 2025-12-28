@@ -1,4 +1,4 @@
-#include "2019/inputs.hpp"
+#include "inputs.hpp"
 
 /*
 
