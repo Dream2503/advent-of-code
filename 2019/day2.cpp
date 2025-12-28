@@ -62,8 +62,8 @@ just before the last computer caught fire. To do this, before running the progra
 the value 2. What value is left at position 0 after the program halts?
 */
 
-int part1() {
-    std::vector<int> opcodes = parse_int_code(input2);
+int64_t part1() {
+    std::vector<int64_t> opcodes = parse_int_code(input2);
     opcodes[1] = 12;
     opcodes[2] = 2;
     int_code_interpreter(opcodes);
@@ -104,12 +104,12 @@ Find the input noun and verb that cause the program to produce the output 196907
 the answer would be 1202.)
 */
 
-int part2(const int target = 19690720) {
-    const std::vector<int> opcodes = parse_int_code(input2);
+int64_t part2(const int target = 19690720) {
+    const std::vector<int64_t> opcodes = parse_int_code(input2);
 
     for (int i = 0; i <= 99; i++) {
         for (int j = 0; j <= 99; j++) {
-            std::vector<int> temp_codes = opcodes;
+            std::vector<int64_t> temp_codes = opcodes;
             temp_codes[1] = i;
             temp_codes[2] = j;
             int_code_interpreter(temp_codes);

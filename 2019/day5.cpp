@@ -68,9 +68,9 @@ means the program finished. If all outputs were zero except the diagnostic code,
 After providing 1 to the only input instruction and passing all the tests, what diagnostic code does the program produce?
 */
 
-int part1(const int input = 1) {
-    std::vector<int> opcodes = parse_int_code(input5);
-    std::queue<int> inputs;
+int64_t part1(const int64_t input = 1) {
+    std::vector<int64_t> opcodes = parse_int_code(input5);
+    std::queue<int64_t> inputs;
     inputs.push(input);
     return int_code_interpreter(opcodes, inputs).back();
 }
@@ -122,7 +122,7 @@ thermal radiator controller. This diagnostic test suite only outputs one number,
 What is the diagnostic code for system ID 5?
 */
 
-int part2() { return part1(5); }
+int64_t part2() { return part1(5); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;
