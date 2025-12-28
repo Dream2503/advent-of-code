@@ -72,7 +72,7 @@ int64_t part1(const int64_t input = 1) {
     std::vector<int64_t> opcodes = parse_int_code(input5);
     std::queue<int64_t> inputs;
     inputs.push(input);
-    return int_code_interpreter(opcodes, inputs).back();
+    return int_code_interpreter(opcodes, inputs);
 }
 
 /*

@@ -367,6 +367,16 @@ public:
 
 namespace std {
     template <typename T>
+    constexpr Vec2<T> min(const Vec2<T>& lhs, const Vec2<T>& rhs) {
+        return {std::min(lhs.x, rhs.x), std::min(lhs.y, rhs.y)};
+    }
+
+    template <typename T>
+    constexpr Vec2<T> max(const Vec2<T>& lhs, const Vec2<T>& rhs) {
+        return {std::max(lhs.x, rhs.x), std::max(lhs.y, rhs.y)};
+    }
+
+    template <typename T>
     constexpr T min(const Vec3<T>& vec3) {
         return std::min({vec3.x, vec3.y, vec3.z});
     }

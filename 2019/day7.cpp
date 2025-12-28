@@ -140,13 +140,13 @@ int64_t part2() {
 
         while (amplifiers[4].status != Status::HALTED) {
             for (int i = 0; i < 5; i++) {
-                std::vector<int64_t> output = int_code_interpreter(amplifiers[i].opcodes, amplifiers[i].inputs, amplifiers[i].pc, amplifiers[i].status);
+                const int64_t output = int_code_interpreter(amplifiers[i].opcodes, amplifiers[i].inputs, amplifiers[i].pc, amplifiers[i].status);
 
                 if (amplifiers[i].status == Status::WAITING) {
-                    amplifiers[(i + 1) % 5].inputs.push(output.front());
+                    amplifiers[(i + 1) % 5].inputs.push(output);
 
                     if (i == 4) {
-                        final_output = output.front();
+                        final_output = output;
                     }
                     amplifiers[i].status = Status::RUNNING;
                 }

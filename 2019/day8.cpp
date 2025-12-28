@@ -55,7 +55,7 @@ std::string part1(const bool print = false) {
                 while (image[layer][j][k] == 2) {
                     layer++;
                 }
-                res.push_back(image[layer][j][k] ? '#' : '.');
+                res.push_back(image[layer][j][k] ? '#' : ' ');
             }
             res.push_back('\n');
         }

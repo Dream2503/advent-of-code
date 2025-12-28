@@ -8,23 +8,23 @@ enum class Status { RUNNING, WAITING, HALTED, EXECUTE };
     std::stringstream ss(input);
 
     while (!ss.eof()) {
-        int opcode;
+        int64_t opcode;
         (ss >> opcode).ignore(1);
         opcodes.push_back(opcode);
     }
     return opcodes;
 }
 
-inline std::vector<int64_t> int_code_interpreter(std::vector<int64_t>& opcodes,
-                                                 const std::optional<std::reference_wrapper<std::queue<int64_t>>>& input = std::nullopt,
-                                                 const std::optional<std::reference_wrapper<int>>& pc_ = std::nullopt,
-                                                 const std::optional<std::reference_wrapper<Status>>& status_ = std::nullopt) {
+inline int64_t int_code_interpreter(std::vector<int64_t>& opcodes,
+                                    const std::optional<std::reference_wrapper<std::queue<int64_t>>>& input = std::nullopt,
+                                    const std::optional<std::reference_wrapper<int>>& pc_ = std::nullopt,
+                                    const std::optional<std::reference_wrapper<Status>>& status_ = std::nullopt,
+                                    const std::optional<std::reference_wrapper<int>>& bp_ = std::nullopt) {
     auto temp_status = Status::EXECUTE;
-    int temp_pc = 0, bp = 0;
+    int temp_pc = 0, temp_bp = 0;
     Status& status = status_.has_value() ? status_->get() : temp_status;
-    int& pc = pc_.has_value() ? pc_->get() : temp_pc;
-    std::vector<int64_t> outputs;
-
+    int& pc = pc_.has_value() ? pc_->get() : temp_pc, &bp = bp_.has_value() ? bp_->get() : temp_bp;
+    int64_t output = 0;
 
     auto ensure_size = [&opcodes](const int64_t size) mutable -> int64_t& {
         if (size >= opcodes.size()) {
@@ -32,11 +32,11 @@ inline std::vector<int64_t> int_code_interpreter(std::vector<int64_t>& opcodes,
         }
         return opcodes[size];
     };
-    auto evaluate_lvalue = [&opcodes, &pc, &bp, ensure_size](const int param, const int delta) mutable -> int64_t& {
-        return param ? ensure_size(bp + opcodes[pc + delta]) : ensure_size(opcodes[pc + delta]);
+    auto evaluate_lvalue = [&opcodes, &pc, &bp, ensure_size](const int mode, const int delta) mutable -> int64_t& {
+        return mode ? ensure_size(bp + opcodes[pc + delta]) : ensure_size(opcodes[pc + delta]);
     };
-    auto evaluate_rvalue = [&opcodes, &pc, &bp, ensure_size](const int param, const int delta) mutable -> int64_t {
-        return param == 2 ? ensure_size(bp + opcodes[pc + delta]) : param ? opcodes[pc + delta] : ensure_size(opcodes[pc + delta]);
+    auto evaluate_rvalue = [&opcodes, &pc, &bp, ensure_size](const int mode, const int delta) mutable -> int64_t {
+        return mode == 2 ? ensure_size(bp + opcodes[pc + delta]) : mode ? opcodes[pc + delta] : ensure_size(opcodes[pc + delta]);
     };
 
     while (status != Status::HALTED && status != Status::WAITING) {
@@ -59,17 +59,13 @@ inline std::vector<int64_t> int_code_interpreter(std::vector<int64_t>& opcodes,
             break;
 
         case 3:
-            if (input->get().empty()) {
-                status = Status::WAITING;
-                break;
-            }
             evaluate_lvalue(param1, 1) = input->get().front();
             input->get().pop();
             pc += 2;
             break;
 
         case 4:
-            outputs.push_back(evaluate_rvalue(param1, 1));
+            output = evaluate_rvalue(param1, 1);
             pc += 2;
             status = status == Status::EXECUTE ? status : Status::WAITING;
             break;
@@ -101,7 +97,7 @@ inline std::vector<int64_t> int_code_interpreter(std::vector<int64_t>& opcodes,
             status = Status::HALTED;
         }
     }
-    return outputs;
+    return output;
 }
 
 constexpr char input1[] = R"(137569
@@ -1488,7 +1484,22 @@ constexpr char input10[] = R"(#.....#...#.........###.#........#..
 ....#......###.#..#......##.....#..#
 #..#...##.........#.....##.....#....)";
 
-constexpr char input11[] = R"()";
+constexpr char input11[] =
+    "3,8,1005,8,309,1106,0,11,0,0,0,104,1,104,0,3,8,102,-1,8,10,101,1,10,10,4,10,1008,8,1,10,4,10,1001,8,0,29,3,8,102,-1,8,10,101,1,10,10,4,10,1008,"
+    "8,0,10,4,10,102,1,8,51,3,8,102,-1,8,10,1001,10,1,10,4,10,108,0,8,10,4,10,1002,8,1,72,1,1104,8,10,2,1105,15,10,2,1106,0,10,3,8,1002,8,-1,10,1001,"
+    "10,1,10,4,10,1008,8,1,10,4,10,101,0,8,107,3,8,102,-1,8,10,1001,10,1,10,4,10,108,1,8,10,4,10,101,0,8,128,2,6,8,10,3,8,102,-1,8,10,101,1,10,10,4,"
+    "10,1008,8,0,10,4,10,102,1,8,155,1006,0,96,2,108,10,10,1,101,4,10,3,8,1002,8,-1,10,101,1,10,10,4,10,1008,8,0,10,4,10,1002,8,1,188,2,1,5,10,3,8,"
+    "102,-1,8,10,101,1,10,10,4,10,1008,8,0,10,4,10,102,1,8,214,2,6,18,10,1006,0,78,1,105,1,10,3,8,1002,8,-1,10,1001,10,1,10,4,10,1008,8,1,10,4,10,"
+    "102,1,8,247,2,103,8,10,2,1002,10,10,2,106,17,10,1,1006,15,10,3,8,102,-1,8,10,101,1,10,10,4,10,1008,8,1,10,4,10,101,0,8,285,1,1101,18,10,101,1,9,"
+    "9,1007,9,992,10,1005,10,15,99,109,631,104,0,104,1,21102,387507921664,1,1,21102,1,326,0,1106,0,430,21102,932826591260,1,1,21102,337,1,0,1106,0,"
+    "430,3,10,104,0,104,1,3,10,104,0,104,0,3,10,104,0,104,1,3,10,104,0,104,1,3,10,104,0,104,0,3,10,104,0,104,1,21101,206400850983,0,1,21101,0,384,0,"
+    "1105,1,430,21102,3224464603,1,1,21102,395,1,0,1106,0,430,3,10,104,0,104,0,3,10,104,0,104,0,21102,838433657700,1,1,21102,418,1,0,1106,0,430,"
+    "21101,825012007272,0,1,21101,429,0,0,1106,0,430,99,109,2,21202,-1,1,1,21101,40,0,2,21101,461,0,3,21102,1,451,0,1105,1,494,109,-2,2105,1,0,0,1,0,"
+    "0,1,109,2,3,10,204,-1,1001,456,457,472,4,0,1001,456,1,456,108,4,456,10,1006,10,488,1102,1,0,456,109,-2,2106,0,0,0,109,4,1202,-1,1,493,1207,-3,0,"
+    "10,1006,10,511,21101,0,0,-3,21202,-3,1,1,21201,-2,0,2,21102,1,1,3,21102,1,530,0,1106,0,535,109,-4,2106,0,0,109,5,1207,-3,1,10,1006,10,558,2207,-"
+    "4,-2,10,1006,10,558,22101,0,-4,-4,1106,0,626,22102,1,-4,1,21201,-3,-1,2,21202,-2,2,3,21101,0,577,0,1106,0,535,22102,1,1,-4,21101,1,0,-1,2207,-4,"
+    "-2,10,1006,10,596,21102,0,1,-1,22202,-2,-1,-2,2107,0,-3,10,1006,10,618,21201,-1,0,1,21102,618,1,0,105,1,493,21202,-2,-1,-2,22201,-4,-2,-4,109,-"
+    "5,2105,1,0";
 
 constexpr char input12[] = R"()";
 
