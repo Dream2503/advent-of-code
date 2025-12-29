@@ -1,6 +1,18 @@
 #pragma once
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <array>
+#include <cmath>
+#include <format>
+#include <iomanip>
+#include <iostream>
+#include <numeric>
 #include <openssl/evp.h>
+#include <queue>
+#include <sstream>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#include <cstring>
 
 inline std::string md5_hash(const std::string& input) noexcept {
     std::array<uint8_t, 0x10> digest;
