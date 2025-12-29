@@ -132,7 +132,7 @@ For example:
 What is the X,Y,size identifier of the square with the largest total power?
 */
 
-int part2() { return part1(300); }
+int part2() { return part1(300).x; }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

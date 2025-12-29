@@ -284,7 +284,7 @@ What is the minimum number of steps required to bring all of the objects, includ
 int part2() {
     State start = parse_input(input11);
 
-    for (const std::string& element : {"elerium", "dilithium"}) {
+    for ([[maybe_unused]] std::string_view element : {"elerium", "dilithium"}) {
         start.items.push_back({0, 0});
     }
     return bfs(start);

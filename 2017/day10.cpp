@@ -51,7 +51,7 @@ process is complete, what is the result of multiplying the first two numbers in 
 
 
 int part1() {
-    constexpr int size = 256;
+    static constexpr int size = 256;
     int i = 0, skip = 0;
     std::string value;
     std::array<uint8_t, size> list, temp;
@@ -63,15 +63,17 @@ int part1() {
         jumps.push_back(std::stoi(value));
     }
     for (const int jump : jumps) {
-        for (int j = 0; j < jump; j++) {
+        const int len = std::min(jump, size);
+
+        for (int j = 0; j < len; j++) {
             temp[j] = list[(i + j) % size];
         }
-        std::reverse(temp.begin(), temp.begin() + jump);
+        std::reverse(temp.begin(), temp.begin() + len);
 
-        for (int j = 0; j < jump; j++) {
+        for (int j = 0; j < len; j++) {
             list[(i + j) % size] = temp[j];
         }
-        i = (i + jump + skip++) % size;
+        i = (i + len + skip++) % size;
     }
     return list[0] * list[1];
 }

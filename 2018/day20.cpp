@@ -206,7 +206,7 @@ void resolve(const std::string& input, std::unordered_map<Vec2<int>, State>& gra
 
 int part1(const bool vicinity = false) {
     int i = 0;
-    Vec2<int> position, min = INT32_MAX, max = INT32_MIN;
+    Vec2<int> position = 0, min = INT32_MAX, max = INT32_MIN;
     std::unordered_map<Vec2<int>, State> graph;
     resolve(input20, graph, i, position);
 

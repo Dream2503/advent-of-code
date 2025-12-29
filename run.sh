@@ -29,7 +29,7 @@ for year in "$@"; do
             echo "Compiling $file ..."
 
             if $optimization; then
-                g++ -std=c++23 -Wall -Wextra -Wpedantic -Wfloat-equal -Wcast-align -Wold-style-cast -Woverloaded-virtual -Wnon-virtual-dtor -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wuseless-cast -Wformat=2 -Wsuggest-override -Wdouble-promotion -Wswitch-enum -Wformat-security -Wformat-overflow -Winvalid-offsetof -Wno-sign-compare -Ofast -march=native -flto -funroll-loops -fomit-frame-pointer -ffast-math -fno-trapping-math -finline-functions -fmerge-all-constants -fstrict-aliasing -falign-functions=32 -falign-loops=32 -falign-jumps=32 -DNDEBUG "$file" -lcrypto -o "$exe"
+                g++ -std=c++23 -Wall -Wextra -Wpedantic -Wfloat-equal -Wcast-align -Wold-style-cast -Woverloaded-virtual -Wnon-virtual-dtor -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wuseless-cast -Wformat=2 -Wsuggest-override -Wdouble-promotion -Wswitch-enum -Wformat-security -Wformat-overflow -Winvalid-offsetof -Wno-sign-compare -Ofast -march=native -flto=auto -funroll-loops -fomit-frame-pointer -ffast-math -fno-trapping-math -finline-functions -fmerge-all-constants -fstrict-aliasing -falign-functions=32 -falign-loops=32 -falign-jumps=32 -DNDEBUG "$file" -lcrypto -o "$exe"
             else
                 g++ -std=c++23 "$file" -lcrypto -o "$exe"
             fi

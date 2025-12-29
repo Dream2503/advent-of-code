@@ -1,18 +1,27 @@
 #pragma once
 #include <algorithm>
 #include <array>
+#include <bitset>
 #include <cmath>
+#include <cstring>
 #include <format>
+#include <functional>
 #include <iomanip>
 #include <iostream>
+#include <map>
 #include <numeric>
 #include <openssl/evp.h>
+#include <print>
 #include <queue>
+#include <ranges>
+#include <set>
 #include <sstream>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
-#include <cstring>
+#include <list>
+#include <stack>
 
 inline std::string md5_hash(const std::string& input) noexcept {
     std::array<uint8_t, 0x10> digest;
@@ -194,6 +203,8 @@ struct Vec2 {
     constexpr Vec2(const T& x, const T& y) : x(x), y(y) {}
 
     constexpr bool operator==(const Vec2& vec2) const noexcept { return x == vec2.x && y == vec2.y; }
+    constexpr bool operator==(const T& value) const noexcept { return x == value && y == value; }
+    constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value; }
 
     template <typename U>
     constexpr auto operator+(const Vec2<U>& vec2) const noexcept -> Vec2<decltype(x + vec2.x)> {
