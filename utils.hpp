@@ -22,6 +22,7 @@
 #include <vector>
 #include <list>
 #include <stack>
+#include <utility>
 
 inline std::string md5_hash(const std::string& input) noexcept {
     std::array<uint8_t, 0x10> digest;
