@@ -63,11 +63,11 @@ the value 2. What value is left at position 0 after the program halts?
 */
 
 int64_t part1() {
-    std::vector<int64_t> opcodes = parse_int_code(input2);
-    opcodes[1] = 12;
-    opcodes[2] = 2;
-    int_code_interpreter(opcodes);
-    return opcodes[0];
+    VirtualMachine VM(input2);
+    VM.opcodes[1] = 12;
+    VM.opcodes[2] = 2;
+    VM.interpret();
+    return VM.opcodes[0];
 }
 
 /*
@@ -105,16 +105,16 @@ the answer would be 1202.)
 */
 
 int64_t part2(const int target = 19690720) {
-    const std::vector<int64_t> opcodes = parse_int_code(input2);
+    const VirtualMachine VM(input2);
 
     for (int i = 0; i <= 99; i++) {
         for (int j = 0; j <= 99; j++) {
-            std::vector<int64_t> temp_codes = opcodes;
-            temp_codes[1] = i;
-            temp_codes[2] = j;
-            int_code_interpreter(temp_codes);
+            VirtualMachine temp_VM = VM;
+            temp_VM.opcodes[1] = i;
+            temp_VM.opcodes[2] = j;
+            temp_VM.interpret();
 
-            if (temp_codes[0] == target) {
+            if (temp_VM.opcodes[0] == target) {
                 return i * 100 + j;
             }
         }

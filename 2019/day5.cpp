@@ -69,10 +69,14 @@ After providing 1 to the only input instruction and passing all the tests, what 
 */
 
 int64_t part1(const int64_t input = 1) {
-    std::vector<int64_t> opcodes = parse_int_code(input5);
-    std::queue<int64_t> inputs;
-    inputs.push(input);
-    return int_code_interpreter(opcodes, inputs);
+    VirtualMachine VM(input5);
+    VM.inputs.push(input);
+    VM.interpret();
+
+    while (VM.outputs.size() > 1) {
+        VM.outputs.pop();
+    }
+    return VM.outputs.front();
 }
 
 /*

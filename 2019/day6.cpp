@@ -142,9 +142,8 @@ void trace_path(const std::unordered_multimap<std::string, std::string>& univers
 
         if (path.back() == target) {
             return;
-        } else {
-            path.pop_back();
         }
+        path.pop_back();
         ++first;
     }
 }

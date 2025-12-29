@@ -182,8 +182,6 @@ struct Vec2 {
     constexpr Vec2(const T& x, const T& y) : x(x), y(y) {}
 
     constexpr bool operator==(const Vec2& vec2) const noexcept { return x == vec2.x && y == vec2.y; }
-    constexpr bool operator==(const T& value) const noexcept { return x == value && y == value; }
-    constexpr bool operator>=(const T& value) const noexcept { return x >= value && y >= value; }
 
     template <typename U>
     constexpr auto operator+(const Vec2<U>& vec2) const noexcept -> Vec2<decltype(x + vec2.x)> {

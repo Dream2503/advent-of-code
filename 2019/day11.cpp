@@ -77,27 +77,21 @@ Build a new emergency hull painting robot and run the Intcode program on it. How
 enum class Direction { NORTH, EAST, SOUTH, WEST };
 
 int part1(const bool white = false) {
-    int pc = 0, bp = 0;
-    Status status = Status::RUNNING;
-    Direction direction = Direction::NORTH;
+    auto direction = Direction::NORTH;
     Vec2 position = 0;
-    std::vector<int64_t> opcodes = parse_int_code(input11);
+    VirtualMachine VM(input11);
     std::unordered_map panel({std::pair(position, white)});
-    std::queue<int64_t> inputs;
 
-    while (status != Status::HALTED) {
+    while (VM.status != VirtualMachine::Status::HALTED) {
         const auto itr = panel.find(position);
-        inputs.push(itr != panel.end() ? itr->second : false);
-        status = Status::RUNNING;
-        int64_t output = int_code_interpreter(opcodes, inputs, pc, status, bp);
+        VM.inputs.push(itr != panel.end() ? itr->second : false);
+        VM.interpret(2);
 
-        if (status == Status::WAITING) {
-            panel[position] = output;
-            status = Status::RUNNING;
-            output = int_code_interpreter(opcodes, inputs, pc, status, bp);
-        }
-        if (status == Status::WAITING) {
-            direction = static_cast<Direction>((static_cast<int>(direction) + (output ? 1 : 3)) % 4);
+        if (VM.status == VirtualMachine::Status::SLEEPING) {
+            panel[position] = VM.outputs.front();
+            VM.outputs.pop();
+            direction = static_cast<Direction>((static_cast<int>(direction) + (VM.outputs.front() ? 1 : 3)) % 4);
+            VM.outputs.pop();
 
             switch (direction) {
             case Direction::NORTH:

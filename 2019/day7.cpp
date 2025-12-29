@@ -57,17 +57,17 @@ Try every combination of phase settings on the amplifiers. What is the highest s
 int64_t part1() {
     int64_t max = 0;
     std::array phases = {0, 1, 2, 3, 4};
-    const std::vector<int64_t> opcodes = parse_int_code(input7);
+    const VirtualMachine VM(input7);
 
     do {
         int64_t output = 0;
 
         for (const int phase : phases) {
-            std::vector<int64_t> temp_codes = opcodes;
-            std::queue<int64_t> queue;
-            queue.push(phase);
-            queue.push(output);
-            output = int_code_interpreter(temp_codes, queue).front();
+            VirtualMachine temp_VM = VM;
+            temp_VM.inputs.push(phase);
+            temp_VM.inputs.push(output);
+            temp_VM.interpret();
+            output = temp_VM.outputs.front();
         }
         max = std::max(max, output);
     } while (std::ranges::next_permutation(phases).found);
@@ -118,37 +118,31 @@ Try every combination of the new phase settings on the amplifier feedback loop. 
 */
 
 int64_t part2() {
-    struct Amplifier {
-        int pc;
-        Status status;
-        std::vector<int64_t> opcodes;
-        std::queue<int64_t> inputs;
-    };
     int64_t max = 0;
     std::array phases = {5, 6, 7, 8, 9};
-    std::array<Amplifier, 5> amplifiers;
-    const std::vector<int64_t> opcodes = parse_int_code(input7);
+    const VirtualMachine VM(input7);
+    std::vector amplifiers(5, VM);
 
     do {
         int64_t final_output = 0;
 
         for (int i = 0; i < 5; i++) {
-            amplifiers[i] = {0, Status::RUNNING, opcodes, {}};
             amplifiers[i].inputs.push(phases[i]);
         }
         amplifiers[0].inputs.push(0);
 
-        while (amplifiers[4].status != Status::HALTED) {
+        while (amplifiers[4].status != VirtualMachine::Status::HALTED) {
             for (int i = 0; i < 5; i++) {
-                const int64_t output = int_code_interpreter(amplifiers[i].opcodes, amplifiers[i].inputs, amplifiers[i].pc, amplifiers[i].status);
+                amplifiers[i].interpret(1);
 
-                if (amplifiers[i].status == Status::WAITING) {
+                if (amplifiers[i].status == VirtualMachine::Status::SLEEPING) {
+                    int64_t output = amplifiers[i].outputs.front();
+                    amplifiers[i].outputs.pop();
                     amplifiers[(i + 1) % 5].inputs.push(output);
 
                     if (i == 4) {
                         final_output = output;
                     }
-                    amplifiers[i].status = Status::RUNNING;
                 }
             }
         }
