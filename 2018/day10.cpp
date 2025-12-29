@@ -206,9 +206,9 @@ std::string part1(const bool time = false) {
         }
         for (const std::vector<bool>& row : sky) {
             for (const bool value : row) {
-                std::cout << (value ? '#' : ' ');
+                std::print("{}", value ? '#' : ' ');
             }
-            std::cout << '\n';
+            std::println();
         }
     }
     return time ? std::to_string(min_index) : "";

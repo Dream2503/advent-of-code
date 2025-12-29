@@ -116,7 +116,7 @@ uint64_t part2() {
     while (std::getline(file, line, ',')) {
         uint64_t start, end;
         (std::stringstream(line) >> start).ignore(1) >> end;
-        std::cout << start << ' ' << end << std::endl;
+        std::println("{} {}", start, end);
 
         for (int i = start; i <= end; i++) {
             std::string current = std::to_string(i);

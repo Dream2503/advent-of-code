@@ -63,7 +63,7 @@ uint16_t resolve(const std::unordered_map<std::string, Instruction>& hash, std::
         left = resolve(hash, cache, lhs);
     }
     right = resolve(hash, cache, rhs);
-    uint16_t result;
+    uint16_t result = 0;
 
     if (opr == "NOT") {
         result = ~right;
@@ -77,9 +77,6 @@ uint16_t resolve(const std::unordered_map<std::string, Instruction>& hash, std::
         result = left >> right;
     } else if (opr == "=") {
         result = right;
-    } else {
-        std::cout << ("Unknown operator: " + opr);
-        std::exit(0);
     }
     cache[key] = result;
     return result;

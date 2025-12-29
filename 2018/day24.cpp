@@ -199,11 +199,7 @@ Attack to_attack(const std::string& attack) {
     if (attack == "radiation") {
         return Attack::RADIATION;
     }
-    if (attack == "slashing") {
-        return Attack::SLASHING;
-    }
-    std::cout << "Invalid Attack Type" << std::endl;
-    return Attack::BLUDGEONING;
+    return Attack::SLASHING;
 }
 
 void extract_defence(std::stringstream& ss, Group& group, char& end) {

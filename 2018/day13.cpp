@@ -177,7 +177,7 @@ struct Cart {
     int x, y;
 };
 
-int part1(const bool remove = false) {
+Vec2<int> part1(const bool remove = false) {
     int i = 0, j;
     std::string line;
     std::vector<std::string> map;
@@ -310,8 +310,7 @@ int part1(const bool remove = false) {
                 for (j = i + 1; j < carts.size(); j++) {
                     if (carts[i].x == carts[j].x && carts[i].y == carts[j].y) {
                         if (!remove) {
-                            std::cout << carts[i].y << ',';
-                            return carts[i].x;
+                            return {carts[i].y, carts[i].x};
                         }
                         to_remove.insert({i, j});
                     }
@@ -322,8 +321,7 @@ int part1(const bool remove = false) {
             carts.erase(carts.begin() + idx);
         }
         if (carts.size() == 1) {
-            std::cout << carts[0].y << ',';
-            return carts[0].x;
+            return {carts[0].y, carts[0].x};
         }
     }
 }
@@ -374,7 +372,7 @@ After four very expensive crashes, a tick ends with only one cart remaining; its
 What is the location of the last cart at the end of the first tick where it is the only cart left?
 */
 
-int part2() { return part1(true); }
+Vec2<int> part2() { return part1(true); }
 
 int main() {
     std::cout << part1() << std::endl << part2() << std::endl;

@@ -60,10 +60,11 @@ For grid serial number 42, the largest 3x3 square's top-left is 21,61 (with a to
 What is the X,Y coordinate of the top-left fuel cell of the 3x3 square with the largest total power?
 */
 
-int part1(const int range = 3) {
+Vec2<int> part1(const int range = 3) {
     constexpr int grid_size = 300;
     const int serial_number = std::atoi(input11);
-    int max_power = 0, max_x = 0, max_y = 0, max_size = 0;
+    int max_power = 0, max_size = 0;
+    Vec2 max = 0;
     std::array<std::array<int, grid_size>, grid_size> grid, summed_power;
 
     for (int x = 0; x < grid_size; x++) {
@@ -100,20 +101,18 @@ int part1(const int range = 3) {
                     }
                     if (max_power < power) {
                         max_power = power;
-                        max_x = i + 1;
-                        max_y = j + 1;
+                        max = {i + 1, j + 1};
                         max_size = size;
                     }
                 }
             }
         }
     }
-    std::cout << max_x << ',';
 
     if (range == 3) {
-        return max_y;
+        return max;
     }
-    std::cout << max_y << ',';
+    std::print("{},", max);
     return max_size;
 }
 

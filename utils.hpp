@@ -245,6 +245,13 @@ struct std::hash<Vec2<T>> {
     size_t operator()(const Vec2<T>& vec2) const noexcept { return std::hash<std::pair<T, T>>()({vec2.x, vec2.y}); }
 };
 
+template <typename T>
+struct std::formatter<Vec2<T>> {
+    constexpr auto parse(std::format_parse_context& ctx) { return ctx.begin(); }
+    auto format(const Vec2<T>& vec2, std::format_context& ctx) const { return std::format_to(ctx.out(), "{},{}", vec2.x, vec2.y); }
+};
+
+
 constexpr std::initializer_list<Vec2<int>> directions_basic = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
 constexpr std::initializer_list<Vec2<int>> directions_complete = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
 
@@ -278,7 +285,7 @@ struct Vec3 {
     constexpr Vec3& operator+=(const Vec3& vec3) noexcept {
         x += vec3.x;
         y += vec3.y;
-        z += vec3.x;
+        z += vec3.z;
         return *this;
     }
 
@@ -367,32 +374,37 @@ public:
 
 namespace std {
     template <typename T>
-    constexpr Vec2<T> min(const Vec2<T>& lhs, const Vec2<T>& rhs) {
+    constexpr Vec2<T> min(const Vec2<T>& lhs, const Vec2<T>& rhs) noexcept {
         return {std::min(lhs.x, rhs.x), std::min(lhs.y, rhs.y)};
     }
 
     template <typename T>
-    constexpr Vec2<T> max(const Vec2<T>& lhs, const Vec2<T>& rhs) {
+    constexpr Vec2<T> max(const Vec2<T>& lhs, const Vec2<T>& rhs) noexcept {
         return {std::max(lhs.x, rhs.x), std::max(lhs.y, rhs.y)};
     }
 
     template <typename T>
-    constexpr T min(const Vec3<T>& vec3) {
+    constexpr Vec3<T> abs(const Vec3<T>& vec3) noexcept {
+        return {std::abs(vec3.x), std::abs(vec3.y), std::abs(vec3.z)};
+    }
+
+    template <typename T>
+    constexpr T min(const Vec3<T>& vec3) noexcept {
         return std::min({vec3.x, vec3.y, vec3.z});
     }
 
     template <typename T>
-    constexpr Vec3<T> min(const Vec3<T>& lhs, const Vec3<T>& rhs) {
+    constexpr Vec3<T> min(const Vec3<T>& lhs, const Vec3<T>& rhs) noexcept {
         return {std::min(lhs.x, rhs.x), std::min(lhs.y, rhs.y), std::min(lhs.z, rhs.z)};
     }
 
     template <typename T>
-    constexpr T max(const Vec3<T>& vec3) {
+    constexpr T max(const Vec3<T>& vec3) noexcept {
         return std::max({vec3.x, vec3.y, vec3.z});
     }
 
     template <typename T>
-    constexpr Vec3<T> max(const Vec3<T>& lhs, const Vec3<T>& rhs) {
+    constexpr Vec3<T> max(const Vec3<T>& lhs, const Vec3<T>& rhs) noexcept {
         return {std::max(lhs.x, rhs.x), std::max(lhs.y, rhs.y), std::max(lhs.z, rhs.z)};
     }
 } // namespace std

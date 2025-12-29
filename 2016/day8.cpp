@@ -90,9 +90,9 @@ int part1(const bool is_print = false) {
     if (is_print) {
         for (int i = 0; i < high; i++) {
             for (int j = 0; j < width; j++) {
-                std::cout << (screen[i][j] ? '#' : ' ');
+                std::print("{}", screen[i][j] ? '#' : ' ');
             }
-            std::cout << std::endl;
+            std::println();
         }
     }
     return std::transform_reduce(screen.begin(), screen.end(), 0, std::plus(), [](const std::bitset<width>& row) -> int { return row.count(); });
