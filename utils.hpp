@@ -269,13 +269,6 @@ struct std::hash<Vec2<T>> {
     size_t operator()(const Vec2<T>& vec2) const noexcept { return std::hash<std::pair<T, T>>()({vec2.x, vec2.y}); }
 };
 
-template <typename T>
-struct std::formatter<Vec2<T>> {
-    constexpr auto parse(std::format_parse_context& ctx) { return ctx.begin(); }
-    auto format(const Vec2<T>& vec2, std::format_context& ctx) const { return std::format_to(ctx.out(), "{},{}", vec2.x, vec2.y); }
-};
-
-
 constexpr std::initializer_list<Vec2<int>> directions_basic = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
 constexpr std::initializer_list<Vec2<int>> directions_complete = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
 
@@ -397,6 +390,18 @@ public:
 };
 
 namespace std {
+    template <typename T>
+    struct formatter<Vec2<T>> {
+        constexpr auto parse(std::format_parse_context& ctx) { return ctx.begin(); }
+        auto format(const Vec2<T>& vec2, std::format_context& ctx) const { return std::format_to(ctx.out(), "{},{}", vec2.x, vec2.y); }
+    };
+
+    template <typename T>
+    struct formatter<Vec3<T>> {
+        constexpr auto parse(std::format_parse_context& ctx) { return ctx.begin(); }
+        auto format(const Vec3<T>& vec3, std::format_context& ctx) const { return std::format_to(ctx.out(), "{},{},{}", vec3.x, vec3.y, vec3.z); }
+    };
+
     template <typename T>
     constexpr Vec2<T> min(const Vec2<T>& lhs, const Vec2<T>& rhs) noexcept {
         return {std::min(lhs.x, rhs.x), std::min(lhs.y, rhs.y)};
