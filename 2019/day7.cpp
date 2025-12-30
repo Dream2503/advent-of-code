@@ -133,9 +133,7 @@ int64_t part2() {
 
         while (amplifiers[4].status != VirtualMachine::Status::HALTED) {
             for (int i = 0; i < 5; i++) {
-                amplifiers[i].interpret(1);
-
-                if (amplifiers[i].status == VirtualMachine::Status::SLEEPING) {
+                if (amplifiers[i].interpret(1) == VirtualMachine::Status::SLEEPING) {
                     int64_t output = amplifiers[i].outputs.front();
                     amplifiers[i].outputs.pop();
                     amplifiers[(i + 1) % 5].inputs.push(output);

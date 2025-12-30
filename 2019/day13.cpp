@@ -29,18 +29,14 @@ int part1() {
     VirtualMachine VM(input13);
     std::unordered_map<Vec2<int64_t>, Tile> screen;
 
-    while (VM.status != VirtualMachine::Status::HALTED) {
-        VM.interpret(3);
-
-        if (VM.status == VirtualMachine::Status::SLEEPING) {
-            Vec2<int64_t> position;
-            position.x = VM.outputs.front();
-            VM.outputs.pop();
-            position.y = VM.outputs.front();
-            VM.outputs.pop();
-            screen[position] = static_cast<Tile>(VM.outputs.front());
-            VM.outputs.pop();
-        }
+    while (VM.interpret(3) != VirtualMachine::Status::HALTED) {
+        Vec2<int64_t> position;
+        position.x = VM.outputs.front();
+        VM.outputs.pop();
+        position.y = VM.outputs.front();
+        VM.outputs.pop();
+        screen[position] = static_cast<Tile>(VM.outputs.front());
+        VM.outputs.pop();
     }
     return std::ranges::count(screen | std::views::values, Tile::BLOCK);
 }
@@ -68,33 +64,29 @@ int part2() {
     VM.opcodes[0] = 2;
     VM.interpret(1);
 
-    while (VM.status != VirtualMachine::Status::HALTED) {
-        VM.interpret(2);
+    while (VM.interpret(2) != VirtualMachine::Status::HALTED) {
+        Vec2<int64_t> position;
+        position.x = VM.outputs.front();
+        VM.outputs.pop();
+        position.y = VM.outputs.front();
+        VM.outputs.pop();
+        const int64_t output = VM.outputs.front();
+        VM.outputs.pop();
 
-        if (VM.status == VirtualMachine::Status::SLEEPING) {
-            Vec2<int64_t> position;
-            position.x = VM.outputs.front();
-            VM.outputs.pop();
-            position.y = VM.outputs.front();
-            VM.outputs.pop();
-            const int64_t output = VM.outputs.front();
-            VM.outputs.pop();
-
-            if (position == Vec2<int64_t>(-1, 0)) {
-                res = output;
-            } else {
-                if (output == static_cast<int>(Tile::PADDLE)) {
-                    paddle = position.x;
-                } else if (output == static_cast<int>(Tile::BALL)) {
-                    ball = position.x;
-                }
+        if (position == Vec2<int64_t>(-1, 0)) {
+            res = output;
+        } else {
+            if (output == static_cast<int>(Tile::PADDLE)) {
+                paddle = position.x;
+            } else if (output == static_cast<int>(Tile::BALL)) {
+                ball = position.x;
             }
+        }
+        VM.interpret(1);
+
+        if (VM.status == VirtualMachine::Status::WAITING) {
+            VM.inputs.push((ball > paddle) - (ball < paddle));
             VM.interpret(1);
-
-            if (VM.status == VirtualMachine::Status::WAITING) {
-                VM.inputs.push((ball > paddle) - (ball < paddle));
-                VM.interpret(1);
-            }
         }
     }
     return res;
