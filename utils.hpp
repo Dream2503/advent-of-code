@@ -180,8 +180,20 @@ struct std::hash<std::pair<T, U>> {
 
 template <typename T>
 struct std::hash<std::vector<T>> {
-    size_t operator()(const std::vector<T>& vec) const noexcept {
-        return fnv1a_hash_bytes(reinterpret_cast<const uint8_t*>(vec.data()), vec.size() * sizeof(T));
+    size_t operator()(const std::vector<T>& vector) const noexcept {
+        std::vector<size_t> hash;
+        hash.reserve(vector.size());
+        std::ranges::transform(vector, std::back_inserter(hash), std::hash<T>());
+        return fnv1a_hash_bytes(reinterpret_cast<const uint8_t*>(hash.data()), hash.size() * sizeof(size_t));
+    }
+};
+
+template <typename T, size_t size>
+struct std::hash<std::array<T, size>> {
+    size_t operator()(const std::array<T, size>& array) const noexcept {
+        std::array<size_t, size> hash;
+        std::ranges::transform(array, hash.begin(), std::hash<T>());
+        return fnv1a_hash_bytes(reinterpret_cast<const uint8_t*>(hash.data()), size * sizeof(size_t));
     }
 };
 
@@ -249,6 +261,11 @@ struct Vec2 {
     template <typename U>
     constexpr bool operator<(const Vec2<U>& vec2) const noexcept {
         return x < vec2.x && y < vec2.y;
+    }
+
+    template <typename U>
+    constexpr bool operator<(const U& value) const noexcept {
+        return x < value && y < value;
     }
 
     friend std::ostream& operator<<(std::ostream& out, const Vec2& vec2) { return out << vec2.x << ',' << vec2.y; }

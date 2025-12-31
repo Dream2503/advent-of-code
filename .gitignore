@@ -1,4 +1,4 @@
 .idea
 .clang-format
 .clang-tidy
-utils.hpp.gch
+*.hpp.gch
