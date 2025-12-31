@@ -26,6 +26,9 @@
 #include <utility>
 #include <vector>
 
+using int128_t = __int128_t;
+using uint128_t = __uint128_t;
+
 inline std::string md5_hash(const std::string& input) noexcept {
     std::array<uint8_t, 0x10> digest;
     EVP_MD_CTX* ctx = EVP_MD_CTX_new();
