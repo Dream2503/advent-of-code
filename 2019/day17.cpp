@@ -152,11 +152,11 @@ std::array<std::string, 5> split_instruction_set(const std::string& instructions
     std::unreachable();
 }
 
-int part1(const bool move = false) {
+int part1(const bool move = false, const bool simulate = false) {
     static constexpr std::array LEFT_TURN = {Robot::Direction::LEFT, Robot::Direction::DOWN, Robot::Direction::UP, Robot::Direction::RIGHT};
     static constexpr std::array RIGHT_TURN = {Robot::Direction::RIGHT, Robot::Direction::UP, Robot::Direction::DOWN, Robot::Direction::LEFT};
     int res = 0, distance = 0;
-    Robot robot;
+    Robot robot = {};
     std::string instructions;
     VirtualMachine VM(input17), temp_VM = VM;
     VM.interpret();
@@ -230,26 +230,34 @@ int part1(const bool move = false) {
     VM = std::move(temp_VM);
     VM.opcodes[0] = 2;
 
-    for (const std::string& coroutine : split_instruction_set(instructions, "y")) {
+    for (const std::string& coroutine : split_instruction_set(instructions, simulate ? "y" :"n")) {
         for (const char ch : coroutine) {
             VM.inputs.push(ch);
         }
     }
-    bool init = true;
+    if (simulate) {
+        bool init = true;
 
-    while (VM.interpret(frame_size) != VirtualMachine::Status::HALTED) {
-        frame = extract_frame(VM);
-        std::print("\x1B[2J\x1B[H");
+        while (VM.interpret(frame_size) != VirtualMachine::Status::HALTED) {
+            frame = extract_frame(VM);
+            std::print("\x1B[2J\x1B[H");
 
-        for (const std::string& row : frame) {
-            std::println("{}", row);
+            for (const std::string& row : frame) {
+                std::println("{}", row);
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(40));
+
+            if (init) {
+                VM.interpret(66);
+                VM.outputs = std::queue<int64_t>();
+                init = false;
+            }
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(40));
+    } else {
+        VM.interpret();
 
-        if (init) {
-            VM.interpret(66);
-            VM.outputs = std::queue<int64_t>();
-            init = false;
+        while (VM.outputs.size() > 1) {
+            VM.outputs.pop();
         }
     }
     return VM.outputs.front();

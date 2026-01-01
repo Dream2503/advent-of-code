@@ -92,7 +92,7 @@ int part1() {
 
                 for (const auto& [di, dj] : directions_basic) {
                     const int ni = i + di, nj = j + dj;
-                    bugs += ni >= 0 && ni < 5 && nj >= 0 && nj < 5 && grid[ni][nj] == '#';
+                    bugs += ni >= 0 && ni < 5 && nj >= 0 && nj < 5 && grid[ni][nj];
                 }
                 next[i][j] = grid[i][j] ? bugs == 1 : bugs == 1 || bugs == 2;
             }
