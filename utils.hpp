@@ -29,6 +29,24 @@
 using int128_t = __int128_t;
 using uint128_t = __uint128_t;
 
+class ScopedTimer {
+    std::string name;
+    std::chrono::high_resolution_clock::time_point start;
+
+public:
+    explicit ScopedTimer(std::string name = "") : name(std::move(name)), start(std::chrono::high_resolution_clock::now()) {}
+
+    ~ScopedTimer() {
+        const auto end = std::chrono::high_resolution_clock::now();
+        const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+
+        if (!name.empty()) {
+            std::print("{}: ", name);
+        }
+        std::println("{}µs", duration);
+    }
+};
+
 inline std::string md5_hash(const std::string& input) noexcept {
     std::array<uint8_t, 0x10> digest;
     EVP_MD_CTX* ctx = EVP_MD_CTX_new();

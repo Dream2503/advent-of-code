@@ -1,5 +1,4 @@
 .idea
 utils.hpp.gch
-build_gch.sh
 .clang-format
 .clang-tidy

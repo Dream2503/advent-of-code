@@ -22,8 +22,8 @@ compile_start=$(date +%s.%N)
 
 for year in "$@"; do
     echo "==== Processing year $year ===="
-    
-	for file in "$year"/day{1..25}.cpp; do
+
+    for file in "$year"/day{1..25}.cpp; do
         if [[ -f "$file" ]]; then
             exe="${file%.cpp}"
             echo "Compiling $file ..."
@@ -61,32 +61,3 @@ for exe in "${executables[@]}"; do
 done
 
 echo "All compiled files removed."
-
-#!/bin/bash
-#
-#if [[ $# -eq 0 ]]; then
-#    echo "Usage: $0 <year1> [year2] [year3] ..."
-#    exit 1
-#fi
-#SEARCH_PATTERN="x, y"
-#
-#for year in "$@"; do
-#    echo "==== Searching in year $year ===="
-#
-#    if [[ ! -d "$year" ]]; then
-#        echo "Warning: Directory '$year' not found, skipping."
-#        continue
-#    fi
-#    for file in "$year"/day{1..25}.cpp; do
-#        if [[ -f "$file" ]]; then
-#            count=$(grep -o "$SEARCH_PATTERN" "$file" | wc -l)
-#
-#            if [[ $count -gt 0 ]]; then
-#                echo "Found $count match(es) in $file"
-#                total_matches=$((total_matches + count))
-#            fi
-#        fi
-#    done
-#    echo "---------------------------------"
-#done
-#echo "Total matches found: $total_matches"

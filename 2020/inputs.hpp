@@ -6814,7 +6814,14 @@ constexpr char input15[] = R"()";
 
 constexpr char input16[] = R"()";
 
-constexpr char input17[] = R"()";
+constexpr char input17[] = R"(#....#.#
+..##.##.
+#..#..#.
+.#..#..#
+.#..#...
+##.#####
+#..#..#.
+##.##..#)";
 
 constexpr char input18[] = R"()";
 
