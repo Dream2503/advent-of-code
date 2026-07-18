@@ -105,23 +105,23 @@ std::pair<std::vector<int>, int> parse(const char input[]) {
 }
 
 int part1() {
-    std::pair res{0, 1};
+    Vec2 res(0, 1);
     const auto [values, size] = parse(input10);
 
     for (int i = 0; i < size - 1; i++) {
         switch (values[i + 1] - values[i]) {
         case 1:
-            res.first++;
+            res.x++;
             break;
 
         case 3:
-            res.second++;
+            res.y++;
 
         default:
             break;
         }
     }
-    return res.first * res.second;
+    return res.x * res.y;
 }
 
 /*
