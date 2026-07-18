@@ -276,6 +276,8 @@ struct Vec2 {
         return *this;
     }
 
+    constexpr Vec2 operator*(const T& value) noexcept { return {x * value, y * value}; }
+
     template <typename U>
     constexpr bool operator<(const Vec2<U>& vec2) const noexcept {
         return x < vec2.x && y < vec2.y;
