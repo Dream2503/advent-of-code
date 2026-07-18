@@ -290,6 +290,11 @@ struct Vec2 {
 
     friend std::ostream& operator<<(std::ostream& out, const Vec2& vec2) { return out << vec2.x << ',' << vec2.y; }
 
+    Vec2& swap() {
+        std::swap(x, y);
+        return *this;
+    }
+
     bool lexicographically_less(const Vec2& vec2) const noexcept { return x < vec2.x || (x == vec2.x && y < vec2.y); }
 
     template <typename U>

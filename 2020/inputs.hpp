@@ -9357,7 +9357,7 @@ mem[10155] = 1064
 mem[33787] = 142284522
 mem[17457] = 15488682)";
 
-constexpr char input15[] = R"()";
+constexpr char input15[] = "0,8,15,2,12,1,4";
 
 constexpr char input16[] = R"()";
 
