@@ -379,6 +379,8 @@ struct Vec4 {
         return Vec4(x - vec4.x, y - vec4.y, z - vec4.z, t - vec4.t);
     }
 
+    constexpr bool operator==(const Vec4& vec4) const noexcept { return x == vec4.x && y == vec4.y && z == vec4.z && t == vec4.t; }
+
     template <typename U>
     constexpr auto manhattan_distance(const Vec4<U> vec4) const noexcept -> decltype(x - vec4.x) {
         auto difference = *this - vec4;
