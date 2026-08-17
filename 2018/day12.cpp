@@ -91,7 +91,9 @@ int64_t part1(const int64_t generations = 20) {
     std::getline(file, line);
 
     while (std::getline(file, line)) {
-        rules.emplace(line.substr(0, 5), line.back());
+        if (!line.empty()) {
+            rules.emplace(line.substr(0, 5), line.back());
+        }
     }
     for (int64_t i = 0; i < generations; i++) {
         if (!state.starts_with("....")) {

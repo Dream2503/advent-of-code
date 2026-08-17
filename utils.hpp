@@ -1,30 +1,7 @@
 #pragma once
-#include <algorithm>
-#include <array>
-#include <bitset>
-#include <chrono>
-#include <cmath>
-#include <cstring>
-#include <format>
-#include <functional>
-#include <iomanip>
-#include <iostream>
-#include <list>
-#include <map>
-#include <numeric>
+
+#include <bits/stdc++.h>
 #include <openssl/evp.h>
-#include <print>
-#include <queue>
-#include <ranges>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <string>
-#include <thread>
-#include <unordered_map>
-#include <unordered_set>
-#include <utility>
-#include <vector>
 
 using int128_t = __int128_t;
 using uint128_t = __uint128_t;
@@ -136,7 +113,7 @@ inline std::string md5_hash(const std::string& input, [[maybe_unused]] const boo
     return ss.str();
 }
 
-inline std::string knot_hash(const std::string& input) noexcept {
+inline std::string knot_hash(const std::string& input) {
     int i = 0x0, skip = 0x0, k = 0x0;
     std::array<uint8_t, 0x100> list, temp;
     std::array<uint8_t, 0x10> dense_hash;
@@ -164,6 +141,8 @@ inline std::string knot_hash(const std::string& input) noexcept {
             i = (i + jump + skip++) % 0x100;
         }
     }
+    k = 0x0;
+
     for (int j = 0; j < 0x10; j++) {
         dense_hash[j] = list[k++];
 

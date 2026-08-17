@@ -104,7 +104,7 @@ std::string part2() {
                 break;
 
             case 'D':
-                i += i < 5 && keypad[i + 1][j] ? 1 : 0;
+                i += i < 4 && keypad[i + 1][j] ? 1 : 0;
                 break;
 
             case 'L':
@@ -112,7 +112,7 @@ std::string part2() {
                 break;
 
             case 'R':
-                j += j < 5 && keypad[i][j + 1] ? 1 : 0;
+                j += j < 4 && keypad[i][j + 1] ? 1 : 0;
                 break;
 
             default:

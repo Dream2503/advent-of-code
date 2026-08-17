@@ -41,10 +41,10 @@ int part1() {
     const int size = code.size();
 
     while (i < size) {
-        char lhs;
         std::stringstream ss(code[i]);
-        std::string instruction, rhs;
-        ss >> instruction >> lhs >> rhs;
+        std::string instruction, x, rhs;
+        ss >> instruction >> x >> rhs;
+        const char lhs = x[0];
 
         if (instruction == "set") {
             registers[lhs - 'a'] = get_value(registers, rhs);
@@ -56,7 +56,7 @@ int part1() {
         } else if (instruction == "jnz") {
             const int64_t value = get_value(registers, rhs);
 
-            if (registers[lhs - 'a'] != 0) {
+            if (get_value(registers, x) != 0) {
                 i += value - 1;
             }
         }

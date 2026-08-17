@@ -34,7 +34,7 @@ int part1(const std::string& input = input5) {
     std::string res(1, input[0]);
 
     for (const char ch : input | std::views::drop(1)) {
-        if (res.back() + 32 == ch || res.back() - 32 == ch) {
+        if (!res.empty() && (res.back() + 32 == ch || res.back() - 32 == ch)) {
             res.pop_back();
         } else {
             res.push_back(ch);

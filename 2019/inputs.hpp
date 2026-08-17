@@ -20,7 +20,7 @@ public:
 
     Status interpret(int output_until = INT32_MAX) noexcept {
         auto ensure_size = [this](const int64_t size) mutable -> int64_t& {
-            if (size >= opcodes.size()) {
+            if (static_cast<uint64_t>(size) >= opcodes.size()) {
                 opcodes.resize(size + 1, 0);
             }
             return opcodes[size];

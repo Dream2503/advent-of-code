@@ -79,17 +79,18 @@ struct Program {
             executing = false;
             return false;
         }
-        char lhs;
+        std::string x, rhs;
+        std::string instruction;
         std::stringstream ss(code[ip]);
-        std::string instruction, rhs;
-        ss >> instruction >> lhs >> rhs;
+        ss >> instruction >> x >> rhs;
+        const char lhs = x[0];
 
         if (instruction == "snd") {
             if (multi_program) {
-                program.queue.push_back(registers[lhs - 'a']);
+                program.queue.push_back(get_value(x));
                 send_count++;
             } else {
-                last_sound = registers[lhs - 'a'];
+                last_sound = get_value(x);
             }
         } else if (instruction == "set") {
             registers[lhs - 'a'] = get_value(rhs);
@@ -100,10 +101,8 @@ struct Program {
         } else if (instruction == "mod") {
             registers[lhs - 'a'] %= get_value(rhs);
         } else if (instruction == "jgz") {
-            const int64_t value = get_value(rhs);
-
-            if (registers[lhs - 'a'] > 0) {
-                ip += value - 1;
+            if (get_value(x) > 0) {
+                ip += get_value(rhs) - 1;
             }
         } else if (instruction == "rcv") {
             if (multi_program) {
