@@ -10000,16 +10000,3015 @@ constexpr char input18[] = R"(2 * (8 + 3 * 3 + (4 + 5)) + 7 * 2
 (3 + 9 * 8 * 7 * 9) + 4 + 4 * 4 * (9 * 6 + (2 * 7 + 3 + 6 * 5 * 5) + 8 + 7) * (2 * (2 * 6) + 9 + (8 * 6 + 6 + 8))
 (2 + 3 * (5 + 8 * 3) * (8 + 3) + 9 * 8) + 5)";
 
-constexpr char input19[] = R"()";
+constexpr char input19[] = R"(77: 30 112 | 20 13
+121: 43 20 | 123 30
+42: 57 30 | 101 20
+30: "a"
+50: 65 20 | 134 30
+37: 89 20 | 43 30
+106: 16 30 | 54 20
+17: 30 84 | 20 35
+129: 89 20 | 96 30
+123: 30 30 | 20 95
+20: "b"
+115: 20 70 | 30 93
+112: 30 90 | 20 123
+4: 20 55 | 30 5
+72: 20 90 | 30 123
+51: 30 20 | 20 95
+24: 131 30 | 7 20
+94: 121 20 | 15 30
+117: 133 30 | 102 20
+92: 28 20 | 43 30
+70: 87 30 | 96 20
+88: 109 20 | 36 30
+35: 20 36 | 30 61
+96: 30 95 | 20 20
+47: 96 20 | 66 30
+6: 20 55 | 30 123
+130: 30 29 | 20 88
+68: 5 20 | 89 30
+66: 95 95
+75: 96 30 | 55 20
+3: 20 90 | 30 5
+7: 20 53 | 30 123
+86: 30 5 | 20 53
+105: 20 87
+46: 134 20 | 87 30
+102: 30 111 | 20 103
+93: 87 20 | 87 30
+79: 116 20 | 71 30
+8: 42
+33: 5 20 | 87 30
+107: 96 20 | 123 30
+90: 20 30
+110: 20 59 | 30 32
+16: 30 68 | 20 39
+52: 4 20 | 38 30
+71: 96 30 | 51 20
+38: 96 20 | 90 30
+28: 20 30 | 30 30
+27: 30 64 | 20 24
+91: 30 27 | 20 113
+1: 20 90 | 30 134
+54: 105 20 | 18 30
+0: 8 11
+73: 65 20 | 55 30
+132: 30 17 | 20 19
+41: 20 51 | 30 22
+45: 22 30 | 53 20
+14: 124 20 | 73 30
+22: 30 30
+23: 87 30 | 55 20
+10: 30 89 | 20 134
+120: 56 30 | 9 20
+11: 42 31
+109: 95 134
+127: 30 53 | 20 123
+61: 20 53 | 30 90
+103: 127 30 | 23 20
+116: 90 20 | 87 30
+134: 20 20 | 30 20
+114: 20 63 | 30 41
+64: 20 118 | 30 25
+12: 30 48 | 20 3
+111: 20 23 | 30 72
+60: 79 30 | 120 20
+59: 20 28 | 30 87
+65: 20 30 | 20 20
+44: 89 30 | 28 20
+18: 65 20 | 43 30
+32: 95 123
+83: 30 66 | 20 22
+63: 20 123 | 30 55
+48: 30 134 | 20 43
+99: 20 12 | 30 125
+43: 20 20
+133: 20 100 | 30 110
+80: 20 50 | 30 44
+125: 20 98 | 30 86
+135: 128 30 | 130 20
+131: 20 55 | 30 134
+122: 97 30 | 60 20
+25: 30 43 | 20 51
+95: 20 | 30
+55: 30 95 | 20 30
+13: 43 20 | 43 30
+21: 20 76 | 30 80
+98: 89 30 | 65 20
+81: 106 30 | 85 20
+53: 30 30 | 20 20
+78: 45 30 | 37 20
+89: 20 30 | 30 20
+9: 96 30 | 43 20
+31: 2 20 | 82 30
+56: 5 20 | 96 30
+76: 1 20 | 23 30
+62: 92 30 | 10 20
+58: 30 22 | 20 43
+85: 77 20 | 67 30
+26: 30 58 | 20 6
+101: 30 81 | 20 91
+29: 83 30 | 47 20
+126: 20 53 | 30 55
+2: 122 20 | 135 30
+15: 5 30 | 51 20
+34: 20 37 | 30 116
+82: 30 104 | 20 132
+19: 40 20 | 62 30
+108: 21 20 | 119 30
+36: 30 22 | 20 87
+104: 69 30 | 99 20
+100: 20 7 | 30 61
+39: 89 20
+87: 30 20
+113: 52 30 | 34 20
+5: 30 30 | 30 20
+40: 4 30 | 107 20
+97: 20 26 | 30 78
+67: 30 131 | 20 126
+118: 20 134 | 30 66
+124: 96 30 | 22 20
+128: 30 114 | 20 14
+119: 30 49 | 20 74
+84: 129 30 | 33 20
+74: 30 6 | 20 46
+49: 30 38 | 20 75
+57: 117 30 | 108 20
+69: 20 94 | 30 115
 
-constexpr char input20[] = R"()";
+aaabbaababbababbabaabbbaaabbbbaa
+baabaabaaaabbabbbbbaaabb
+aabbbaaabaaaabbbbaabbaaa
+bababbbabbabbaaaaabababbbbaaaaaaaaabbaabaaaaabababaaabbaababbaab
+baababbbbbbaaaababaaaababbabbaaaaabbbbbbbabaabaaaaabbbbb
+abbaaabababbaaaabbaabababbbabbaa
+aaabaaabaaabaaaaaaabbbab
+abaaabaabbababababaaabba
+aabbbbbbaaabbaaaabbabbbb
+aabbbabaaaababaabbbababb
+aaabbabbbaabbabbabaabbba
+bbbaaaabbbabbbaaababbaabaaabaaaabbbbabba
+babbbbaaaaabaaaabaaababbbabbaabbbaababbaabaaabab
+aabaaaaabbaaaaaabbababbbbabaaaaabbaaaabb
+bbbbababaaabbaaaaababbaa
+baabaaabbbbbababababaabbaaabbabbaabbbaab
+bbaabbabbbabbbaababbbbbabaabaabbbababababaaabaaa
+baabbbbbaaaabbbabbbbbbbb
+bbabbaabbbabbaaabbbaabaabaaabbbbaababaaa
+babbbaababbbabbababaabbb
+aabbbbbabbbbaaaabbbaabababababbb
+aabbabaababababababbaaabaaabaabb
+aabababbaaaaaaaababbbbaaabaaaaaa
+abbbababaaabbaabababababbaaabbbbaaabaabb
+baabbabaaabaaaaabbbbbaabababaaaa
+abbbbabbbababbababbaabbbbaaaabba
+abababbababaaabbabaabbbb
+aaaabbbaaaaaabaabaaabbba
+bbaabaababaaaabbaaaaaabb
+aaabbabbaabaabbbaabbaaba
+aaaaabaabbaabaababbabaaa
+bbabbbbabbbaabbbabbbbaab
+aaabbabbbaaabbbbbaabaabbbabababbaaaaaababbbbaabb
+abaabbabbabaaabababaababaabbabbbabbbbaaaaabbbbaabbaaaaababbbabbaabbbbbabaabaabbabbbbbaabaaaabbab
+bbbaababaaaabababaaaaaab
+bbbbabbbaaababbbaabbbbbb
+babbbaabaababbbaabbbbbaa
+abababbabbbabbabbbbabaaa
+abaabaaaaabaabbabaaabbbbbbababab
+abababbaaabababbbababaaa
+baaabbabbbbbbabababbaaababbbbabbbaababbbaabbbbabbbaaabbabbbbbbab
+aababbbaabababaaaaaaabab
+baaabbababbaaaababbabbbabaaabaaabaabbbbaaabbabaabbbaabbbabbabbabaabbaaab
+baaaabaabbababbbbbbbbababaaabaab
+bbabbaababbabaabaaabaaabaaaabbaaabbbbaab
+bbbaaaaaabbaaaaabaaaaaaa
+bbabbbaababbbaaaababababbbaabaabbbbbababbaaabbbaabbaaaabbaaaaaaa
+abbbbabbaabbabbbaaaaabba
+babbababbaaabbabbabbaabaaaaaaaba
+bbbbababbababbbbabbababbaaababab
+abbaaaababbabbbbbabbaaabaababaab
+aabbbbbbabaabababbbabaaa
+aaaaaaaababaaabaabaabbaaabbabbbaabaaaaaabbaabbba
+abbbababaaaaabaaaababbbaaaabbaaa
+bbbbbabbaabaaaaaaabaabbaaaaabbaa
+ababbabababbbaabababbbaaabaabbbb
+ababaabaabbabbbabbbabbbabbaaaababaabbaaa
+ababaabaaaababbbbaaaabaabababbaaabbababb
+aaabbbaabaabbbbbbaaababbaaaabbbabbbbbbbb
+aaababbbaaaabaabbababaab
+aabbbabaababbbabbaaaabab
+abaabbbbbbabaabaaababababbbabaabbaabbaabaabababbabbaaaababaaaaaa
+abbaaaababaaaabaabbbbbabbbaaabaaaabbabaa
+babaaaaabbbaabababaaabbb
+abbbbbbaabaabaaabbaaaaaabbabbbaabbabbbbbaabbbbababbababb
+baabbababbbabbababbbbbaa
+bbabaababbbabbabaabbbaab
+ababbbabbbbbabaabaaaaabb
+babbbbbbbaaaabbbabbbbaba
+babbabaabaaabbababaababaababaaab
+aaaababaaaababaaabbbabbaabbaaaabaaaabbab
+abbaabbbbbabbabbababbbbbbbbabbaabaaaababbbbaabbabaaaabbbbabaaaabaaaabbab
+baabbbbabaabbbbabaaabaaa
+aaabbaaaaaabbabaabaaaaab
+abbabaabbaaababbaabbabab
+aabaabbbbaababbabbbbbaaabbbaaabb
+aaaaaaaaaabbabbbaabaaabbabaaabababbbaababbaaabababbbbaaaaaabbbababaaaaaa
+babbabababaaaababaaaabba
+abbaaaaaaaabbaaabbbaabaaabaaaabbabaabaaabbbaabbbbbbaabbbbbaabababababaab
+bbabaababaabbabbbbaaaaba
+bbabbbaaaabaaabbbbbabbbaaabbbbba
+babbbaaaaabbaaaababbbabb
+bababbabbbaabaabbbbaaaaabaabbbab
+bbbaaaaabababbaabaaaaaab
+babababbbaabaaaaaaaabbbaabbbabbb
+aaaaabaabbabbababbaabbba
+aabababbabbabbaabbbaabbb
+baaababbaabbaaaaaabbbabb
+bbaababbaaabbbaababababbaabbaaabaaababab
+baaaabaaababababaabbabbbabababbaaababbbbbbbaabba
+babbbbabbbabbababaabaaabbbbaaaabababaaab
+baaaaabaaabbbbaaabbaabbaabaabbbabababbabbaaabaaaaaabaaababaabbabbabaaaaaaaabbbbb
+babbbaaaabbbbbbbaaaababbaabbbbbbbbbaaaabbbabbbbabaababaa
+baabbbbbabababbaabababaabaabaabaaababbbbbbaabbaa
+babaaababaaaaabaaabaabbabaaabbabbaaaabaabbbaabbbbbabaaabaaaaabbabbbabaab
+abbabaaababaabaaabaaabaaababbbaababbababbaaabaaababbaaaa
+ababaabaabbababaaaabbbbb
+baababbabaabbbbbbbbaabaaababaaabbbbbbbaa
+aabbaaabbbbababbababbaaa
+babaabbabbbbbabbabbbbaba
+abbbabbbbaaababbabaabbaabbbabaaa
+babbbaaabaaaabaaaaabaaabbaaabbbbbabbaabaabaaabba
+bbbbabbbbabbaababbabbbbb
+bbbbaaaabaabbbabbbbabbaaaabbbaab
+babbbbbababababaaaaabaaa
+babbaabbbabaabbababaaaab
+abbbabbabbababbbaabbbbaa
+aaabbaababbbabbbbbaabaaa
+babbaabaabaabaaaaaaaaaaabababbba
+aabaaaababaaaabaababbbababbbababaabababa
+bbbabbbbaaababbaabbbaaaabbbbbaabbabbbbbaaaabbbbaabbbaabb
+abbabababbabbaaaabaabbba
+abbaaaabbaaaabbabbbababaabbbabaa
+abbaaabbbbaaababbbbaaaabbabbbbbabbbababbaababbab
+baaababbababaababbbbabaaaabbababbaaabaaa
+babbaaabbaabbbbbaabaaaaababbabaabaaabaabaabbbabbbabaabaa
+aaababbbaaaababaababbaab
+baaaabbbbaabbbaaabbaabbb
+babbbaabaabbabababaaaaabaabbaabababaabbb
+abbabbbbabababbababbaabaaaaaaaababbaaabbabbbbbaabbbabbabbbbababb
+baaabbbbabbbaaaabbbaabba
+abababaabaabaabbbbbabbbaaaabbababaabbbaabbababab
+aaaabaababababbaaababbbabbabbaabaabbbbabbbbbbbaaabaaaaaa
+aabaaabababbbaabbbbbbbaa
+aabaaaabbaabaaaaaaaaabba
+babababbaabbbaaaabbaaaba
+abbabbbaaaababaaaabaaaaaaabbbbbbabaaabbb
+bbbaaabaaabaababbbbaabba
+bbabaababbbbbabbaaaababaaabaaaaaabbbbaaabbaabaaa
+aaaababbbababbababbbbbbaaaabaaaaabbaaabaabbbbbaabababaab
+baabbbbbaabaaaababbabbaaaaaabaaa
+bbbbbaabbbbbabaababbbaaabababbbbbbbaaaaaabbbbaba
+ababbaabaabbaabbaaaabbbb
+bbbbbaabaabbbbbbbaaaaaaa
+bbbbbaaabbbbabbbaabaaabbbabaabbb
+bbbbbaabaaababbaaaabbaaabbbbababbabaabbabbbaaabbaaaaabbb
+baabbbaabaabbababbababbabaaaabab
+abaababbabbabbaaababbbba
+aaabbaababbabababababaaabbabbbbb
+aaababbbbabbabaaabaabaaabbbbaaba
+baaababbbabbaaabbaabaaaabbbababb
+abbbbbbaabbbabbaaabaaaabbbababbbaaabbbab
+bbbbbababbbaababbababaab
+aaaababababbbaaaabababbb
+bbabbaababbababaaabaaababbbbababbbbbbbabbbaaabbb
+abbbbbbbaabaabbaaabbbaab
+bbbaababbbbbbaaaaaaabbab
+babbbbbaaaaababbaaaaaabb
+baabbbaabaabbababbabbabb
+baabbababbbaababaabbabba
+baababbabaaabbabbaaababbbabbbbbbbaababbbbabbbabbbababaab
+bbaaabaaaaababbaaaabbbab
+babaabbaabbbbbbbbabaabbb
+ababaabaaaabbbaaabababaaaabaaabbbaaaaabb
+baabbabbaabbaabbaaaabababbabaaab
+aabaabbbaaababbbabbbbaab
+bbbbbaaaaaabbabababbbbaaaabbbabb
+baaabaabbaaabbbabaabaaababaabababbbababababbaaababaabaabbbbabbabaaabbabbaabbaaabaaabaaab
+aabbbbbbaabaaabbbbabbaaabaaaaabaabbbaaaababaabaa
+aaaabaabbababbabbbbabbbbaabbbababbbaaabaababaaaaabbabbab
+babaababaaaabaabbaabaabbbaabbababbabbbbb
+bbbaababbbbaabaaabbbabbbabbaaaba
+baaaabbabbbbaaaaaaaaabbbbbabababbbbababaaababbbabbababababbbbbba
+abbbabaaabaabbbaaabaabaabbbbbbab
+babaaaaabaabaabaaaabaabb
+aabababbabaabaaaaaaabbbabbaabbabaaaabbabbaaabbba
+ababbbabbbbbbaaaaaabbaababbbaaaaaaaaabba
+baabbabbbbabbaababbabbaaabaabbba
+bbaaababbabbabbabbabbaabaaaaaababaabaaabaababaaa
+baabbbbbbbbaabaaabbabaaa
+abbabababaaabbabbaaaabab
+ababbababaabaaabaabbbbbbbbbabaab
+baabababbaaaabbababbaaaaabaabbaa
+abbaaabbabbabbabaaaaabbbbabbbbaaababbbbbaababbabbaababbaabbbabba
+abbbbababbabaabaabbaaaabbaabbabaaabbaababaaabaababaaaabbabababba
+babbaaabbbabbabaaaabbbab
+aabbbaaaabbbbabbaaabbbbb
+baababbbbaaabbababbbabbbbbaaabaaaabbaaaaaaaabbab
+babaabababababbababbbbbaabbabaaa
+babaaabaaaabbabbaabaaababbaabaabbaababbbabaabbbabbbbabbaabbaabaa
+baababbabababbabbbabbaabbaabbbaabbbababb
+baabaabbababaabbaabbaaaaaaaaabba
+aaaababbbabbaababbbbaaba
+bbbabbbaaaaababbaabbbbaa
+abaaaabaaaaaaaaaaaabbaaaabaabbab
+ababbaabbabbaaaabbbbaaab
+baaabbbbabbbaabababaabababaabbbb
+baabaabaaabaaabbbbbaabaaaabaababaabbbbba
+bbbbabaababbbaabaaaaaabbbaaababa
+abbabababaabbabbababbabb
+babababababaaaaaabbbbbaa
+aabbbbbbbabaaaaabbbaaaaaabababbbabbbaabbababbaaa
+babababaabaababaababaaab
+baababbabaabbbbaaaabbbaabaaabbabababaababaaabaabababbbbbbbabababbaaabbaa
+abbbaabaaabbbabaaaabbbbb
+bbabbabaabbabbbaaabbabbbaababbababbabaaa
+abbaababaaababbbabbbbbab
+aaababbababaaabbabbababb
+baaaaabababaaabbbaabbbaabaaabaaa
+aabaaaabbbbbababaaababbb
+abaaaabbbabbabbaabbbbbbbabbaabbb
+bababaaababbbbaaaaaabababaaaababbaabbbabbaaabbabaabaaaaababaaaabaabaabbabbbaaabbaababaab
+aabbabbbabbaaaaaaaababab
+bbbaaaaaababbaabababbbba
+ababababbbababbbaaabbaabbababbbabbaabbaa
+aabbabaabaaabaabaaabaabaaaabaabbbbababbaaaababababbbbbabbbaabaaababbaabababaaaabbaaaaaba
+abbbbabbbbaaaaaabbaabaaa
+aaaababbbabaaabbbabaababaaabaaabaaaaabbb
+ababbbaaabbabbaabbaaabbb
+abaaaabbbaabbbaaaaabaaabbbabbbba
+aaabaaaaaaabbabaabbabbaababbbbbaabaabbbb
+aaabbabbbabbbaababaababbaaaaabbbaababbbb
+aabaabaabaaaabbabaaabbaaabbabaaaaabbabbbbbabaaaabbbababbaabaabbb
+abaabbaababbaaabbabaaabbbabaabbabbabbabaabbbbbabaababbaa
+ababbbabbbbabbbbbaaaabbbabbabbbaaaaaaaab
+abbbabbabaaabbababbbababaaabbaabaaaaabba
+abaaaabababaaaaabbaabaabaababaaa
+bbbbbbabbabbbbaaaaabbbabbbaaaabaaabaabab
+bbbaaaaaabbbbbbbaabababa
+baabaaaabbbabbbaabababbb
+aabbbabaaaaaabaabbbabbaa
+babaaabbaaaaabaaabbbbbbbbabaaabbaaaaabab
+bababbbbbaabbabbbbaaabbb
+bbaabbbaabbabbbbaabbbabb
+abbabaabbabbaabaaababaaa
+bababbaabaabaabbabbabbab
+bbbaababbabbabaabaabbbbabaaaaabbbbbbaaab
+bbbaababbabbbbaabababbba
+babbaabbbabbabaaaabbabbbbabaaaabbbbababb
+bbaabaababaabaaaababaaababaaabbaababbbbb
+abbbabbbaababaaaaaabbabbabababaaaaababaaaaababbabbaababb
+abbaaabbbaabbabbabaabbaaaababbbabbaabaabababbbabaaabbbab
+abbbaaaaaabbbaaabbaaabbb
+bbbbbabbabbabbaaabbabbbb
+baabbabaaaaabababaaaaaab
+aaaababbbbbabbbaaaababaabababbbb
+abbbabaabbbababbbbabbbaaaaaaabaaaaaaabbbaaababab
+baaabbbbaaabbaabbaaabbababbaababbbbaaaba
+bbaababbbbbbbababaaababbabbabbbaaabbbabaabbbabbbbaaabaabaaabaaba
+aaabaaaabbbbabbbbabbbabb
+bbabbaababaababababbabbb
+babbaaababbbbabbabbbaaabaabbabba
+bbabbaabbabbabaababaaaaaaababbabbaaabbaababbbbbaababbbabaababbabbbabbbaabbbabbbbabaabbab
+baabaaaaabaaaabbabbbbbbbaabbbaaabaaabbabbabbabbaaaaaaababaaababaaaaaabbb
+bbaabbabbbaaabaabbaababa
+aababbbabbbaabaaaaabbbab
+baabbbbaabbabbaabbaaaabb
+bbabbaabbaaaabaaaaaabbbb
+baabaabaaabaabbaabababbb
+abaabbaabbaabaabbbaabbabaaabbbaaaaaaabbb
+bbbbbababbaaababbaabbaaa
+bbaabbabbbabbaaabaabbbab
+bbbaaaaaabbbbbbbaabbabaa
+bbaaababbbabaabbaabbaaaaaaabbbbbbaaababaabbbbbbbbabaabaaaabbabab
+aabbaabbbabbaaabaabbaaaabbababab
+abbbabbaaaababbaabbaaaaa
+aaabbabbbbaabaabbbabbaaaabbaaabbbabbbaba
+abaabaaababbababaaababbbaabbbabb
+abaaaabababbbbbbaaabaaaaabababbaaabbbbab
+abbaabbbbbabbbbabbbaaababbabaaabbbabbbab
+babbbbbbbabaabbabaababbaabaabaaaabbbabaababbbbab
+bbbabbbbaabbaaaaabbaabaa
+bbbbbaaababababbbaaababa
+baabbbaabaabbababbbaababbbababbbabaabbbb
+bbaababbbabaaabbabbbaaab
+baabaaaaabbaaaaabbbaaaabbabbabbaaabbbaaaaabaabbbbbbbaaba
+abbbababaaaaabaaababbabb
+aaaaabaababbaaabaaaababbbaaabbbbababaaaa
+ababbaababbabbbababbabbabbabbaababaaaaabbbbbaaaabbbaaaba
+baaabaaabbbbabaaaababbaabbbaaabaababbabbaaabaaba
+bababbaaababababaabbabbbaabaabaaabaaabbaabbbaaaaabbbabaa
+abbaaabbabbaababbbaaaaaabbaaaabb
+bbaabaabbbbaaaaabababababbabbbaaaaabbbba
+bbaababbabbababaabbbaababbabbabbbbabaaab
+abababaaabbbaaaabababbaaabbbaaababaaaaab
+abbabaababbbbabbbbaabbbb
+ababbaabbabbabababaaabbb
+aababbbabababaababbbbbbaababbabbaababbbbbbbbaaaababbaabbbaaaaabb
+abbbaaaaaabababbababbbba
+babbabaaaaabbbaabaaabbaa
+aabaaababaabbbaaaabaaababaaababbabbbaaaaaaaabbaa
+bbaabbabbbabbabaaabbaaba
+bababbaabbbaababbaaaabaaabbbbaab
+bbbabbbabbbabbababbbaaab
+abbbbbbbaabbabbbaaaabaabaabbaaabaaaabbbb
+bbbbbabbbaababbbaabbaaba
+ababababababababababbabb
+baaaaaaabbabbaababaaabbb
+bababbaaabbabababababbabaabaabbabbaababaababbbbb
+bbabbaaabbbbaabaababababaabbbbabbabaabbbbaabbbaabbaaaababaabaabb
+abbababaabaaaabbbabaaaab
+bbabaabababbaabbbabbbbbbabbbbaabaabaabaa
+bababbaaaabaaaaabbbbaabb
+bbaabbabaabaabbbbabaabbaababaaababbaaaab
+babaaabaaabaaaabababaabababbbaba
+babbbbbaabababbaaaabbaabbabbabaabbaabbbb
+abbababaabababaababaaababbbabbaa
+aabaaaaaabbabbaabbabaababaababbaabaaabbb
+abaabbaabbbbbaaaabbaabba
+babaabbabaabbbbbbbabbbaababbbaabbbbababbaabbbaaabababbbbbaaababaabbbabbabbaaaabbaababaabaaaabbba
+aaaabbbabbaaababaaabbaaaabababaababbbbababbaabbb
+baabbabaabbaababaabbabab
+ababaabbaabaaabaabbababb
+aabbbababbaabbabaaaaabaa
+ababaababbbabbbbbaaaabab
+ababaababaaaaababbbabbbaabbbabaa
+abaabbaaabbabababbbbabba
+babbbbbabbaaaaaaaaaaabab
+bbabbababbbabbbbababbbbb
+abaababbabbaaabbbbbbababbbbbaaaa
+abaaaabbbababbbbaababbbb
+baabaababababbbbababbabb
+baaaabaaaaabbabbabbabababaabbababbbbabaaabaaababbabbaaaa
+aaaaaaaabbbabaaabbabbabaaabbbbaaabaaababababbabbabababab
+bbbaaaabaaabaaaaaabaabbbbababaab
+baabbbbabaaaaabaabbbaabb
+abaaaabaabbaaaaaabaababbbaaabbba
+ababbbaabbbaabaaaaababab
+aaababbabbbbbabbabbbaaaabababaab
+bbbbabbbbababbabaabbbbba
+baaabbbbbbbbbaaabbaaabaaabaaabbaaababbab
+bbabbaabababbbbbbbbaaabbabbbaaba
+aaabbababaabaaabbaababbbbbaabbababbaaabbbbabbabbaabbbbab
+abbaaaaabbabbaaaabbababb
+baabaabbbaabbabababbaaabbaaaaababaaaabbabbbbbbaa
+babbaabaaabababbbabbabaaabaaaaabbbaaabbb
+babababbaabbaabbbbbbaaab
+babaaababbbaabaaaaaabaabbbbaaaabababbaaa
+aaabbbbbbbabababaabbabba
+baaabbaaaaabbbbaaababbaaabbaaaaabbabbbbbabbbabbbbbbaaaaabbaaaababaaabbbbbaabbaababbbbbbababbaaaa
+ababbababaabbabaababbbababaababbabbbaaaabbbbbbaaabbababb
+babababababababaaaaabbab
+aaabbaaaabbbbabbabaaabbb
+babbbaaabababbaabaabaabaabbaababaaaabaaaababaaab
+babaaaaaabbbbabbbbaabbba
+bbabbaabaabbbaaaaabaaabaabbbababaabbaabaababaaaaababbbba
+aabbbabaabbabbbababbaaaa
+baaaabaababbabaabbbaabbb
+aaabbabaaaabaaabaabbaaaabbaabbaa
+abaabaaaabbabbaabbaababbabababbabbbbaabbbbaabbba
+bbbaaaaabbabbabaabaaabaa
+ababbbabbabbaababbaabbaa
+aaabbaaaababbbabbaabbaaa
+aaaaabaaabbabbaaabbbbaab
+bbbaaaababaabaaabbbabbbabaabaaaabaabbbaaabbabaabaaaabbbb
+babaaabababbbbbaaaaabbaa
+baabaabbbabaabaabbaaaaab
+baababbbbaaabbabaababbbb
+bbaababbbbababbabbabbbbb
+abbaababaabaabbaabbbbbbbbbaabbbbbbaababa
+babaaaaaaaababbaabaaabab
+babaaaaabbaabbaabaabbaabbbaabaaabbbbaabbbbbaabba
+bbbaaabaaabbbabbabbaabbb
+bbbbabababbaaaaaaabbbaaabbbbabaabbaaaaaabbbbaaaa
+bbbaaaaaabaabaaabaaababa
+aaabbababaaabbabbabaaaaaaaababababbbbaab
+babbbbbabababbababaaabbb
+aabababbaabbabbbbbbbbbba
+abbabbaaabaababbbabbabbaaaaabaabaabbbbba
+babbabbaabababbabababbbbaaababaaabbaaabbaabaabaa
+aaaaaaaabbbabbbaabaaabba
+baaaabaaabbbbbbaaabaabbbbbbbaaaa
+abbbaaaabababaaabbbbbabbabaaabaaaaababbbabaababaabaaaaaa
+abaababbabbbbbbaaabbabbbabbaaaab
+abbabbbababbaaabbbabaaaabaababaaabbaabba
+aaaabaabbbababbbbabbbbaabbbabbababaaaaab
+abbaaabbabaababbbaabaababaaababa
+abababababbaaabbbaaabbababaabaab
+baaabbabaabaabbaaabababa
+bbaaabaaaaaaabaababbaabb
+ababbabaaabbabaaaabababa
+babbbbaabbbbbaabbbaababa
+babaaaababaabbababbabbbaabaaabababbabbaaaabbaabb
+baaababbaaabaaabaabbabbbbaaaaaab
+abaabbaabbabbaabaabababbabbabbbb
+bbbaababaababbbabbababab
+baababbabaaaabaaabababbababaaaab
+babbaababbabaaaaababbaaa
+aababbbaaabababbaabaabab
+bbaabbabaabbbbbbbbababbbaaaabbbabbbbaaba
+bbaaababbbaaabaabbbaaabaababbbbababbbabbababbbbaabaabbba
+bbabaaaaaabbbababbaaabbb
+baaaabaabaabbababaabaaababbbaabbbbabbaabbbbabbabaaababaaaabbaaaaaaaabbabaabbbabaabbabbaa
+abaaaabbaabbabaaaabbbababbabaaaaaabbaaba
+baaaaaabbbabbbbaabbbbbbbbbabaabbbabbabababaabababbbbaaabaaaabbbababbbbaa
+aaaaaaaaaabbbabaaabbaaab
+aababbbababaabbaaaabbbababbbaabb
+abbbbabbaaabbbaaababaabbbabababa
+aaaaabaabaaaabaaabbaabaa
+bababbabbabaababbabbbabb
+abbbbabbbaabbbabbbbaabaabbbaabbaaaaababaaaaaaaaababaaaba
+aabaaababbbaabaabaabaaaabbbbaaababbbbaba
+abbabaabbbaaababaaabaaba
+bbaaababbbbbbaababbbabaa
+bbabaaaababbbaaaabaaaaaa
+aaabbaaabbabaababaaaabba
+baabbabaaabbaaaaabbbbaba
+baabaabababbaabbbbababaa
+aaaabaabbbaaababaabbaabbabbbaaaaabaabaab
+aaababbbaabaaaabbaaaabbbbabbbbba
+aaabbbaababbaababbaaaaba
+bbbabbbababbbaabbbaababa
+abbbaaaabbabbbaaabbaabaa
+aaaaaabbbbabbaaaabbabbbabaabbbabbbaaabaabaaaabaa
+abababaaaaaaaaaaabbbaababaaaabbabbaabbabbabaabaaaabaabaababaabbabaabbbbb
+ababbbaaabaabbaaabaababaabbbbbaa
+abbabbbaababbababbbbbabaaabaabbabaabbabbbbaaaabaabaaabaa
+ababbaabababbbabbbbbaaab
+babbabaababaaabbbaabaabb
+bbababbbaaabbaabbabbabaaaabaabaa
+abaababbbaabbababaaababbbabaababbaaaaabaabbabbbb
+ababababaaababaabbaaaabb
+bbbaaaaaababbaababaabbba
+babbbaababbbabbabbabaababaababbabbaababa
+baabaabbbbaaaaaabbbaaabb
+abbbaababbbbbabababbaabaaaaaabaaabbaaaaaabbbbaabaabbbbaaaabbbbabaababaab
+ababaabbaabababbbbabbaabaaababaabaaaaababaaaabba
+ababbbbbaabbaababababaababaaaaaaabbaaaaabbabbbaa
+abbaaabbabaaaabbbbbabbbbbabbaabbbbbaaaaaabbbabbbbbbaabba
+aaababbaaaaabaabbbaaababaaaabbbb
+aabaaababbbbbbabaaabbabaabbaaaaabbbbbbbbababababbbaababbbabbabab
+bbbaababbaaabbaabbbbbbaaabaaaaabaabbaababbaaaaab
+aaaabbbaababbaabbabaabbababaaabbbaabbaab
+bbbabababbababababbaabaa
+bbbbabaabbaababbaaaabbbaabbbbbab
+aaabbaaaaaaabbbaabbbbbbaabaaaabababbbaaabbaababbbaaaaaaaababbbbabababaaa
+aaaaabbababbababbbababbbbaaababbabaabbaaaababbaabbaabbaa
+bbabbabaaaaaabaabababbbbaaabbbba
+ababbbaabbababbaaaaaaaab
+babaaabbbaabbabaaaabaabb
+babbababbbbbabaabababaab
+bababbabbbaabaabbbbabaab
+abbbaabaaabbbbbbaabbbbbbaabaaabbbbbbbaaaababbaaaaababaaabaaabaaa
+abaabaaaabaababababaaabaaaabbbaabbabaaab
+ababbbabaaaaaaaababbbbab
+bbabbbbaabbbbabaaaaaabbbbababbaaabbbbbbbbbaabbbabbaaababababbbbbabbaabbabbabaaaabbbabbba
+abaaaabbaaabbaabaaabaaaabbbabbbbababbbaabaabbbab
+aabbbbbbbabbaababaabbababaabbbba
+baaaabbbbababbabbbaabbba
+abbbaaaaababbbababbabaaa
+bbbabbbaaaababbaabaabbaaabaababaabbabababbaaabbaaaaaaabbabaabbabbbbaabbb)";
 
-constexpr char input21[] = R"()";
+constexpr char input20[] = R"(Tile 1409:
+##..#.#.#.
+##........
+#.#...##.#
+#..#..#...
+.......##.
+##......##
+..........
+.........#
+.#..##....
+#.##...##.
 
-constexpr char input22[] = R"()";
+Tile 2939:
+......#.##
+##.#......
+...##...##
+#.#.....##
+#...#....#
+.#..#....#
+#.....##.#
+..##.#...#
+..#.#.#..#
+#######..#
 
-constexpr char input23[] = R"()";
+Tile 3347:
+...##..#.#
+.#......#.
+.#........
+#.....#...
+#.....##..
+##.......#
+.....#....
+......###.
+#...#..##.
+########.#
 
-constexpr char input24[] = R"()";
+Tile 1297:
+#..#.##.##
+#..###...#
+#.##......
+...#.#...#
+#.#......#
+....#....#
+.#..#.....
+......##..
+#.........
+...#.##.##
 
-constexpr char input25[] = R"()";
+Tile 3203:
+####.#.#..
+#.#.#.##..
+#......###
+#....###.#
+.......#.#
+#.........
+#..#..##..
+..##...#.#
+#.....##..
+#.##.#...#
+
+Tile 1283:
+####..#...
+#.......##
+#....#..#.
+..##.....#
+.#...#####
+###...#...
+..##....#.
+.#.......#
+.##.#.....
+#.###..###
+
+Tile 1879:
+######.#..
+..#.#....#
+..#..##...
+.#...#.#..
+....#....#
+....#.#.##
+##.......#
+#...#..#.#
+..#.##....
+#..####.#.
+
+Tile 2293:
+#.##.###.#
+..#.....##
+#...#.....
+..##......
+.#...#.#.#
+#........#
+.##...###.
+###.#....#
+...#......
+.#..######
+
+Tile 3079:
+#.###.....
+......#...
+..##......
+..#...#...
+.#.#......
+#....#...#
+........##
+..#..#...#
+#..#......
+#.#.#.###.
+
+Tile 1069:
+.#.##.....
+...##...#.
+###.#..##.
+.#....#.##
+......#.#.
+#.#..#.##.
+...#......
+#..##...#.
+##.##.....
+#.#.##.#..
+
+Tile 1229:
+#.#...#..#
+.........#
+....#..##.
+#.#...#..#
+...###.#.#
+##.##.....
+...##....#
+..#..#.###
+..#......#
+.##..#.#.#
+
+Tile 3631:
+###.....##
+#.#.......
+#.#.#..#.#
+....#...##
+#.###.#.#.
+.....##.##
+...#..###.
+#..#...#.#
+..#..##..#
+.##.#.#..#
+
+Tile 1747:
+..##.....#
+.#.....#.#
+..........
+..#.#.#..#
+#...#.....
+..##.#.#..
+#....#..##
+...#.....#
+#.....##.#
+..#.#####.
+
+Tile 2531:
+.#...##...
+#....####.
+##...##..#
+#..#...#..
+##....#...
+.#....#.##
+.........#
+.#......#.
+...#...#.#
+##....#...
+
+Tile 2203:
+##..#...##
+##..#.#..#
+....##..#.
+###.###...
+.......#.#
+#.....##.#
+#.#....#..
+.......#.#
+...#.#....
+##.#.####.
+
+Tile 2777:
+...#.##...
+...#......
+.#....##..
+....#..#.#
+#.....#..#
+......##..
+#....##.##
+......#..#
+#..##.##..
+...#.#.###
+
+Tile 3323:
+#...##.#.#
+..#.......
+#......#..
+.#..##...#
+......##..
+#....#..##
+.......#.#
+....#...#.
+#.....#...
+##..#.#..#
+
+Tile 3319:
+#....#.##.
+##.....#.#
+####......
+..#.##..##
+##....##.#
+.......#.#
+..######.#
+#.#......#
+#..#......
+#..#.#..##
+
+Tile 3313:
+...#.##.##
+........##
+##..#...##
+##.....#.#
+##..#....#
+.......#..
+##.......#
+#.#.......
+.........#
+#.#..###.#
+
+Tile 2657:
+.###..#..#
+..#......#
+.#...##...
+#..#.....#
+....#...##
+#.........
+...##.#...
+.##....#.#
+##...#....
+#.####...#
+
+Tile 1907:
+#.#####.#.
+##..#.##..
+.....#.###
+.#.#..##.#
+.#.###...#
+...####...
+#..###....
+##....#...
+..#..#.#..
+#...###.#.
+
+Tile 3373:
+#.#####...
+..###.....
+.##..#..##
+....#...##
+......#..#
+..##.....#
+....##.###
+.#.#.....#
+#..##.#...
+.......###
+
+Tile 3253:
+##..###..#
+##......##
+##.......#
+##.#......
+##.......#
+#........#
+..##...###
+#..###..#.
+#.....###.
+..#.##..##
+
+Tile 2767:
+......####
+..#...####
+..###.....
+#...##...#
+...#..#..#
+.####....#
+#...##...#
+...##.####
+#...##.#..
+..#.....##
+
+Tile 3761:
+....######
+.......###
+.#.##.....
+.......#..
+..........
+.#.#.....#
+#........#
+##.##...##
+#......#.#
+#.##.#..#.
+
+Tile 1031:
+...#.###.#
+.#......#.
+##...#..#.
+#...#.....
+#.....#.##
+#.#...#..#
+##..##.#..
+.##.#..#..
+..#.....##
+.......#.#
+
+Tile 1181:
+####..#.##
+.....###.#
+..##..#...
+...#.#..##
+...#....#.
+#.......##
+...#....##
+#..##.#..#
+###...#...
+#.##..#.#.
+
+Tile 2887:
+.####..#.#
+.......#.#
+#.#..#.#.#
+#.##.....#
+...#.#...#
+###..#....
+#...#.....
+.....#....
+###..#..#.
+...###..#.
+
+Tile 1381:
+#...#..#.#
+..........
+....#...#.
+..#..##...
+........##
+#.#.......
+##........
+.#..##...#
+#..#......
+########..
+
+Tile 2621:
+...#.####.
+#...#..#..
+#.#.....#.
+..##.#..##
+####..#...
+.###.#..#.
+##...##..#
+#..#.#..#.
+#..##.#...
+#..###...#
+
+Tile 1597:
+##.##..###
+.#...##...
+..##....#.
+.##.......
+.##....#.#
+#..#.#....
+#........#
+...#......
+.#..###.##
+...###.###
+
+Tile 3533:
+#.###.##.#
+##.##...#.
+##..#.#.##
+.#.#..#.##
+#.....#...
+#..#...#.#
+..###.#..#
+.#....#.#.
+#.........
+#...#.#.##
+
+Tile 1249:
+.##.....##
+#.....#.##
+#..#..#.##
+#.#.#...#.
+......#...
+.#...##...
+##.#.....#
+..###.....
+#.......#.
+#.######..
+
+Tile 2843:
+#.#.#.....
+.......#.#
+#.....###.
+#.....##.#
+...##.##.#
+#...#.####
+..#.#....#
+.......#..
+##.#..#.##
+.##.##...#
+
+Tile 1583:
+..####.#..
+##..#....#
+###...##.#
+#....#.##.
+#..#......
+##.......#
+##.#...#..
+....#.#..#
+....#..#.#
+....#.###.
+
+Tile 3169:
+...#.###..
+.####.....
+#.#.#..#..
+#...#..#..
+..........
+##.#...#..
+..........
+#..#....##
+#...#....#
+..##.....#
+
+Tile 1367:
+......##..
+.##.......
+##.#..##.#
+#...#.#...
+#.###.#..#
+#.#...#..#
+.....#...#
+.....#...#
+#.#.#.#...
+#....##...
+
+Tile 2099:
+..###.####
+.####.###.
+...#...#..
+...##.##.#
+#....##...
+....#..#.#
+...#...##.
+#........#
+#..#.#..#.
+..##...##.
+
+Tile 3613:
+#.#.####..
+###......#
+.##..##...
+##..##...#
+#........#
+.....#....
+.......#..
+.##.#.....
+.##.#....#
+####..#.##
+
+Tile 3727:
+..#.##.##.
+#..#..##..
+##........
+#.......#.
+.#.###.#..
+.#....#...
+#.........
+#...#.#.#.
+.#..#...##
+.###.#.#..
+
+Tile 3697:
+##.###.#..
+......####
+#...#.#...
+.###...#.#
+##.#....#.
+..##.#..#.
+.##....#.#
+#..#.....#
+.#........
+#######.#.
+
+Tile 2503:
+..#.#..#..
+.......###
+....#.....
+####.#.##.
+...##...#.
+#..#..#..#
+..........
+.......#..
+##..#..#.#
+.#...#.###
+
+Tile 2131:
+##..#...##
+#..#.#..##
+..##...##.
+.....#.#.#
+...##....#
+..##..#..#
+..........
+......#.#.
+.#..#.#.##
+#..##.##..
+
+Tile 2129:
+.#.#....#.
+.......#.#
+.....#..#.
+.#......#.
+###.#.#...
+##.##.#...
+...#.##...
+......####
+....#####.
+#..#.##.#.
+
+Tile 3643:
+##..#.....
+.##.##...#
+#....#...#
+#.###.....
+####.#....
+.#.....#..
+##..###.#.
+..#..#.#.#
+#..##.#..#
+#...##..##
+
+Tile 1307:
+#......#.#
+##...#..#.
+......##..
+....#.#..#
+#....##..#
+......#.##
+....#.#..#
+#....#....
+#..#..#...
+#..#.#.#..
+
+Tile 3989:
+..###.#..#
+###...#...
+..#..#....
+##....#.#.
+##..#.#..#
+.......##.
+...#..##.#
+#....#....
+......#...
+####.#..#.
+
+Tile 2347:
+.#########
+##...#.#.#
+..#.##...#
+#..#..##..
+#..#......
+###......#
+.##...#...
+.####...#.
+#...#.##..
+.#.#####..
+
+Tile 2801:
+#.###.####
+......#..#
+...##.....
+#.....#..#
+...#......
+........##
+..###.####
+#.#.#.##..
+###...##..
+##.##..##.
+
+Tile 2543:
+.....#..##
+#....#.#..
+....#.##.#
+##.#..###.
+.#.#.#..##
+#.###.#..#
+##..#..#.#
+...###.#..
+.....###.#
+.##..#.#.#
+
+Tile 2029:
+##.##..###
+.........#
+#.#......#
+#.#.#..#.#
+.#.#.##.##
+#.....####
+...#.#....
+#..##....#
+....#.#...
+###.#..###
+
+Tile 1889:
+#..#.#####
+#.#.#...##
+#.#...##.#
+.....#...#
+##...#.###
+.....#....
+#.#......#
+#........#
+...#......
+.#..#####.
+
+Tile 1787:
+######.#.#
+#.........
+.#.#.#....
+...#.....#
+#..#.#..##
+##.#...#..
+...#.....#
+##..#.#...
+#.....##..
+#...##.###
+
+Tile 1619:
+#.####....
+#.#.#.##..
+#...#....#
+.#........
+.......#..
+#....#.#.#
+.......#.#
+.#.#..##.#
+.##..##.#.
+.#...##...
+
+Tile 2617:
+#..##.###.
+.###...#..
+..#.....#.
+#....##...
+#...#...##
+.#.....#.#
+#....#...#
+...##..#.#
+........##
+...###...#
+
+Tile 2879:
+#.#.####..
+.....#....
+.###...#..
+...#......
+#.#.....#.
+....#.....
+.#.#.#.#.#
+......#.#.
+#.........
+#.#..#####
+
+Tile 1429:
+..#.......
+#.##.#.###
+#......###
+....#...#.
+.....#.#.#
+..#....###
+#..#......
+....#..#..
+..#...#...
+.#####.#..
+
+Tile 2797:
+##.#.#..#.
+.....#.#.#
+.......#.#
+#...#.#...
+.##.#.##.#
+.##.....##
+##......#.
+##.#.#.#..
+.....#...#
+##.#######
+
+Tile 3943:
+..#.#.####
+.#.......#
+#..#.##.#.
+.#..#....#
+.#.##....#
+#.#.#.#..#
+......#...
+#...##...#
+#....##...
+.##....#.#
+
+Tile 3691:
+##.#...###
+.#.##...#.
+##.##....#
+.##.......
+......#..#
+...#..#..#
+####.....#
+#..####...
+..#.....#.
+...#.#....
+
+Tile 3083:
+#.###.....
+#.#....#.#
+#..#...###
+...#..#..#
+..#..#....
+##...#.#.#
+#.#.......
+#.#..###..
+##.#.....#
+.#.##.....
+
+Tile 1013:
+#....#..##
+#..#....##
+#.#.#.#...
+.....#.#.#
+#........#
+..#.....#.
+.##..#.###
+#..#..#.#.
+........##
+#.#.#.#.##
+
+Tile 2089:
+##.#.#..#.
+#...#...##
+#...#...##
+..#....###
+...#......
+......##..
+#......###
+...#...###
+.##...#.#.
+.##...###.
+
+Tile 2551:
+###.######
+####.#.###
+.##.##...#
+#..##.##.#
+#.#.#.#..#
+....#.#...
+#.#....#..
+##...#...#
+#..#.#...#
+..###..#.#
+
+Tile 3607:
+.#...##..#
+####......
+#..#.##..#
+#..#......
+###.....#.
+#....###..
+.........#
+....##.#.#
+......#..#
+...#####..
+
+Tile 1831:
+##....##..
+##.#......
+#.#....#..
+#.##..##..
+...###....
+##.#.#...#
+#...#.#...
+....#....#
+##......##
+.##.#..#.#
+
+Tile 1697:
+##..###.#.
+#..#...###
+#..#.....#
+......#...
+...#......
+#........#
+.#....####
+#....#....
+..##.###..
+.#.##..#..
+
+Tile 1621:
+....##.##.
+....#.#...
+....#.#.#.
+#.#...#..#
+..#..#.#..
+#........#
+....##....
+#.###.#..#
+#....#..##
+#..####...
+
+Tile 1019:
+.#.###..#.
+###.......
+#...#.#..#
+..#.#.....
+#.....###.
+....#..#.#
+.#.#.#.#..
+#.........
+#...#..#.#
+..##..####
+
+Tile 1471:
+...#.####.
+...##.##..
+#.#.#..###
+..##...###
+##.###....
+#....#...#
+........##
+#.##....#.
+##.##..#.#
+####.###..
+
+Tile 3797:
+..##...##.
+#...#....#
+###.###.##
+##....##..
+#.#.#...##
+....##....
+#.....#..#
+#...#.#...
+#.##.#..#.
+..#.#.#.#.
+
+Tile 1231:
+##....#..#
+#.........
+#..#.#....
+##...#....
+#..#.#...#
+###.##....
+##.#....#.
+....#.#..#
+.#...#..##
+#..#####.#
+
+Tile 1667:
+##.##.#..#
+...#..#.##
+..........
+#.........
+..#.##...#
+....#.#.##
+..#.##...#
+##...###.#
+###.......
+#####..###
+
+Tile 3719:
+..##.##..#
+...#......
+#......#.#
+#.#..###..
+....#.#.#.
+#.........
+#........#
+##.......#
+#.....#..#
+.##.#.####
+
+Tile 1103:
+.#..####.#
+#....##.##
+....###..#
+#.........
+#..#.....#
+#......#..
+.#..###.#.
+.....#....
+.......#.#
+.##.##.###
+
+Tile 2609:
+..####..#.
+#.....#..#
+.#.####...
+....#.....
+#......#.#
+.........#
+.......#..
+#.##.#....
+..#.#.....
+####.##..#
+
+Tile 1117:
+.#.#..##.#
+#...#....#
+#.#..####.
+.#.......#
+#...#.....
+#...#....#
+#..#.#.#..
+.........#
+.....#.##.
+.#..####.#
+
+Tile 3359:
+##...#.#.#
+..#.#....#
+..#..##...
+.......#..
+.........#
+#.#...###.
+..#..#...#
+#..#.....#
+#..#.#..##
+.###.#.#.#
+
+Tile 2851:
+.#....####
+#...##...#
+#..#.....#
+#......#..
+#.......#.
+.###.#.#..
+#....#..#.
+###......#
+#.##.#..#.
+..#...#.##
+
+Tile 2423:
+.#..#.####
+...#....#.
+.....##...
+.........#
+........##
+##.......#
+........#.
+#....#..##
+#.#.......
+#...##.##.
+
+Tile 1579:
+.##....#.#
+##...#....
+.#.##....#
+..##.#.###
+.#..#.#..#
+....##..#.
+..#..##..#
+#.#..##...
+.........#
+.#.###.###
+
+Tile 1361:
+....#..##.
+.###.#...#
+...#.#....
+#..#..#...
+#.##......
+#..#...#..
+.##......#
+.#...#.#.#
+#........#
+.#.#######
+
+Tile 1171:
+##.####..#
+....#.#..#
+#..#.....#
+#.#......#
+###...#..#
+.##.#...##
+##..##.#.#
+#..#.#..##
+#......#.#
+....#.###.
+
+Tile 3847:
+##...#..#.
+##.#.#..##
+..........
+#........#
+..........
+#........#
+#..#.#....
+.#.....#.#
+....#.....
+#.##.##.##
+
+Tile 2557:
+##..#.#...
+.#.#..#...
+####....#.
+#...#.#...
+...#.....#
+..#..##..#
+..###.#.##
+...#..#..#
+.....##...
+##.####..#
+
+Tile 2069:
+..###....#
+###..#.###
+........##
+#..#.#..#.
+.........#
+##.#.#.#.#
+....#...#.
+...#.#....
+........#.
+#.#.##..##
+
+Tile 2179:
+##...#.#.#
+.##..#.##.
+#..#..#...
+..........
+###.#....#
+..........
+#...#.....
+#........#
+....#...#.
+##..####..
+
+Tile 2659:
+##..#...#.
+#....##...
+.....#.#.#
+.......#..
+##.#..#.#.
+##........
+#....###.#
+#......#.#
+.........#
+#...#.##.#
+
+Tile 1097:
+.#..#.###.
+.....#..##
+....####..
+.#.#.....#
+......##.#
+.#..####.#
+.###....#.
+..##.##...
+###.##.#..
+#..###...#
+
+Tile 2143:
+.##.....#.
+......#..#
+.#........
+##......##
+###....##.
+#...#....#
+..#..#..##
+..##....#.
+#.#.......
+#..#####.#
+
+Tile 3527:
+##.#...#..
+..#.###..#
+.........#
+.....##.##
+.#.....###
+#.#...#..#
+.#.##.#.##
+###.#..#..
+.........#
+#####.#.##
+
+Tile 1063:
+##.#.#.##.
+##...#....
+#.........
+##..#.#..#
+......##.#
+##....#.#.
+.....#..##
+##.###...#
+.....##.#.
+#......#.#
+
+Tile 2593:
+#...####.#
+##.####...
+##.#.#..#.
+#........#
+#...#....#
+.........#
+.#..#..#.#
+......#...
+.#.......#
+##..#####.
+
+Tile 1753:
+...#.#..#.
+#.....#...
+.#......##
+.#....##.#
+.#..#...##
+..#..###..
+###......#
+#.#.#..###
+###....##.
+..#.##...#
+
+Tile 2273:
+#..##.###.
+#.....#...
+#...##....
+..#....###
+#.........
+#####.#...
+##..###..#
+#...##....
+#.#......#
+##.##..##.
+
+Tile 2731:
+.#..#..##.
+...#...#.#
+...##.....
+#..#..#..#
+..........
+.......###
+...#..####
+##.##....#
+...#.#..#.
+.##..#..##
+
+Tile 2477:
+..#.###.##
+#..#.#....
+.#.....#..
+##..#.##..
+...##....#
+#.#.#...##
+.##......#
+..##..#..#
+..#......#
+#..#..#.##
+
+Tile 2243:
+.#..######
+..#..####.
+...##.#...
+...##..#.#
+..#.#...#.
+#.#.#..#..
+..#......#
+#...#.#...
+...##...##
+##.#####.#
+
+Tile 1451:
+#.####.#.#
+#........#
+#.#......#
+.#.......#
+.........#
+..........
+#.........
+.........#
+#.........
+..#..#..##
+
+Tile 1289:
+#....#...#
+#.....#.#.
+...#......
+.#....###.
+......#..#
+##........
+###.......
+.#...#..#.
+..#..#.#.#
+#.#...###.
+
+Tile 2927:
+..##.#..#.
+##.#.#..#.
+..########
+#....##...
+...#.##...
+#.........
+#.....#.#.
+#.##..#...
+....#.#...
+#.##.#..##
+
+Tile 3433:
+#.##...###
+#.#..#..#.
+.#.....#.#
+#..#......
+.....##...
+#.##.....#
+#..#....##
+.....#..##
+##..#.....
+..###..###
+
+Tile 1913:
+#.##..#.##
+#..####.#.
+#.##..##..
+....#..#..
+.#.....#..
+.#..#....#
+#..####.##
+..#..#...#
+#.......##
+.#.#####..
+
+Tile 1567:
+####...##.
+#..#.....#
+##..#...#.
+##.#.#.#.#
+..#.#.#...
+##.#..#..#
+.##...##.#
+....#...#.
+..###..#..
+...#..####
+
+Tile 2707:
+.#.#.#..##
+.#....#..#
+#..#.#...#
+......#.#.
+.#..##...#
+.#.##.....
+#.#.....##
+#.....#..#
+#..#..##.#
+#..#...#.#
+
+Tile 3803:
+#..#.#...#
+.#........
+##....###.
+#.##....##
+..#....#..
+##.#..#.#.
+....#..#.#
+.#.......#
+#..#...#.#
+##.....###
+
+Tile 2837:
+.#..#####.
+#.......##
+###..#.###
+#...#....#
+..#..#.#..
+....#....#
+.#..##.##.
+...#.....#
+#...#..#.#
+.##...##.#
+
+Tile 2473:
+#.##..##..
+....#..#.#
+.........#
+#.....##..
+....#.#..#
+...#..#...
+....#...##
+.....###..
+..#......#
+##..###..#
+
+Tile 3121:
+...#.##..#
+#........#
+.##..##...
+#.....#..#
+......##.#
+......#.#.
+......#..#
+........##
+#...#....#
+.##.#..#..
+
+Tile 1637:
+#....#....
+....#..#..
+#......#.#
+#..#..#..#
+#.......##
+#..##.....
+#....#...#
+.#........
+.##..##.##
+.##...###.
+
+Tile 1091:
+..###....#
+###...#...
+..#......#
+##........
+.........#
+.....##..#
+###.##....
+#..#....#.
+.#.#.#....
+.....#####
+
+Tile 1453:
+###...#.##
+.##..#.#.#
+.#.......#
+.##...#..#
+#..#...#..
+.##...#..#
+#....##..#
+...##..#..
+....#.....
+..##....##
+
+Tile 2861:
+##....####
+.....#...#
+.##.#...#.
+.....##..#
+##..##..#.
+#...#.##.#
+##....##.#
+#..#.#....
+#####.#...
+##.....#..
+
+Tile 2677:
+##..#..#.#
+#....#....
+.#..#....#
+.###....#.
+.#........
+.....#.#.#
+#..#.....#
+#.##.##.##
+..#.##..##
+#..#..#...
+
+Tile 3413:
+..###.#..#
+...##.....
+...#..####
+........#.
+##.....#.#
+......#..#
+#...#..#.#
+#.......#.
+##..#.#.#.
+#...#####.
+
+Tile 1193:
+#.#.#.#.#.
+.#....##..
+#.........
+.......#.#
+..#.#.#.##
+...#...##.
+##........
+#..#....##
+.........#
+####...###
+
+Tile 1949:
+##..#..##.
+.....#..#.
+...##...##
+####....##
+.#..#.....
+#........#
+.##.#....#
+...##.....
+...#..####
+###...####
+
+Tile 3863:
+#.#..#.###
+#.#.....##
+##....##.#
+..###.###.
+#.##....#.
+...#.#.###
+...#..#.##
+..#......#
+##...#...#
+#..#.#.##.
+
+Tile 1439:
+#....#.###
+.....#.#.#
+.#.#...##.
+.##.#....#
+#....#....
+....#.#..#
+.....#...#
+#...###...
+.#..##..##
+##..#.####
+
+Tile 1129:
+..########
+..#.#.#...
+....##....
+.......#..
+........##
+..........
+#..#.#.#..
+##........
+.........#
+..##..####
+
+Tile 2953:
+.#.###.###
+........#.
+....#.#.##
+..#.#....#
+......#.##
+...#....#.
+###...#..#
+....#.....
+#.........
+#...#...#.
+
+Tile 3371:
+##..#..###
+##.....###
+##....#..#
+#.....#...
+###.#..###
+.#.#..#.##
+##........
+##.......#
+#.##..#...
+..##.####.
+
+Tile 1399:
+#.....#.#.
+#......#..
+.#..#....#
+####..#..#
+#..#.....#
+##..#..#..
+#.....#.##
+.#..##..#.
+.#..#....#
+..#.#.###.
+
+Tile 3911:
+.#.....#.#
+..#.....##
+#...##....
+#.........
+..#.#...##
+..#...#..#
+.#.#....##
+#..##....#
+.#..##..##
+#.#..#..#.
+
+Tile 1699:
+.####.####
+..#..#....
+#.....#.#.
+...#..##..
+##.#..#...
+##..##....
+#..#..#.#.
+.###.#....
+.....##.##
+.#..#...##
+
+Tile 3701:
+.#.#.#.#..
+..#.####.#
+..##...###
+......##.#
+....#....#
+.....#..##
+...#.#.###
+#..####.#.
+...##....#
+..###..###
+
+Tile 1811:
+.##.##.#..
+....#....#
+#......#.#
+.....#..#.
+#..#.#...#
+.#.#.##..#
+......#...
+..##..#...
+.....#...#
+#####.#..#
+
+Tile 2539:
+...######.
+#...#.###.
+.#..#.....
+.....#...#
+.#...#...#
+#.###..###
+.######...
+#...#.#.##
+#.....##.#
+...#..#.##
+
+Tile 3517:
+.#...#.##.
+#....#..#.
+#......#.#
+##.##.....
+...###..#.
+#..#.#...#
+#...#.#...
+###.......
+.#.......#
+######.#..
+
+Tile 2113:
+#..###..#.
+...#....##
+##.......#
+#....##..#
+..#.#..###
+#.#......#
+#.....#..#
+.#..#.#..#
+...###....
+##.#..#...
+
+Tile 1009:
+...##..###
+..#.......
+.#.....##.
+##....#..#
+##........
+#....#..#.
+.........#
+#.#..#..##
+....#.#..#
+..#.##.#.#
+
+Tile 1559:
+###....#.#
+.###...#.#
+#.#.....#.
+.#..#.#..#
+....##.#.#
+#.#..##.##
+..#..##...
+#.###.....
+.#.#.##..#
+##....####
+
+Tile 2971:
+...###...#
+......##..
+...#....##
+.#.#.##..#
+###.#.##.#
+#..#...##.
+..#.#...##
+.....#.##.
+.#........
+##....#..#
+
+Tile 1327:
+.#..##...#
+#.##.....#
+.#.....#.#
+...###...#
+#....#....
+.#.......#
+.#.......#
+#.........
+.....#...#
+..#######.
+
+Tile 3217:
+..###..#..
+.#..#....#
+......####
+###....#.#
+###...#...
+.#...#....
+........##
+#.##.#.##.
+#......#..
+...#...#.#
+
+Tile 1861:
+####.####.
+.#.....#..
+###...#...
+.##.#..##.
+...#..#...
+...#..#...
+##..#...##
+#...##..#.
+#...#.....
+##........
+
+Tile 3593:
+.##.##.###
+....#...##
+.#..#....#
+#..##.##..
+#..#...###
+...#..##..
+....#...##
+###......#
+..........
+..#......#
+
+Tile 3041:
+###..###.#
+....####..
+....#..##.
+#.#.....##
+#..#...#..
+#.......##
+.#...#####
+##.#...#.#
+..#.###.#.
+.####...##
+
+Tile 2647:
+#.###.####
+#...#...##
+.##....##.
+#.#.#.....
+#..#..##.#
+##....#..#
+..#....###
+.....###..
+........##
+#.#.#....#
+
+Tile 2437:
+.##...#...
+#.#...##.#
+.#....##.#
+#####...#.
+#...##.#..
+..#....#..
+#.......#.
+..#..#.#..
+#.##...#.#
+#.##..#..#
+
+Tile 3709:
+#######.##
+###.#..##.
+#.#...#..#
+.#....####
+##...#..#.
+....#..#..
+##........
+#..##..#.#
+.....#...#
+..#.##...#
+
+Tile 2039:
+##.###..#.
+...#.....#
+..#...##.#
+##.#.#...#
+#....#..#.
+#.####...#
+...##...##
+##...##..#
+#.....##.#
+####.#.#.#
+
+Tile 3011:
+...##.#...
+.........#
+###.####.#
+#.......#.
+.#.....#.#
+..######..
+#.....#..#
+#........#
+.##.##....
+#.....###.
+
+Tile 1151:
+.##.#..#.#
+#.##.....#
+...#..#...
+....##..##
+###....###
+##..#..#.#
+#...#....#
+..#....#..
+...#.....#
+#.#..#.#..
+)";
+
+constexpr char input21[] =
+    R"(lstszk nqmpbj tbns dtmrg qfpshxg rzqxjt hfjcm ghspr bhl nvgltvp nnghzx ljkgrv dbgtk xlpnhzk qxcbdq jvgnc mxxnn ftxvj qhjqq dbsm fqhhh cpmqmd zqp gssmcm kbmlt bmqft rgg bckqmz qjkvzrj smthrb xfkk mrccxm crpp mtdqzs zdsfp xqxjmh lpzgzmk tqlmf dxrj vrgtc pxxh pfpd bnqvfg ppj nblt strzx plrlg dshk zmjgh lcr lfxnqb stj tpxr gjmmvlx lkbgv nkztt rxrcp gvzkz vlrrm dhlsfm zxzsp rhvjh mkvzps sjn rqkzqhm ksnnt (contains sesame)
+ffv trs xvt sjn svnkt ppj cpnz ttqcjc ftxvj mkvzps lzs kzzcg bdds mrnzdb tqlmf vrgtc vjngxs xqxjmh qmkr fzcrb gxjv jvgnc plrlg mrccxm jghzkx xlpnhzk qfllqzq kbmlt gtbzks mxxnn zzrc nblt zcl nsgvx rcgc rqkzqhm zdgxsxg xtqs zchs shzv lpbsvq zmjgh stj pfpd njcpxn mqnlsk vlrrm ldpl xtflt hrmbv mbvdr lnxcm pcfgsc gssmcm ktzvqsv rhvjh zgrvqc lpzgzmk qfxgrl lfxnqb bvnxkx pprcp dtsqng rxrcp xdjtdmxs pccg tdrh crpp jrczjdvh tbns gvzkz zjdkf (contains eggs)
+qmkr mtdqzs gvzkz jvgnc zjdkf xtflt hkx vdghdc clt nfgv bnqvfg jnqvv pprcp fltk mnrnts jjtc tqlmf bprncs jlh vlrrm dbsm fzcrb mgdkfn snjq vjngxs lnxcm hrmg qfpshxg hghkj xlpnhzk zdsfp rcgc shzv plrlg zmjgh zchs bvnxkx tplc fqhhh gxnr xhcbk ttfctr mxxnn zdgxsxg nglg pmg pvlznp pxxh kq ljkgrv rxrcp rkpnsv qlbvk rsc ngrkp crpp bmqft xgtl fbplkn tbns qhjqq rhdh rrkjkz tnjtdf hmlx zzrc cpmqmd trs zlkcs sjn kbmlt mrccxm lpbsvq hpk pkrfq lpkbnb tpxr lzs mljm vmcczg stj jjlbpdl pnjj vrjs lpzgzmk hmjmsl ldpl (contains shellfish, nuts)
+vmcczg fqhhh mxxnn fzcrb rzqxjt rxrsz rgg lktpx rcgc qfllqzq ppj gtbzks rhvjh xpjcnq tplc mqnlsk pcfgsc hghkj vbjknl hmjmsl ghspr dshk njcpxn fltk mgdkfn ktzvqsv shzv stj tqlmf smthrb nglg crpp fbplkn pkrfq pmg nblt lzs bbpcgfr sqkbn bprncs sjn mkvzps rkpnsv mrccxm pprcp nm xtflt plrlg nvgltvp fslg ftxvj htrp vdghdc xfkk gxjv vkgh msxdtzt zzrc kbmlt bckqmz gxnr pnjj hshx pxxh qfpshxg btz tnjtdf pfpd zlkcs rsc zdsfp zdgxsxg dtmrg hpk ztxrfc lpzgzmk lstszk vpsq qlbvk hfjcm qfxgrl dbgtk kzzcg trs mbvdr (contains peanuts, soy, sesame)
+ttfctr mxxnn clt xvgj qfxgrl zxrbz qxcbdq ttqcjc ppj rhvjh dhlsfm nglg hpk msld nblt ksnnt vlmppdhn xhblgds tdrh vrgtc nqmpbj njcpxn jvgnc zjdkf xpjcnq sfflvrf jjlbpdl vmcczg snjq rkpnsv hshx mrccxm nm bdds dtmrg xqxjmh jghzkx dbsm mtdqzs rcgc plrlg gxnr rkkq hmjmsl hkx mnrnts fltk xhcbk hrmg btz fzcrb bckqmz qhjqq lktpx crpp jnqvv tnjtdf strzx ngrkp kbmlt lpzgzmk (contains peanuts, shellfish, fish)
+lcr sjn zmjgh smthrb lnxcm fslg jvgnc clt klm lpzgzmk nm jnqvv ghspr vqnzjk gtbzks dglrks hrmg vrgtc xgtl mrccxm stj rsc pmg rcgc hghkj zxzsp xqxjmh bmqft njcpxn qmkr shzv qfllqzq lzs cpmqmd rkkq gssmcm gxnr qjkvzrj pcfgsc hrmbv hshx zchs pxxh kzzcg dhlsfm bvnxkx vlrrm vfmggjg mzjgp mljm ngrkp bfnkf pvlznp fzcrb vdklml ffv ztxrfc mtdqzs gvzkz plrlg pfpd hbqvgsc rgg qhjqq htrp xtqs mxxnn nfgv dtmrg xvgj xtflt lkbgv xhblgds qfpshxg kbmlt sqkbn tqlmf ftxvj zdsfp tdrh cpnz nhvl rtl (contains fish)
+hfjcm hkx pnjj pxxh lkbgv mxxnn fgkgs fltk bprncs stj dshk snjq ttqcjc nblt kbmlt bmqft rcgc bdds lstszk nsgvx xtflt drnhfq qhjqq rrkjkz zdsfp jjtc fzcrb jvgnc njcpxn zqp mljm zzrc gxnr jlh zlvdgnq rhdh plrlg ksnnt mrccxm lpzgzmk qfllqzq lzs (contains wheat, sesame)
+xhcbk gxnr dbsm bfnkf nfgv dtmrg vdklml stj xqxjmh nhvl bnqvfg lpzgzmk gxjv fbplkn jvgnc mkvzps vlmppdhn rhdh zjdkf plrlg vfmggjg rhvjh kbmlt smthrb rkkq fltk rrkjkz pnjj nvdnp qmkr kq mgdkfn hghkj xdjtdmxs vdghdc bvnxkx btz jrczjdvh rgg dxrj ztxrfc zqp ljkgrv mljm xtflt nkztt fslg nnghzx njcpxn lpkbnb fzcrb zzgdb bckqmz sjn vmcczg mrccxm (contains soy)
+lpzgzmk ljdjl btz ftxvj kq pnjj pprcp blkl ztxrfc shzv xgtl zzgdb kbmlt hshx bbpcgfr plrlg rhdh bprncs snjq dxrj mkvzps sqkbn bckqmz xtqs zmjgh zlvdgnq dbsm hbqvgsc hmlx zfb cpnz dtsqng bnqvfg vrjs vlrrm vdklml lcr dglrks njcpxn rhvjh klm rcgc vmcczg pccg zchs zgrvqc gxnr ghspr mrccxm dtmrg lfxnqb dhlsfm jvgnc rsc jnqvv nsgvx jghzkx zxrbz ldpl pmg vdghdc nblt fgkgs htrp nm pcfgsc qmkr vfmggjg zdgxsxg tqlmf zzrc vkgh fcdxphc crpp nhvl qfpshxg rxrsz stj xtflt (contains eggs, nuts, soy)
+xqxjmh lpkbnb lnxcm qxcbdq vdklml ldpl zdsfp ttqcjc fcdxphc dbgtk msxdtzt gtbzks jnqvv hrmbv rkpnsv bprncs rhdh ppj mrccxm nkztt nblt rkkq ttfctr mljm gxnr ljdjl rxrsz pxxh hrmg mnrnts xpjcnq dtsqng rxrcp sfflvrf zgrvqc kbmlt zchs pprcp xhcbk bnqvfg ghspr zmmp sqkbn fqhhh nm zdgxsxg lpbsvq cpnz fbplkn tplc nnghzx kkfnhr vjngxs dbsm mrnzdb mgdkfn stj pccg blkl xvt mtdqzs trs rhvjh lfxnqb strzx pfpd zjdkf lpzgzmk jvgnc hfjcm mqnlsk dglrks jlh xhblgds vfmggjg nvgltvp xvgj crpp bbpcgfr sjn bvnxkx nfgv hsvx zfb pcfgsc bckqmz qlbvk lstszk zzrc mzjgp shzv mkvzps bdds (contains nuts, shellfish, soy)
+gvzkz mljm dxrj nkztt mbvdr rzqxjt kkfnhr lpzgzmk xhcbk pvlznp jvgnc klm rcgc xqxjmh rsc zcl bhl lkbgv ztxrfc ttfctr mrccxm tplc mxxnn rhdh pkrfq gxnr plrlg hrmg nvdnp bfnkf vpsq rqkzqhm vfmggjg stj pnjj ppj vdklml rxrsz ldpl fbplkn mgdkfn hghkj tdrh xtqs pfpd strzx ghspr lktpx fgkgs fltk rrkjkz (contains wheat, sesame)
+hrmg fltk sqkbn bfnkf zfb dglrks tnjtdf tdrh jjtc jvgnc nnghzx sfflvrf kq blkl qcpc mrccxm rzqxjt nhvl bmqft rhdh rcgc mtdqzs fcdxphc vlrrm bnqvfg xgtl vqnzjk lktpx vdklml ttfctr pfpd msld dbgtk hlhpq zzrc rkkq kzzcg cpnz plrlg dbsm vlmppdhn hfjcm ksnnt zxzsp gxnr kbmlt vdghdc lpkbnb jghzkx tplc pxxh lnxcm mbvdr vrjs mxxnn zcl pmg pcfgsc qfllqzq zlvdgnq nglg vjngxs nsgvx ppj bbpcgfr htrp nm hbqvgsc xpjcnq xqxjmh ghspr ztxrfc xvgj drnhfq xdjtdmxs tbns zxrbz ffv hsvx lpzgzmk lkbgv jrczjdvh lstszk bckqmz pccg strzx gxjv (contains peanuts, shellfish)
+zlkcs hfjcm zmmp lfxnqb zqp nsgvx lpzgzmk stj qfpshxg dtmrg xvgj hghkj gssmcm rgg bdds lkbgv bhl pnjj vrgtc xhblgds xvt bbpcgfr fgkgs mrccxm strzx kbmlt rkpnsv rkkq jvgnc qfxgrl ktzvqsv tdrh pvlznp jrczjdvh bprncs mqnlsk ffv clt lcr plrlg ljdjl mbvdr hkx lstszk gxnr xlpnhzk tpxr mnrnts ljkgrv hrmg ttfctr (contains sesame)
+pcfgsc cpmqmd qfpshxg xdjtdmxs xvt pxxh hghkj vpsq snjq mtdqzs lpzgzmk sjn rsc dbgtk dhlsfm msld ksnnt vkgh lfxnqb zlvdgnq xhcbk tqlmf qlbvk jghzkx nvdnp tnjtdf hkx pnjj rhdh nblt qxcbdq rcgc vmcczg gtbzks nsgvx pfpd plrlg vbjknl xhblgds nvgltvp vdghdc nfgv hrmbv hbqvgsc hlhpq xtqs stj blkl jvgnc nm lktpx fbplkn tdrh zxrbz pmg sqkbn rkpnsv klm gxnr xtflt kkfnhr hshx dbsm nglg lkbgv jrczjdvh pvlznp kbmlt xgtl kzzcg bbpcgfr mrccxm rkkq lzs fcdxphc msxdtzt jjtc crpp hrmg (contains wheat, shellfish, nuts)
+bckqmz bnqvfg gssmcm zzgdb ljdjl lfxnqb zjdkf zchs ppj ftxvj dxrj nm stj hpk mxxnn fslg shzv kbmlt rgg plrlg ngrkp nsgvx bprncs njcpxn mrnzdb mnrnts gxnr gvzkz lpzgzmk zlkcs tpxr dhlsfm vrgtc pxxh mrccxm zlvdgnq qxcbdq pnjj mmbdpl zfb bbpcgfr zmmp mzjgp xfkk zxzsp mgdkfn gjmmvlx svnkt nnghzx qhjqq (contains wheat, fish)
+jjlbpdl qhjqq bhl ftxvj stj dtsqng hpk hsvx bdds kbmlt mrccxm ppj zxrbz dshk hbqvgsc lkbgv zfb blkl hrmbv fbplkn gxnr mzjgp zdgxsxg dbsm vqnzjk jrczjdvh mmbdpl gjmmvlx vfmggjg snjq ttfctr xvt nkztt sfflvrf bvnxkx bnqvfg lpzgzmk njcpxn qfpshxg cpnz cpmqmd jvgnc sjn qcpc (contains eggs)
+gxnr lzs nkztt zmjgh hmlx jvgnc xtflt zxrbz kzzcg rqkzqhm pxxh fltk xvt pfpd nsgvx vdghdc rkpnsv msxdtzt ktzvqsv stj plrlg zjdkf rxrsz zchs zgrvqc vpsq btz hlhpq xhcbk shzv kbmlt vqnzjk vlmppdhn hpk bnqvfg dbgtk qmkr vfmggjg bbpcgfr lstszk zmmp dxrj lpzgzmk xpjcnq vbjknl ppj dglrks xhblgds bmqft zcl hrmbv hfjcm fqhhh (contains eggs, sesame)
+ffv jjlbpdl shzv zjdkf dshk jvgnc xtqs ttfctr hghkj lkbgv tqlmf vdghdc hrmg zxzsp zgrvqc mnrnts bprncs kq gtbzks zdgxsxg nvdnp fqhhh lpzgzmk ftxvj gxjv zlvdgnq pmg lktpx fgkgs kbmlt drnhfq lpkbnb rgg gxnr fzcrb stj msxdtzt zmmp nblt pnjj kzzcg nglg lcr nvgltvp hbqvgsc klm vfmggjg qhjqq qfllqzq zxrbz sqkbn qfxgrl htrp plrlg cpnz jrczjdvh qjkvzrj lpbsvq xdjtdmxs vqnzjk ppj tplc zcl lstszk sjn (contains nuts, sesame)
+snjq jlh lzs strzx pmg ldpl fbplkn ljkgrv gjmmvlx tpxr nvdnp mkvzps tdrh pkrfq zxzsp ppj mqnlsk rcgc rqkzqhm xtflt mmbdpl drnhfq cpmqmd bckqmz lpzgzmk ljdjl rxrsz pprcp tplc zlvdgnq xtqs lpkbnb zzgdb gssmcm gvzkz qcpc kbmlt dbgtk msld zqp dbsm gxnr vrjs qjkvzrj bbpcgfr rzqxjt lstszk zchs plrlg ksnnt mljm nnghzx zjdkf zdgxsxg hbqvgsc pcfgsc fgkgs rtl pvlznp vpsq vmcczg dtmrg rxrcp ttqcjc mzjgp vlmppdhn lpbsvq hmjmsl hkx nfgv bprncs zdsfp fslg mrccxm qhjqq qxcbdq tbns fcdxphc mbvdr nqmpbj pnjj bhl jvgnc kq zxrbz dhlsfm (contains shellfish)
+hlhpq zxrbz lpzgzmk zzrc hmjmsl lcr dglrks jghzkx rcgc zfb mkvzps xvt njcpxn vrgtc zqp xdjtdmxs plrlg ksnnt kbmlt hpk nkztt vrjs mmbdpl lzs vqnzjk bnqvfg vfmggjg nsgvx mrccxm mxxnn ppj htrp kzzcg rkkq hsvx vjngxs fbplkn pfpd lfxnqb vkgh xhcbk zmmp nnghzx zxzsp bckqmz lstszk stj xvgj jlh dshk gxnr kq (contains eggs)
+zdsfp pnjj mkvzps jvgnc zqp pvlznp xtflt crpp lnxcm fcdxphc bdds pfpd bfnkf bckqmz kbmlt qjkvzrj fqhhh lpbsvq smthrb zchs mtdqzs rxrcp tplc stj jlh bvnxkx rcgc ppj vdghdc htrp rsc qmkr lpzgzmk mrccxm gxnr nkztt ghspr hshx hrmg pcfgsc rzqxjt nqmpbj mzjgp vqnzjk ttfctr tbns jjtc gxjv nglg dbgtk ldpl lpkbnb xtqs qfllqzq vjngxs kkfnhr zzgdb zcl pxxh jghzkx fzcrb gjmmvlx nnghzx snjq xgtl lktpx qhjqq lkbgv xvgj pkrfq dshk fltk hkx ljkgrv (contains shellfish)
+bvnxkx ngrkp hghkj ktzvqsv strzx crpp vfmggjg lpbsvq lstszk sqkbn mnrnts dxrj hmlx vjngxs xvt rsc xqxjmh pxxh xhcbk zqp pnjj fzcrb hbqvgsc gxnr jrczjdvh nfgv pccg jghzkx ppj tqlmf gjmmvlx rxrsz rgg gtbzks mrccxm mxxnn hmjmsl rkpnsv nvgltvp lkbgv mrnzdb gxjv ldpl vrjs qfpshxg tplc xfkk ghspr zchs shzv xtqs msld dshk rzqxjt zfb xpjcnq htrp zlkcs ljkgrv xgtl pcfgsc vdklml jjtc mmbdpl zxzsp plrlg qmkr lpzgzmk nnghzx sjn kzzcg zmmp tdrh kbmlt jvgnc ztxrfc mtdqzs (contains fish, peanuts, shellfish)
+rzqxjt hfjcm xqxjmh hsvx lpzgzmk vlmppdhn fltk plrlg blkl gjmmvlx qhjqq sfflvrf rkkq zmmp sjn zcl dhlsfm ljkgrv fqhhh hbqvgsc hghkj pprcp jlh gxjv kkfnhr snjq kzzcg hrmg bnqvfg rqkzqhm jrczjdvh hrmbv tnjtdf bmqft rxrsz pkrfq jvgnc stj gssmcm dbgtk rsc zfb tplc jnqvv nhvl lpbsvq msxdtzt rrkjkz ttqcjc pccg ljdjl zzgdb ppj vpsq zzrc nfgv lnxcm rtl kbmlt fslg fzcrb jjtc mxxnn zxrbz bhl msld nnghzx mrccxm lstszk (contains fish, nuts, peanuts)
+stj xlpnhzk cpmqmd lpzgzmk mrnzdb jrczjdvh dhlsfm nblt vpsq jjtc lnxcm nm pcfgsc jlh hmlx bhl bckqmz mmbdpl tpxr bdds pccg lpkbnb nsgvx xhcbk nkztt lzs zmjgh rkkq qjkvzrj rcgc kzzcg gxnr tplc xtflt tqlmf vfmggjg ppj tnjtdf qxcbdq ztxrfc mzjgp zzrc nfgv ljkgrv vmcczg tbns hrmbv zchs qfllqzq zjdkf fbplkn mrccxm drnhfq hghkj kkfnhr vrjs dtmrg vkgh dtsqng kbmlt zmmp plrlg nvdnp gxjv trs mqnlsk cpnz shzv ffv xtqs xhblgds vdghdc ttfctr mbvdr (contains eggs)
+ttfctr htrp strzx rxrcp stj qlbvk hpk njcpxn zjdkf vdghdc jghzkx gtbzks bckqmz lpkbnb lkbgv rqkzqhm vbjknl mmbdpl jlh hghkj ljkgrv dshk lpzgzmk fzcrb pkrfq ghspr kbmlt dbsm ksnnt lcr xhblgds nsgvx dbgtk rhvjh snjq rxrsz cpnz lzs bvnxkx mrccxm ppj shzv tbns jvgnc gxnr crpp pnjj pcfgsc rzqxjt lpbsvq bbpcgfr qfllqzq hmjmsl zchs mgdkfn zxzsp pprcp nkztt pccg zlvdgnq pvlznp nnghzx rcgc hsvx nglg fcdxphc zdsfp pmg mljm qmkr zmmp vlrrm xqxjmh zcl hrmg xlpnhzk hmlx zqp xvgj xdjtdmxs qhjqq zzgdb (contains soy)
+zcl nsgvx hshx mrnzdb zzrc rgg vdghdc jghzkx lnxcm qhjqq vdklml svnkt zgrvqc msxdtzt tbns gjmmvlx qcpc plrlg lpzgzmk vlmppdhn pxxh vrjs ghspr dxrj hsvx jvgnc rtl zfb pvlznp xdjtdmxs bnqvfg mkvzps htrp ngrkp ljdjl stj nvgltvp zlvdgnq jlh hfjcm qxcbdq ldpl nnghzx ttqcjc ppj sjn zmjgh vmcczg fgkgs hrmbv xtqs nglg vjngxs vqnzjk tdrh dbsm xlpnhzk pkrfq fltk bmqft zqp ktzvqsv vlrrm bbpcgfr hghkj klm lpbsvq cpnz gvzkz gxnr fqhhh dbgtk clt vpsq crpp mrccxm qfpshxg (contains nuts, peanuts)
+xhcbk hrmbv qjkvzrj tplc jlh gxnr nkztt xfkk vrjs kbmlt htrp hrmg blkl msld xtqs lcr jvgnc vdghdc vqnzjk fcdxphc bbpcgfr mrccxm plrlg rqkzqhm dtsqng tbns hkx nqmpbj zzgdb nnghzx clt xtflt xqxjmh bckqmz vlrrm lpzgzmk tqlmf pnjj lzs cpnz hshx dtmrg bprncs zlvdgnq mnrnts zmmp qlbvk xpjcnq rxrcp ppj pfpd pkrfq dxrj qfpshxg ldpl lktpx qcpc qhjqq nfgv strzx jrczjdvh svnkt xvgj fgkgs (contains fish, shellfish, nuts)
+tqlmf bmqft strzx tpxr dtmrg drnhfq pkrfq vlrrm rxrsz kbmlt gxnr lpzgzmk vbjknl hkx njcpxn rxrcp jvgnc dshk zfb stj bnqvfg vrjs xtqs pccg tplc zchs mrnzdb vfmggjg jrczjdvh lcr vjngxs bdds lnxcm dbgtk crpp ppj hsvx ttqcjc mnrnts zcl rhdh mbvdr ztxrfc svnkt hbqvgsc gxjv pxxh bckqmz lfxnqb plrlg pvlznp lktpx xlpnhzk (contains soy, wheat)
+mnrnts zmmp zdgxsxg gxjv lpkbnb tqlmf ngrkp kkfnhr rzqxjt vfmggjg mbvdr cpnz mrccxm msxdtzt qfxgrl pxxh rxrcp fcdxphc rkpnsv lfxnqb xdjtdmxs zlkcs stj jrczjdvh xvt qxcbdq tbns ksnnt fgkgs jnqvv zjdkf gjmmvlx bfnkf lnxcm crpp mxxnn kbmlt rhdh xtflt sjn ftxvj gxnr rxrsz gvzkz ztxrfc lpzgzmk zzgdb mrnzdb fzcrb zmjgh jvgnc sqkbn cpmqmd rgg nqmpbj mljm njcpxn ppj mtdqzs zgrvqc mqnlsk nhvl bbpcgfr zchs rhvjh nm svnkt ktzvqsv nvgltvp tnjtdf pfpd (contains peanuts, soy)
+pfpd clt vdghdc plrlg qlbvk tdrh cpnz xfkk gssmcm xhcbk zlvdgnq xtflt lnxcm lpzgzmk rrkjkz lzs hghkj vrgtc xqxjmh njcpxn zgrvqc xpjcnq bhl nkztt bprncs svnkt zjdkf vqnzjk jnqvv fzcrb rtl vdklml zmmp qfxgrl vlmppdhn bvnxkx tnjtdf vlrrm zzrc xgtl lktpx dxrj mrccxm dtmrg zzgdb kbmlt fqhhh jlh ljkgrv stj nsgvx sjn hmlx nvgltvp mqnlsk gxnr nvdnp ftxvj xtqs smthrb nqmpbj bmqft rcgc jvgnc bckqmz (contains eggs)
+hkx rcgc hsvx vkgh tplc zzgdb gxnr ppj jlh zcl pxxh mkvzps dglrks qfxgrl pcfgsc nkztt xtqs blkl ksnnt bvnxkx jghzkx ljkgrv mmbdpl vdklml ldpl bbpcgfr pvlznp fltk lpzgzmk kkfnhr stj clt zdgxsxg trs zxrbz xqxjmh pccg mzjgp vrjs jjlbpdl vrgtc vlmppdhn kbmlt hshx sjn nhvl rhdh bprncs mljm mrnzdb njcpxn fslg hpk mrccxm gtbzks lfxnqb zdsfp lnxcm jvgnc sfflvrf nglg ktzvqsv nblt rzqxjt rsc xhcbk pfpd lkbgv zzrc snjq ftxvj ttqcjc qhjqq cpnz (contains eggs, nuts, sesame)
+stj crpp trs ffv lkbgv rrkjkz msld plrlg lpzgzmk mkvzps ttfctr dbsm tplc vbjknl rgg xfkk sjn fzcrb pnjj dtsqng ljkgrv msxdtzt jjlbpdl strzx nblt ktzvqsv xtflt zmmp vrgtc rzqxjt hsvx ppj xvt qcpc pfpd ljdjl rxrcp pprcp mnrnts hmjmsl vfmggjg tqlmf hpk mrccxm qfpshxg fgkgs nkztt rhvjh vkgh klm hfjcm lcr kbmlt jvgnc shzv qmkr fslg (contains nuts)
+nvgltvp gxnr nm dtsqng qfxgrl dtmrg svnkt pnjj mtdqzs zmmp xvt qjkvzrj plrlg fslg qmkr hghkj jghzkx jlh lzs qcpc sjn kbmlt nsgvx crpp xgtl bckqmz xpjcnq xhblgds lpzgzmk rrkjkz hfjcm gvzkz msld zchs mrccxm nhvl lktpx hrmbv vrjs smthrb fgkgs lpkbnb mzjgp ppj mnrnts hsvx rsc vpsq rzqxjt bmqft zzgdb msxdtzt jvgnc (contains wheat)
+vpsq bbpcgfr qlbvk jrczjdvh ksnnt jghzkx mrccxm zjdkf njcpxn nnghzx jjtc tnjtdf fltk xhcbk pnjj hghkj lpbsvq tpxr msld qjkvzrj mxxnn dxrj rkpnsv msxdtzt hbqvgsc zzrc xvgj kzzcg mgdkfn zmmp bvnxkx vdghdc xfkk stj mmbdpl zxzsp zmjgh bdds zchs dbsm ttfctr kbmlt xpjcnq ppj plrlg fcdxphc fqhhh jvgnc gxnr rhvjh vrgtc gvzkz zlvdgnq lfxnqb vkgh xhblgds mkvzps lcr jjlbpdl bhl zgrvqc ffv clt (contains eggs, shellfish)
+ppj mxxnn nblt pfpd sfflvrf lktpx fzcrb shzv xhblgds mbvdr jghzkx mqnlsk nnghzx jvgnc nqmpbj plrlg mkvzps bdds rxrcp nhvl hghkj ffv zzrc xpjcnq xlpnhzk xvgj mrccxm ldpl kkfnhr pkrfq bckqmz ghspr snjq gxnr tpxr vkgh bvnxkx zcl zgrvqc fqhhh rhvjh dtsqng vlmppdhn zqp cpnz gxjv pnjj ljkgrv vfmggjg hpk xdjtdmxs ngrkp drnhfq kbmlt vlrrm gssmcm lnxcm rzqxjt btz mrnzdb jrczjdvh zxrbz jlh xtqs rtl rgg tdrh tnjtdf nvgltvp hshx dshk qlbvk lpzgzmk njcpxn hbqvgsc xgtl svnkt gvzkz mtdqzs (contains nuts, peanuts, fish)
+ghspr lcr mrnzdb sqkbn drnhfq vrjs htrp jjtc gssmcm vlmppdhn ppj xvt xgtl vjngxs kbmlt ksnnt qfpshxg rkpnsv zdsfp ldpl zgrvqc lpzgzmk mljm stj mrccxm klm clt xvgj mxxnn strzx fcdxphc ngrkp tplc jvgnc pccg plrlg rtl mnrnts nblt mkvzps zdgxsxg dtmrg (contains fish, shellfish)
+jjlbpdl rcgc ppj ftxvj dshk jvgnc zmjgh rhvjh fslg njcpxn nhvl sjn lpzgzmk cpmqmd mnrnts bfnkf msld ghspr gxnr tnjtdf fcdxphc qhjqq nfgv lstszk tplc btz kbmlt fqhhh hlhpq vjngxs zchs mrnzdb xlpnhzk ttqcjc gxjv hsvx bckqmz dtsqng drnhfq zmmp ztxrfc nglg lfxnqb stj jjtc xvt vfmggjg nnghzx qlbvk mljm vlrrm rsc lpkbnb jghzkx plrlg vrjs fltk vlmppdhn trs (contains nuts, shellfish, wheat)
+xtqs bmqft kkfnhr ppj lstszk vqnzjk lpkbnb jlh clt zcl pnjj xlpnhzk hfjcm stj xpjcnq zlkcs dshk vlmppdhn lktpx mtdqzs tbns nfgv hlhpq vdghdc rkpnsv mzjgp fqhhh ztxrfc dglrks hrmbv ffv ljdjl rtl qxcbdq ljkgrv msld fslg pmg fcdxphc ngrkp bnqvfg nvdnp vrjs jvgnc xtflt zmjgh rxrsz qfxgrl crpp dtmrg kbmlt nglg rcgc ghspr mrccxm lnxcm blkl bbpcgfr ttqcjc lpzgzmk rxrcp gxnr tpxr (contains peanuts, shellfish, sesame)
+zmjgh zlvdgnq tqlmf ksnnt hfjcm mrccxm rtl lstszk fbplkn lfxnqb nfgv rzqxjt zfb bnqvfg vdghdc hpk qfpshxg rxrcp xqxjmh ttfctr zxrbz pmg plrlg kzzcg vqnzjk zcl ppj zzgdb kkfnhr nsgvx ljdjl qcpc ftxvj xfkk gxnr lpbsvq qhjqq lpzgzmk mgdkfn hlhpq nblt vdklml pfpd fcdxphc bprncs xdjtdmxs clt nnghzx jvgnc stj msld ffv nm hbqvgsc zzrc rxrsz xlpnhzk xhcbk jjtc htrp rcgc pnjj hmlx kq fzcrb hshx vbjknl lzs nvdnp dhlsfm lktpx (contains shellfish, peanuts)
+mqnlsk zgrvqc zqp strzx ffv gtbzks smthrb pxxh pcfgsc nsgvx mxxnn zzrc jjtc ljkgrv gssmcm fgkgs qjkvzrj dtsqng vlmppdhn tplc zzgdb qmkr dbgtk bnqvfg tnjtdf hfjcm hghkj nfgv qhjqq jjlbpdl xpjcnq gxnr gxjv xdjtdmxs mgdkfn zjdkf jrczjdvh zchs mrccxm clt qfllqzq zxrbz vdghdc nqmpbj lpzgzmk mzjgp xgtl ppj nkztt rhdh ksnnt hshx xhblgds ttqcjc zlvdgnq jvgnc qfpshxg plrlg rkpnsv vmcczg nblt nnghzx lfxnqb jlh ngrkp zlkcs kbmlt (contains soy, shellfish, nuts)
+jvgnc vjngxs smthrb plrlg pfpd crpp fzcrb rzqxjt fslg vmcczg strzx bdds fltk qfpshxg mbvdr gjmmvlx mkvzps qfllqzq zxrbz bhl xtqs mljm xvt pkrfq bprncs xhcbk hpk rxrsz zjdkf vdklml ppj nvdnp klm kkfnhr gxnr dbgtk qlbvk ttfctr pnjj lpzgzmk zlvdgnq dtmrg dglrks mqnlsk htrp xhblgds ldpl lzs kbmlt mrccxm ljkgrv vdghdc hrmg vrjs (contains peanuts, wheat, nuts)
+hkx jvgnc fbplkn ffv xlpnhzk mbvdr lpbsvq vbjknl pmg jlh xhcbk dhlsfm rzqxjt nvgltvp vlrrm ztxrfc rrkjkz gjmmvlx nnghzx nsgvx vdklml vpsq kq rcgc lpzgzmk strzx kbmlt bfnkf qmkr ttqcjc ljkgrv bhl rhdh nkztt stj zjdkf dglrks hlhpq rxrsz mrccxm pkrfq vrgtc mnrnts pvlznp blkl xvt hmlx plrlg zdgxsxg qjkvzrj fslg gxnr dxrj (contains soy, shellfish, eggs)
+pxxh mkvzps njcpxn nqmpbj sfflvrf mrccxm rxrsz dglrks gxnr tnjtdf ktzvqsv rrkjkz xqxjmh mqnlsk kzzcg zchs mtdqzs kbmlt bckqmz vrjs pvlznp mljm smthrb lzs zgrvqc lcr nblt ppj pccg vbjknl ksnnt qmkr qlbvk xtflt mrnzdb vlmppdhn jvgnc ttqcjc xdjtdmxs xhblgds hrmbv hkx pfpd mzjgp xfkk lfxnqb hbqvgsc lktpx fbplkn lpkbnb msxdtzt zdsfp vdklml ngrkp stj mnrnts zlkcs svnkt rhdh nkztt xlpnhzk lnxcm htrp ztxrfc jlh rzqxjt bnqvfg qfxgrl nvgltvp tbns qjkvzrj rqkzqhm crpp zqp strzx mxxnn jrczjdvh dxrj jjlbpdl rtl blkl zdgxsxg sqkbn gtbzks zlvdgnq vqnzjk nfgv mbvdr gxjv fzcrb lpzgzmk lstszk (contains eggs, soy)
+hmlx xvgj dtsqng nsgvx ghspr vlmppdhn mrccxm stj qjkvzrj ppj pmg zqp hghkj bfnkf kzzcg njcpxn mbvdr rgg svnkt hrmg vmcczg pprcp bhl rhvjh bdds qxcbdq zjdkf dbsm zxrbz plrlg lktpx lkbgv rsc vjngxs xlpnhzk vfmggjg tdrh lpzgzmk mljm qhjqq gxnr nvgltvp xvt mnrnts nblt jvgnc nnghzx msxdtzt fslg (contains sesame, shellfish)
+ttqcjc mtdqzs fbplkn btz xtflt kbmlt mnrnts lpzgzmk ljdjl ktzvqsv msxdtzt cpnz lfxnqb xvgj sqkbn rtl vkgh zdgxsxg qfpshxg pmg bnqvfg lpkbnb jnqvv xlpnhzk lktpx vfmggjg plrlg rhvjh jvgnc bckqmz htrp mkvzps zxzsp nfgv mrccxm fqhhh rxrsz sfflvrf cpmqmd gxnr lpbsvq drnhfq ttfctr vbjknl ffv trs fzcrb stj ljkgrv (contains sesame)
+smthrb lcr nhvl rsc hmjmsl mgdkfn xpjcnq ftxvj vlmppdhn kbmlt hlhpq zcl trs lpzgzmk ffv zfb clt jjlbpdl lstszk tdrh jvgnc zzrc qxcbdq nfgv dxrj sfflvrf gssmcm mqnlsk gjmmvlx dglrks mljm vkgh strzx qfllqzq zchs plrlg lkbgv hghkj njcpxn lnxcm stj dbgtk jjtc xtflt mzjgp bnqvfg qcpc dbsm fzcrb xhblgds blkl zlvdgnq mkvzps mxxnn mrccxm rkpnsv nblt lzs gxjv fbplkn fqhhh rhvjh xvgj msld svnkt drnhfq cpnz rzqxjt rgg xhcbk klm vdklml qhjqq btz qfpshxg jghzkx xtqs shzv nvgltvp gxnr vfmggjg bprncs nsgvx (contains shellfish, wheat, nuts))";
+
+constexpr char input22[] = R"(Player 1:
+43
+36
+13
+11
+20
+25
+37
+38
+4
+18
+1
+8
+27
+23
+7
+22
+10
+5
+50
+40
+45
+26
+15
+32
+33
+
+Player 2:
+21
+29
+12
+28
+46
+9
+44
+6
+16
+39
+19
+24
+17
+14
+47
+48
+42
+34
+31
+3
+41
+35
+2
+30
+49)";
+
+constexpr char input23[] = "586439172";
+
+constexpr char input24[] = R"(nwnwesenenewnwswnwweewswwweswwsew
+wswnewwwwwwwswswseswswswwwwesw
+eeneeeeseswenweeswneneeneeneene
+nwnwnwnwnwnwnwnwnwnwsenwnwnwnwnwnwwenwnw
+swneswnwneseswenwnwnwwseneneswnenenene
+nwnenwnenwnwneenwnwneneneneswnenene
+seneswsesesesesesewnesesesesesewsesese
+neseseesewwwnwswseseseswseneswswseee
+eneneeeneeeneneeenewneneneee
+seseeeneseseeseseseeeeseeewse
+swneswewswwswwnwenwsewwnewwwww
+wswwwwwwnwwwnwsewnew
+neeeneeeeeeeweeeneneseneeenw
+eneewenwnenwswnwneswnwnwswesenwnwne
+eeeeeenewsweeeeseene
+swnwseswseswsenenesenewsesesenwsesesesese
+wswnwnwwwwwwwwwnwwseenwwnwnwnw
+neeweseseeeenweewweesenwnee
+swswnenwsweenwwswswswswswnwswwwswsee
+nwseseewsenwswnenwnwsewneswewnwnwnwenw
+nwnwnenwswnenwnwnenwnenwnenwnwnwnwswnwnwe
+swneenwneneswnenenenenenenenenwnwneneswnene
+senwnwneneneenewnwnwnwenwnenwnenwwnwnw
+swwnwwwwwwwswneswewwwewwswe
+neewneweswnwnweseswnwwneeneswnwnw
+nenenweeeeneneswneswnesweenenenewe
+seeswswwswswswswsweswswseswwswswswswsw
+seseseseneeseseeswsesesesenwsesenwswse
+ewenwsewnwwnwnwwnwwnwnwwwwww
+sewnwwwnwwnwewnwwswwwwnwnwww
+wswnweswswwswwesesweneseswneswwesw
+sewswswneswswwswswwswswswswswwwswsw
+swseswwseswswswseswseseneseseneseseswswse
+seswswesewseswsesenwseseesewneseswswswsw
+neeenwneneswneneneeneswenewnwenesw
+wsewenewwwwwwwnwwwswenwnwswe
+neseswseseswswswsenwnwswwswseswseneesee
+swnenenwenesweeneeeeswnwneenenee
+wwwwwnwwwswwswwwwwseww
+seenwseeseseseeweseseeeeenwsese
+seeswnwsesenenweneseenwswswseswsesese
+swswweneweeeeswseneenwnwneeene
+wnwwswwwwwswwseswswswswwwwsw
+nwwnewewnwewswwswewnwwwnwwswe
+eeewseeneesweeeenwwnwseeeese
+wswswneswswswnwswswwwswwswswswswwesww
+neweneeswnwnwenenenwnenwnwnwwnwsesw
+seswesesenenwewnwneewnewnwnewneew
+swwenewsenenewneneneneneneeswswewe
+nwnwnwseenwwnwnwwnwnwwneswwnwwwnw
+nwnwswswwwnewswneewwnwwwwwnww
+wnwnwwwnwenwnwewwnwswnw
+swswswswswwswswneswswswswswseswwswswnw
+sesewswseseseseeseswsesenwseseseesesw
+eeweneeneeeeesweeneeeenee
+wnwnwnesenenwnwswswwnwnwnenenwneeseswnw
+seswseswswsesesesesesesewseseseseneese
+seseseeseseweseseseeseseeseese
+enweneseseeseeseseseseeeeseew
+eneneneeneenenenenesenwnene
+nenwnenesenenwwnewnwnwenenwe
+wwneseneswswsenewwwwwwseeswwnwe
+seseeeseseseseswnwwseesweenenesewnee
+wwneseswsewseeseseswsesesenwsesesesee
+swswswswswswesewwwswswswnewswswsww
+eesweeswswwswenwenwnwnwsenwnwswe
+nenenewneneneneneneenewneneneneenene
+wwswnenwnwnwenwswnenwswswewnewesesw
+eeseeeseeseeeseseweneeseeeewse
+ewwwnwnwwsenwwwwnwwwwwwwww
+seseneswsesenewseseswseseswsesesesesesesese
+seneseneseswwseesesesesesenewseswesenw
+nwswswnewswswswwwswwwewnewsewse
+swnwswseseswneweseseseseswswenenwnwsw
+eeneenenewweeeeeneeseewnee
+wwnwwwwnwwewnwswwwnwewwne
+swwswswswwnwsweswwswwwswnwseswswsw
+wwswwwwsewewswnenwwsewswswnwswsw
+nwsenwnwswnwnwnwnwnwnwwnwnwnwnwwenwnw
+nenwnwnwnwnwnwnwnwnwnwsenwneswwnwnwnene
+nwseeswesenwseseswsewnesenww
+nenwwnwnwnwsenwnenwwwnwnwnwswnwwnwnw
+swwwswswwwswswswnewsw
+nenenwneneneneswnwsenenwnenenenwnenwnwnw
+wwwnewwswswseswwwwwwsenwwwwwsw
+nwnwewwwnwswnwwnwneeenwswewswsw
+swswswswseswswswswswnweswswswswswswsweswnw
+nenwenewnenweswneneenwnenenenenwseneswne
+seswsenwwnenwseseseswsewsenesesesenw
+neenweneneeeeneeeneeesweneeesw
+nwnwsenwnwnwwnwnwnwnwwnwnwnwsenenwnenwnwnw
+swseswseswwswswseseseneswswseswsesesese
+sesesesesesenwseseeswswseseeseneeese
+wwnenewwwwwsewwnwwswwwwnwse
+nweeeswnweswesenwsenweweenwswe
+swseswswseswwswswswswswswswswswwneeswse
+wwnwnwwnwnewnwnwnwnwsewwewnwnwse
+enewwswneeneswe
+sweneswswswnwwseswswwswewseswnenenesww
+ewwwswwwnesewwsenweneswnwneswesw
+swwwneswswswnwswwswwswwsewnenwswewne
+seeseswseswseswsenwswseseswseseesewse
+senewnesewnwwsewseseneseswneseseenwse
+swwnwwewwwnwwwnwwwwnwnwwnwnw
+wsenwswswswseseswswneseswseseswswsesese
+nenenwnwnenwenwwnwnwneeswnwswnenwwesw
+weeseneeeeeneneeeneeeewenenee
+nenwneeseenenenenenenenenwneswnwnenewwnw
+eeeeeeseeeswneeseenwesenwesew
+nwnwnenenwnwnwneeswenenenwnenenwwnene
+swwnwnwnwnwnwnwnwnweeneenwnwsenwwnw
+nenenenwnwneswnwswsenenwnwneenenenenwnene
+eeeeeeeeeeeeewe
+swnwseswsesenwsenwseswnenesenwewswswse
+neswneneeneneneneseneneneneneenwnewne
+nwwnwsewnwwsenwwnwnwnewwnwnwwnwnwnwnw
+neswsenwnenwnenewwsesesewnwseneenwnwne
+nwnwnwswnewnwnenenwnenwenwnenwnewsenw
+eneewneseseneseswseseeenwsww
+seesenwsweseseseeseseeesesesesesenw
+senwnwnwswwnwwnesewwnwnwnenwenw
+eseswneswseswnwnwsweseenewnenwnwsese
+senwewseenwswneeeeeeeeeneee
+swnwsenwwnwnwneneswnwewwwnwnwnwnwnwwnw
+swwsesenwsesenwseeeseneseeweseseee
+wwwwswwswwswwnwwswsewseneswswswsw
+nenwwsewswnwnwenwnwnwnwenwnwweenwnw
+swseeseeseeeeeeeeeeeeeenw
+eeswweeeeneenweeee
+seseseeeewseenewseeseseseseneesese
+wnwnwnwnwnwnwnwnenwnwnwwsenwnwnwnwnwnw
+wwswwwwswwwwwwewwwwnewww
+seswnwsweweswneswseswswsesewswnwsese
+swwwswswseswwswswswwswswwnwwnwwswe
+swnwwnwwewnwnwwnwnwnwwnwwwwnww
+nenenenwnwswswewsenwnwsenwnwesenwwnwse
+seswneseneseswseseseseswseswwsewsesese
+neswnenenenwnewneneeneenene
+swnwswnenwneenwenwswsenwnwnewnenenene
+swneswswswswwwswswswswswswswswnewswswsw
+enwnwewnwswwwwnwwnwwneswwesww
+senenwnenwnwnwneewnwnwnwnwnwswnenwnwsw
+senwnenwwnwnwneeswnwseswnwnwseenwenwnw
+wswwwwseswswwwwwwwwwneew
+swwswsenwswswswswswswnwswswswswnesweeswsw
+nenenenwnenenwneswneseseneneswnenew
+nwewnwnwneswnwswswseseeeesweewseee
+neswswwwswneswwswswsweswswswswwswsw
+nwnenwnenwswneeneneneneneneswnwenenwnenw
+eseeneeeseweeneseesesweeeee
+neneneenwnenwewsewnenwwnenenwnwew
+sweeswnwnwneeswnwwswnwnwe
+nenwnenenwnenwneswneenenenenwnenesenwne
+eneseswswseswneneswswwwswswsesesewsese
+nwnewwnwwnwnwswwwnwwwnwwenwwsww
+ewswseeeseeneneneenew
+esesesenewnwwseneseseseseswnwse
+nenwnwnwnwnwnwsenwsenwnenwnwnwwnewwsese
+ewwwwnewswwswnewwwww
+ewwwnewwnwewswnwnwwswwwnwwew
+nweswswswswnwswsweswswseswwnwswseswee
+seenwsesenwsewnweneseswseseseseseesese
+senewseswesenwsenw
+swneswswseweswseswseswneswwseswsewsesw
+wnwwwswnwswnewneswseswsesewweew
+nwnwsenwnwnwwnwnwnwnwnwnwnenwnw
+ewenwneenwnenwneseseswneswnenenenwnwsw
+seseseseseenwsweseeeseseesesenewse
+eseseseseseeeeenwneeeseswwesenwee
+wnwesweeswenweeeeeeeeeneee
+newwnwwewswweeewnenwwswnwwsw
+wwwwwwnenwwswswswweewwswswsww
+senwseswsweswswswseswswwswsweswwswswsw
+neneneeweneneweeeeseeenenenenee
+nwswnwnweneneswsesweneneneneswsenewnene
+swswnewwswnwsewwwswswwwswwwwswe
+nweswsewenweeswweewneeeseesese
+eeeswseeeeweeeenenwe
+wswwwwnwnenwwwnwnwwnwswnwwwew
+swwsweeswswwswswwseswswseswseswswe
+sweswnwsweseswnwsenwswseswswwne
+swsesesenwswseswnwswswneseeswseseswweswse
+newwwnwwswnwnesewnwnwenwnwnwnw
+eneswsesesewwenewneswseeseneneseswse
+neswswwwwwswwwsenwsweswswneswww
+sweneeeeneeeswesweneneneeenee
+senweseneseswwswswenw
+wweswwsewneswnewswneswwwsw
+eeseseseesesenewsesewsesesesesesese
+enwenesesesweeseeeeeeseeswesenwnw
+nenenwnenenenwwswneneneneneneneneneenene
+seswnewnenwswnwnwnwnwwnwnwswnenenwwnwsw
+nwnenenwnenenwnwsenenenwneswnwnenenwnenee
+seseswsewsesesweseswwsesesweseseswse
+nesenwnwnenenenenenewneneeneneneswnenenene
+nwswseswswseswswswseeseswswseswswnwswswnwse
+eeeseeseneewnweeseeswseesewsee
+nwnwnwswnwnwnenwnwnw
+eeneeneenweeneneswenenenenweesw
+wswseswswswswswseweneswsenenweswww
+nwnenenwnwnwnwswenwnwsenwwnwnenenenenenwnw
+wnwnenenenenwnwnenwnenwnwsenenw
+seesesesweseeeseseseseseesenwse
+swseseseswseseswwsesesesesesesenwseeswse
+nwwnwwwwwwnwnwwsewnwsenwnwwnee
+nwwnwnwwnwwnwsewwnwnwnw
+eeneneneseeneswneneneeeneweewee
+eneewneneneneneneeseneneswneneswnww
+seswnwsesesesesweseseswswseeseswswsesesew
+neeseneneenenewne
+sesesweewweseseeseeenenesesewew
+wsewswneswwwswswswswseesweswwnesww
+eswswwswnwewneseneswwswnweenwwsw
+swswswwesweswnwnwswswswswsewswsewsw
+ewwswwwwnwsewnwswnewswswswwsww
+eneeenewneeeneseneeneeeswnenenwne
+swwwwwenwwwnwwwewseeswwwne
+enwenweewsweswseeeeeseeeee
+wnwwwwswwwwwswnewnewwsewenesw
+seeseesesesesesewse
+sewnewnwsewsewnwewnenwwwwnwswnewnw
+swswswswswseswswnwswnwswseseswsesw
+nwnwnwwsewnwnwnwnwnewnwnwnwnwnwnwnw
+nwswswseswseswseneseseneeswswseswwswsenwse
+seewneseseeeweseeeeseseseeeswsenw
+eneseeweeneeeeneeeweeneneee
+swswswswswswwweswwswnwseswswswswswnee
+nenesewnenenwnenenene
+ewwnwsesewnenwsewseneweswwnwswnw
+sweneneneneesenenenenewenenenenenene
+neeneneneneneeewneeeswneeneneew
+wnwsenwewnwnwenwnwseswnwneweswnenenw
+swswseseenwswewswswsewswswnwswseeenw
+nwswwswenewewwwswswwwswwwwse
+eeseseeeeeswenweeseeseeenw
+neswnesenwnenenenesenwneenene
+seseneseseseseeseswsesesewswsesenwsesesese
+eseswseeseeseewnwwseesesesesesee
+nwnwnenwnwewswnwnenenenw
+weeseneeseenweneeeneeneeeee
+neneneneeneneneneneneneeenenew
+swwswswswswswswsenwswswswswseswneswesw
+nenwnwnwnenwsewnenwenwenwsenwnwwsenwne
+senwwwwneseewsenewnewwwwswnwwsw
+swswswwsesewwswwwneneseenewswswswsw
+newseeeeeneeseeseeweseeeseww
+neneseeenenenenewnesenenwnenenenenenene
+seseseesesesesesesesesesewseseseswse
+newswswswswswneseswswneswswseswswwwnesw
+eewneseneesenwenwneswsesewesesewse
+seseseseseneseseeeeeswee
+ewnenenenwnwnwnwnwnenwwnenwnwnenwenene
+eweweneeswneeneeneesweenenenene
+seseseseseswseewesewnesenwseseesenese
+neswwseeseeswsenewnenwneswnwsenwneene
+sewnwewwwnwewnwewswnewnwwswww
+nenenesweeneenenwnwenenenesweeneese
+nwneeseesesesesesewnwseswseweesese
+nwnwnwnwnwsenesesenenenenwswnwwnwnenwwnwne
+swnweswsesesesenwseseseseseseseneswnwse
+eseseeseseeseseseseewsesesesewenesee
+eswnwnenenwneenwneswneneneswnwswnwswne
+neseseseeswsewswswswneenwwsww
+eeweeesenwwsenweeeeseeee
+swwswsweswswswswswsewne
+senwwwweneseneweesenwnenenwnwwnw
+seseseseeesesenwseesweeseseesesee
+eeeneseeweeneneeeene
+nwswwwenwnwnwnenwnwswswnenwnwnenenwnwsesw
+nenenenwnwnwnwnenenenenwsenenwwnenenene
+swswsweswswewswswswswswswswnwswnwswsw
+ewswswswwwswwswnewseswwneneswwsww
+swswswswnwswswswswseswsw
+eswswswswwwnwswwe
+esesweeseseeenesenwseeseseeseseese
+swswnewswswwswswwswswswswswwseswsw
+wnwnwwwnwewwwwnwwsenwnwww
+seeweesesesesesenwenwswseeeeswe
+swesenwnwnwnwwnwnwneenwnwswnwnwnenwnwnw
+nwnwnwwwnwnwnwnwnwnwenwwsenwnenwnwnw
+nenenenenenesenewneneneneneneneswenene
+neswswswswnwseswswsewwwswwswsweneesw
+nweseseseeseesweseneeseeseseeswsee
+swswwwwwswwswwneswseewwwwwww
+seeseseseseseeseesesesewsesesese
+enwneswnwnenenenenwsenwswnenenenwnwse
+swseswnwwswswswswswswsweswswswswsesesw
+wnwwnenewneneseswswnesenwswwesewnesew
+neseseseseswseseswswseseseseseswse
+wwswewwneswswwwwswnwwseswwswwse
+seseseseswwneseneneswswnewewenwwne
+sweweseseswsenwneswwseseswsesesese
+eeeeneeneeeeseeeeeswseweese
+nwenwenwnwswnwswnwnwnenwnwnwnwne
+nenenenewneeneesenwewneweeswseesee
+nwnewewwwwwseswswwsewweneswnww
+sewwnwnwneswwwnwwwnwnwwwsewwww
+eeeeneeswneeeeenwnwewseswee
+eswnwwwwswnesweswnesewswnwwwswswsw
+nenwnwneswnenwnewnenesenwnenesenwenese
+seseseseseseswnwsesesesesesenwe
+nweswnwswseesenenenwswseesenww
+eeeeswneweneeeeeenwnwseeesese
+wswnwneswswseenenwswneswwswwnee
+seenwnewneewwsenenenewnwnwseneswswse
+nwswwswnwswneneswsweseswse
+newnenenwnwneswnewnenesesenenwsenwnwnwne
+swswwswwnwswswswneswswswewwswswswsw
+swwswswneswwswnewwswwswswswsewww
+wwwwenewnwsenweseewwseewww
+wwwwseewwwwwwwwwwneww
+seswseneseseseswnesesesesesenwswswsesese
+swswneswswseenwnwseswswnwsesewswnesese
+nwnenenenwneneneseneneenewnenenenenenw
+eeeewesweneneneeweeswnweswnenw
+seeseesesesewsenesese
+nwnwseenweenenenenesweeswneneswnenenene
+wswwwwswwnwwwswnwwwsewwwwwse
+eseswewnwnwesesewswsweneseswnwesw
+swswnwswswswseseswswswswswewswswswnwsw
+ewsenenwneswseneswneswnenw
+swnwnwnwnwnwnwnwnenwnwnwnweewswnwwwnw
+eeeenwsenewwswswwnwwwnwwwnew
+seseesewseseseseseneswweseseseseese
+neswswwewswwswnew
+nenenwneneenwseneneneneseeswneenewne
+seenweseswseeseeese
+wwwnwwwnenwesesenwnwnwnww
+nwsweeswnwneseseneenwswseneswwseseneswse
+sesewswsenwseseseseseswsenese
+enenenenwneenesweneneeeneneeeene
+nwnwneeswneneswnwnwnenenenenwenwnwnwne
+swneesesesewswwnwseseneseswnwnwnesew
+swsesesesenesenesesesesew
+seneewnesweneneeneneneeneneenenene
+ewwswseswwswsenwswwwwwswnwnwswsesw
+eeeswseeneeeeeswseneseesewnewnw
+seseswsewswnwseseseeswseesesewsesese
+nenwswseeswnwnweenwnwneswneeswswsewnwse
+seseesesweneseesese
+eswnwewsweseeseeweseeesenenwse
+eesenweenwswweswnweeeeseswenwse
+nwneneneneneneneneneswnenene
+nwnwwnenewwnwnwnwswnwwwswnwwnwwnw
+seeneeewseeewsenwseesweeeseee
+sewnesewweneeeenwwnewwswswwswnw
+neswswwnwnwnenwnwnwwsenwnwnwnesenwnwnenw
+swnwswswnenwseswneeswnweesenwnw
+neswswnewnenwseeneewenene
+nenwneneseswneneneneneneenenenwswnenwsene
+seswwswwwneseseswswswnwnewwsesenwnesw
+eeeseenwseeneseenwseeeeseweee
+nwnenenesenenewnwnenwnwswenwsenenenew
+nwneneeseneswsenenewnwnwnewne
+wwwswswswwwsewswswwneswwneswnewse
+wnwnewsenenwnwenwnw
+nwwseswsenwwseswswwswwnweenwwwnwsw
+nenwseneswnenwswnwenwnenwnenwnwnwwnwswe
+nenweneeseenweenenwsweneseneenene
+sweswswwnwswswwwwwswswswswsweww
+wwneseswesewsenwwnwnenwnw
+wswswswewwswwwwwsewwwswnwwww
+swswneeswswswswseswseswnwewnwsenwswsesese
+swwnwswsweeswneswsweseswswsenwswnwsw
+wneswneseswseseswswseeseseswwseseswsese
+seswnwnwswswswswsenweseswswwnwswswese
+swneseseeseeseseseseseseesewneseseseese
+swswswswseswswswswswswswseseneseswneswse
+sewwswwswweneswswswwswswswwwswwwsw
+swswswswswswswswswswswnwswswswswswswnese
+wwwswwwwwwswwsenwwwwwwnesww
+seseseeseswwseeneseswsesesesesenwsesesese
+enwnwnenwwnwnenwnwnwnwnenwnwnenwwnee
+swswsewneneswsenwseeswseseneeswsenwsenesw
+sweswswswswswswsenwswswswswswswswsww
+seseseseseswsenesesesewseseswswnwseseswse
+seneenwweenwsesewwneeswnenwwenee
+enwenewseeneeewnweseswnesenenene
+wwseswswswneswswswswswwswwswsw
+swseseswwneswwnenwew
+eseweswswnesenweneneesee
+nwnwnwnesenwnwnwnwnwnwswnwenwnwnenwnwne
+swwwwwseswwwswneswswwwwswwww
+nenwnwswnesweseeswnenenwneenene
+neenwwewneeseneswsenwswswewnese
+nwnwwnwwwenwnwnwnwnwnwswenwnwwnwnwnwnw
+wwnwwwwwwwwwwwwewwww
+newweeneseseenwneseswnwneeesenwnw
+esweeenewneswnenenenwenee
+swswwswwneswswswswwwwswwswswsw
+nenenenenenenenenesenenenenewneneneswne
+seseseswsesesewsesesesesenesese
+ewnwseswwswswwneswswswwneswwwswnw
+newnesenenenenenenenenenwweneswnenene
+swneseneseseneswwsenesesesewseswswswnw
+nwnwnwwnwnwwwnwnwnwnwsewnw
+ewneseeeseeneeeneeewneeeeeswne
+nwwnwswenwswwwnwwnenwnwnwnwwnww
+sewweswwwswwenwwwwwwnwwswesw
+swnwneswwsweenwwwwnwnwwnwwnwnww
+neswnenwwneneswwnenwnwenwsenenesenenwnwnw
+nwnwsenwswnwwwenwnwnewswswnene
+seneseswseswswswswseseswseswseseseswwswne
+nenwnenwnenwnwnenenwnenenwsenenenwswnwswnw
+enwnweneneneneneeswneneneesweenene
+swswswswswnwswswswseseswswswswneswswswsw
+eeeneneenweeeeeneneeeswnwesw
+eneeswsweeneeesee
+seseeeseseseeeswseseseseenwnwesese
+eneneneneenenenenewswneneneneeeene
+enwswneenenweseswneeewswesese
+wseeeswsweswnewnesesesesenwewnwnw
+seseswseswseswswnesesenwseseswswswseswsenw
+nenwneneneneneneewnenwnene
+nwnwwenenwnenwnwseneswnwnwnwenenwnwnenw
+sesewnweseswseseseseseseseseseseseseseenw
+neeneeswneenwnenenenenenwneneneneswnenene
+neneswneswneeswneneneneneswenenenenwnene
+senewnwenweewsesesewneseswneeeswnw
+nwneeewsewseneneenwnwneswenewnenwnw
+sweeenwwneswnewnweeeewnenwnwswswne
+esweeneweneeeeeewenwsweesw
+neswnenwwwwewsenweswwnwseeewnwe
+newwwwwwwwwwwwwwseeswsww
+nweeseeeeesenweeeeeesweee
+wnwwenwwwnwnwnwwnesww
+wewswwseneswwwswnwwnwwwwwnesww
+nenenenenwsweeneneeeweseswnwneene
+eeeeeewsweeesenweeesenweee
+eeeeeneneneneswnenewneneeeneeese
+nwswswnenesenenenenesenwnenenenenenw
+neeeeseseeeseeswneseeeseseeew
+seswseswnwseswseseswsesesesw
+swwwswwwwnwwseswwnewewwwwswsww
+ewwwewsewnwwwwwwwwwwwnww
+swsesesesewsesesenwseseneseseewswsese
+nenenenewneneeneneswneeneneneeenenee
+nwnwwwswnwwnwwenwwnwnw
+senenenweswnweweneneswesenwneneneneene
+enenewneneneeeneeneeseenewnenenene
+sesenwnwseseeseeseeeee
+seewnwswswseswswseeswswswswseswsewesw
+swswswswnwwswseswswwwewwwswwwnwww
+nwnwnwnwnwnwnwnwnwnwnwwnwnenwnwnenwsenw
+eeeeeeeeeneweeesweeeee
+eswswwwwswwswswwswswnwwwwswwsw
+neneneneneenwneneneenewsewweenese
+nenenwnenwneneneneneswnenwswnwnwnwnwenwnwe
+nwnwsenwnwwwenwnwenwwnwsewnwnwnenw
+nwsenenwnwnwnwnwnwnenwnenene
+eeseneseseswnweeenwneswnwsenweseswse
+enwnenesenenewnenwwwnwnenenenwnwene
+nwenwnweswnwwnwnenenenenwsewnwnwnwnene
+seneseseneweeweseseeenesesweee
+nenenesenenwwnwnwnwnwnwsenwnwnwnwnwnwnwnwne
+swswswewenwneswswnweseswnwweswswnw
+nenwsenenenwnwnewnwswnenenwnenenenenenesw
+nweswseenewewnwewwnwsewswnwswnww
+ewseneeneeneneeneneewseneneewnenw
+wwnwnwnwnwwwwnwenenwnwseswwnwwww
+senenenenwnenenwnwnesenenwwswnwnwnenwnwe
+eseseesweseeeeseeesweeesenenwe
+neneswnenwenwsenenwsweeneneneeswsenwe
+neswswsweswswswnwswswneswswswwswseswnesw
+swseseseeswseswnwseseseswseseswnwsesesw
+seswswseseseseswneseseswswseseseswseswnesw
+ewwwwnwwwwwwwwwwwwswww
+seneswwwseseseseseswsenwseneseseswseswse
+wsenwsenwwnweneswseewnwnewneseseswsenw
+seswswneswswneseswswseswseswseswseswsesw
+weseeeenweneeeneeeneeesweeee
+neneneneneswneneneenwenene
+eewseesesweeeenwweeneswewene
+swswswswswwswswwswsweswswnwswswswswswse
+wnenwneswnwnewswnwnwsenwewnwneenenwse
+neneeneneneneneewnenenesenene
+eeeseenwsesweeeeweeeseeenee
+wswswseswneswsweneswswneswswseswswsww
+nwnwwwnwsewnwwwwnewwwnwwwww
+nwnwwnwnenenenwnenesenwnenenwnenenwnwne
+wswswswweswnwswswswwswswswwswswwsw
+newneneneneseneneneew
+eeswsweseseneenenenewseswseenwese
+seenwseeswwnwwseenenenwnewnewnew
+neeneeneenesesweneeneweenenweeee
+swsewwnwswwswswwsenwnewswwwneswe
+nenenewneneeneeeneneneneeneneneneswne
+seeesewseeeeeneeesenweeeswse
+sesenwseswnwswsweseswnwswnweswseswnwswsw
+ewwwwwwsewwwwnwwwwwwnewwnw
+nwswseswnwwwsesenwenwnewnwnwwneswnwe
+swnwswswswswswswswswswswswswsweswswswsw
+sesesewnwseswnwseseswseswswswesweswsw
+eeseeeenwswsweeeeeeneeeeeee
+nenenenenenenewseneeeeseneneenewnenene
+eeeeneneeneswneneeewneneseeene
+nenesenenenenenewnwnenenenenenenenenene
+nwswwnwweswsweswswneneswswswsw
+sewnenenenenweenew
+weeswenwswsenwsenwnwnweeeswesee
+esenwsenenwsesenwneswwseseswsesesesewse
+nwwnwnwnwnwnwswenwneswesesenenwnwenwwsw
+wwnwnwnwnwnwwwnwnwswnewwwnwwnw
+nwswenweswnwnwenwenwsenwnwwnwwnenwnw
+eneneweeeneesenenenwenenewneeswne
+seeseeesesenesesesesewsenweswseswne
+eeneneeswwneneeeneenenenenewnenene
+sesenewwwwewwwwwnewswwwnwnwne
+senweeswnwseseneswnwsewswesene
+sesesewwsenwseneesweseeeneswsesee
+wnwnwnwwwwnwwwewswnw
+swwwwwewwwwwwswesw
+wwnwsewsewwesenwswsenwnewwnwsenww
+nwnwenwnwnenwswnenwnwnwnwnwwnwnwsenwnwse
+swsewswswseseswswwwswneneewswwswne
+eeeeeenweeeswweeeeenwesee
+wwnenwwwnewwswwwnwsewswwwsew
+nwnwnesewsenwnwenwnwnwnwnwnww
+nweswnesenenenesenenewsenewneneneswne
+enwseseneenwwwnwnwnewnwsw
+wwwenwwswwnwwnwnwnwnwnwnwwsenwwnw
+swneswswswswswwswswswswswseswswnewswsw
+seseenwneseweeesweneenwseswseee
+senwswnwneswwwnwseewwnewnwnwnwee
+swswswswnwwwseswneneswswwwswsweswsw
+nwnewsenwsewnwnwsenwwwnwnwwwwnw
+nwwnwswwswswwwwwnwseeswwseswswww
+seweesesenwseseenesesweneewswwse
+seweenewswnwwwwwwsenenewewwsew
+nwnenenenewnenwneneneneneneneswneenwnene
+eeeeeeneswneseeeeeseseeeeeew
+seseesesesewseseeseseseewse
+nweseneseeeseseseeseseesesweeswsenwsw
+seneneswnesenenenenenenenwwnwnwswnenene
+swnwseseseneseswswswsweswswswswsesesewsw
+wseseeneseseeneewenewneenwnenenene
+enwnenesenenewseswnwnwnenenenwnewnene
+eneeeeneeewee
+swwswwwewesewwnesewswswnw
+swwseswseeswnewsewnwnwnwwneeswesw
+weeswseeneeenwsewenenwweeewe
+nwswnwnenwwnwnenewwewwwwseswwenww
+seeseenwnwwewwneswwnewswwwsewsw
+wswswswwswswswswswseswswswwwwnwesw
+newseneeneswnenwwweneneswseeeeene
+seswswseswseeswwswswnwswswswsweswnw
+seseseseseseseseseneseseswseseseseneswsese
+nenenwnwswneeneneenenwnwnwsew
+nwswwnesewswsenwswweenesesew
+wswswwenwswwwsenewswswneweseswsw
+seswseswswswswswnwseseneseseswsw
+wswswswswswswsenweswswswswswneseswsew
+eneeenenweneneneneneneswneeeene
+nwwwwwwwnewwwwwwwsewwwwswe
+eseseseseseseneseseswwnweseseseseese
+eweseeenweeeeseseweeese
+nwnenwwnwwnwnwswnwsenwnwsenwenwnewsw
+nwnenwnenwnenwswnenwswnenwnwnwnenwnenenwe
+eeeeeeeeneweeneeeeeeswe
+esenwnewnwnwnwwsenwnwnewnewwswswne
+eenwseseeeeweseeeeeeeesesese
+seseswswseswswswswseseeneseswswnwswsewswsw
+nwnwnwneneneneneswenenenenenenwnenene
+nwnwwnwnwnwwnwwsenwenwenwnwnwnwneswsw
+sewwnwwnesesesewnewewswewnwwe
+sweswswwnewswswweewswnwwseswsewnwsw
+wsweeeneewenwneswene
+eewseseeeesesenweeseseseseseeene
+wwsweeswwwnwwwwswwewswwenw
+eneeneneeenweeeeeseneeeee
+neseneneswwneneeneeswnewneneseenene
+eeeeeseseseseeewseswsenwwseeeese
+wwswwswnewswwswwswwneswwswwwsw
+wswwwswewswwswswwnwwwwswe
+eseeweeeeeneeeeneeneeweeee
+swswswswswseswnwsweswswswswswswswswswne
+sesesenwwseesenwseseseesesesesesesesese
+seenwnwwneeenwswwsesweeeenwse
+nwwwwwwneseewwwww
+eeeeeseenwsesw
+nwnenwnwnenwnwnenwnwsenenwnenewnwnwnenw
+seseseseseneseeeenwseseeseseeseseew
+swswnwsweseneswwswswswwswswnewswwwsw
+neneeesewneneeseneeneweeeeswnew
+swswswsesesweswweswswswswsweswswwnwsw
+nwswseseseswseswenwseswsesw
+nwneneswnwnenenesenwnwneswne
+sweseseeseseesewseswsesenwseswnwsesw
+swnewsenenweneneneneneesewwnwnenenwnwse
+nwnwsenwnwwnwnwnwnwwnenwwnweenwnwsw
+nwwnwewnwnwnwwwwnwnwwnwnwnwswwnw
+swswswewswseswseseswswswswsesewswsenesesw
+eeweeeeeeeeseeeeeee
+neenwswsenenewneew
+seswneseenwswnwseswswswswswe
+nwnenwnwsesenwnwwnwnwnenwnwnenenwsenwnw
+sesenwsweseeswnwseswsewwseesesesesesw)";
+
+constexpr char input25[] = R"(6930903
+19716708)";
