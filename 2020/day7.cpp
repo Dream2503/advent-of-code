@@ -140,7 +140,7 @@ int resolve_part2(List& list, const std::string& key) {
 
 int part2() {
     List list = parse_input(input7);
-    return resolve_part2(list, "shiny gold") ;
+    return resolve_part2(list, "shiny gold");
 }
 
 int main() {

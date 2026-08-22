@@ -75,7 +75,7 @@ void resolve(const std::unordered_set<Vec2<int>>& tiles, const Vec2<int>& tile, 
     }
 }
 
-int part1(const bool part2 = false) {
+int part1(const bool recurse = false) {
     std::string line;
     std::unordered_set<Vec2<int>> tiles;
     std::stringstream file(input24);
@@ -116,14 +116,15 @@ int part1(const bool part2 = false) {
             tiles.insert(position);
         }
     }
-    for (int i = 0; part2 && i < 100; i++) {
+    for (int i = 0; recurse && i < 100; i++) {
         std::unordered_set<Vec2<int>> next_tiles, visited;
 
         for (const Vec2<int>& tile : tiles) {
             resolve(tiles, tile, next_tiles, visited);
 
-            for (const Vec2<int>& d : delta)
+            for (const Vec2<int>& d : delta) {
                 resolve(tiles, tile + d, next_tiles, visited);
+            }
         }
         tiles = std::move(next_tiles);
     }

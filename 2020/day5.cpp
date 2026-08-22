@@ -77,7 +77,7 @@ int part1(const bool find = false) {
                 low = mid;
             }
         }
-       seats.push_back(seat * 8 + low);
+        seats.push_back(seat * 8 + low);
     }
     std::ranges::sort(seats);
 
@@ -86,7 +86,7 @@ int part1(const bool find = false) {
 
         for (int i = 0; i < size - 1; i++) {
             if (seats[i] + 1 != seats[i + 1]) {
-                return seats[i] + 1 ;
+                return seats[i] + 1;
             }
         }
     }

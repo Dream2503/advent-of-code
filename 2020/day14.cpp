@@ -141,7 +141,7 @@ Execute the initialization program using an emulator for a version 2 decoder chi
 uint64_t part2() {
     std::string line;
     std::array<int8_t, 36> mask;
-    std::unordered_map<uint64_t , uint64_t> memory;
+    std::unordered_map<uint64_t, uint64_t> memory;
     std::stringstream file(input14);
 
     while (std::getline(file, line)) {

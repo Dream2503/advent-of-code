@@ -92,7 +92,7 @@ stop moving around, you count 37 occupied seats.
 Simulate your seating area by applying the seating rules repeatedly until no seats change state. How many seats end up occupied?
 */
 
-int part1(const bool part2 = false) {
+int part1(const bool recurse = false) {
     enum class Seat { FLOOR = '.', EMPTY = 'L', OCCUPIED = '#' };
     std::vector<std::vector<Seat>> prev, current;
     prev.resize(1);
@@ -126,7 +126,7 @@ int part1(const bool part2 = false) {
                             break;
                         }
                         if (current[next.x][next.y] == Seat::FLOOR) {
-                            if (part2) {
+                            if (recurse) {
                                 continue;
                             }
                             break;
@@ -140,7 +140,7 @@ int part1(const bool part2 = false) {
                 if (current[i][j] == Seat::EMPTY && occupied == 0) {
                     prev[i][j] = Seat::OCCUPIED;
                 }
-                if (current[i][j] == Seat::OCCUPIED && occupied >= (part2 ? 5 : 4)) {
+                if (current[i][j] == Seat::OCCUPIED && occupied >= (recurse ? 5 : 4)) {
                     prev[i][j] = Seat::EMPTY;
                 }
             }
