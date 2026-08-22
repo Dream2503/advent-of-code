@@ -213,6 +213,11 @@ constexpr std::array<Enum, size> enum_to_array() {
     return values;
 }
 
+auto split(const auto& delimiter) {
+    return std::views::split(delimiter) |
+        std::views::transform([](const auto& part) -> std::string { return std::string(part.begin(), part.end()); });
+}
+
 template <typename T>
 struct Vec2 {
     T x, y;

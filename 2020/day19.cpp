@@ -74,14 +74,13 @@ void resolve(std::vector<std::vector<std::string>>& rules, const int idx, std::v
     for (const std::string& values : rules[idx]) {
         std::vector<std::vector<std::string>> options;
 
-        for (auto&& value : values | std::views::split(' ')) {
-            if (std::isdigit(*value.begin())) {
-                std::string index(value.begin(), value.end());
-                const int ind = std::stoi(index);
+        for (const std::string& value : values | split(' ')) {
+            if (std::isdigit(value.front())) {
+                const int ind = std::stoi(value);
                 resolve(rules, ind, resolved);
                 options.emplace_back(rules[ind]);
             } else {
-                options.emplace_back(1, std::string(value.begin(), value.end()));
+                options.emplace_back(1, value);
             }
         }
         std::vector<std::string> combinations = {""};
@@ -115,8 +114,8 @@ int part1() {
         if (idx >= rules.size()) {
             rules.resize(idx + 1);
         }
-        for (auto&& part : line.substr(line.find(':') + 2) | std::views::split(std::string_view(" | "))) {
-            rules[idx].emplace_back(part.begin(), part.end());
+        for (const std::string& part : line.substr(line.find(':') + 2) | split(std::string_view(" | "))) {
+            rules[idx].emplace_back(part);
             std::erase(rules[idx].back(), '"');
         }
     }
@@ -233,8 +232,8 @@ int part2() {
         } else if (idx == 11) {
             line = "11: 42 31 | 42 11 31";
         }
-        for (auto&& part : line.substr(line.find(':') + 2) | std::views::split(std::string_view(" | "))) {
-            rules[idx].emplace_back(part.begin(), part.end());
+        for (const std::string& part : line.substr(line.find(':') + 2) | split(std::string_view(" | "))) {
+            rules[idx].emplace_back(part);
             std::erase(rules[idx].back(), '"');
         }
     }
