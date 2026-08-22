@@ -13,14 +13,22 @@ class ScopedTimer {
 public:
     explicit ScopedTimer(std::string name = "") : name(std::move(name)), start(std::chrono::high_resolution_clock::now()) {}
 
-    ~ScopedTimer() {
+    ~ScopedTimer() noexcept {
         const auto end = std::chrono::high_resolution_clock::now();
-        const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+        const auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 
         if (!name.empty()) {
             std::print("{}: ", name);
         }
-        std::println("{}µs", duration);
+        if (duration < 1'000) {
+            std::println("{}ns", duration);
+        } else if (duration < 1'000'000) {
+            std::println("{:.3f}µs", duration / 1'000.0);
+        } else if (duration < 1'000'000'000) {
+            std::println("{:.3f}ms", duration / 1'000'000.0);
+        } else {
+            std::println("{:.3f}s", duration / 1'000'000'000.0);
+        }
     }
 };
 
@@ -41,17 +49,19 @@ inline std::string md5_hash(const std::string& input) noexcept {
 
 // MD5 hash function algo - https://en.wikipedia.org/wiki/MD5
 inline std::string md5_hash(const std::string& input, [[maybe_unused]] const bool enable) noexcept {
-    constexpr std::array<uint32_t, 0x40> s = {0x07, 0x0c, 0x11, 0x16, 0x07, 0x0c, 0x11, 0x16, 0x07, 0x0c, 0x11, 0x16, 0x07, 0x0c, 0x11, 0x16,
-                                              0x05, 0x09, 0x0e, 0x14, 0x05, 0x09, 0x0e, 0x14, 0x05, 0x09, 0x0e, 0x14, 0x05, 0x09, 0x0e, 0x14,
-                                              0x04, 0x0b, 0x10, 0x17, 0x04, 0x0b, 0x10, 0x17, 0x04, 0x0b, 0x10, 0x17, 0x04, 0x0b, 0x10, 0x17,
-                                              0x06, 0x0a, 0x0f, 0x15, 0x06, 0x0a, 0x0f, 0x15, 0x06, 0x0a, 0x0f, 0x15, 0x06, 0x0a, 0x0f, 0x15};
+    constexpr std::array<uint32_t, 0x40> s = {
+        0x07, 0x0c, 0x11, 0x16, 0x07, 0x0c, 0x11, 0x16, 0x07, 0x0c, 0x11, 0x16, 0x07, 0x0c, 0x11, 0x16, 0x05, 0x09, 0x0e, 0x14, 0x05, 0x09,
+        0x0e, 0x14, 0x05, 0x09, 0x0e, 0x14, 0x05, 0x09, 0x0e, 0x14, 0x04, 0x0b, 0x10, 0x17, 0x04, 0x0b, 0x10, 0x17, 0x04, 0x0b, 0x10, 0x17,
+        0x04, 0x0b, 0x10, 0x17, 0x06, 0x0a, 0x0f, 0x15, 0x06, 0x0a, 0x0f, 0x15, 0x06, 0x0a, 0x0f, 0x15, 0x06, 0x0a, 0x0f, 0x15,
+    };
     constexpr std::array<uint32_t, 0x40> K = {
         0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee, 0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501, 0x698098d8, 0x8b44f7af, 0xffff5bb1,
         0x895cd7be, 0x6b901122, 0xfd987193, 0xa679438e, 0x49b40821, 0xf61e2562, 0xc040b340, 0x265e5a51, 0xe9b6c7aa, 0xd62f105d, 0x02441453,
         0xd8a1e681, 0xe7d3fbc8, 0x21e1cde6, 0xc33707d6, 0xf4d50d87, 0x455a14ed, 0xa9e3e905, 0xfcefa3f8, 0x676f02d9, 0x8d2a4c8a, 0xfffa3942,
         0x8771f681, 0x6d9d6122, 0xfde5380c, 0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70, 0x289b7ec6, 0xeaa127fa, 0xd4ef3085, 0x04881d05,
         0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665, 0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039, 0x655b59c3, 0x8f0ccc92, 0xffeff47d,
-        0x85845dd1, 0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1, 0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391};
+        0x85845dd1, 0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1, 0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391,
+    };
     uint32_t a0 = 0x67452301, b0 = 0xefcdab89, c0 = 0x98badcfe, d0 = 0x10325476;
     const uint64_t bit_len = input.size() * 0x8;
     std::array<uint8_t, 0x10> digest = {};
@@ -114,7 +124,7 @@ inline std::string md5_hash(const std::string& input, [[maybe_unused]] const boo
 }
 
 inline std::string knot_hash(const std::string& input) {
-    int i = 0x0, skip = 0x0, k = 0x0;
+    int i = 0x0, skip = 0x0;
     std::array<uint8_t, 0x100> list, temp;
     std::array<uint8_t, 0x10> dense_hash;
     std::vector<uint8_t> jumps;
@@ -130,23 +140,21 @@ inline std::string knot_hash(const std::string& input) {
     }
     for (int j = 0x0; j < 0x40; j++) {
         for (const int jump : jumps) {
-            for (k = 0x0; k < jump; k++) {
+            for (int k = 0x0; k < jump; k++) {
                 temp[k] = list[(i + k) % 0x100];
             }
-            std::reverse(temp.begin(), temp.begin() + jump);
+            std::ranges::reverse(temp | std::views::take(jump));
 
-            for (k = 0x0; k < jump; k++) {
+            for (int k = 0x0; k < jump; k++) {
                 list[(i + k) % 0x100] = temp[k];
             }
             i = (i + jump + skip++) % 0x100;
         }
     }
-    k = 0x0;
-
-    for (int j = 0; j < 0x10; j++) {
+    for (int j = 0x0, k = 0x0; j < 0x10; j++) {
         dense_hash[j] = list[k++];
 
-        for (int _ = 1; _ < 0x10; _++) {
+        for (int _ = 0x1; _ < 0x10; _++) {
             dense_hash[j] ^= list[k++];
         }
     }
