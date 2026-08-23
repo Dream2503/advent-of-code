@@ -91,10 +91,9 @@ std::string part1(const bool list = false) {
         }
         return std::to_string(result);
     }
-    return std::ranges::to<std::string>(
-        std::map(res.begin(), res.end()) | std::views::values |
+    return std::map(res.begin(), res.end()) | std::views::values |
         std::views::transform([](const std::vector<std::string>& element) -> const std::string& { return element.front(); }) |
-        std::views::join_with(','));
+        std::views::join_with(',') | std::ranges::to<std::string>();
 }
 
 /*
