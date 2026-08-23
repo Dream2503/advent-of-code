@@ -55,7 +55,7 @@ Count the number of valid passports - those that have all required fields. Treat
 int part1(const bool check = false) {
     static constexpr std::array<std::string_view, 7> EYE_COLOUR = {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"};
     auto is_digit = [](const unsigned char ch) -> bool { return std::isdigit(ch); };
-    auto is_hex = [](const unsigned char ch) -> bool { return std::isdigit(ch) || ch >= 'a' && ch <= 'f'; };
+    auto is_hex = [](const unsigned char ch) -> bool { return std::isdigit(ch) || (ch >= 'a' && ch <= 'f'); };
     auto validate = [](const std::string& value, const int size, bool comparator(const unsigned char), const std::string& min,
                        const std::string& max) -> bool {
         return value.size() == size && std::ranges::all_of(value, comparator) && value >= min && value <= max;
@@ -68,7 +68,7 @@ int part1(const bool check = false) {
 
     while (std::getline(file, line)) {
         if (line.empty()) {
-            res += valid && (keys.size() == 8 || keys.size() == 7 && !std::ranges::contains(keys, "cid"));
+            res += valid && (keys.size() == 8 || (keys.size() == 7 && !std::ranges::contains(keys, "cid")));
             valid = true;
             keys.clear();
         } else if (valid) {
@@ -87,8 +87,8 @@ int part1(const bool check = false) {
                     } else if (key == "eyr") {
                         valid = validate(value, 4, is_digit, "2020", "2030");
                     } else if (key == "hgt") {
-                        valid = value.ends_with("cm") && validate(value.substr(0, value.size() - 2), 3, is_digit, "150", "193") ||
-                            value.ends_with("in") && validate(value.substr(0, value.size() - 2), 2, is_digit, "59", "76");
+                        valid = (value.ends_with("cm") && validate(value.substr(0, value.size() - 2), 3, is_digit, "150", "193")) ||
+                            (value.ends_with("in") && validate(value.substr(0, value.size() - 2), 2, is_digit, "59", "76"));
                     } else if (key == "hcl") {
                         valid = value.starts_with('#') && validate(value.substr(1), 6, is_hex, "000000", "ffffff");
                     } else if (key == "ecl") {

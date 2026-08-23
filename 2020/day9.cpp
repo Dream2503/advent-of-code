@@ -110,6 +110,7 @@ uint64_t part1(const bool part2 = false) {
             return *min + *max;
         }
     }
+    std::unreachable();
 }
 
 /*

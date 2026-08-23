@@ -39,7 +39,7 @@ int part1(const int update = false) {
         ((std::stringstream(line) >> low).ignore(1) >> high >> ch).ignore(1) >> password;
 
         if (update) {
-            res += password[low - 1] == ch ^ password[high - 1] == ch;
+            res += (password[low - 1] == ch) ^ (password[high - 1] == ch);
         } else {
             const int count = std::ranges::count(password, ch);
             res += count >= low && count <= high;
