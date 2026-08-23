@@ -317,7 +317,7 @@ struct State {
 
 int part2() {
     int k = 0;
-    Vec2<int> center;
+    Vec2 center = 0;
     std::bitset<26> keys;
     std::string line;
     std::vector<std::string> grid;
