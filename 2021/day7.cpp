@@ -77,7 +77,7 @@ int part2() {
     std::vector<int> values = input7 | split(',') | std::views::transform([](const std::string& number) -> int { return std::stoi(number); }) |
         std::ranges::to<std::vector>();
     const double mean = std::ranges::fold_left(values, 0.0, std::plus{}) / values.size();
-    return std::ranges::min(std::array{std::floor(mean), std::ceil(mean)} | std::views::transform([&](const int position) -> int {
+    return std::ranges::min(std::array{std::floor(mean), std::ceil(mean)} | std::views::transform([&values](const int position) -> int {
                                 return std::ranges::fold_left(values, 0, [position](const int sum, const int value) -> int {
                                     const int distance = std::abs(position - value);
                                     return sum + distance * (distance + 1) / 2;
