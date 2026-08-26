@@ -60,16 +60,16 @@ points), and an illegal > was found once (25137 points). So, the total syntax er
 Find the first illegal character in each corrupted line of the navigation subsystem. What is the total syntax error score for those errors?
 */
 
-int part1(const char* input, const bool auto_complete) {
+uint64_t part1(const char* input, const bool auto_complete) {
     int res = 0;
-    std::vector<int> values;
+    std::vector<uint64_t> values;
     std::string line;
     std::stringstream file(input);
 
     while (std::getline(file, line)) {
         const int size = line.size();
         bool corrupted = false;
-        int temp = 0;
+        uint64_t temp = 0;
         std::stack<char> stack;
 
         for (int i = 0; i < size; i++) {
@@ -78,29 +78,19 @@ int part1(const char* input, const bool auto_complete) {
             } else if (line[i] == ')' && stack.top() == '(' || line[i] == ']' && stack.top() == '[' || line[i] == '}' && stack.top() == '{' ||
                        line[i] == '>' && stack.top() == '<') {
                 stack.pop();
-            } else if (auto_complete) {
-                corrupted = true;
-                temp *= 5;
-
-                if (stack.top() == '(') {
-                    temp++;
-                } else if (stack.top() == '[') {
-                    temp += 2;
-                } else if (stack.top() == '{') {
-                    temp += 3;
-                } else if (stack.top() == '<') {
-                    temp += 4;
-                }
-                stack.pop();
             } else {
-                if (line[i] == ')') {
-                    res += 3;
-                } else if (line[i] == ']') {
-                    res += 57;
-                } else if (line[i] == '}') {
-                    res += 1197;
-                } else if (line[i] == '>') {
-                    res += 25137;
+                if (auto_complete) {
+                    corrupted = true;
+                } else {
+                    if (line[i] == ')') {
+                        res += 3;
+                    } else if (line[i] == ']') {
+                        res += 57;
+                    } else if (line[i] == '}') {
+                        res += 1197;
+                    } else if (line[i] == '>') {
+                        res += 25137;
+                    }
                 }
                 break;
             }
@@ -172,7 +162,7 @@ number of scores to consider.) In this example, the middle score is 288957 becau
 Find the completion string for each incomplete line, score the completion strings, and sort the scores. What is the middle score?
 */
 
-int part2(const char* input) { return part1(input, true); }
+uint64_t part2(const char* input) { return part1(input, true); }
 
 int main() {
     std::println("Part 1:");
