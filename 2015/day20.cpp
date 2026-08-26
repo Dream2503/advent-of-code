@@ -29,8 +29,8 @@ visited by Elves 1, 2, and 4, for a total of 10 + 20 + 40 = 70 presents.
 What is the lowest house number of the house to get at least as many presents as the number in your puzzle input?
 */
 
-int part1(const int multiplier = 10, const int limit = INT32_MAX) {
-    const int input = std::atoi(input20);
+int part1(const char* input, const int multiplier, const int limit) {
+    const int target = std::atoi(input);
     int i = 1;
 
     while (true) {
@@ -49,7 +49,7 @@ int part1(const int multiplier = 10, const int limit = INT32_MAX) {
             }
         }
 
-        if (sum * multiplier >= input) {
+        if (sum * multiplier >= target) {
             return i;
         }
         i++;
@@ -64,9 +64,23 @@ for it, they decide to deliver presents equal to eleven times their number at ea
 With these changes, what is the new lowest house number of the house to get at least as many presents as the number in your puzzle input?
 */
 
-int part2() { return part1(11, 50); }
+int part2(const char* input) { return part1(input, 11, 50); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "10", 10, INT32_MAX, 1);
+    Executor::test(part1, "30", 10, INT32_MAX, 2);
+    Executor::test(part1, "40", 10, INT32_MAX, 3);
+    Executor::test(part1, "70", 10, INT32_MAX, 4);
+    Executor::test(part1, "60", 10, INT32_MAX, 4);
+    Executor::test(part1, "120", 10, INT32_MAX, 6);
+    Executor::test(part1, "80", 10, INT32_MAX, 6);
+    Executor::test(part1, "150", 10, INT32_MAX, 8);
+    Executor::test(part1, "130", 10, INT32_MAX, 8);
+    Executor::run(part1, input20, 10, INT32_MAX);
+
+    std::println("Part 2:");
+    Executor::run(part2, input20);
+
     return 0;
 }

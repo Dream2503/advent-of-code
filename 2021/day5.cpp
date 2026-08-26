@@ -44,14 +44,12 @@ To avoid the most dangerous areas, you need to determine the number of points wh
 in the diagram with a 2 or larger - a total of 5 points.
 
 Consider only horizontal and vertical lines. At how many points do at least two lines overlap?
-
-
 */
 
-int part1(const bool diagonal = false) {
+int part1(const char* input, const bool diagonal) {
     std::string line;
     std::unordered_map<Vec2<int>, int> grid;
-    std::stringstream file(input5);
+    std::stringstream file(input);
     while (std::getline(file, line)) {
         Vec2<int> from, to;
         std::sscanf(line.c_str(), "%d,%d -> %d,%d", &from.x, &from.y, &to.x, &to.y);
@@ -104,9 +102,38 @@ You still need to determine the number of points where at least two lines overla
 Consider all of the lines. At how many points do at least two lines overlap?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(0,9 -> 5,9
+8,0 -> 0,8
+9,4 -> 3,4
+2,2 -> 2,1
+7,0 -> 7,4
+6,4 -> 2,0
+0,9 -> 2,9
+3,4 -> 1,4
+0,0 -> 8,8
+5,5 -> 8,2)",
+                   false, 5);
+    Executor::run(part1, input5, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(0,9 -> 5,9
+8,0 -> 0,8
+9,4 -> 3,4
+2,2 -> 2,1
+7,0 -> 7,4
+6,4 -> 2,0
+0,9 -> 2,9
+3,4 -> 1,4
+0,0 -> 8,8
+5,5 -> 8,2)",
+                   12);
+    Executor::run(part2, input5);
+
     return 0;
 }

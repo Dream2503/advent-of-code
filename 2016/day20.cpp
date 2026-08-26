@@ -20,14 +20,14 @@ are 3 and 9, since those are the only numbers not in any range.
 Given the list of blocked IPs you retrieved from the firewall (your puzzle input), what is the lowest-valued IP that is not blocked?
 */
 
-uint32_t part1(const bool all = false) {
+uint32_t part1(const char* input, const bool all = false, const uint32_t max = UINT32_MAX) {
     std::string line;
     std::vector<std::pair<uint32_t, uint32_t>> ranges;
-    std::stringstream file(input20);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         uint32_t low, high;
-        std::sscanf(line.c_str(), "%udx%ud", &low, &high);
+        std::sscanf(line.c_str(), "%u-%u", &low, &high);
         ranges.emplace_back(low, high);
     }
     std::ranges::sort(ranges);
@@ -45,18 +45,17 @@ uint32_t part1(const bool all = false) {
     for (const auto& [low, high] : merged) {
         if (prev_end < low) {
             if (!all) {
-                return low + 1;
+                return prev_end;
             }
             count += low - prev_end;
         }
-        if (high == UINT32_MAX) {
+        if (high == max) {
             return count;
         }
         prev_end = high + 1;
     }
-    if (prev_end <= UINT32_MAX) {
-        count += UINT32_MAX - prev_end + 1;
-    }
+
+    count += max - prev_end + 1;
     return count;
 }
 
@@ -65,9 +64,22 @@ uint32_t part1(const bool all = false) {
 How many IPs are allowed by the blacklist?
 */
 
-uint32_t part2() { return part1(true); }
+uint32_t part2(const char* input, const uint32_t max = UINT32_MAX) { return part1(input, true, max); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(5-8
+0-2
+4-7)",
+                   false, UINT32_MAX, 3);
+    Executor::run(part1, input20, false, UINT32_MAX);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(5-8
+0-2
+4-7)",
+                   9, 2);
+    Executor::run(part2, input20, UINT32_MAX);
+
     return 0;
 }

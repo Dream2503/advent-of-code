@@ -316,13 +316,13 @@ struct Target {
     Vec2<int> position;
 };
 
-int simulation(int elf_attack, bool& elves_survived) {
+int simulation(const char* input, int elf_attack, bool& elves_survived) {
     elves_survived = true;
     int i = 0, rounds = 0;
     std::string line;
     std::vector<Unit> units;
     std::vector<std::string> map;
-    std::stringstream file(input15);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         for (int j = 0; j < line.length(); j++) {
@@ -483,9 +483,9 @@ int simulation(int elf_attack, bool& elves_survived) {
     }
 }
 
-int part1(const int elf_attack = 3) {
+int part1(const char* input, const int elf_attack) {
     bool elves_survived;
-    const int score = simulation(elf_attack, elves_survived);
+    const int score = simulation(input, elf_attack, elves_survived);
     return score;
 }
 
@@ -572,10 +572,10 @@ After increasing the Elves' attack power until it is just barely enough for them
 described in your puzzle input?
 */
 
-int part2() {
+int part2(const char* input) {
     for (int attack = 4;; attack++) {
         bool elves_survived;
-        const int score = simulation(attack, elves_survived);
+        const int score = simulation(input, attack, elves_survived);
 
         if (elves_survived) {
             return score;
@@ -584,6 +584,114 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(#######
+#.G...#
+#...EG#
+#.#.#G#
+#..G#E#
+#.....#
+#######)",
+                   3, 27730);
+    Executor::test(part1,
+                   R"(#######
+#G..#E#
+#E#E.E#
+#G.##.#
+#...#E#
+#...E.#
+#######)",
+                   3, 36334);
+    Executor::test(part1,
+                   R"(#######
+#E..EG#
+#.#G.E#
+#E.##E#
+#G..#.#
+#..E#.#
+#######)",
+                   3, 39514);
+    Executor::test(part1,
+                   R"(#######
+#E.G#.#
+#.#G..#
+#G.#.G#
+#G..#.#
+#...E.#
+#######)",
+                   3, 27755);
+    Executor::test(part1,
+                   R"(#######
+#.E...#
+#.#..G#
+#.###.#
+#E#G#G#
+#...#G#
+#######)",
+                   3, 28944);
+    Executor::test(part1,
+                   R"(#########
+#G......#
+#.E.#...#
+#..##..G#
+#...##..#
+#...#...#
+#.G...G.#
+#.....G.#
+#########)",
+                   3, 18740);
+    Executor::run(part1, input15, 3);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(#######
+#.G...#
+#...EG#
+#.#.#G#
+#..G#E#
+#.....#
+#######)",
+                   4988);
+    Executor::test(part2,
+                   R"(#######
+#E..EG#
+#.#G.E#
+#E.##E#
+#G..#.#
+#..E#.#
+#######)",
+                   31284);
+    Executor::test(part2,
+                   R"(#######
+#E.G#.#
+#.#G..#
+#G.#.G#
+#G..#.#
+#...E.#
+#######)",
+                   3478);
+    Executor::test(part2,
+                   R"(#######
+#.E...#
+#.#..G#
+#.###.#
+#E#G#G#
+#...#G#
+#######)",
+                   6474);
+    Executor::test(part2,
+                   R"(#########
+#G......#
+#.E.#...#
+#..##..G#
+#...##..#
+#...#...#
+#.G...G.#
+#.....G.#
+#########)",
+                   1140);
+    Executor::run(part2, input15);
+
     return 0;
 }

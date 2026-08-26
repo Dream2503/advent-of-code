@@ -24,8 +24,8 @@ After finishing their dance, the programs end up in order baedc.
 You watch the dance for a while and record their dance moves (your puzzle input). In what order are the programs standing after their dance?
 */
 
-std::string part1(const int times = 1) {
-    std::string programs(16, 0), step;
+std::string part1(const char* input, const int size, const int times) {
+    std::string programs(size, 0), step;
     std::vector<std::string> history;
     std::unordered_map<std::string, int> seen;
     std::iota(programs.begin(), programs.end(), 'a');
@@ -37,7 +37,7 @@ std::string part1(const int times = 1) {
         }
         seen.emplace(programs, i);
         history.push_back(programs);
-        std::stringstream file(input16);
+        std::stringstream file(input);
 
         while (std::getline(file, step, ',')) {
             std::stringstream ss(step);
@@ -58,6 +58,7 @@ std::string part1(const int times = 1) {
                 lhs = std::ranges::find(programs, ss.get()) - programs.begin();
                 rhs = std::ranges::find(programs, ss.ignore(1).get()) - programs.begin();
                 std::swap(programs[lhs], programs[rhs]);
+                break;
 
             default:
                 break;
@@ -82,9 +83,16 @@ In the example above, their second dance would begin with the order baedc, and u
 In what order are the programs standing after their billion dances?
 */
 
-std::string part2() { return part1(1'000'000'000); }
+std::string part2(const char* input, const int size, const int times) { return part1(input, size, times); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(s1,x3/4,pe/b)", 5, 1, "baedc");
+    Executor::run(part1, input16, 16, 1);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(s1,x3/4,pe/b)", 5, 2, "ceadb");
+    Executor::run(part2, input16, 16, 1'000'000'000);
+
     return 0;
 }

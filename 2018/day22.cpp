@@ -88,10 +88,10 @@ inline void resolve(std::vector<std::vector<int>>& map, const Vec2<int>& positio
     }
 }
 
-int part1() {
+int part1(const char* input) {
     int depth;
     Vec2<int> target;
-    std::sscanf(input22, "depth: %d\ntarget: %d,%d", &depth, &target.x, &target.y);
+    std::sscanf(input, "depth: %d\ntarget: %d,%d", &depth, &target.x, &target.y);
     std::vector map(target.y + 1, std::vector(target.x + 1, -1));
     resolve(map, target, depth);
     map[0][0] = map[target.y][target.x] = 0;
@@ -385,7 +385,7 @@ minutes each) and the remaining 24 minutes are spent moving.
 What is the fewest number of minutes you can take to reach the target?
 */
 
-int part2() {
+int part2(const char* input) {
     enum class Gear { NEITHER, TORCH, CLIMBING, SAME };
 
     struct State {
@@ -398,7 +398,7 @@ int part2() {
                                               std::array{Gear::TORCH, Gear::NEITHER, Gear::SAME}};
     int depth;
     Vec2<int> target;
-    std::sscanf(input22, "depth: %d\ntarget: %d,%d", &depth, &target.x, &target.y);
+    std::sscanf(input, "depth: %d\ntarget: %d,%d", &depth, &target.x, &target.y);
     std::vector map(target.y + 1, std::vector(target.x + 1, -1));
     std::priority_queue<State, std::vector<State>, decltype([](const State& lhs, const State& rhs) -> bool { return lhs.time > rhs.time; })> queue;
     std::unordered_set<std::pair<Vec2<int>, Gear>> seen;
@@ -453,6 +453,19 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(depth: 510
+target: 10,10)",
+                   114);
+    Executor::run(part1, input22);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(depth: 510
+target: 10,10)",
+                   45);
+    Executor::run(part2, input22);
+
     return 0;
 }

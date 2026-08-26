@@ -25,8 +25,8 @@ Start the game. How many block tiles are on the screen when the game exits?
 
 enum class Tile { EMPTY, WALL, BLOCK, PADDLE, BALL };
 
-int part1() {
-    VirtualMachine VM(input13);
+int part1(const char* input) {
+    VirtualMachine VM(input);
     std::unordered_map<Vec2<int64_t>, Tile> screen;
 
     while (VM.interpret(3) != VirtualMachine::Status::HALTED) {
@@ -58,9 +58,9 @@ For example, a sequence of output values like -1,0,12345 would show 12345 as the
 Beat the game by breaking all the blocks. What is your score after the last block is broken?
 */
 
-int part2() {
+int part2(const char* input) {
     int res = 0, ball = 0, paddle = 0;
-    VirtualMachine VM(input13);
+    VirtualMachine VM(input);
     VM.opcodes[0] = 2;
     VM.interpret(1);
 
@@ -93,6 +93,11 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::run(part1, input13);
+
+    std::println("Part 2:");
+    Executor::run(part2, input13);
+
     return 0;
 }

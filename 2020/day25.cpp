@@ -55,10 +55,10 @@ subject number of 5764801 (the card's public key) with a loop size of 11 (the do
 What encryption key is the handshake trying to establish?
 */
 
-uint64_t part1() {
+uint64_t part1(const char* input) {
     static constexpr uint64_t MOD = 20201227, SUBJECT = 7;
     uint64_t card_public, door_public, res = 1, card_loop = 0;
-    std::stringstream(input25) >> card_public >> door_public;
+    std::stringstream(input) >> card_public >> door_public;
 
     while (res != card_public) {
         res = res * SUBJECT % MOD;
@@ -93,9 +93,12 @@ leave. Noticing that you look concerned, the reindeer wanders over to you; you s
 Looks like you only needed 49 stars after all.
 */
 
-int part2() { return 0; }
-
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(5764801
+17807724)",
+                   14897079);
+    Executor::run(part1, input25);
+
     return 0;
 }

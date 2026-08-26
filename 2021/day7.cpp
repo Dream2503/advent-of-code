@@ -39,9 +39,9 @@ fuel), or position 10 (71 fuel).
 Determine the horizontal position that the crabs can align to using the least fuel possible. How much fuel must they spend to align to that position?
 */
 
-int part1() {
-    std::vector<int> values = input7 | split(',') | std::views::transform([](const std::string& number) -> int { return std::stoi(number); }) |
-        std::ranges::to<std::vector>();
+int part1(const char* input) {
+    std::vector<int> values = std::string_view(input) | split(',') |
+        std::views::transform([](const std::string& number) -> int { return std::stoi(number); }) | std::ranges::to<std::vector>();
     std::ranges::sort(values);
     const int median = values[values.size() / 2];
     return std::ranges::fold_left(values, 0, [median](const int sum, const int value) { return sum + std::abs(median - value); });
@@ -73,8 +73,8 @@ Determine the horizontal position that the crabs can align to using the least fu
 they spend to align to that position?
 */
 
-int part2() {
-    std::vector<int> values = input7 | split(',') | std::views::transform([](const std::string& number) -> int { return std::stoi(number); }) |
+int part2(const char* input) {
+    std::vector<int> values = std::string_view(input) | split(',') | std::views::transform([](const std::string& number) -> int { return std::stoi(number); }) |
         std::ranges::to<std::vector>();
     const double mean = std::ranges::fold_left(values, 0.0, std::plus{}) / values.size();
     return std::ranges::min(std::array{std::floor(mean), std::ceil(mean)} | std::views::transform([&values](const int position) -> int {
@@ -86,6 +86,13 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(16,1,2,0,4,2,7,1,2,14)", 37);
+    Executor::run(part1, input7);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(16,1,2,0,4,2,7,1,2,14)", 168);
+    Executor::run(part2, input7);
+
     return 0;
 }

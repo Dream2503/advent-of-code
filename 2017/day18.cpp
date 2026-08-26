@@ -64,9 +64,9 @@ struct Program {
         return std::stoll(str);
     }
 
-    Program(const int id, const bool multi_program) : id(id), multi_program(multi_program) {
+    Program(const char* input, const int id, const bool multi_program) : id(id), multi_program(multi_program) {
         std::string instruction;
-        std::stringstream file(input18);
+        std::stringstream file(input);
 
         while (std::getline(file, instruction)) {
             code.push_back(instruction);
@@ -79,8 +79,7 @@ struct Program {
             executing = false;
             return false;
         }
-        std::string x, rhs;
-        std::string instruction;
+        std::string x, rhs, instruction;
         std::stringstream ss(code[ip]);
         ss >> instruction >> x >> rhs;
         const char lhs = x[0];
@@ -126,8 +125,8 @@ struct Program {
 };
 
 
-int part1() {
-    Program program(0, false);
+int part1(const char* input) {
+    Program program(input, 0, false);
 
     while (program.executing) {
         program.execute(program);
@@ -172,8 +171,8 @@ values and then stopped at the first rcv before program 1 executed even its firs
 Once both of your programs have terminated (regardless of what caused them to do so), how many times did program 1 send a value?
 */
 
-int part2() {
-    Program program0(0, true), program1(1, true);
+int part2(const char* input) {
+    Program program0(input, 0, true), program1(input, 1, true);
 
     while (program0.executing || program1.executing) {
         program0.execute(program1);
@@ -183,6 +182,30 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(set a 1
+add a 2
+mul a a
+mod a 5
+snd a
+set a 0
+rcv a
+jgz a -1
+set a 1
+jgz a -2)",
+                   4);
+    Executor::run(part1, input18);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(snd 1
+snd 2
+snd p
+rcv a
+rcv b
+rcv c
+rcv d)",
+                   3);
+    Executor::run(part2, input18);
+
     return 0;
 }

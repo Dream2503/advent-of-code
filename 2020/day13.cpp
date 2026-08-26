@@ -55,12 +55,12 @@ departs. Multiplying the bus ID by the number of minutes you'd need to wait give
 What is the ID of the earliest bus you can take to the airport multiplied by the number of minutes you'll need to wait for that bus?
 */
 
-uint64_t part1(const bool part2 = false) {
+uint64_t part1(const char* input, const bool part2 = false) {
     int i = 0;
     uint64_t j = 1, res2 = 0;
     Vec2 res1 = INT32_MAX;
     std::string token;
-    std::stringstream file(input13);
+    std::stringstream file(input);
     std::getline(file, token);
     const int time = std::stoi(token);
 
@@ -148,9 +148,42 @@ However, with so many bus IDs in your list, surely the actual earliest timestamp
 What is the earliest timestamp such that all of the listed bus IDs depart at offsets matching their positions in the list?
 */
 
-uint64_t part2() { return part1(true); }
+uint64_t part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(939
+7,13,x,x,59,x,31,19)",
+                   false, 295);
+    Executor::run(part1, input13, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(939
+7,13,x,x,59,x,31,19)",
+                   1068781);
+    Executor::test(part2,
+                   R"(0
+17,x,13,19)",
+                   3417);
+    Executor::test(part2,
+                   R"(0
+67,7,59,61)",
+                   754018);
+    Executor::test(part2,
+                   R"(0
+67,x,7,59,61)",
+                   779210);
+    Executor::test(part2,
+                   R"(0
+67,7,x,59,61)",
+                   1261476);
+    Executor::test(part2,
+                   R"(0
+1789,37,47,1889)",
+                   1202161486);
+    Executor::run(part2, input13);
+
     return 0;
 }

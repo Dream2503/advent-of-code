@@ -32,6 +32,39 @@ public:
     }
 };
 
+class Executor {
+public:
+    template <typename F, typename... Args>
+    static void test(F&& function, Args&&... args) {
+        auto arguments = std::forward_as_tuple(std::forward<Args>(args)...);
+        auto input = std::get<0>(arguments);
+        auto expected = std::get<sizeof...(Args) - 1>(arguments);
+        auto result = [&function, &arguments]<std::size_t... I>(std::index_sequence<I...>) {
+            return std::invoke(std::forward<F>(function), std::get<I>(arguments)...);
+        }(std::make_index_sequence<sizeof...(Args) - 1>{});
+
+        if (result != expected) {
+            if (std::string_view(input).contains('\n')) {
+                std::println("Test failed:\n{}: expected {}, got {}\n", input, expected, result);
+            } else {
+                std::println("Test failed: \"{}\": expected {}, got {}", input, expected, result);
+            }
+            std::exit(1);
+        }
+        if (std::string_view(input).contains('\n')) {
+            std::println("Test passed:\n{} -> {}\n", input, result);
+        } else {
+            std::println("Test passed: \"{}\" -> {}", input, result);
+        }
+        std::cout << std::flush;
+    }
+
+    template <typename F, typename... Args>
+    static void run(F&& function, Args&&... args) {
+        std::println("Output: {}\n", std::invoke(std::forward<F>(function), std::forward<Args>(args)...));
+    }
+};
+
 inline std::string md5_hash(const std::string& input) noexcept {
     std::array<uint8_t, 0x10> digest;
     EVP_MD_CTX* ctx = EVP_MD_CTX_new();
@@ -239,11 +272,12 @@ struct Vec2 {
         return {x + vec2.x, y + vec2.y};
     }
 
+    constexpr Vec2 operator+(const T& value) const noexcept { return {x + value, y + value}; }
+
     template <typename U>
     constexpr auto operator-(const Vec2<U>& vec2) const noexcept -> Vec2<decltype(x - vec2.x)> {
         return {x - vec2.x, y - vec2.y};
     }
-
 
     template <typename U>
     constexpr auto operator/(const U& value) const noexcept -> Vec2<decltype(x / value)> {
@@ -353,6 +387,12 @@ struct Vec3 {
         auto difference = *this - vec3;
         return std::abs(difference.x) + std::abs(difference.y) + std::abs(difference.z);
     }
+
+    constexpr T sum() const noexcept { return x + y + z; }
+
+    constexpr T product() const noexcept { return x * y * z; }
+
+    constexpr T min() const noexcept { return std::min({x, y, z}); }
 };
 
 template <typename T>
@@ -365,6 +405,12 @@ struct std::hash<Vec3<T>> {
 template <typename T>
 struct Vec4 {
     T x, y, z, t;
+
+    constexpr Vec4() = default;
+
+    constexpr Vec4(const T& x, const T& y, const T& z, const T& t) noexcept : x(x), y(y), z(z), t(t) {}
+
+    constexpr Vec4(const T& value) noexcept : x(value), y(value), z(value), t(value) {}
 
     template <typename U>
     constexpr auto operator-(const Vec4<U>& vec4) const noexcept -> Vec4<decltype(x - vec4.x)> {
@@ -431,13 +477,13 @@ public:
 namespace std {
     template <typename T>
     struct formatter<Vec2<T>> {
-        constexpr auto parse(std::format_parse_context& ctx) { return ctx.begin(); }
+        constexpr format_parse_context::const_iterator parse(const std::format_parse_context& ctx) { return ctx.begin(); }
         auto format(const Vec2<T>& vec2, std::format_context& ctx) const { return std::format_to(ctx.out(), "{},{}", vec2.x, vec2.y); }
     };
 
     template <typename T>
     struct formatter<Vec3<T>> {
-        constexpr auto parse(std::format_parse_context& ctx) { return ctx.begin(); }
+        constexpr format_parse_context::const_iterator parse(const std::format_parse_context& ctx) { return ctx.begin(); }
         auto format(const Vec3<T>& vec3, std::format_context& ctx) const { return std::format_to(ctx.out(), "{},{},{}", vec3.x, vec3.y, vec3.z); }
     };
 

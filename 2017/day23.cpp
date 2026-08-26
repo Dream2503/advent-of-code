@@ -28,12 +28,12 @@ int get_value(const std::array<int, 8>& registers, const std::string& str) {
     return std::stoi(str);
 }
 
-int part1() {
+int part1(const char* input) {
     std::array<int, 8> registers = {};
     int i = 0, res = 0;
     std::string line;
     std::vector<std::string> code;
-    std::stringstream file(input23);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         code.push_back(line);
@@ -80,7 +80,7 @@ wouldn't even need to run the program.
 After setting register a to 1, if the program were to run to completion, what value would be left in register h?
 */
 
-int part2() {
+int part2([[maybe_unused]] const char* input) {
     int b = 65 * 100 + 100000;
     const int c = b + 17000;
     int h = 0;
@@ -102,6 +102,18 @@ int part2() {
 
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(set a 1
+mul a 2
+mul a 3
+jnz a 2
+mul a 4)",
+                   2);
+    Executor::run(part1, input23);
+
+    std::println("Part 2:");
+    Executor::run(part2, input23);
+
     return 0;
 }

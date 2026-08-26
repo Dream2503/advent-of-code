@@ -53,26 +53,21 @@ Then, divide that by 33554393, which leaves a remainder of 31916031. That remain
 Santa looks nervous. Your puzzle input contains the message on the machine's console. What code do you give the machine?
 */
 
-int part1() {
-    constexpr int first_code = 20151125, multiply_factor = 252533, modulus_factor = 33554393;
-    int row, column, i = 2, j = 1, next_row = i + 1;
-    size_t value = first_code;
-    std::sscanf(input25, "row %d, column %d", &row, &column);
+int part1(const char* input) {
+    constexpr uint64_t first_code = 20151125, multiply_factor = 252533, modulus_factor = 33554393;
+    uint64_t row, column;
+    std::sscanf(input, "row %lu, column %lu", &row, &column);
+    uint64_t exponent = (row + column - 2) * (row + column - 1) / 2 + column - 1;
+    uint64_t base = multiply_factor, value = first_code;
 
-    while (true) {
-        value = value * multiply_factor % modulus_factor;
-
-        if (i == row && j == column) {
-            return value;
+    while (exponent) {
+        if (exponent & 1) {
+            value = value * base % modulus_factor;
         }
-        if (i == 1) {
-            i = next_row++;
-            j = 1;
-        } else {
-            i--;
-            j++;
-        }
+        base = base * base % modulus_factor;
+        exponent >>= 1;
     }
+    return value;
 }
 
 /*
@@ -84,9 +79,45 @@ One star is available."
 49 yourself.
 */
 
-int part2() { return 0; }
-
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "row 1, column 1", 20151125);
+    Executor::test(part1, "row 1, column 2", 18749137);
+    Executor::test(part1, "row 1, column 3", 17289845);
+    Executor::test(part1, "row 1, column 4", 30943339);
+    Executor::test(part1, "row 1, column 5", 10071777);
+    Executor::test(part1, "row 1, column 6", 33511524);
+    Executor::test(part1, "row 2, column 1", 31916031);
+    Executor::test(part1, "row 2, column 2", 21629792);
+    Executor::test(part1, "row 2, column 3", 16929656);
+    Executor::test(part1, "row 2, column 4", 7726640);
+    Executor::test(part1, "row 2, column 5", 15514188);
+    Executor::test(part1, "row 2, column 6", 4041754);
+    Executor::test(part1, "row 3, column 1", 16080970);
+    Executor::test(part1, "row 3, column 2", 8057251);
+    Executor::test(part1, "row 3, column 3", 1601130);
+    Executor::test(part1, "row 3, column 4", 7981243);
+    Executor::test(part1, "row 3, column 5", 11661866);
+    Executor::test(part1, "row 3, column 6", 16474243);
+    Executor::test(part1, "row 4, column 1", 24592653);
+    Executor::test(part1, "row 4, column 2", 32451966);
+    Executor::test(part1, "row 4, column 3", 21345942);
+    Executor::test(part1, "row 4, column 4", 9380097);
+    Executor::test(part1, "row 4, column 5", 10600672);
+    Executor::test(part1, "row 4, column 6", 31527494);
+    Executor::test(part1, "row 5, column 1", 77061);
+    Executor::test(part1, "row 5, column 2", 17552253);
+    Executor::test(part1, "row 5, column 3", 28094349);
+    Executor::test(part1, "row 5, column 4", 6899651);
+    Executor::test(part1, "row 5, column 5", 9250759);
+    Executor::test(part1, "row 5, column 6", 31663883);
+    Executor::test(part1, "row 6, column 1", 33071741);
+    Executor::test(part1, "row 6, column 2", 6796745);
+    Executor::test(part1, "row 6, column 3", 25397450);
+    Executor::test(part1, "row 6, column 4", 24659492);
+    Executor::test(part1, "row 6, column 5", 1534922);
+    Executor::test(part1, "row 6, column 6", 27995004);
+    Executor::run(part1, input25);
+
     return 0;
 }

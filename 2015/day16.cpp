@@ -42,9 +42,9 @@ What is the number of the Sue that got you the gift?
 const std::unordered_map<std::string, int>& signature = {{"children:", 3}, {"cats:", 7},     {"samoyeds:", 2}, {"pomeranians:", 3}, {"akitas:", 0},
                                                          {"vizslas:", 0},  {"goldfish:", 5}, {"trees:", 3},    {"cars:", 2},        {"perfumes:", 1}};
 
-int part1() {
+int part1(const char* input) {
     std::string line;
-    std::stringstream file(input16);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int number, value1, value2, value3;
@@ -70,9 +70,9 @@ magnetoreluctance).
 What is the number of the real Aunt Sue?
 */
 
-int part2() {
+int part2(const char* input) {
     std::string line;
-    std::stringstream file(input16);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         bool broke = false;
@@ -99,6 +99,19 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(Sue 1: children: 3, cars: 2, samoyeds: 2
+Sue 2: children: 1, cars: 2, samoyeds: 2
+Sue 3: children: 3, cars: 1, samoyeds: 2)",
+                   1);
+    Executor::run(part1, input16);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(Sue 1: cats: 8, trees: 4, pomeranians: 2
+Sue 2: cats: 7, trees: 3, pomeranians: 3
+Sue 3: cats: 8, trees: 4, pomeranians: 1)",
+                   1);
+    Executor::run(part2, input16);
+
     return 0;
 }

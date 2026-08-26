@@ -86,10 +86,10 @@ The portly man nervously strokes his white beard. It's time to get that hot choc
 How many constellations are formed by the fixed points in spacetime?
 */
 
-int part1() {
+int part1(const char* input) {
     std::vector<Vec4<int>> points;
     std::string line;
-    std::stringstream file(input25);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int x, y, z, t;
@@ -109,7 +109,6 @@ int part1() {
     return dsu.get_components();
 }
 
-
 /*
 --- Part Two ---
 A small glowing portal opens above the mug you prepared and just enough hot chocolate streams in to fill it. You suspect the reindeer has never
@@ -123,9 +122,55 @@ The reindeer bumps the device with its nose.
 "Energy required: 49 stars."
 */
 
-int part2() { return 0; }
-
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(0,0,0,0
+3,0,0,0
+0,3,0,0
+0,0,3,0
+0,0,0,3
+0,0,0,6
+9,0,0,0
+12,0,0,0)",
+                   2);
+    Executor::test(part1,
+                   R"(-1,2,2,0
+0,0,2,-2
+0,0,0,-2
+-1,2,0,0
+-2,-2,-2,2
+3,0,2,-1
+-1,3,2,2
+-1,0,-1,0
+0,2,1,-2
+3,0,0,0)",
+                   4);
+    Executor::test(part1,
+                   R"(1,-1,0,1
+2,0,-1,0
+3,2,-1,0
+0,0,3,1
+0,0,-1,-1
+2,3,-2,0
+-2,2,0,0
+2,-2,0,-1
+1,-1,0,-1
+3,2,0,2)",
+                   3);
+    Executor::test(part1,
+                   R"(1,-1,-1,-2
+-2,-2,0,1
+0,2,1,3
+-2,3,-2,1
+0,2,3,-2
+-1,-1,1,-2
+0,-2,-1,0
+-2,2,3,-1
+1,2,2,0
+-1,-2,0,-2)",
+                   8);
+    Executor::run(part1, input25);
+
     return 0;
 }

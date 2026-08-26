@@ -41,11 +41,11 @@ Use the binary numbers in your diagnostic report to calculate the gamma rate and
 consumption of the submarine? (Be sure to represent your answer in decimal, not binary.)
 */
 
-int part1(const bool part2 = false) {
-    constexpr int size = std::string_view(input3).find('\n');
+int part1(const char* input, const bool part2) {
+    const int size = std::string_view(input).find('\n');
     std::string line;
-    std::array<std::string, size> bits_list;
-    std::stringstream file(input3);
+    std::vector<std::string> bits_list(size);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         for (int i = 0; i < size; i++) {
@@ -60,11 +60,11 @@ int part1(const bool part2 = false) {
             0, [](const int value, const int bit) -> int { return value << 1 | bit; });
         return res * (res ^ (1 << size) - 1);
     }
-    std::array<std::string, size> oxygen_generator_list = bits_list, &co2_scrubber_list = bits_list;
+    std::vector<std::string> oxygen_generator_list = bits_list, &co2_scrubber_list = bits_list;
 
     for (int k = 0; k < size; k++) {
-        for (const std::reference_wrapper<std::array<std::string, size>>& list : {std::ref(oxygen_generator_list), std::ref(co2_scrubber_list)}) {
-            std::array<std::string, size>& current = list.get();
+        for (const std::reference_wrapper<std::vector<std::string>>& list : {std::ref(oxygen_generator_list), std::ref(co2_scrubber_list)}) {
+            std::vector<std::string>& current = list.get();
             const int current_size = current.front().size();
 
             if (current_size > 1) {
@@ -134,9 +134,42 @@ Use the binary numbers in your diagnostic report to calculate the oxygen generat
 is the life support rating of the submarine? (Be sure to represent your answer in decimal, not binary.)
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(00100
+11110
+10110
+10111
+10101
+01111
+00111
+11100
+10000
+11001
+00010
+01010)",
+                   false, 198);
+    Executor::run(part1, input3, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(00100
+11110
+10110
+10111
+10101
+01111
+00111
+11100
+10000
+11001
+00010
+01010)",
+                   230);
+    Executor::run(part2, input3);
+
     return 0;
 }

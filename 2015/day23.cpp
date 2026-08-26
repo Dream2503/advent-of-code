@@ -29,11 +29,11 @@ inc a
 What is the value in register b when the program in your puzzle input is finished executing?
 */
 
-int part1(const int start = 0) {
+int part1(const char* input, const int start) {
     int a = start, b = 0, pc = 0;
     std::string instruction;
     std::vector<std::string> instructions;
-    std::stringstream file(input23);
+    std::stringstream file(input);
 
     while (std::getline(file, instruction)) {
         instructions.push_back(instruction);
@@ -81,9 +81,19 @@ The unknown benefactor is very thankful for releasi-- er, helping little Jane Ma
 value in register b after the program is finished executing if register a starts as 1 instead?
 */
 
-size_t part2() { return part1(1); }
+int part2(const char* input) { return part1(input, 1); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(inc a
+jio a, +2
+tpl a
+inc a)",
+                   0, 0);
+    Executor::run(part1, input23, 0);
+
+    std::println("Part 2:");
+    Executor::run(part2, input23);
+
     return 0;
 }

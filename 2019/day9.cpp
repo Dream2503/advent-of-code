@@ -47,9 +47,9 @@ Once your Intcode computer is fully functional, the BOOST program should report 
 a single value, the BOOST keycode. What BOOST keycode does it produce?
 */
 
-int64_t part1(const int64_t input = 1) {
-    VirtualMachine VM(input9);
-    VM.inputs.push(input);
+int64_t part1(const char* input, const int64_t input_value) {
+    VirtualMachine VM(input);
+    VM.inputs.push(input_value);
     VM.interpret();
     return VM.outputs.front();
 }
@@ -67,9 +67,17 @@ distress signal.
 Run the BOOST program in sensor boost mode. What are the coordinates of the distress signal?
 */
 
-int64_t part2() { return part1(2); }
+int64_t part2(const char* input) { return part1(input, 2); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99", 1, 109);
+    Executor::test(part1, "1102,34915192,34915192,7,4,7,99,0", 1, 1219070632396864);
+    Executor::test(part1, "104,1125899906842624,99", 1, 1125899906842624);
+    Executor::run(part1, input9, 1);
+
+    std::println("Part 2:");
+    Executor::run(part2, input9);
+
     return 0;
 }

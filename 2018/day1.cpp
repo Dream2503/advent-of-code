@@ -36,11 +36,11 @@ Here are other example situations:
 Starting with a frequency of zero, what is the resulting frequency after all of the changes in frequency have been applied?
 */
 
-int part1(const bool twice = false) {
+int part1(const char* input, const bool twice) {
     int res = 0, value;
     std::vector<int> frequencies;
     std::unordered_set<int> seen;
-    std::stringstream file(input1);
+    std::stringstream file(input);
 
     while (file >> value) {
         frequencies.push_back(value);
@@ -85,9 +85,57 @@ Here are other examples:
 What is the first frequency your device reaches twice?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(+1
+-2
++3
++1)",
+                   false, 3);
+    Executor::test(part1, R"(+1
++1
++1)",
+                   false, 3);
+    Executor::test(part1, R"(+1
++1
+-2)",
+                   false, 0);
+    Executor::test(part1, R"(-1
+-2
+-3)",
+                   false, -6);
+    Executor::run(part1, input1, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(+1
+-1)",
+                   0);
+    Executor::test(part2, R"(+3
++3
++4
+-2
+-4)",
+                   10);
+    Executor::test(part2, R"(-6
++3
++8
++5
+-6)",
+                   5);
+    Executor::test(part2, R"(+7
++7
+-2
+-7
+-4)",
+                   14);
+    Executor::test(part2, R"(+1
+-2
++3
++1)",
+                   2);
+    Executor::run(part2, input1);
+
     return 0;
 }

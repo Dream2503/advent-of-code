@@ -49,11 +49,11 @@ address 7) and 64 (at address 8) - producing a sum of 165.
 Execute the initialization program. What is the sum of all values left in memory after it completes? (Do not truncate the sum to 36 bits.)
 */
 
-uint64_t part1() {
+uint64_t part1(const char* input) {
     std::string line;
     std::array<int8_t, 36> mask;
     std::unordered_map<int, uint64_t> memory;
-    std::stringstream file(input14);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         if (line[1] == 'a') {
@@ -138,11 +138,11 @@ the end of the program. In this example, the sum is 208.
 Execute the initialization program using an emulator for a version 2 decoder chip. What is the sum of all values left in memory after it completes?
 */
 
-uint64_t part2() {
+uint64_t part2(const char* input) {
     std::string line;
     std::array<int8_t, 36> mask;
     std::unordered_map<uint64_t, uint64_t> memory;
-    std::stringstream file(input14);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         if (line[1] == 'a') {
@@ -186,6 +186,23 @@ uint64_t part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X
+mem[8] = 11
+mem[7] = 101
+mem[8] = 0)",
+                   165);
+    Executor::run(part1, input14);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(mask = 000000000000000000000000000000X1001X
+mem[42] = 100
+mask = 00000000000000000000000000000000X0XX
+mem[26] = 1)",
+                   208);
+    Executor::run(part2, input14);
+
     return 0;
 }

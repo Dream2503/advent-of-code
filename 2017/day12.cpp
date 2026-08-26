@@ -49,10 +49,10 @@ void search(const std::unordered_map<int, std::vector<int>>& graph, std::unorder
     }
 }
 
-int part1(const bool group = false) {
+int part1(const char* input, const bool group) {
     std::string line;
-    std::stringstream file(input12);
-    std::unordered_map<int, std::vector<int>> graph(2000);
+    std::stringstream file(input);
+    std::unordered_map<int, std::vector<int>> graph;
 
     while (std::getline(file, line)) {
         int key, value;
@@ -66,7 +66,7 @@ int part1(const bool group = false) {
         }
         graph.emplace(key, values);
     }
-    std::unordered_set<int> seen(2000);
+    std::unordered_set<int> seen;
 
     if (!group) {
         search(graph, seen, 0);
@@ -96,9 +96,30 @@ In the example above, there were 2 groups: one consisting of programs 0,2,3,4,5,
 How many groups are there in total?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(0 <-> 2
+1 <-> 1
+2 <-> 0, 3, 4
+3 <-> 2, 4
+4 <-> 2, 3, 6
+5 <-> 6
+6 <-> 4, 5)",
+                   false, 6);
+    Executor::run(part1, input12, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(0 <-> 2
+1 <-> 1
+2 <-> 0, 3, 4
+3 <-> 2, 4
+4 <-> 2, 3, 6
+5 <-> 6
+6 <-> 4, 5)",
+                   2);
+    Executor::run(part2, input12);
+
     return 0;
 }

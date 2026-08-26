@@ -30,10 +30,10 @@ How many units remain after fully reacting the polymer you scanned? (Note: in th
 input, make sure you get the whole thing.)
 */
 
-int part1(const std::string& input = input5) {
+int part1(const char* input) {
     std::string res(1, input[0]);
 
-    for (const char ch : input | std::views::drop(1)) {
+    for (const char ch : std::string_view(input) | std::views::drop(1)) {
         if (!res.empty() && (res.back() + 32 == ch || res.back() - 32 == ch)) {
             res.pop_back();
         } else {
@@ -42,6 +42,7 @@ int part1(const std::string& input = input5) {
     }
     return res.length();
 }
+
 
 /*
 --- Part Two ---
@@ -61,18 +62,25 @@ In this example, removing all C/c units was best, producing the answer 4.
 What is the length of the shortest polymer you can produce by removing all units of exactly one type and fully reacting the result?
 */
 
-int part2() {
+int part2(const char* input) {
     int min = INT32_MAX;
 
     for (int i = 0; i < 26; i++) {
-        std::string input(input5);
-        std::erase_if(input, [i](const char ch) -> bool { return ch == 'a' + i || ch == 'A' + i; });
-        min = std::min(min, part1(input));
+        std::string polymer(input);
+        std::erase_if(polymer, [i](const char ch) -> bool { return ch == 'a' + i || ch == 'A' + i; });
+        min = std::min(min, part1(polymer.c_str()));
     }
     return min;
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "dabAcCaCBAcCcaDA", 10);
+    Executor::run(part1, input5);
+
+    std::println("Part 2:");
+    Executor::test(part2, "dabAcCaCBAcCcaDA", 4);
+    Executor::run(part2, input5);
+
     return 0;
 }

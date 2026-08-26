@@ -47,8 +47,8 @@ void update(Direction current, Vec2<int>& position) {
     }
 }
 
-int part1() {
-    const int target = std::atoi(input3);
+int part1(const char* input) {
+    const int target = std::atoi(input);
     auto current = Direction::UP;
     int i = 1, area = 0;
     Vec2 position = 0;
@@ -94,15 +94,15 @@ Once a square is written, its value does not change. Therefore, the first few sq
 What is the first value written that is larger than your puzzle input?
 */
 
-int part2() {
-    const int target = std::atoi(input3);
+int part2(const char* input) {
+    const int target = std::atoi(input);
     auto current = Direction::UP;
     int area = 0;
     Vec2 position = 0;
     std::unordered_map<Vec2<int>, int> map;
     map[0] = 1;
 
-    while (map[position] < target) {
+    while (map[position] <= target) {
         position.y--;
         position.x++;
         area += 8;
@@ -110,7 +110,7 @@ int part2() {
         for (int i = 0; i < 4; i++) {
             int k = 0;
 
-            while (map[position] < target && k < area / 4) {
+            while (map[position] <= target && k < area / 4) {
                 update(current, position);
                 int& value = map[position];
 
@@ -126,6 +126,18 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "1", 0);
+    Executor::test(part1, "12", 3);
+    Executor::test(part1, "23", 2);
+    Executor::test(part1, "1024", 31);
+    Executor::run(part1, input3);
+
+    std::println("Part 2:");
+    Executor::test(part2, "1", 2);
+    Executor::test(part2, "2", 4);
+    Executor::test(part2, "4", 5);
+    Executor::run(part2, input3);
+
     return 0;
 }

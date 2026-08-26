@@ -170,11 +170,11 @@ bool resolve(const std::vector<std::vector<std::vector<uint8_t>>>& grid, const i
     return grid[position.x][position.y][position.z] ? active == 2 || active == 3 : active == 3;
 }
 
-int part1(const int cycles = 6) {
+int part1(const char* input, const int cycles) {
     int layers = 1;
     std::vector<std::vector<std::vector<uint8_t>>> grid(1);
     std::string line;
-    std::stringstream file(input17);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         const int size = line.size();
@@ -496,11 +496,11 @@ bool resolve(const std::vector<std::vector<std::vector<std::vector<uint8_t>>>>& 
     return grid[position.x][position.y][position.z][position.t] ? active == 2 || active == 3 : active == 3;
 }
 
-int part2(const int cycles = 6) {
+int part2(const char* input, const int cycles) {
     int depth = 1;
     std::vector grid(1, std::vector<std::vector<std::vector<uint8_t>>>(1));
     std::string line;
-    std::stringstream file(input17);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         const int width = line.size();
@@ -538,7 +538,7 @@ int part2(const int cycles = 6) {
             for (int j = 0; j < depth; j++) {
                 for (int k = 0; k < size; k++) {
                     for (int l = 0; l < size; l++) {
-                        next[i][j][k][l] = resolve(grid, depth, size, {.x = i, .y = j, .z = k, .t = l});
+                        next[i][j][k][l] = resolve(grid, depth, size, Vec4{i, j, k, l});
                     }
                 }
             }
@@ -549,6 +549,21 @@ int part2(const int cycles = 6) {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(.#.
+..#
+###)",
+                   6, 112);
+    Executor::run(part1, input17, 6);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(.#.
+..#
+###)",
+                   6, 848);
+    Executor::run(part2, input17, 6);
+
     return 0;
 }

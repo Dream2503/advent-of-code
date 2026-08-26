@@ -104,9 +104,9 @@ std::pair<std::vector<int>, int> parse(const char input[]) {
     return {values, values.size()};
 }
 
-int part1() {
+int part1(const char* input) {
     Vec2 res(0, 1);
-    const auto [values, size] = parse(input10);
+    const auto [values, size] = parse(input);
 
     for (int i = 0; i < size - 1; i++) {
         switch (values[i + 1] - values[i]) {
@@ -181,8 +181,8 @@ Surely, there must be an efficient way to count the arrangements.
 What is the total number of distinct ways you can arrange the adapters to connect the charging outlet to your device?
 */
 
-uint64_t part2() {
-    const auto [values, size] = parse(input10);
+uint64_t part2(const char* input) {
+    const auto [values, size] = parse(input);
     std::vector<uint64_t> dp(size);
     dp[size - 1] = 1;
 
@@ -195,6 +195,103 @@ uint64_t part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(16
+10
+15
+5
+1
+11
+7
+19
+6
+12
+4)",
+                   35);
+    Executor::test(part1,
+                   R"(28
+33
+18
+42
+31
+14
+46
+20
+48
+47
+24
+23
+49
+45
+19
+38
+39
+11
+1
+32
+25
+35
+8
+17
+7
+9
+4
+2
+34
+10
+3)",
+                   220);
+    Executor::run(part1, input10);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(16
+10
+15
+5
+1
+11
+7
+19
+6
+12
+4)",
+                   8);
+    Executor::test(part2,
+                   R"(28
+33
+18
+42
+31
+14
+46
+20
+48
+47
+24
+23
+49
+45
+19
+38
+39
+11
+1
+32
+25
+35
+8
+17
+7
+9
+4
+2
+34
+10
+3)",
+                   19208);
+    Executor::run(part2, input10);
+
     return 0;
 }

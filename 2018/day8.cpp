@@ -88,9 +88,9 @@ int value_of(Node& root) {
     return value;
 }
 
-int part1(const int check = false) {
-    std::stringstream input(input8);
-    Node root = resolve_node(input);
+int part1(const char* input, const bool check) {
+    std::stringstream ss(input);
+    Node root = resolve_node(ss);
 
     if (check) {
         return value_of(root);
@@ -122,9 +122,16 @@ So, in this example, the value of the root node is 66.
 What is the value of the root node?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2", false, 138);
+    Executor::run(part1, input8, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, "2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2", 66);
+    Executor::run(part2, input8);
+
     return 0;
 }

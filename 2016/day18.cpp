@@ -78,8 +78,8 @@ char determine_tile(const std::string& row, const int i) {
     return (i > 0 ? row[i - 1] : '.') ^ (i < row.length() - 1 ? row[i + 1] : '.') ? '^' : '.';
 }
 
-int part1(const int rows = 40) {
-    std::string prev_row(input18);
+int part1(const char* input, const int rows) {
+    std::string prev_row(input);
     const int size = prev_row.length();
     int res = 0;
     std::string next_row(size, 0);
@@ -100,9 +100,16 @@ int part1(const int rows = 40) {
 How many safe tiles are there in a total of 400000 rows?
 */
 
-int part2() { return part1(400000); }
+int part2(const char* input) { return part1(input, 400000); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "..^^.", 3, 6);
+    Executor::test(part1, ".^^.^.^^^^", 10, 38);
+    Executor::run(part1, input18, 40);
+
+    std::println("Part 2:");
+    Executor::run(part2, input18);
+
     return 0;
 }

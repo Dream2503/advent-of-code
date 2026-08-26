@@ -50,11 +50,11 @@ struct Particle {
 
 int distance(const Vec3<int>& vec3) { return std::abs(vec3.x) + std::abs(vec3.y) + std::abs(vec3.z); }
 
-int part1(const bool collide = false) {
+int part1(const char* input, const bool collide = false) {
     constexpr int ticks = 320;
     std::string line;
     std::vector<Particle> particles;
-    std::stringstream file(input20);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         Particle particle;
@@ -63,34 +63,30 @@ int part1(const bool collide = false) {
                     &particle.acceleration.z);
         particles.push_back(particle);
     }
-    const int size = particles.size();
+    std::vector<uint8_t> alive(particles.size(), true);
 
     for (int i = 0; i < ticks; i++) {
-        for (int j = 0; j < size; j++) {
+        std::unordered_map<Vec3<int>, int> positions;
+
+        for (int j = 0; j < particles.size(); j++) {
+            if (!alive[j]) {
+                continue;
+            }
             particles[j].position += particles[j].velocity += particles[j].acceleration;
+            positions[particles[j].position]++;
         }
         if (collide) {
-            std::ranges::sort(particles, {}, [](const Particle& particle) -> int { return distance(particle.position); });
-            bool collision = false;
-
-            for (int k = 0; k < size - 1; k++) {
-                if (particles[k].position == particles[k + 1].position) {
-                    collision = true;
-                    particles[k] = Particle();
-                } else if (collision) {
-                    particles[k] = Particle();
-                    collision = false;
+            for (int j = 0; j < particles.size(); j++) {
+                if (alive[j] && positions[particles[j].position] > 1) {
+                    alive[j] = false;
                 }
-            }
-            if (collision) {
-                particles[size - 1] = Particle();
             }
         }
     }
-    return collide
-        ? std::transform_reduce(particles.begin(), particles.end(), 0, std::plus(),
-                                [](const Particle& particle) -> int { return particle != Particle(); })
-        : std::ranges::min_element(particles, {}, [](const Particle& particle) -> int { return distance(particle.position); }) - particles.begin();
+    if (collide) {
+        return std::ranges::count(alive, true);
+    }
+    return std::ranges::min_element(particles, {}, [](const Particle& particle) -> int { return distance(particle.position); }) - particles.begin();
 }
 
 /*
@@ -126,9 +122,24 @@ unharmed.
 How many particles are left after all collisions are resolved?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(p=<3,0,0>, v=<2,0,0>, a=<-1,0,0>
+p=<4,0,0>, v=<0,0,0>, a=<-2,0,0>)",
+                   false, 0);
+    Executor::run(part1, input20, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(p=<-6,0,0>, v=<3,0,0>, a=<0,0,0>
+p=<-4,0,0>, v=<2,0,0>, a=<0,0,0>
+p=<-2,0,0>, v=<1,0,0>, a=<0,0,0>
+p=<3,0,0>, v=<-1,0,0>, a=<0,0,0>)",
+                   1);
+    Executor::run(part2, input20);
+
     return 0;
 }

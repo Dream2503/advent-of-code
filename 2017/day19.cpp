@@ -32,12 +32,12 @@ The little packet looks up at you, hoping you can help it find the way. What let
 path? (The routing diagram is very wide; make sure you view it without line wrapping.)
 */
 
-std::string part1(const bool steps = false) {
+std::string part1(const char* input, const bool steps) {
     enum Direction { UP, DOWN, LEFT, RIGHT, STOP };
     int row_size = 0, step_count = 0;
     std::string line, res;
     std::vector<std::string> diagram;
-    std::stringstream file(input19);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         diagram.push_back(line);
@@ -121,9 +121,28 @@ This would result in a total of 38 steps.
 How many steps does the packet need to go?
 */
 
-std::string part2() { return part1(true); }
+std::string part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(     |
+     |  +--+
+     A  |  C
+ F---|----E|--+
+     |  |  |  D
+     +B-+  +--+)",
+                   false, "ABCDEF");
+    Executor::run(part1, input19, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(     |
+     |  +--+
+     A  |  C
+ F---|----E|--+
+     |  |  |  D
+     +B-+  +--+)",
+                   "38");
+    Executor::run(part2, input19);
+
     return 0;
 }

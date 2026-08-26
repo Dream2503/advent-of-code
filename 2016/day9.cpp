@@ -26,16 +26,21 @@ For example:
 What is the decompressed length of the file (your puzzle input)? Don't count whitespace.
 */
 
-int part1() {
+int part1(const char* input) {
     int res = 0;
-    std::stringstream ss(input9);
+    std::stringstream ss(input);
 
-    while (!ss.eof()) {
+    while (ss.peek() != EOF) {
         if (ss.peek() == '(') {
             int offset, times;
             ((ss.ignore(1) >> offset).ignore(1) >> times).ignore(1);
             res += offset * times;
             ss.ignore(offset);
+        } else if (!std::isspace(ss.peek())) {
+            res++;
+            ss.ignore(1);
+        } else {
+            ss.ignore(1);
         }
     }
     return res;
@@ -62,26 +67,42 @@ What is the decompressed length of the file using this improved format?
 */
 
 uint64_t count(const std::string& str, const size_t repeat) {
-    int start = str.find('(');
+    uint64_t res = 0;
+    size_t i = 0;
 
-    if (start != std::string::npos) {
-        uint64_t res = 0;
-
-        while (start != std::string::npos) {
-            const int split = str.find(')', start);
+    while (i < str.size()) {
+        if (str[i] == '(') {
+            const size_t split = str.find(')', i);
             int offset, times;
-            (std::stringstream(str.substr(start + 1, split)) >> offset).ignore(1) >> times;
+            (std::stringstream(str.substr(i + 1, split - i - 1)) >> offset).ignore(1) >> times;
             res += count(str.substr(split + 1, offset), repeat * times);
-            start = str.find('(', split + offset);
+            i = split + 1 + offset;
+        } else {
+            res += repeat;
+            i++;
         }
-        return res;
     }
-    return str.length() * repeat;
+    return res;
 }
 
-uint64_t part2() { return count(input9, 1); }
+uint64_t part2(const char* input) { return count(input, 1); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "ADVENT", 6);
+    Executor::test(part1, "A(1x5)BC", 7);
+    Executor::test(part1, "(3x3)XYZ", 9);
+    Executor::test(part1, "A(2x2)BCD(2x2)EFG", 11);
+    Executor::test(part1, "(6x1)(1x3)A", 6);
+    Executor::test(part1, "X(8x2)(3x3)ABCY", 18);
+    Executor::run(part1, input9);
+
+    std::println("Part 2:");
+    Executor::test(part2, "(3x3)XYZ", 9);
+    Executor::test(part2, "X(8x2)(3x3)ABCY", 20);
+    Executor::test(part2, "(27x12)(20x12)(13x14)(7x10)(1x12)A", 241920);
+    Executor::test(part2, "(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN", 445);
+    Executor::run(part2, input9);
+
     return 0;
 }

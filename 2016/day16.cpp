@@ -61,25 +61,24 @@ std::string negate(std::string&& str) {
     return str;
 }
 
-std::string part1(const int length = 272) {
-    std::string data(input16);
+std::string part1(std::string input, const int length) {
 
-    while (data.length() < length) {
+    while (input.length() < length) {
         std::string temp;
-        data += negate(std::string(data.rbegin(), data.rend())).insert(0, "0");
+        input += negate(std::string(input.rbegin(), input.rend())).insert(0, "0");
     }
-    data = data.substr(0, length);
+    input = input.substr(0, length);
 
-    while (data.length() % 2 == 0) {
-        const int size = data.length();
+    while (input.length() % 2 == 0) {
+        const int size = input.length();
         std::string checksum;
 
         for (int i = 0; i < size - 1; i += 2) {
-            checksum.push_back((data[i] == data[i + 1]) + '0');
+            checksum.push_back((input[i] == input[i + 1]) + '0');
         }
-        std::swap(data, checksum);
+        std::swap(input, checksum);
     }
-    return data;
+    return input;
 }
 
 /*
@@ -87,9 +86,20 @@ std::string part1(const int length = 272) {
 The second disk you have to fill has length 35651584. Again using the initial state in your puzzle input, what is the correct checksum for this disk?
 */
 
-std::string part2() { return part1(35651584); }
+std::string part2(const char* input) { return part1(input, 35651584); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "1", 3, "100");
+    Executor::test(part1, "0", 3, "001");
+    Executor::test(part1, "11111", 11, "11111000000");
+    Executor::test(part1, "111100001010", 25, "1111000010100101011110000");
+    Executor::test(part1, "10000", 20, "01100");
+    Executor::test(part1, "110010110100", 12, "100");
+    Executor::run(part1, input16, 272);
+
+    std::println("Part 2:");
+    Executor::run(part2, input16);
+
     return 0;
 }

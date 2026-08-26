@@ -35,11 +35,11 @@ What is the lowest positive integer that can be used to initialize register a an
 forever?
 */
 
-int part1() {
+int part1(const char* input) {
     constexpr int threshold = 7;
     std::string line;
     std::vector<std::string> code;
-    std::stringstream file(input25);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         code.push_back(line);
@@ -115,9 +115,9 @@ The antenna is ready. Now, all you need is the fifty stars required to generate 
 You look toward the sky in desperation... suddenly noticing that a lone star has been installed at the top of the antenna! Only 49 more to go.
 */
 
-int part2() { return 0; }
-
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::run(part1, input25);
+
     return 0;
 }

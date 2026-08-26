@@ -48,10 +48,8 @@ struct Path {
     int steps;
 };
 
-constexpr Vec2 terminate = {31, 39};
-
-int part1(const int max_steps = INT32_MAX) {
-    const int dfn = std::stoi(input13);
+int part1(const char* input, const Vec2<int> target, const int max_steps) {
+    const int dfn = std::stoi(input);
     std::queue<Path> queue;
     std::unordered_set<Vec2<int>> seen;
     queue.emplace(Vec2{1, 1}, 0);
@@ -61,10 +59,13 @@ int part1(const int max_steps = INT32_MAX) {
         const auto& [x, y] = position;
         queue.pop();
 
-        if (position == terminate && max_steps == INT32_MAX) {
+        if (position == target && max_steps == INT32_MAX) {
             return steps;
         }
         if (__builtin_popcount(x * x + 3 * x + 2 * x * y + y + y * y + dfn) % 2 == 0) {
+            if (seen.contains(position)) {
+                continue;
+            }
             seen.insert(position);
 
             for (const auto& [i, j] : directions_basic) {
@@ -84,9 +85,15 @@ int part1(const int max_steps = INT32_MAX) {
 How many locations (distinct x,y coordinates, including your starting location) can you reach in at most 50 steps?
 */
 
-int part2() { return part1(50); }
+int part2(const char* input) { return part1(input, {31, 39}, 50); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "10", Vec2{7, 4}, INT32_MAX, 11);
+    Executor::run(part1, input13, Vec2{31, 39}, INT32_MAX);
+
+    std::println("Part 2:");
+    Executor::run(part2, input13);
+
     return 0;
 }

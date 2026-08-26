@@ -83,8 +83,8 @@ Here are the first eight digits of the final output list after 100 phases for so
 After 100 phases of FFT, what are the first eight digits in the final output list?
 */
 
-std::string part1() {
-    std::string prev(input16), next;
+std::string part1(const char* input) {
+    std::string prev(input), next;
     const int size = prev.size();
     next.reserve(size);
 
@@ -135,8 +135,8 @@ inputs given below are repeated 10000 times to find the actual starting input li
 After repeating your input signal 10000 times and running 100 phases of FFT, what is the eight-digit message embedded in the final output list?
 */
 
-std::string part2() {
-    const std::string base(input16);
+std::string part2(const char* input) {
+    const std::string base(input);
     const int offset = std::stoi(base.substr(0, 7)), base_size = base.size(), total_size = base_size * 10000;
     std::string prev;
     prev.reserve(total_size - offset);
@@ -160,6 +160,17 @@ std::string part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "80871224585914546619083218645595", "24176176");
+    Executor::test(part1, "19617804207202209144916044189917", "73745418");
+    Executor::test(part1, "69317163492948606335995924319873", "52432133");
+    Executor::run(part1, input16);
+
+    std::println("Part 2:");
+    Executor::test(part2, "03036732577212944063491565474664", "84462026");
+    Executor::test(part2, "02935109699940807407585447034323", "78725270");
+    Executor::test(part2, "03081770884921959731165446850517", "53553731");
+    Executor::run(part2, input16);
+
     return 0;
 }

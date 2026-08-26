@@ -44,13 +44,13 @@ int dfs(const std::vector<std::string>& grid, const Vec2<int>& position, std::un
     return res;
 }
 
-int part1(const bool floodfill = false) {
+int part1(const char* input, const bool floodfill) {
     int res = 0;
     std::string line;
     std::vector<std::string> grid;
     std::priority_queue<int, std::vector<int>, std::greater<>> ans;
     std::unordered_set<Vec2<int>> seen;
-    std::stringstream file(input9);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         grid.push_back(line);
@@ -124,9 +124,28 @@ Find the three largest basins and multiply their sizes together. In the above ex
 What do you get if you multiply together the sizes of the three largest basins?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(2199943210
+3987894921
+9856789892
+8767896789
+9899965678)",
+                   false, 15);
+    Executor::run(part1, input9, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(2199943210
+3987894921
+9856789892
+8767896789
+9899965678)",
+                   1134);
+    Executor::run(part2, input9);
+
     return 0;
 }

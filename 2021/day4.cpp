@@ -64,11 +64,11 @@ Then, multiply that sum by the number that was just called when the board won, 2
 To guarantee victory against the giant squid, figure out which board will win first. What will your final score be if you choose that board?
 */
 
-int part1(const bool last = false) {
+int part1(const char* input, const bool last) {
     std::string line, list;
     std::vector<std::vector<std::vector<int>>> boards;
     std::unordered_set<int> completed;
-    std::stringstream file(input4);
+    std::stringstream file(input);
     std::getline(file, list);
 
     while (std::getline(file, line)) {
@@ -123,9 +123,56 @@ you were to keep playing until this point, the second board would have a sum of 
 Figure out which board will win last. Once it wins, what would its final score be?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
+
+22 13 17 11  0
+ 8  2 23  4 24
+21  9 14 16  7
+ 6 10  3 18  5
+ 1 12 20 15 19
+
+ 3 15  0  2 22
+ 9 18 13 17  5
+19  8  7 25 23
+20 11 10 24  4
+14 21 16 12  6
+
+14 21 17 24  4
+10 16 15  9 19
+18  8 23 26 20
+22 11 13  6  5
+ 2  0 12  3  7)",
+                   false, 4512);
+    Executor::run(part1, input4, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1
+
+22 13 17 11  0
+ 8  2 23  4 24
+21  9 14 16  7
+ 6 10  3 18  5
+ 1 12 20 15 19
+
+ 3 15  0  2 22
+ 9 18 13 17  5
+19  8  7 25 23
+20 11 10 24  4
+14 21 16 12  6
+
+14 21 17 24  4
+10 16 15  9 19
+18  8 23 26 20
+22 11 13  6  5
+ 2  0 12  3  7)",
+                   1924);
+    Executor::run(part2, input4);
+
     return 0;
 }

@@ -82,19 +82,19 @@ labeled 9, 2, 6, 5, and so on, producing 92658374. If the crab were to complete 
 Using your labeling, simulate 100 moves. What are the labels on the cups after cup 1?
 */
 
-std::string part1(const int max_cup = 9, const int moves = 100) {
-    int previous = input23[0] - '0';
+std::string part1(const char* input, const int max_cup, const int moves) {
+    int previous = input[0] - '0';
     std::vector<int> next(max_cup + 1);
 
-    for (int i = 1; input23[i]; i++) {
-        next[previous] = input23[i] - '0';
-        previous = input23[i] - '0';
+    for (int i = 1; input[i]; i++) {
+        next[previous] = input[i] - '0';
+        previous = input[i] - '0';
     }
     for (int cup = 10; cup <= max_cup; cup++) {
         next[previous] = cup;
         previous = cup;
     }
-    int current = next[previous] = input23[0] - '0';
+    int current = next[previous] = input[0] - '0';
 
     for (int i = 0; i < moves; i++) {
         const int a = next[current], b = next[a], c = next[b];
@@ -147,9 +147,19 @@ In the above example (389125467), this would be 934001 and then 159792; multiply
 Determine which two cups will end up immediately clockwise of cup 1. What do you get if you multiply their labels together?
 */
 
-std::string part2() { return part1(1'000'000, 10'000'000); }
+std::string part2(const char* input) { return part1(input, 1'000'000, 10'000'000); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    constexpr const char* example = "389125467";
+
+    std::println("Part 1:");
+    Executor::test(part1, example, 9, 10, "92658374");
+    Executor::test(part1, example, 9, 100, "67384529");
+    Executor::run(part1, input23, 9, 100);
+
+    std::println("Part 2:");
+    Executor::test(part2, example, "149245887792");
+    Executor::run(part2, input23);
+
     return 0;
 }

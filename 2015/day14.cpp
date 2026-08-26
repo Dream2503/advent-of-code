@@ -22,12 +22,10 @@ point). So, in this situation, Comet would win (if the race ended at 1000 second
 Given the descriptions of each reindeer (in your puzzle input), after exactly 2503 seconds, what distance has the winning reindeer traveled?
 */
 
-constexpr int time_limit = 2503;
-
-int part1() {
+int part1(const char* input, const int time_limit) {
     int max = 0;
     std::string line;
-    std::stringstream file(input14);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int speed, move_time, rest_time, time = 0, distance = 0;
@@ -64,9 +62,9 @@ struct Reindeer {
     bool is_moving;
 };
 
-int part2() {
+int part2(const char* input, const int time_limit) {
     std::string line;
-    std::stringstream file(input14);
+    std::stringstream file(input);
     std::vector<Reindeer> reindeers;
 
     while (std::getline(file, line)) {
@@ -107,6 +105,17 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(Comet can fly 14 km/s for 10 seconds, but then must rest for 127 seconds.
+Dancer can fly 16 km/s for 11 seconds, but then must rest for 162 seconds.)",
+                   1000, 1120);
+    Executor::run(part1, input14, 2503);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(Comet can fly 14 km/s for 10 seconds, but then must rest for 127 seconds.
+Dancer can fly 16 km/s for 11 seconds, but then must rest for 162 seconds.)",
+                   1000, 689);
+    Executor::run(part2, input14, 2503);
+
     return 0;
 }

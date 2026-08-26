@@ -44,11 +44,11 @@ Here are a few more examples:
     - Given your starting numbers, what will be the 2020th number spoken?
 */
 
-int part1(const int nth = 2020) {
+int part1(const char* input, const int nth) {
     int prev = -1, i = 0;
     std::string token;
     std::vector<Vec2<int>> memory(nth);
-    std::stringstream file(input15);
+    std::stringstream file(input);
 
     while (std::getline(file, token, ',')) {
         prev = std::stoi(token);
@@ -79,9 +79,28 @@ Given 3,1,2, the 30000000th number spoken is 362.
 Given your starting numbers, what will be the 30000000th number spoken?
 */
 
-int part2() { return part1(30000000); }
+int part2(const char* input) { return part1(input, 30'000'000); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "0,3,6", 2020, 436);
+    Executor::test(part1, "1,3,2", 2020, 1);
+    Executor::test(part1, "2,1,3", 2020, 10);
+    Executor::test(part1, "1,2,3", 2020, 27);
+    Executor::test(part1, "2,3,1", 2020, 78);
+    Executor::test(part1, "3,2,1", 2020, 438);
+    Executor::test(part1, "3,1,2", 2020, 1836);
+    Executor::run(part1, input15, 2020);
+
+    std::println("Part 2:");
+    Executor::test(part2, "0,3,6", 175594);
+    Executor::test(part2, "1,3,2", 2578);
+    Executor::test(part2, "2,1,3", 3544142);
+    Executor::test(part2, "1,2,3", 261214);
+    Executor::test(part2, "2,3,1", 6895259);
+    Executor::test(part2, "3,2,1", 18);
+    Executor::test(part2, "3,1,2", 362);
+    Executor::run(part2, input15);
+
     return 0;
 }

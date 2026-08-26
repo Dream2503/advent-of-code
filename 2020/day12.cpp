@@ -41,11 +41,11 @@ Figure out where the navigation instructions lead. What is the Manhattan distanc
 */
 
 
-int part1() {
+int part1(const char* input) {
     enum class Direction { NORTH, EAST, SOUTH, WEST } facing = Direction::EAST;
     Vec2 ship(0);
     std::string line;
-    std::stringstream file(input12);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         const int value = std::stoi(line.substr(1));
@@ -135,10 +135,10 @@ After these operations, the ship's Manhattan distance from its starting position
 Figure out where the navigation instructions actually lead. What is the Manhattan distance between that location and the ship's starting position?
 */
 
-int part2() {
+int part2(const char* input) {
     Vec2 ship(0), waypoint(1, 10);
     std::string line;
-    std::stringstream file(input12);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         const int value = std::stoi(line.substr(1));
@@ -184,6 +184,25 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(F10
+N3
+F7
+R90
+F11)",
+                   25);
+    Executor::run(part1, input12);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(F10
+N3
+F7
+R90
+F11)",
+                   286);
+    Executor::run(part2, input12);
+
     return 0;
 }

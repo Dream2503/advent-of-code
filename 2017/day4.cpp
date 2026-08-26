@@ -15,10 +15,10 @@ For example:
 The system's full passphrase list is available as your puzzle input. How many passphrases are valid?
 */
 
-int part1(const bool anagram = false) {
+int part1(const char* input, const bool anagram) {
     int res = 0;
     std::string line;
-    std::stringstream file(input4);
+    std::stringstream file(input);
     std::vector<std::string> seen;
 
     while (std::getline(file, line)) {
@@ -59,9 +59,22 @@ For example:
 Under this new system policy, how many passphrases are valid?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "aa bb cc dd ee", false, 1);
+    Executor::test(part1, "aa bb cc dd aa", false, 0);
+    Executor::test(part1, "aa bb cc dd aaa", false, 1);
+    Executor::run(part1, input4, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, "abcde fghij", 1);
+    Executor::test(part2, "abcde xyz ecdab", 0);
+    Executor::test(part2, "a ab abc abd abf abj", 1);
+    Executor::test(part2, "iiii oiii ooii oooi oooo", 1);
+    Executor::test(part2, "oiii ioii iioi iiio", 0);
+    Executor::run(part2, input4);
+
     return 0;
 }

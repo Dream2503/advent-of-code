@@ -39,19 +39,18 @@ example, that would be 638.
 What is the value after 2017 in your completed circular buffer?
 */
 
-int part1() {
-    constexpr int insertion = 2018;
-    const int steps = std::atoi(input17);
+int part1(const char* input, const int insertion) {
+    const int steps = std::atoi(input);
     int i = 0;
     std::vector<int> spinlock;
-    spinlock.reserve(2018);
+    spinlock.reserve(insertion);
     spinlock.push_back(0);
 
     for (int k = 1; k < insertion; k++) {
         i = (i + steps) % k + 1;
         spinlock.insert(spinlock.begin() + i, k);
     }
-    return spinlock[std::ranges::find(spinlock, 2017) - spinlock.begin() + 1];
+    return spinlock[(std::ranges::find(spinlock, insertion - 1) - spinlock.begin() + 1) % insertion];
 }
 
 /*
@@ -69,9 +68,8 @@ The bad news is that while you were determining this, the spinlock has just fini
 What is the value after 0 the moment 50000000 is inserted?
 */
 
-int part2() {
-    constexpr int insertion = 50'000'000;
-    const int steps = std::atoi(input17);
+int part2(const char* input, const int insertion) {
+    const int steps = std::atoi(input);
     int i = 0, res = 0;
 
     for (int k = 1; k <= insertion; k++) {
@@ -81,10 +79,18 @@ int part2() {
             res = k;
         }
     }
+
     return res;
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "3", 2018, 638);
+    Executor::run(part1, input17, 2018);
+
+    std::println("Part 2:");
+    Executor::test(part2, "3", 2017, 1226);
+    Executor::run(part2, input17, 50'000'000);
+
     return 0;
 }

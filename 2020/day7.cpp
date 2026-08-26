@@ -80,9 +80,9 @@ bool resolve_part1(List& list, const std::string& key) {
     return res;
 }
 
-int part1() {
+int part1(const char* input) {
     int res = 0;
-    List list = parse_input(input7);
+    List list = parse_input(input);
     list["shiny gold"].second = 1;
 
     for (const std::string& key : list | std::views::keys) {
@@ -138,12 +138,48 @@ int resolve_part2(List& list, const std::string& key) {
     return count = res;
 }
 
-int part2() {
-    List list = parse_input(input7);
+int part2(const char* input) {
+    List list = parse_input(input);
     return resolve_part2(list, "shiny gold");
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(light red bags contain 1 bright white bag, 2 muted yellow bags.
+dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+bright white bags contain 1 shiny gold bag.
+muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.
+shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
+dark olive bags contain 3 faded blue bags, 4 dotted black bags.
+vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
+faded blue bags contain no other bags.
+dotted black bags contain no other bags.)",
+                   4);
+    Executor::run(part1, input7);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(light red bags contain 1 bright white bag, 2 muted yellow bags.
+dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+bright white bags contain 1 shiny gold bag.
+muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.
+shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
+dark olive bags contain 3 faded blue bags, 4 dotted black bags.
+vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
+faded blue bags contain no other bags.
+dotted black bags contain no other bags.)",
+                   32);
+    Executor::test(part2,
+                   R"(shiny gold bags contain 2 dark red bags.
+dark red bags contain 2 dark orange bags.
+dark orange bags contain 2 dark yellow bags.
+dark yellow bags contain 2 dark green bags.
+dark green bags contain 2 dark blue bags.
+dark blue bags contain 2 dark violet bags.
+dark violet bags contain no other bags.)",
+                   126);
+    Executor::run(part2, input7);
+
     return 0;
 }

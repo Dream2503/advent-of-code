@@ -45,13 +45,13 @@ There seems to be an intermediate check of the voltage used by the display: afte
 be lit?
 */
 
-int part1(const bool is_print = false) {
+int part1(const char* input, const bool is_print) {
     constexpr int width = 50, high = 6;
     std::string line;
     std::array<std::bitset<width>, high> screen;
     std::bitset<width> rotate_row;
     std::bitset<high> rotate_col;
-    std::stringstream file(input8);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int row, col, k, n;
@@ -105,12 +105,22 @@ You notice that the screen is only capable of displaying capital letters; in the
 After you swipe your card, what code is the screen trying to display?
 */
 
-char part2() {
-    part1(true);
+char part2(const char* input) {
+    part1(input, true);
     return ' ';
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(rect 3x2
+rotate column x=1 by 1
+rotate row y=0 by 4
+rotate column x=1 by 1)",
+                   false, 6);
+    Executor::run(part1, input8, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input8);
+
     return 0;
 }

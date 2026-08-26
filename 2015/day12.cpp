@@ -18,8 +18,7 @@ You will not encounter any strings containing numbers.
 What is the sum of all numbers in the document?
 */
 
-int part1() {
-    const std::string input(input12);
+int part1(const std::string& input) {
     std::string number;
     const int size = input.length();
     int res = 0, i = 0;
@@ -50,7 +49,7 @@ Ignore any object (and all of its children) which has any property with the valu
 */
 
 int depth_first_count(const std::string& input, int& idx) {
-    static const int size = input.length();
+    const int size = input.length();
 
     if (idx >= size) {
         return 0;
@@ -109,9 +108,29 @@ int depth_first_count(const std::string& input, int& idx) {
     return res;
 }
 
-int part2(int idx = 0) { return depth_first_count(input12, idx); }
+int part2(const char* input) {
+    int idx = 0;
+    return depth_first_count(input, idx);
+}
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "[1,2,3]", 6);
+    Executor::test(part1, R"({"a":2,"b":4})", 6);
+    Executor::test(part1, "[[[3]]]", 3);
+    Executor::test(part1, R"({"a":{"b":4},"c":-1})", 3);
+    Executor::test(part1, R"({"a":[-1,1]})", 0);
+    Executor::test(part1, R"([-1,{"a":1}])", 0);
+    Executor::test(part1, "[]", 0);
+    Executor::test(part1, "{}", 0);
+    Executor::run(part1, input12);
+
+    std::println("Part 2:");
+    Executor::test(part2, "[1,2,3]", 6);
+    Executor::test(part2, R"([1,{"c":"red","b":2},3])", 4);
+    Executor::test(part2, R"({"d":"red","e":[1,2,3,4],"f":5})", 0);
+    Executor::test(part2, R"([1,"red",5])", 6);
+    Executor::run(part2, input12);
+
     return 0;
 }

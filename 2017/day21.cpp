@@ -163,11 +163,11 @@ Block parse_block(const std::string& str) {
     return block;
 }
 
-int part1(const int iterations = 5) {
+int part1(const char* input, const int iterations) {
     const std::string art_s = ".#./..#/###";
     std::unordered_map<std::string, Block> hash;
     std::string line;
-    std::stringstream file(input21);
+    std::stringstream file(input);
     Block art = parse_block(art_s);
 
     while (getline(file, line)) {
@@ -211,9 +211,18 @@ int part1(const int iterations = 5) {
 How many pixels stay on after 18 iterations?
 */
 
-int part2() { return part1(18); }
+int part2(const char* input) { return part1(input, 18); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(../.# => ##./#../...
+.#./..#/### => #..#/..../..../#..#)",
+                   2, 12);
+    Executor::run(part1, input21, 5);
+
+    std::println("Part 2:");
+    Executor::run(part2, input21);
+
     return 0;
 }

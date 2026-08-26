@@ -99,17 +99,10 @@ giant integer outside the normal ASCII range.
 Program the springdroid with logic that allows it to survey the hull without falling into space. What amount of hull damage does it report?
 */
 
-int part1(const std::string& spring_script = R"(NOT A J
-NOT B T
-OR T J
-NOT C T
-OR T J
-AND D J
-WALK
-)") {
-    VirtualMachine VM(input21);
+int part1(const char* input, const char* spring_script) {
+    VirtualMachine VM(input);
 
-    for (const char ch : spring_script) {
+    for (const char ch : std::string_view(spring_script)) {
         VM.inputs.push(ch);
     }
     VM.interpret();
@@ -137,7 +130,8 @@ All other functions remain the same.
 Successfully survey the rest of the hull by ending your program with RUN. What amount of hull damage does the springdroid now report?
 */
 
-int part2() { return part1(R"(NOT A J
+int part2(const char* input) {
+    return part1(input, R"(NOT A J
 NOT B T
 OR T J
 NOT C T
@@ -148,9 +142,23 @@ NOT T T
 OR H T
 AND T J
 RUN
-)"); }
+)");
+}
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::run(part1, input21,
+                  R"(NOT A J
+NOT B T
+OR T J
+NOT C T
+OR T J
+AND D J
+WALK
+)");
+
+    std::println("Part 2:");
+    Executor::run(part2, input21);
+
     return 0;
 }

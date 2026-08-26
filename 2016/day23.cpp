@@ -49,11 +49,11 @@ register a to the safe.
 What value should be sent to the safe?
 */
 
-int part1() {
+int part1(const char* input, const int init_a) {
     std::string line;
-    std::array<int, 4> registers = {7};
+    std::array<int, 4> registers = {init_a};
     std::vector<std::string> code;
-    std::stringstream file(input23);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         code.push_back(line);
@@ -148,7 +148,7 @@ instruction more powerful than "add one" has anything to do with it. Don't bunni
 Anyway, what value should actually be sent to the safe?
 */
 
-int part2() {
+int part2([[maybe_unused]] const char* input) {
     constexpr int a = 12;
     int factorial = 1;
 
@@ -159,6 +159,19 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(cpy 2 a
+tgl a
+tgl a
+tgl a
+cpy 1 a
+dec a
+dec a)",
+                   2, 3);
+    Executor::run(part1, input23, 7);
+
+    std::println("Part 2:");
+    Executor::run(part2, input23);
+
     return 0;
 }

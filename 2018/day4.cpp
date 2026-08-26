@@ -63,19 +63,19 @@ can be analyzed.
 What is the ID of the guard you chose multiplied by the minute you chose? (In the above example, the answer would be 10 * 24 = 240.)
 */
 
-int part1(const bool strategy2 = false) {
+int part1(const char* input, const bool strategy2) {
     int current_id = -1, start = 0;
     std::string line;
-    std::vector<std::string> input;
+    std::vector<std::string> inputs;
     std::unordered_map<int, std::array<int, 60>> details;
-    std::stringstream file(input4);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
-        input.push_back(line);
+        inputs.push_back(line);
     }
-    std::ranges::sort(input);
+    std::ranges::sort(inputs);
 
-    for (const std::string& activity : input) {
+    for (const std::string& activity : inputs) {
         int minute;
         std::string type;
         std::stringstream ss(activity);
@@ -112,9 +112,52 @@ spent any minute asleep at most twice.)
 What is the ID of the guard you chose multiplied by the minute you chose? (In the above example, the answer would be 99 * 45 = 4455.)
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"([1518-11-01 00:00] Guard #10 begins shift
+[1518-11-01 00:05] falls asleep
+[1518-11-01 00:25] wakes up
+[1518-11-01 00:30] falls asleep
+[1518-11-01 00:55] wakes up
+[1518-11-01 23:58] Guard #99 begins shift
+[1518-11-02 00:40] falls asleep
+[1518-11-02 00:50] wakes up
+[1518-11-03 00:05] Guard #10 begins shift
+[1518-11-03 00:24] falls asleep
+[1518-11-03 00:29] wakes up
+[1518-11-04 00:02] Guard #99 begins shift
+[1518-11-04 00:36] falls asleep
+[1518-11-04 00:46] wakes up
+[1518-11-05 00:03] Guard #99 begins shift
+[1518-11-05 00:45] falls asleep
+[1518-11-05 00:55] wakes up)",
+                   false, 240);
+    Executor::run(part1, input4, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"([1518-11-01 00:00] Guard #10 begins shift
+[1518-11-01 00:05] falls asleep
+[1518-11-01 00:25] wakes up
+[1518-11-01 00:30] falls asleep
+[1518-11-01 00:55] wakes up
+[1518-11-01 23:58] Guard #99 begins shift
+[1518-11-02 00:40] falls asleep
+[1518-11-02 00:50] wakes up
+[1518-11-03 00:05] Guard #10 begins shift
+[1518-11-03 00:24] falls asleep
+[1518-11-03 00:29] wakes up
+[1518-11-04 00:02] Guard #99 begins shift
+[1518-11-04 00:36] falls asleep
+[1518-11-04 00:46] wakes up
+[1518-11-05 00:03] Guard #99 begins shift
+[1518-11-05 00:45] falls asleep
+[1518-11-05 00:55] wakes up)",
+                   4455);
+    Executor::run(part2, input4);
+
     return 0;
 }

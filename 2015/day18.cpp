@@ -5,7 +5,7 @@
 After the million lights incident, the fire code has gotten stricter: now, at most ten thousand lights are allowed. You arrange them in a 100x100
 grid.
 
-Never one to let you down, Santa again mails you instructions on the ideal lighting configuration. With so few lights, he says, you'll have to resort
+Never one to let you down, Santa again mails you instructions on the ideal lighting configuration. With so few lights, you'll have to resort
 to animation.
 
 Start by setting your lights to the included initial configuration (your puzzle input). A # means "on", and a . means "off".
@@ -74,12 +74,11 @@ After 4 steps, this example has four lights on.
 In your grid of 100x100 lights, given your initial configuration, how many lights are on after 100 steps?
 */
 
-
-int part1(const bool conner = false) {
-    constexpr int grid_size = 100, steps = 100;
+int part1(const char* input, const int grid_size, const int steps, const bool conner) {
     std::string line;
-    std::array<std::bitset<grid_size>, grid_size> actual_state, temp_state;
-    std::stringstream file(input18);
+    std::vector actual_state(grid_size, std::vector<uint8_t>(grid_size));
+    std::vector temp_state(grid_size, std::vector<uint8_t>(grid_size));
+    std::stringstream file(input);
     int i = 0;
 
     while (std::getline(file, line)) {
@@ -130,9 +129,20 @@ int part1(const bool conner = false) {
             }
         }
         std::swap(actual_state, temp_state);
+        if (conner) {
+            actual_state[0][0] = true;
+            actual_state[0][grid_size - 1] = true;
+            actual_state[grid_size - 1][0] = true;
+            actual_state[grid_size - 1][grid_size - 1] = true;
+        }
     }
-    return std::transform_reduce(actual_state.begin(), actual_state.end(), 0, std::plus<int>(),
-                                 [](const std::bitset<grid_size>& row) -> int { return row.count(); });
+    int res = 0;
+    for (const std::vector<uint8_t>& row : actual_state) {
+        for (const uint8_t light : row) {
+            res += light;
+        }
+    }
+    return res;
 }
 
 /*
@@ -193,9 +203,28 @@ In your grid of 100x100 lights, given your initial configuration, but with the f
 steps?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input, const int grid_size, const int steps) { return part1(input, grid_size, steps, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(.#.#.#
+...##.
+#....#
+..#...
+#.#..#
+####..)",
+                   6, 4, false, 4);
+    Executor::run(part1, input18, 100, 100, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(##.#.#
+...##.
+#....#
+..#...
+#.#..#
+####.#)",
+                   6, 5, 17);
+    Executor::run(part2, input18, 100, 100);
+
     return 0;
 }

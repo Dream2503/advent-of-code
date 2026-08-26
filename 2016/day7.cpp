@@ -20,10 +20,10 @@ How many IPs in your puzzle input support TLS?
 
 bool is_abba(const std::string& line, const int i) { return line[i] == line[i - 3] && line[i - 1] == line[i - 2] && line[i] != line[i - 1]; }
 
-int part1() {
+int part1(const char* input) {
     int res = 0;
     std::string line;
-    std::stringstream file(input7);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         bool on_hypernet = false, valid = false;
@@ -74,10 +74,10 @@ in your puzzle input support SSL?
 
 bool is_aba(const std::string& line, const int i) { return line[i] == line[i - 2] && line[i] != line[i - 1]; }
 
-int part2() {
+int part2(const char* input) {
     int res = 0;
     std::string line;
-    std::stringstream file(input7);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         bool on_hypernet = false, valid;
@@ -125,6 +125,19 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(abba[mnop]qrst)", 1);
+    Executor::test(part1, R"(abcd[bddb]xyyx)", 0);
+    Executor::test(part1, R"(aaaa[qwer]tyui)", 0);
+    Executor::test(part1, R"(ioxxoj[asdfgh]zxcvbn)", 1);
+    Executor::run(part1, input7);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(aba[bab]xyz)", 1);
+    Executor::test(part2, R"(xyx[xyx]xyx)", 0);
+    Executor::test(part2, R"(aaa[kek]eke)", 1);
+    Executor::test(part2, R"(zazbz[bzb]cdb)", 1);
+    Executor::run(part2, input7);
+
     return 0;
 }

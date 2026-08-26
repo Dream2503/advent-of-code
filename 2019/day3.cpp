@@ -136,9 +136,9 @@ int trace_until(const std::string& wire, const Vec2<int>& target) {
     return -1;
 }
 
-int part1(const bool fastest = false) {
+int part1(const char* input, const bool fastest) {
     std::string wire1, wire2;
-    std::stringstream file(input3);
+    std::stringstream file(input);
     std::getline(file, wire1);
     std::getline(file, wire2);
     std::vector<Vec2<int>> path1 = trace_path(wire1), path2 = trace_path(wire2), intersection;
@@ -193,9 +193,38 @@ U98,R91,D20,R16,D67,R40,U7,R15,U6,R7 = 410 steps
 What is the fewest combined steps the wires must take to reach an intersection?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(R8,U5,L5,D3
+U7,R6,D4,L4)",
+                   false, 6);
+    Executor::test(part1,
+                   R"(R75,D30,R83,U83,L12,D49,R71,U7,L72
+U62,R66,U55,R34,D71,R55,D58,R83)",
+                   false, 159);
+    Executor::test(part1,
+                   R"(R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51
+U98,R91,D20,R16,D67,R40,U7,R15,U6,R7)",
+                   false, 135);
+    Executor::run(part1, input3, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(R8,U5,L5,D3
+U7,R6,D4,L4)",
+                   30);
+    Executor::test(part2,
+                   R"(R75,D30,R83,U83,L12,D49,R71,U7,L72
+U62,R66,U55,R34,D71,R55,D58,R83)",
+                   610);
+    Executor::test(part2,
+                   R"(R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51
+U98,R91,D20,R16,D67,R40,U7,R15,U6,R7)",
+                   410);
+    Executor::run(part2, input3);
+
     return 0;
 }

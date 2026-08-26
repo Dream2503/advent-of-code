@@ -27,10 +27,10 @@ third passwords are valid: they contain one a or nine c, both within the limits 
 How many passwords are valid according to their policies?
 */
 
-int part1(const int update = false) {
+int part1(const char* input, const bool update) {
     int res = 0;
     std::string line;
-    std::stringstream file(input2);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         char ch;
@@ -67,9 +67,24 @@ Given the same example list from above:
 How many passwords are valid according to the new interpretation of the policies?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(1-3 a: abcde
+1-3 b: cdefg
+2-9 c: ccccccccc)",
+                   false, 2);
+    Executor::run(part1, input2, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(1-3 a: abcde
+1-3 b: cdefg
+2-9 c: ccccccccc)",
+                   1);
+    Executor::run(part2, input2);
+
     return 0;
 }

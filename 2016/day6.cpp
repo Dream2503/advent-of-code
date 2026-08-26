@@ -32,15 +32,18 @@ error-corrected message, easter.
 Given the recording in your puzzle input, what is the error-corrected version of the message being sent?
 */
 
-std::string part1(const std::function<int(const std::array<int, 26>&)>& func = [](const std::array<int, 26>& array) -> int {
-    return std::ranges::max_element(array) - array.begin();
-}) {
+int max_index(const std::array<int, 26>& array) { return std::ranges::max_element(array) - array.begin(); }
+
+std::string part1(const char* input, int (*func)(const std::array<int, 26>&) = max_index) {
     std::string line, message;
-    std::array<std::array<int, 26>, 8> hash = {};
-    std::stringstream file(input6);
+    std::vector<std::array<int, 26>> hash;
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
-        for (int i = 0; i < 8; i++) {
+        if (hash.empty()) {
+            hash.resize(line.size());
+        }
+        for (int i = 0; i < line.size(); i++) {
             hash[i][line[i] - 'a']++;
         }
     }
@@ -64,11 +67,62 @@ characters produces the original message, advent.
 Given the recording in your puzzle input and this new decoding methodology, what is the original message that Santa is trying to send?
 */
 
-std::string part2() {
-    return part1([](const std::array<int, 26>& array) -> int { return std::ranges::min_element(array) - array.begin(); });
+int min_index(const std::array<int, 26>& array) {
+    int index = 0;
+
+    while (!array[index]) {
+        index++;
+    }
+    for (int i = index + 1; i < 26; i++) {
+        if (array[i] && array[i] < array[index]) {
+            index = i;
+        }
+    }
+    return index;
 }
 
+std::string part2(const char* input) { return part1(input, min_index); }
+
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(eedadn
+drvtee
+eandsr
+raavrd
+atevrs
+tsrnev
+sdttsa
+rasrtv
+nssdts
+ntnada
+svetve
+tesnvt
+vntsnd
+vrdear
+dvrsen
+enarar)",
+                   max_index, "easter");
+    Executor::run(part1, input6, max_index);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(eedadn
+drvtee
+eandsr
+raavrd
+atevrs
+tsrnev
+sdttsa
+rasrtv
+nssdts
+ntnada
+svetve
+tesnvt
+vntsnd
+vrdear
+dvrsen
+enarar)",
+                   "advent");
+    Executor::run(part2, input6);
+
     return 0;
 }

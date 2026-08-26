@@ -8,8 +8,8 @@ balance. If it isn't balanced, he can't defy physics, and nobody gets presents t
 No pressure.
 
 Santa has provided you a list of the weights of every package he needs to fit on the sleigh. The packages need to be split into three groups of
-exactly the same weight, and every package has to fit. The first group goes in the passenger compartment of the sleigh, and the second and third go in
-containers on either side. Only when all three groups weigh exactly the same amount will the sleigh be able to fly. Defying physics has rules,
+exactly the same weight, and every package has to fit. The first group goes in the passenger compartment of the sleigh, and the second and third go
+in containers on either side. Only when all three groups weigh exactly the same amount will the sleigh be able to fly. Defying physics has rules,
 you know!
 
 Of course, that's not the only problem. The first group - the one going in the passenger compartment - needs as few packages as possible so that Santa
@@ -62,10 +62,10 @@ void search(const std::vector<int>& packages, const int index, const int groups,
     }
 }
 
-uint64_t part1(const int groups = 3) {
+uint64_t part1(const char* input, const int groups) {
     std::string line;
     std::vector<int> packages;
-    std::stringstream file(input24);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         packages.push_back(std::stoi(line));
@@ -99,9 +99,36 @@ lowest quantum entanglement, and so it is selected.
 Now, what is the quantum entanglement of the first group of packages in the ideal configuration?
 */
 
-size_t part2() { return part1(4); }
+uint64_t part2(const char* input) { return part1(input, 4); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(1
+2
+3
+4
+5
+7
+8
+9
+10
+11)",
+                   3, 99);
+    Executor::run(part1, input24, 3);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(1
+2
+3
+4
+5
+7
+8
+9
+10
+11)",
+                   44);
+    Executor::run(part2, input24);
+
     return 0;
 }

@@ -52,8 +52,8 @@ considerably by identifying the scores of the ten recipes after that. For exampl
 What are the scores of the ten recipes immediately after the number of recipes in your puzzle input?
 */
 
-std::string part1(const bool score = false) {
-    const int recipe = std::atoi(input14), size = std::strlen(input14);
+std::string part1(const char* input, const bool score) {
+    const int recipe = std::atoi(input), size = std::strlen(input);
     std::string recipes = "37";
     int i = 0, j = 1;
 
@@ -63,19 +63,19 @@ std::string part1(const bool score = false) {
         if (sum >= 10) {
             recipes.push_back('1');
 
-            if (score && recipes.ends_with(input14)) {
+            if (score && recipes.ends_with(input)) {
                 return std::to_string(recipes.length() - size);
             }
         }
         recipes.push_back(sum % 10 + '0');
 
-        if (score && recipes.ends_with(input14)) {
+        if (score && recipes.ends_with(input)) {
             return std::to_string(recipes.length() - size);
         }
         i = (i + recipes[i] - '0' + 1) % recipes.length();
         j = (j + recipes[j] - '0' + 1) % recipes.length();
     }
-    return recipes.substr(recipe);
+    return recipes.substr(recipe, 10);
 }
 
 /*
@@ -90,9 +90,22 @@ recipes whose scores are the digits from your puzzle input.
 How many recipes appear on the scoreboard to the left of the score sequence in your puzzle input?
 */
 
-std::string part2() { return part1(true); }
+std::string part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "9", false, "5158916779");
+    Executor::test(part1, "5", false, "0124515891");
+    Executor::test(part1, "18", false, "9251071085");
+    Executor::test(part1, "2018", false, "5941429882");
+    Executor::run(part1, input14, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, "51589", "9");
+    Executor::test(part2, "01245", "5");
+    Executor::test(part2, "92510", "18");
+    Executor::test(part2, "59414", "2018");
+    Executor::run(part2, input14);
+
     return 0;
 }

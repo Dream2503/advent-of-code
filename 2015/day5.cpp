@@ -19,10 +19,10 @@ For example:
 How many strings are nice?
 */
 
-int part1() {
+int part1(const char* input) {
     int res = 0;
     std::string line;
-    std::stringstream file(input5);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         const int size = line.length();
@@ -61,10 +61,10 @@ For example:
 How many strings are nice under these new rules?
 */
 
-int part2() {
+int part2(const char* input) {
     int res = 0;
     std::string line;
-    std::stringstream file(input5);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         bool twice = false;
@@ -87,6 +87,20 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "ugknbfddgicrmopn", 1);
+    Executor::test(part1, "aaa", 1);
+    Executor::test(part1, "jchzalrnumimnmhp", 0);
+    Executor::test(part1, "haegwjzuvuyypxyu", 0);
+    Executor::test(part1, "dvszwmarrgswjxmb", 0);
+    Executor::run(part1, input5);
+
+    std::println("Part 2:");
+    Executor::test(part2, "qjhvhtzxzqqjkmpb", 1);
+    Executor::test(part2, "xxyxx", 1);
+    Executor::test(part2, "uurcxstgmygtbstg", 0);
+    Executor::test(part2, "ieodomkazucvgmuy", 0);
+    Executor::run(part2, input5);
+
     return 0;
 }

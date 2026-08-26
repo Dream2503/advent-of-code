@@ -31,8 +31,7 @@ For example:
 What is the solution to your captcha?
 */
 
-int part1(int next = 1) {
-    const std::string input(input1);
+int part1(const std::string& input, int next = 1) {
     const int size = input.length();
     int res = 0;
 
@@ -65,9 +64,23 @@ For example:
 What is the solution to your new captcha?
 */
 
-int part2() { return part1(-1); }
+int part2(const char* input) { return part1(input, -1); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "1122", 1, 3);
+    Executor::test(part1, "1111", 1, 4);
+    Executor::test(part1, "1234", 1, 0);
+    Executor::test(part1, "91212129", 1, 9);
+    Executor::run(part1, input1, 1);
+
+    std::println("Part 2:");
+    Executor::test(part2, "1212", 6);
+    Executor::test(part2, "1221", 0);
+    Executor::test(part2, "123425", 4);
+    Executor::test(part2, "123123", 12);
+    Executor::test(part2, "12131415", 4);
+    Executor::run(part2, input1);
+
     return 0;
 }

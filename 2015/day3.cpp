@@ -41,13 +41,13 @@ void update(std::unordered_set<std::string>& seen, const char ch, int& x, int& y
     seen.emplace(std::to_string(x) + ',' + std::to_string(y));
 }
 
-int part1() {
+int part1(const char* input) {
     int x = 0, y = 0, i = 0;
     std::unordered_set<std::string> seen;
     seen.emplace("0,0");
 
-    while (input3[i]) {
-        update(seen, input3[i++], x, y);
+    while (input[i]) {
+        update(seen, input[i++], x, y);
     }
     return seen.size();
 }
@@ -67,20 +67,31 @@ For example:
     - ^v^v^v^v^v now delivers presents to 11 houses, with Santa going one direction and Robo-Santa going the other.
 */
 
-int part2() {
+int part2(const char* input) {
     int x1 = 0, y1 = 0, x2 = 0, y2 = 0, i = 0;
     std::unordered_set<std::string> seen;
     seen.emplace("0,0");
 
-    while (input3[i]) {
+    while (input[i]) {
         int& x = i % 2 ? x1 : x2;
         int& y = i % 2 ? y1 : y2;
-        update(seen, input3[i++], x, y);
+        update(seen, input[i++], x, y);
     }
     return seen.size();
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, ">", 2);
+    Executor::test(part1, "^>v<", 4);
+    Executor::test(part1, "^v^v^v^v^v", 2);
+    Executor::run(part1, input3);
+
+    std::println("Part 2:");
+    Executor::test(part2, "^v", 3);
+    Executor::test(part2, "^>v<", 3);
+    Executor::test(part2, "^v^v^v^v^v", 11);
+    Executor::run(part2, input3);
+
     return 0;
 }

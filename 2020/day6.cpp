@@ -47,11 +47,11 @@ In this example, the sum of these counts is 3 + 3 + 3 + 1 + 1 = 11.
 For each group, count the number of questions to which anyone answered "yes". What is the sum of those counts?
 */
 
-int part1(const bool everyone = false) {
+int part1(const char* input, const bool everyone) {
     int res = 0, count = 0;
     std::string answers;
     std::array<int, 26> seen = {};
-    std::stringstream file(input6);
+    std::stringstream file(input);
 
     while (std::getline(file, answers)) {
         if (answers.empty()) {
@@ -103,9 +103,52 @@ In this example, the sum of these counts is 3 + 0 + 1 + 1 + 1 = 6.
 For each group, count the number of questions to which everyone answered "yes". What is the sum of those counts?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(abc
+
+a
+b
+c
+
+ab
+ac
+
+a
+a
+a
+a
+
+b
+
+)",
+                   false, 11);
+    Executor::run(part1, input6, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(abc
+
+a
+b
+c
+
+ab
+ac
+
+a
+a
+a
+a
+
+b
+
+)",
+                   6);
+    Executor::run(part2, input6);
+
     return 0;
 }

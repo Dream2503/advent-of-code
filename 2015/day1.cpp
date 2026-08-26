@@ -27,11 +27,11 @@ For example:
 To what floor do the instructions take Santa?
 */
 
-int part1(const bool first = false) {
+int part1(const char* input, const bool first) {
     int res = 0, i = 0;
 
-    while (input1[i]) {
-        res += (input1[i++] == '(') * 2 - 1;
+    while (input[i]) {
+        res += (input[i++] == '(') * 2 - 1;
 
         if (first && res < 0) {
             return i;
@@ -52,9 +52,25 @@ For example:
 What is the position of the character that causes Santa to first enter the basement?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "(())", false, 0);
+    Executor::test(part1, "()()", false, 0);
+    Executor::test(part1, "(((", false, 3);
+    Executor::test(part1, "(()(()(", false, 3);
+    Executor::test(part1, "))(((((", false, 3);
+    Executor::test(part1, "())", false, -1);
+    Executor::test(part1, "))(", false, -1);
+    Executor::test(part1, ")))", false, -3);
+    Executor::test(part1, ")())())", false, -3);
+    Executor::run(part1, input1, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, ")", 1);
+    Executor::test(part2, "()())", 5);
+    Executor::run(part2, input1);
+
     return 0;
 }

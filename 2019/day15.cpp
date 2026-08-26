@@ -104,15 +104,14 @@ void resolve(VirtualMachine& VM, const Vec2<int>& position, std::unordered_set<V
     }
 }
 
-int part1(const bool fill = false) {
+int part1(const char* input, const bool fill) {
     int res = 0;
     Vec2<int> source;
-    VirtualMachine VM(input15);
+    VirtualMachine VM(input);
     std::queue<std::pair<int, Vec2<int>>> queue;
     std::unordered_set<Vec2<int>> seen;
     resolve(VM, {0, 0}, seen, source);
     queue.emplace(0, source);
-    // std::print("{} {} x", source , seen.size());
 
     while (!queue.empty()) {
         const auto [time, location] = queue.front();
@@ -183,9 +182,14 @@ So, in this example, all locations contain oxygen after 4 minutes.
 Use the repair droid to get a complete map of the area. How many minutes will it take to fill with oxygen?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::run(part1, input15, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input15);
+
     return 0;
 }

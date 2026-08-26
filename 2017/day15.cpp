@@ -47,11 +47,11 @@ pairs that match in their lowest 16 bits.)
 After 40 million pairs, what is the judge's final count?
 */
 
-int part1(const int iterations = 40'000'000, const int modulo_A = 1, const int module_B = 1) {
+int part1(const char* input, const int iterations, const int modulo_A, const int modulo_B) {
     constexpr int factor_A = 16807, factor_B = 48271;
     int res = 0;
     size_t A, B;
-    std::sscanf(input15, "Generator A starts with %zu\nGenerator B starts with %zu", &A, &B);
+    std::sscanf(input, "Generator A starts with %zu\nGenerator B starts with %zu", &A, &B);
 
     for (int i = 0; i < iterations; i++) {
         do {
@@ -59,7 +59,8 @@ int part1(const int iterations = 40'000'000, const int modulo_A = 1, const int m
         } while (A % modulo_A != 0);
         do {
             B = B * factor_B % INT32_MAX;
-        } while (B % module_B != 0);
+        } while (B % modulo_B != 0);
+
         res += (A & 0xffff) == (B & 0xffff);
     }
     return res;
@@ -118,9 +119,21 @@ values from the example above, after five million pairs, the judge would eventua
 After 5 million pairs, but using this new generator logic, what is the judge's final count?
 */
 
-int part2() { return part1(5'000'000, 4, 8); }
+int part2(const char* input) { return part1(input, 5'000'000, 4, 8); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(Generator A starts with 65
+Generator B starts with 8921)",
+                   40'000'000, 1, 1, 588);
+    Executor::run(part1, input15, 40'000'000, 1, 1);
+
+    std::println("Part 2:");
+
+    Executor::test(part2, R"(Generator A starts with 65
+Generator B starts with 8921)",
+                   309);
+    Executor::run(part2, input15);
+
     return 0;
 }

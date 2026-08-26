@@ -53,11 +53,11 @@ Immediately before the program would run an instruction a second time, the value
 Run your copy of the boot code. Immediately before any instruction is executed a second time, what value is in the accumulator?
 */
 
-int part1(const bool change = false) {
+int part1(const char* input, const bool change) {
     std::string line;
     std::vector<std::pair<std::string, int>> program;
     std::unordered_set<int> seen;
-    std::stringstream file(input8);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int value;
@@ -147,9 +147,36 @@ Fix the program so that it terminates normally by changing exactly one jmp (to n
 program terminates?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(nop +0
+acc +1
+jmp +4
+acc +3
+jmp -3
+acc -99
+acc +1
+jmp -4
+acc +6)",
+                   false, 5);
+    Executor::run(part1, input8, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(nop +0
+acc +1
+jmp +4
+acc +3
+jmp -3
+acc -99
+acc +1
+jmp -4
+acc +6)",
+                   8);
+    Executor::run(part2, input8);
+
     return 0;
 }

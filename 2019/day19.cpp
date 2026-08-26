@@ -42,9 +42,9 @@ bool resolve(VirtualMachine VM, const int i, const int j) {
     return VM.outputs.front();
 }
 
-int part1() {
+int part1(const char* input) {
     int res = 0;
-    const VirtualMachine VM(input19);
+    const VirtualMachine VM(input);
 
     for (int i = 0; i < 50; i++) {
         for (int j = 0; j < 50; j++) {
@@ -53,6 +53,7 @@ int part1() {
     }
     return res;
 }
+
 
 /*
 --- Part Two ---
@@ -107,8 +108,8 @@ What value do you get if you take that point's X coordinate, multiply it by 1000
 would be 250020.)
 */
 
-int part2() {
-    const VirtualMachine VM(input19);
+int part2(const char* input) {
+    const VirtualMachine VM(input);
 
     int x = 0;
     for (int y = 100;; y++) {
@@ -122,6 +123,11 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::run(part1, input19);
+
+    std::println("Part 2:");
+    Executor::run(part2, input19);
+
     return 0;
 }

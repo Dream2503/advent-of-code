@@ -49,13 +49,13 @@ void dfs(std::array<std::array<int, size>, size>& grid, const int i, const int j
     }
 }
 
-int part1(const bool region = false) {
+int part1(const char* input, const bool region = false) {
     std::array<std::array<int, size>, size> grid;
 
     for (int i = 0; i < size; i++) {
         int k = 0;
 
-        for (const char ch : knot_hash((input14 + ('-' + std::to_string(i))))) {
+        for (const char ch : knot_hash((input + ('-' + std::to_string(i))))) {
             int n = 0;
 
             if (ch >= '0' && ch <= '9') {
@@ -110,9 +110,18 @@ considering the whole 128x128 grid. In total, in this example, 1242 regions are 
 How many regions are present given your key string?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+
+    Executor::test(part1, "flqrgnkx", false, 8108);
+    Executor::run(part1, input14, false);
+
+    std::println("Part 2:");
+
+    Executor::test(part2, "flqrgnkx", 1242);
+    Executor::run(part2, input14);
+
     return 0;
 }

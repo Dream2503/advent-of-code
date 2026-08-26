@@ -153,50 +153,61 @@ your starting location to that room would require passing through the most doors
 
 enum class State { START = 'X', ROOM = '.', WALL = '#', V_DOOR = '|', H_DOOR = '-' };
 
-void resolve(const std::string& input, std::unordered_map<Vec2<int>, State>& graph, int& i, Vec2<int>& position) {
-    static const int size = input.length();
-    const Vec2 start = position;
+void resolve(const std::string& input, std::unordered_map<Vec2<int>, State>& graph, int& i, std::unordered_set<Vec2<int>>& positions) {
+    const std::unordered_set<Vec2<int>> start = positions;
+    std::unordered_set<Vec2<int>> ends;
 
-    while (i < size) {
+    while (i < static_cast<int>(input.length())) {
         switch (input[++i]) {
         case 'N':
-            position.y--;
-            graph[position] = State::H_DOOR;
-            position.y--;
-            graph[position] = State::ROOM;
-            break;
-
         case 'S':
-            position.y++;
-            graph[position] = State::H_DOOR;
-            position.y++;
-            graph[position] = State::ROOM;
-            break;
-
         case 'E':
-            position.x++;
-            graph[position] = State::V_DOOR;
-            position.x++;
-            graph[position] = State::ROOM;
-            break;
-
         case 'W':
-            position.x--;
-            graph[position] = State::V_DOOR;
-            position.x--;
-            graph[position] = State::ROOM;
-            break;
+            {
+                std::unordered_set<Vec2<int>> next;
+
+                for (auto position : positions) {
+                    Vec2<int> direction;
+
+                    switch (input[i]) {
+                    case 'N':
+                        direction = {0, -1};
+                        break;
+                    case 'S':
+                        direction = {0, 1};
+                        break;
+                    case 'E':
+                        direction = {1, 0};
+                        break;
+                    case 'W':
+                        direction = {-1, 0};
+                        break;
+                    }
+
+                    position += direction;
+                    graph[position] = input[i] == 'N' || input[i] == 'S' ? State::H_DOOR : State::V_DOOR;
+                    position += direction;
+                    graph[position] = State::ROOM;
+                    next.insert(position);
+                }
+
+                positions = std::move(next);
+                break;
+            }
 
         case '(':
-            resolve(input, graph, i, position);
+            resolve(input, graph, i, positions);
+            break;
+
+        case '|':
+            ends.insert(positions.begin(), positions.end());
+            positions = start;
             break;
 
         case ')':
+            ends.insert(positions.begin(), positions.end());
+            positions = std::move(ends);
             return;
-
-        case '|':
-            position = start;
-            break;
 
         default:
             break;
@@ -204,11 +215,12 @@ void resolve(const std::string& input, std::unordered_map<Vec2<int>, State>& gra
     }
 }
 
-int part1(const bool vicinity = false) {
+int part1(const char* input, const bool vicinity) {
     int i = 0;
-    Vec2<int> position = 0, min = INT32_MAX, max = INT32_MIN;
+    Vec2<int> min = INT32_MAX, max = INT32_MIN;
     std::unordered_map<Vec2<int>, State> graph;
-    resolve(input20, graph, i, position);
+    std::unordered_set<Vec2<int>> positions = {0};
+    resolve(input, graph, i, positions);
 
     for (const auto& [x, y] : graph | std::views::keys) {
         min.x = std::min(min.x, x);
@@ -257,9 +269,19 @@ Okay, so the facility is big.
 How many rooms have a shortest path from your current location that pass through at least 1000 doors?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "^WNE$", false, 3);
+    Executor::test(part1, "^ENWWW(NEEE|SSE(EE|N))$", false, 10);
+    Executor::test(part1, "^ENNWSWW(NEWS|)SSSEEN(WNSE|)EE(SWEN|)NNN$", false, 18);
+    Executor::test(part1, "^ESSWWN(E|NNENN(EESS(WNSE|)SSS|WWWSSSSE(SW|NNNE)))$", false, 23);
+    Executor::test(part1, "^WSSEESWWWNW(S|NENNEEEENN(ESSSSW(NWSW|SSEN)|WSWWN(E|WWS(E|SS))))$", false, 31);
+    Executor::run(part1, input20, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input20);
+
     return 0;
 }

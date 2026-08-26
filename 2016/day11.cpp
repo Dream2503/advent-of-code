@@ -221,14 +221,13 @@ int bfs(const State& start) {
     return -1;
 }
 
-State parse_input(const char input[]) {
+State parse_input(const char* input) {
     struct Temp {
         int generator, microchip;
     };
-
     int id = 0, floor = 0;
     std::string word, line;
-    std::stringstream s(input), file(input);
+    std::stringstream file(input);
     std::vector<Temp> temp;
     std::map<std::string, int> hash;
 
@@ -264,7 +263,7 @@ State parse_input(const char input[]) {
     return start;
 }
 
-int part1() { return bfs(parse_input(input11)); }
+int part1(const char* input) { return bfs(parse_input(input)); }
 
 /*
 --- Part Two ---
@@ -281,8 +280,8 @@ These work just like the other generators and microchips. You'll have to get the
 What is the minimum number of steps required to bring all of the objects, including these four new ones, to the fourth floor?
 */
 
-int part2() {
-    State start = parse_input(input11);
+int part2(const char* input) {
+    State start = parse_input(input);
 
     for ([[maybe_unused]] std::string_view element : {"elerium", "dilithium"}) {
         start.items.push_back({0, 0});
@@ -292,6 +291,16 @@ int part2() {
 
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(The first floor contains a hydrogen-compatible microchip and a lithium-compatible microchip.
+The second floor contains a hydrogen generator.
+The third floor contains a lithium generator.
+The fourth floor contains nothing relevant.)",
+                   11);
+    Executor::run(part1, input11);
+
+    std::println("Part 2:");
+    Executor::run(part2, input11);
+
     return 0;
 }

@@ -48,8 +48,8 @@ std::pair<std::string, std::vector<std::pair<std::string, std::string>>> parse_i
     return {initial_molecule, replacements};
 }
 
-int part1() {
-    const auto& [initial_molecule, replacements] = parse_input(input19);
+int part1(const char* input) {
+    const auto& [initial_molecule, replacements] = parse_input(input);
     std::unordered_set<std::string> seen;
 
     for (const auto& [key, value] : replacements) {
@@ -93,8 +93,8 @@ How long will it take to make the medicine? Given the available replacements and
 of steps to go from e to the medicine molecule?
 */
 
-int part2() {
-    auto [initial_molecule, replacements] = parse_input(input19, true);
+int part2(const char* input) {
+    auto [initial_molecule, replacements] = parse_input(input, true);
     int replacement_count = 0;
     bool broke = false;
 
@@ -115,6 +115,35 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(HOH
+H => HO
+H => OH
+O => HH)",
+                   4);
+    Executor::test(part1, R"(HOHOHO
+H => HO
+H => OH
+O => HH)",
+                   7);
+    Executor::run(part1, input19);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(HOH
+e => H
+e => O
+H => HO
+H => OH
+O => HH)",
+                   3);
+    Executor::test(part2, R"(HOHOHO
+e => H
+e => O
+H => HO
+H => OH
+O => HH)",
+                   6);
+    Executor::run(part2, input19);
+
     return 0;
 }

@@ -160,12 +160,12 @@ water can reach is 57.
 How many tiles can the water reach within the range of y values in your scan?
 */
 
-int part1(const bool dry = false) {
+int part1(const char* input, const bool dry) {
     enum class Tile { SAND = '.', CLAY = '#', FLOW = '|', STILL = '~' };
     Vec2 min(INT32_MAX, INT32_MAX), max(0, 0);
     std::string line;
     std::vector<Vec2<Vec2<int>>> data;
-    std::stringstream file(input17);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         char coord;
@@ -299,9 +299,34 @@ In the example above, water that won't eventually drain out is shown as ~, a tot
 How many water tiles are left after the water spring stops producing water and all remaining water not at rest has drained?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(x=495, y=2..7
+y=7, x=495..501
+x=501, y=3..7
+x=498, y=2..4
+x=506, y=1..2
+x=498, y=10..13
+x=504, y=10..13
+y=13, x=498..504)",
+                   false, 57);
+    Executor::run(part1, input17, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(x=495, y=2..7
+y=7, x=495..501
+x=501, y=3..7
+x=498, y=2..4
+x=506, y=1..2
+x=498, y=10..13
+x=504, y=10..13
+y=13, x=498..504)",
+                   29);
+    Executor::run(part2, input17);
+
     return 0;
 }

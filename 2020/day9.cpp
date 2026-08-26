@@ -55,12 +55,11 @@ The first step of attacking the weakness in the XMAS data is to find the first n
 the 25 numbers before it. What is the first number that does not have this property?
 */
 
-uint64_t part1(const bool part2 = false) {
-    static constexpr int preamble_length = 25;
-    std::array<uint64_t, preamble_length> preamble;
+uint64_t part1(const char* input, const int preamble_length, const bool part2) {
+    std::vector<uint64_t> preamble(preamble_length);
     std::string line;
     std::vector<uint64_t> values;
-    std::stringstream file(input9);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         values.push_back(std::stoll(line));
@@ -149,9 +148,58 @@ producing 62.
 What is the encryption weakness in your XMAS-encrypted list of numbers?
 */
 
-uint64_t part2() { return part1(true); }
+uint64_t part2(const char* input, const int preamble_length) { return part1(input, preamble_length, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(35
+20
+15
+25
+47
+40
+62
+55
+65
+95
+102
+117
+150
+182
+127
+219
+299
+277
+309
+576)",
+                   5, false, 127);
+    Executor::run(part1, input9, 25, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(35
+20
+15
+25
+47
+40
+62
+55
+65
+95
+102
+117
+150
+182
+127
+219
+299
+277
+309
+576)",
+                   5, 62);
+    Executor::run(part2, input9, 25);
+
     return 0;
 }

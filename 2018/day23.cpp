@@ -65,8 +65,8 @@ std::vector<Nanobot> parse_input(const char* input) {
     return nanobots;
 }
 
-int part1() {
-    const std::vector<Nanobot> nanobots = parse_input(input23);
+int part1(const char* input) {
+    const std::vector<Nanobot> nanobots = parse_input(input);
     Nanobot bot = *std::ranges::max_element(nanobots, {}, &Nanobot::range);
     return std::ranges::count_if(nanobots,
                                  [&bot](const Nanobot& nanobot) -> bool { return nanobot.position.manhattan_distance(bot.position) <= bot.range; });
@@ -121,7 +121,7 @@ int distance_to_cube(const Vec3<int>& position, const Cube& cube) {
     return difference.manhattan_distance(Vec3(0));
 }
 
-int part2() {
+int part2(const char* input) {
     auto comparator = [](const Cube& lhs, const Cube& rhs) -> bool {
         if (lhs.bots != rhs.bots) {
             return lhs.bots < rhs.bots;
@@ -131,7 +131,7 @@ int part2() {
         }
         return lhs.size > rhs.size;
     };
-    const std::vector<Nanobot> nanobots = parse_input(input23);
+    const std::vector<Nanobot> nanobots = parse_input(input);
     Vec3 min_position = INT32_MAX, max_position = INT32_MIN;
 
     for (const auto& [position, range] : nanobots) {
@@ -176,10 +176,34 @@ int part2() {
             }
         }
     }
-    return -1;
+    std::unreachable();
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(pos=<0,0,0>, r=4
+pos=<1,0,0>, r=1
+pos=<4,0,0>, r=3
+pos=<0,2,0>, r=1
+pos=<0,5,0>, r=3
+pos=<0,0,3>, r=1
+pos=<1,1,1>, r=1
+pos=<1,1,2>, r=1
+pos=<1,3,1>, r=1)",
+                   7);
+    Executor::run(part1, input23);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(pos=<10,12,12>, r=2
+pos=<12,14,12>, r=2
+pos=<16,12,12>, r=4
+pos=<14,14,14>, r=6
+pos=<50,50,50>, r=200
+pos=<10,10,10>, r=5)",
+                   36);
+    Executor::run(part2, input23);
+
     return 0;
 }

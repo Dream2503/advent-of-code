@@ -84,11 +84,11 @@ void search(const std::vector<std::vector<int>>& graph, std::unordered_set<int>&
     }
 }
 
-int part1(const bool complete = false) {
+int part1(const char* input, const bool complete) {
     int max = 0;
     std::string line;
     std::vector<std::string> map;
-    std::stringstream file(input24);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         map.push_back(line);
@@ -122,9 +122,26 @@ Of course, if you leave the cleaning robot somewhere weird, someone is bound to 
 What is the fewest number of steps required to start at 0, visit every non-0 number marked on the map at least once, and then return to 0?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(###########
+#0.1.....2#
+#.#######.#
+#4.......3#
+###########)",
+                   false, 14);
+    Executor::run(part1, input24, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(###########
+#0.1.....2#
+#.#######.#
+#4.......3#
+###########)",
+                   20);
+    Executor::run(part2, input24);
+
     return 0;
 }

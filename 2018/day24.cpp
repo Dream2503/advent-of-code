@@ -253,7 +253,7 @@ std::vector<Group> parse_input(const char* input) {
         } else if (line == "Infection:") {
             on_immune = false;
         } else if (!line.empty()) {
-            Group group;
+            Group group{};
             std::stringstream ss(line);
             ((ss >> group.units).ignore(17) >> group.hit_points).ignore(12);
 
@@ -330,8 +330,8 @@ Army simulate(std::vector<Group>& groups) {
     return std::ranges::contains(groups, Army::IMMUNE_SYSTEM, &Group::army) ? Army::IMMUNE_SYSTEM : Army::INFECTION;
 }
 
-int part1() {
-    std::vector<Group> groups = parse_input(input24);
+int part1(const char* input) {
+    std::vector<Group> groups = parse_input(input);
     simulate(groups);
     return std::transform_reduce(groups.begin(), groups.end(), 0, std::plus(), [](const Group& group) -> int { return group.units; });
 }
@@ -474,8 +474,8 @@ boost that would allow the immune system to win.
 How many units does the immune system have left after getting the smallest boost it needs to win?
 */
 
-int part2() {
-    const std::vector<Group> groups = parse_input(input24);
+int part2(const char* input) {
+    const std::vector<Group> groups = parse_input(input);
     int buff = 1;
     std::vector<Group> temp;
     temp.reserve(groups.size());
@@ -496,6 +496,29 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(Immune System:
+17 units each with 5390 hit points (weak to radiation, bludgeoning) with an attack that does 4507 fire damage at initiative 2
+989 units each with 1274 hit points (immune to fire; weak to bludgeoning, slashing) with an attack that does 25 slashing damage at initiative 3
+
+Infection:
+801 units each with 4706 hit points (weak to radiation) with an attack that does 116 bludgeoning damage at initiative 1
+4485 units each with 2961 hit points (immune to radiation; weak to fire, cold) with an attack that does 12 slashing damage at initiative 4)",
+                   5216);
+    Executor::run(part1, input24);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(Immune System:
+17 units each with 5390 hit points (weak to radiation, bludgeoning) with an attack that does 4507 fire damage at initiative 2
+989 units each with 1274 hit points (immune to fire; weak to bludgeoning, slashing) with an attack that does 25 slashing damage at initiative 3
+
+Infection:
+801 units each with 4706 hit points (weak to radiation) with an attack that does 116 bludgeoning damage at initiative 1
+4485 units each with 2961 hit points (immune to radiation; weak to fire, cold) with an attack that does 12 slashing damage at initiative 4)",
+                   51);
+    Executor::run(part2, input24);
+
     return 0;
 }

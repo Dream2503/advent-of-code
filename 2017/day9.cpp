@@ -52,12 +52,12 @@ immediately contains it. (The outermost group gets a score of 1.)
 What is the total score for all groups in your input?
 */
 
-int part1(const bool garbage = false) {
+int part1(const char* input, const bool garbage) {
     bool on_garbage = false;
     int i = 0, sum = 0, current = 0, garbage_count = 0;
 
-    while (input9[i]) {
-        switch (input9[i++]) {
+    while (input[i]) {
+        switch (input[i++]) {
         case '!':
             i++;
             break;
@@ -104,9 +104,29 @@ canceled characters or the ! doing the canceling.
 How many non-canceled characters are within the garbage in your puzzle input?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "{}", false, 1);
+    Executor::test(part1, "{{{}}}", false, 6);
+    Executor::test(part1, "{{},{}}", false, 5);
+    Executor::test(part1, "{{{},{},{{}}}}", false, 16);
+    Executor::test(part1, "{<a>,<a>,<a>,<a>}", false, 1);
+    Executor::test(part1, "{{<ab>},{<ab>},{<ab>},{<ab>}}", false, 9);
+    Executor::test(part1, "{{<!!>},{<!!>},{<!!>},{<!!>}}", false, 9);
+    Executor::test(part1, "{{<a!>},{<a!>},{<a!>},{<ab>}}", false, 3);
+    Executor::run(part1, input9, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, "<>", 0);
+    Executor::test(part2, "<random characters>", 17);
+    Executor::test(part2, "<<<<>", 3);
+    Executor::test(part2, "<{!>}>", 2);
+    Executor::test(part2, "<!!>", 0);
+    Executor::test(part2, "<!!!>>", 0);
+    Executor::test(part2, "<{o\"i!a,<{i<a>", 10);
+    Executor::run(part2, input9);
+
     return 0;
 }

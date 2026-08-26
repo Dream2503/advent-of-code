@@ -60,11 +60,11 @@ For grid serial number 42, the largest 3x3 square's top-left is 21,61 (with a to
 What is the X,Y coordinate of the top-left fuel cell of the 3x3 square with the largest total power?
 */
 
-Vec2<int> part1(const int range = 3) {
+Vec3<int> part1(const char* input, const int range) {
     constexpr int grid_size = 300;
-    const int serial_number = std::atoi(input11);
-    int max_power = 0, max_size = 0;
-    Vec2 max = 0;
+    const int serial_number = std::atoi(input);
+    int max_power = 0;
+    Vec3 max = 0;
     std::array<std::array<int, grid_size>, grid_size> grid, summed_power;
 
     for (int x = 0; x < grid_size; x++) {
@@ -101,19 +101,13 @@ Vec2<int> part1(const int range = 3) {
                     }
                     if (max_power < power) {
                         max_power = power;
-                        max = {i + 1, j + 1};
-                        max_size = size;
+                        max = {i + 1, j + 1, size};
                     }
                 }
             }
         }
     }
-
-    if (range == 3) {
-        return max;
-    }
-    std::print("{},", max);
-    return max_size;
+    return max;
 }
 
 /*
@@ -132,9 +126,18 @@ For example:
 What is the X,Y,size identifier of the square with the largest total power?
 */
 
-int part2() { return part1(300).x; }
+Vec3<int> part2(const char* input) { return part1(input, 300); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "18", 3, Vec3{33, 45, 3});
+    Executor::test(part1, "42", 3, Vec3{21, 61, 3});
+    Executor::run(part1, input11, 3);
+
+    std::println("Part 2:");
+    Executor::test(part2, "18", Vec3{90, 269, 16});
+    Executor::test(part2, "42", Vec3{232, 251, 12});
+    Executor::run(part2, input11);
+
     return 0;
 }

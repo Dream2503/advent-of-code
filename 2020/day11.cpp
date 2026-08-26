@@ -92,12 +92,12 @@ stop moving around, you count 37 occupied seats.
 Simulate your seating area by applying the seating rules repeatedly until no seats change state. How many seats end up occupied?
 */
 
-int part1(const bool recurse = false) {
+int part1(const char* input, const bool recurse) {
     enum class Seat { FLOOR = '.', EMPTY = 'L', OCCUPIED = '#' };
     std::vector<std::vector<Seat>> prev, current;
     prev.resize(1);
 
-    for (const char ch : input11) {
+    for (const char ch : std::string_view(input)) {
         if (ch == '\n') {
             prev.push_back(std::vector<Seat>());
         } else {
@@ -261,9 +261,38 @@ Again, at this point, people stop shifting around and the seating area reaches e
 Given the new visibility method and the rule change for occupied seats becoming empty, once equilibrium is reached, how many seats end up occupied?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(L.LL.LL.LL
+LLLLLLL.LL
+L.L.L..L..
+LLLL.LL.LL
+L.LL.LL.LL
+L.LLLLL.LL
+..L.L.....
+LLLLLLLLLL
+L.LLLLLL.L
+L.LLLLL.LL)",
+                   false, 37);
+    Executor::run(part1, input11, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(L.LL.LL.LL
+LLLLLLL.LL
+L.L.L..L..
+LLLL.LL.LL
+L.LL.LL.LL
+L.LLLLL.LL
+..L.L.....
+LLLLLLLLLL
+L.LLLLLL.L
+L.LLLLL.LL)",
+                   26);
+    Executor::run(part2, input11);
+
     return 0;
 }

@@ -33,13 +33,13 @@ list produces 5: they all appear once each except sbzzf, which appears twice.
 Determine which ingredients cannot possibly contain any of the allergens in your list. How many times do any of those ingredients appear?
 */
 
-std::string part1(const bool list = false) {
+std::string part1(const char* input, const bool list) {
     bool changed = true;
     std::string line;
     std::unordered_map<std::string, std::vector<std::string>> res;
     std::unordered_map<std::string, int> count;
     std::unordered_set<std::string> dangerous;
-    std::stringstream file(input21);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         bool on_ingredient = true;
@@ -111,9 +111,21 @@ should not be any spaces in your canonical dangerous ingredient list.) In the ab
 Time to stock your raft with supplies. What is your canonical dangerous ingredient list?
 */
 
-std::string part2() { return part1(true); }
+std::string part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    constexpr const char* example = R"(mxmxvkd kfcds sqjhc nhms (contains dairy, fish)
+trh fvjkl sbzzf mxmxvkd (contains dairy)
+sqjhc fvjkl (contains soy)
+sqjhc mxmxvkd sbzzf (contains fish))";
+
+    std::println("Part 1:");
+    Executor::test(part1, example, false, "5");
+    Executor::run(part1, input21, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, example, "mxmxvkd,sqjhc,fvjkl");
+    Executor::run(part2, input21);
+
     return 0;
 }

@@ -54,10 +54,10 @@ Here are some example programs:
 Try every combination of phase settings on the amplifiers. What is the highest signal that can be sent to the thrusters?
 */
 
-int64_t part1() {
+int64_t part1(const char* input) {
     int64_t max = 0;
     std::array phases = {0, 1, 2, 3, 4};
-    const VirtualMachine VM(input7);
+    const VirtualMachine VM(input);
 
     do {
         int64_t output = 0;
@@ -117,13 +117,13 @@ Here are some example programs:
 Try every combination of the new phase settings on the amplifier feedback loop. What is the highest signal that can be sent to the thrusters?
 */
 
-int64_t part2() {
+int64_t part2(const char* input) {
     int64_t max = 0;
     std::array phases = {5, 6, 7, 8, 9};
-    const VirtualMachine VM(input7);
-    std::vector amplifiers(5, VM);
+    const VirtualMachine VM(input);
 
     do {
+        std::vector amplifiers(5, VM);
         int64_t final_output = 0;
 
         for (int i = 0; i < 5; i++) {
@@ -144,12 +144,37 @@ int64_t part2() {
                 }
             }
         }
+
         max = std::max(max, final_output);
     } while (std::ranges::next_permutation(phases).found);
+
     return max;
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "3,15,3,16,1002,16,10,16,1,16,15,15,4,15,99,0,0", 43210);
+    Executor::test(part1,
+                   "3,23,3,24,1002,24,10,24,1002,23,-1,23,"
+                   "101,5,23,23,1,24,23,23,4,23,99,0,0",
+                   54321);
+    Executor::test(part1,
+                   "3,31,3,32,1002,32,10,32,1001,31,-2,31,1007,31,0,33,"
+                   "1002,33,7,33,1,33,31,31,1,32,31,31,4,31,99,0,0,0",
+                   65210);
+    Executor::run(part1, input7);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   "3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,"
+                   "27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5",
+                   139629729);
+    Executor::test(part2,
+                   "3,52,1001,52,-5,52,3,53,1,52,56,54,1007,54,5,55,1005,55,26,1001,54,"
+                   "-5,54,1105,1,12,1,53,54,53,1008,54,0,55,1001,55,1,55,2,53,55,53,4,"
+                   "53,1001,56,-1,56,1005,56,6,99,0,0,0,0,10",
+                   18216);
+    Executor::run(part2, input7);
+
     return 0;
 }

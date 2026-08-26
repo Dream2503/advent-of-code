@@ -56,10 +56,10 @@ void search(const std::unordered_map<std::string, std::unordered_map<std::string
     }
 }
 
-int part1(const bool add_me = false) {
+int part1(const char* input, const bool add_me) {
     std::string line;
     std::unordered_map<std::string, std::unordered_map<std::string, int>> graph;
-    std::stringstream file(input13);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int happiness;
@@ -96,9 +96,40 @@ So, add yourself to the list, and give all happiness relationships that involve 
 What is the total change in happiness for the optimal seating arrangement that actually includes yourself?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(Alice would gain 54 happiness units by sitting next to Bob.
+Alice would lose 79 happiness units by sitting next to Carol.
+Alice would lose 2 happiness units by sitting next to David.
+Bob would gain 83 happiness units by sitting next to Alice.
+Bob would lose 7 happiness units by sitting next to Carol.
+Bob would lose 63 happiness units by sitting next to David.
+Carol would lose 62 happiness units by sitting next to Alice.
+Carol would gain 60 happiness units by sitting next to Bob.
+Carol would gain 55 happiness units by sitting next to David.
+David would gain 46 happiness units by sitting next to Alice.
+David would lose 7 happiness units by sitting next to Bob.
+David would gain 41 happiness units by sitting next to Carol.)",
+                   false, 330);
+    Executor::run(part1, input13, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(Alice would gain 54 happiness units by sitting next to Bob.
+Alice would lose 79 happiness units by sitting next to Carol.
+Alice would lose 2 happiness units by sitting next to David.
+Bob would gain 83 happiness units by sitting next to Alice.
+Bob would lose 7 happiness units by sitting next to Carol.
+Bob would lose 63 happiness units by sitting next to David.
+Carol would lose 62 happiness units by sitting next to Alice.
+Carol would gain 60 happiness units by sitting next to Bob.
+Carol would gain 55 happiness units by sitting next to David.
+David would gain 46 happiness units by sitting next to Alice.
+David would lose 7 happiness units by sitting next to Bob.
+David would gain 41 happiness units by sitting next to Carol.)",
+                   286);
+    Executor::run(part2, input13);
+
     return 0;
 }

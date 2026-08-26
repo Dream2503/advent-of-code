@@ -18,11 +18,11 @@ their sector IDs is 1514.
 What is the sum of the sector IDs of the real rooms?
 */
 
-int part1() {
+int part1(const char* input) {
     int res = 0;
     std::string line;
     std::array<std::pair<char, int>, 26> hash = {};
-    std::stringstream file(input4);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         bool on_checksum = false, valid = true;
@@ -76,10 +76,10 @@ For example, the real name for qzmt-zixmtkozy-ivhz-343 is very encrypted name.
 What is the sector ID of the room where North Pole objects are stored?
 */
 
-int part2() {
+int part2(const char* input) {
     const std::string target = "northpole object storage ";
     std::string line;
-    std::stringstream file(input4);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         bool valid = true;
@@ -113,6 +113,16 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(aaaaa-bbb-z-y-x-123[abxyz]
+a-b-c-d-e-f-g-h-987[abcde]
+not-a-real-room-404[oarel]
+totally-real-room-200[decoy])",
+                   1514);
+    Executor::run(part1, input4);
+
+    std::println("Part 2:");
+    Executor::run(part2, input4);
+
     return 0;
 }

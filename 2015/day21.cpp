@@ -82,9 +82,9 @@ bool simulate_battle(Character player, Character boss) {
     return false;
 }
 
-int part1(const std::function<int(int, int)>& func = [](const int x, const int y) { return std::min(x, y); }, const bool lose = false) {
+int part1(const char* input, const std::function<int(int, int)>& func, const bool lose = false) {
     int hp, damage, armour, cost = lose ? INT32_MIN : INT32_MAX;
-    std::sscanf(input21, "Hit Points: %d\nDamage: %d\nArmor: %d", &hp, &damage, &armour);
+    std::sscanf(input, "Hit Points: %d\nDamage: %d\nArmor: %d", &hp, &damage, &armour);
     const Character boss = {hp, damage, armour};
 
     for (const Item& weapon : weapons) {
@@ -112,11 +112,21 @@ has one of each item.
 What is the most amount of gold you can spend and still lose the fight?
 */
 
-int part2() {
-    return part1([](const int x, const int y) -> int { return std::max(x, y); }, true);
+int part2(const char* input) {
+    return part1(input, [](const int x, const int y) -> int { return std::max(x, y); }, true);
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(
+        part1, R"(Hit Points: 12
+Damage: 7
+Armor: 2)",
+        [](const int x, const int y) { return std::min(x, y); }, false, 8);
+    Executor::run(part1, input21, [](const int x, const int y) { return std::min(x, y); }, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input21);
+
     return 0;
 }

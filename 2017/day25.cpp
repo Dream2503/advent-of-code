@@ -75,12 +75,12 @@ struct Instruction {
     bool lhs_write, rhs_write, lhs_move, rhs_move;
 };
 
-int part1() {
+int part1(const char* input) {
     char start;
     int iterations;
     std::string information, line;
     std::array<Instruction, 6> instructions = {};
-    std::stringstream file(input25);
+    std::stringstream file(input);
 
     std::getline(file, line);
     information += line + '\n';
@@ -154,9 +154,33 @@ You must deposit 49 stars to increase your priority to the required level.
 The garbage collector winks at you, then continues sweeping.
 */
 
-int part2() { return 0; }
-
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(Begin in state A.
+Perform a diagnostic checksum after 6 steps.
+
+In state A:
+  If the current value is 0:
+    - Write the value 1.
+    - Move one slot to the right.
+    - Continue with state B.
+  If the current value is 1:
+    - Write the value 0.
+    - Move one slot to the left.
+    - Continue with state B.
+
+In state B:
+  If the current value is 0:
+    - Write the value 1.
+    - Move one slot to the left.
+    - Continue with state A.
+  If the current value is 1:
+    - Write the value 1.
+    - Move one slot to the right.
+    - Continue with state A.)",
+                   3);
+    Executor::run(part1, input25);
+
     return 0;
 }

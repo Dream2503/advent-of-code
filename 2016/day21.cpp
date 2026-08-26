@@ -42,10 +42,10 @@ void apply_rotate(std::string& password, const char ch) {
     std::ranges::rotate(password, password.end() - rotate);
 }
 
-std::string part1(std::string password = "abcdefgh", const bool unscramble = false) {
+std::string part1(const char* input, std::string password, const bool unscramble) {
     std::string instruction;
     std::vector<std::string> lines;
-    std::stringstream file(input21);
+    std::stringstream file(input);
 
     while (std::getline(file, instruction)) {
         lines.push_back(instruction);
@@ -126,9 +126,23 @@ of the existing passwords by reversing the scrambling process.
 What is the un-scrambled version of the scrambled password fbgdceah?
 */
 
-std::string part2() { return part1("fbgdceah", true); }
+std::string part2(const char* input) { return part1(input, "fbgdceah", true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(swap position 4 with position 0
+swap letter d with letter b
+reverse positions 0 through 4
+rotate left 1 step
+move position 1 to position 4
+move position 3 to position 0
+rotate based on position of letter b
+rotate based on position of letter d)",
+                   "abcde", false, "decab");
+    Executor::run(part1, input21, "abcdefgh", false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input21);
+
     return 0;
 }

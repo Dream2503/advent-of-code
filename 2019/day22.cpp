@@ -147,15 +147,14 @@ in the position matching their number.)
 After shuffling your factory order deck of 10007 cards, what is the position of card 2019?
 */
 
-int part1() {
-    static constexpr int DECK_SIZE = 10007;
+int part1(const char* input, const int deck_size, const int target) {
     int value;
     std::string line;
-    std::vector<int> final_deck(DECK_SIZE);
+    std::vector<int> final_deck(deck_size);
     std::deque<int> deck;
-    std::stringstream file(input22);
+    std::stringstream file(input);
 
-    for (int i = 0; i < DECK_SIZE; i++) {
+    for (int i = 0; i < deck_size; i++) {
         deck.push_back(i);
     }
     while (std::getline(file, line)) {
@@ -163,25 +162,25 @@ int part1() {
             std::ranges::reverse(deck);
         } else if (line.starts_with("cut")) {
             std::sscanf(line.c_str(), "cut %d", &value);
-            value %= DECK_SIZE;
+            value %= deck_size;
 
             if (value < 0) {
-                value += DECK_SIZE;
+                value += deck_size;
             }
             std::ranges::rotate(deck, deck.begin() + value);
         } else if (line.starts_with("deal with increment")) {
             int idx = 0;
             std::sscanf(line.c_str(), "deal with increment %d", &value);
 
-            for (int i = 0; i < DECK_SIZE; i++) {
+            for (int i = 0; i < deck_size; i++) {
                 final_deck[idx] = deck.front();
                 deck.pop_front();
-                idx = (idx + value) % DECK_SIZE;
+                idx = (idx + value) % deck_size;
             }
             deck = std::deque(final_deck.begin(), final_deck.end());
         }
     }
-    return std::ranges::find(deck, 2019) - deck.begin();
+    return std::ranges::find(deck, target) - deck.begin();
 }
 
 
@@ -251,7 +250,7 @@ All inverses are computed modulo N (N is prime).
 ============================================================================
 */
 
-int64_t part2() {
+int64_t part2(const char* input) {
     static constexpr int64_t DECK_SIZE = 119315717514047, ITERATIONS = 101741582076661, INDEX = 2020;
     auto modular_multiplication = [](const int64_t lhs, const int64_t rhs) -> int64_t { return static_cast<int128_t>(lhs) * rhs % DECK_SIZE; };
     auto modular_exponentiation = [modular_multiplication](int64_t base, int64_t exp) -> int64_t {
@@ -271,7 +270,7 @@ int64_t part2() {
     };
     int64_t a = 1, b = 0, k;
     std::string line;
-    std::stringstream program(input22);
+    std::stringstream program(input);
 
     while (std::getline(program, line)) {
         if (line == "deal into new stack") {
@@ -293,6 +292,38 @@ int64_t part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(deal with increment 7
+deal into new stack
+deal into new stack)",
+                   10, 0, 0);
+    Executor::test(part1,
+                   R"(cut 6
+deal with increment 7
+deal into new stack)",
+                   10, 0, 1);
+    Executor::test(part1,
+                   R"(deal with increment 7
+deal with increment 9
+cut -2)",
+                   10, 0, 2);
+    Executor::test(part1,
+                   R"(deal into new stack
+cut -2
+deal with increment 7
+cut 8
+cut -4
+deal with increment 7
+cut 3
+deal with increment 9
+deal with increment 3
+cut -1)",
+                   10, 2, 1);
+    Executor::run(part1, input22, 10007, 2019);
+
+    std::println("Part 2:");
+    Executor::run(part2, input22);
+
     return 0;
 }

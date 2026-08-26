@@ -66,12 +66,12 @@ In detail, when running this program, the following events occur:
 What value is left in register 0 when the background process halts?
 */
 
-int part1(const int start = 0) {
+int part1(const char* input, const int start) {
     int ip;
     std::array<int, 6> registers = {start};
     std::string line;
     std::vector<std::tuple<std::string, int, int, int>> code;
-    std::stringstream file(input19);
+    std::stringstream file(input);
     std::getline(file, line);
     std::sscanf(line.c_str(), "#ip %d", &ip);
 
@@ -83,8 +83,11 @@ int part1(const int start = 0) {
     }
     const int size = code.size();
 
-    while (registers[ip] < size) {
-        const auto& [op, lhs, rhs, res] = code[registers[ip]];
+    int pointer = 0;
+
+    while (pointer < size) {
+        registers[ip] = pointer;
+        const auto& [op, lhs, rhs, res] = code[pointer];
 
         if (op == "addr") {
             registers[res] = registers[lhs] + registers[rhs];
@@ -119,7 +122,7 @@ int part1(const int start = 0) {
         } else if (op == "eqrr") {
             registers[res] = registers[lhs] == registers[rhs];
         }
-        registers[ip]++;
+        pointer = registers[ip] + 1;
     }
     return registers[0];
 }
@@ -149,6 +152,21 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(#ip 0
+seti 5 0 1
+seti 6 0 2
+addi 0 1 0
+addr 1 2 3
+setr 1 0 0
+seti 8 0 4
+seti 9 0 5)",
+                   0, 6);
+    Executor::run(part1, input19, 0);
+
+    std::println("Part 2:");
+    Executor::run(part2);
+
     return 0;
 }

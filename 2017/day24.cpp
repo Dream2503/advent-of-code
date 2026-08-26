@@ -68,9 +68,9 @@ void search(const std::unordered_map<int, std::vector<int>>& graph, std::unorder
     }
 }
 
-int part1(const bool depth = false) {
+int part1(const char* input, const bool depth) {
     std::string line;
-    std::stringstream file(input24);
+    std::stringstream file(input);
     std::unordered_map<int, std::vector<int>> graph;
 
     while (std::getline(file, line)) {
@@ -100,9 +100,34 @@ Of them, the one which uses the 3/5 component is stronger; its strength is 0+2 +
 What is the strength of the longest bridge you can make? If you can make multiple bridges of the longest length, pick the strongest one.
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(0/2
+2/2
+2/3
+3/4
+3/5
+0/1
+10/1
+9/10)",
+                   false, 31);
+    Executor::run(part1, input24, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(0/2
+2/2
+2/3
+3/4
+3/5
+0/1
+10/1
+9/10)",
+                   19);
+    Executor::run(part2, input24);
+
     return 0;
 }

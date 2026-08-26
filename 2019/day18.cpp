@@ -98,13 +98,13 @@ Here are a few more examples:
 How many steps is the shortest path that collects all of the keys?
 */
 
-int part1() {
+int part1(const char* input) {
     int i = 0;
     Vec2<int> source;
     std::string line;
     std::vector<std::string> grid;
 
-    std::stringstream file(input18);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         if (line.contains('@')) {
@@ -315,8 +315,9 @@ struct State {
     }
 };
 
-int part2() {
+int part2(const char* input) {
     int k = 0;
+    int robots = 0;
     Vec2 center = 0;
     std::bitset<26> keys;
     std::string line;
@@ -324,9 +325,10 @@ int part2() {
     std::map<char, std::vector<Target>> graph;
     std::priority_queue<std::pair<int, State>, std::vector<std::pair<int, State>>, std::greater<>> priority_queue;
     std::map<State, int> min_distance;
-    std::stringstream file(input18);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
+        robots += std::count(line.begin(), line.end(), '@');
         if (line.contains('@')) {
             center = {k, static_cast<int>(line.find('@'))};
         }
@@ -334,15 +336,28 @@ int part2() {
         k++;
     }
     const int row_size = grid.size(), col_size = grid[0].size();
-    grid[center.x - 1][center.y - 1] = '0';
-    grid[center.x - 1][center.y] = '#';
-    grid[center.x - 1][center.y + 1] = '1';
-    grid[center.x][center.y - 1] = '#';
-    grid[center.x][center.y] = '#';
-    grid[center.x][center.y + 1] = '#';
-    grid[center.x + 1][center.y - 1] = '2';
-    grid[center.x + 1][center.y] = '#';
-    grid[center.x + 1][center.y + 1] = '3';
+
+    if (robots == 1) {
+        grid[center.x - 1][center.y - 1] = '0';
+        grid[center.x - 1][center.y] = '#';
+        grid[center.x - 1][center.y + 1] = '1';
+        grid[center.x][center.y - 1] = '#';
+        grid[center.x][center.y] = '#';
+        grid[center.x][center.y + 1] = '#';
+        grid[center.x + 1][center.y - 1] = '2';
+        grid[center.x + 1][center.y] = '#';
+        grid[center.x + 1][center.y + 1] = '3';
+    } else {
+        char robot = '0';
+
+        for (std::string& row : grid) {
+            for (char& cell : row) {
+                if (cell == '@') {
+                    cell = robot++;
+                }
+            }
+        }
+    }
 
     for (int i = 0; i < row_size; i++) {
         for (int j = 0; j < col_size; j++) {
@@ -426,6 +441,88 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(#########
+#b.A.@.a#
+#########)",
+                   8);
+    Executor::test(part1,
+                   R"(########################
+#f.D.E.e.C.b.A.@.a.B.c.#
+######################.#
+#d.....................#
+########################)",
+                   86);
+    Executor::test(part1,
+                   R"(########################
+#...............b.C.D.f#
+#.######################
+#.....@.a.B.c.d.A.e.F.g#
+########################)",
+                   132);
+    Executor::test(part1,
+                   R"(#################
+#i.G..c...e..H.p#
+########.########
+#j.A..b...f..D.o#
+########@########
+#k.E..a...g..B.n#
+########.########
+#l.F..d...h..C.m#
+#################)",
+                   136);
+    Executor::test(part1,
+                   R"(########################
+#@..............ac.GI.b#
+###d#e#f################
+###A#B#C################
+###g#h#i################
+########################)",
+                   81);
+    Executor::run(part1, input18);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(#######
+#a.#Cd#
+##...##
+##.@.##
+##...##
+#cB#Ab#
+#######)",
+                   8);
+    Executor::test(part2,
+                   R"(###############
+#d.ABC.#.....a#
+######@#@######
+###############
+######@#@######
+#b.....#.....c#
+###############)",
+                   24);
+    Executor::test(part2,
+
+                   R"(#############
+#DcBa.#.GhKl#
+#.###@#@#I###
+#e#d#####j#k#
+###C#@#@###J#
+#fEbA.#.FgHi#
+#############)",
+                   32);
+    Executor::test(part2,
+                   R"(#############
+#g#f.D#..h#l#
+#F###e#E###.#
+#dCba@#@BcIJ#
+#############
+#nK.L@#@G...#
+#M###N#H###.#
+#o#m..#i#jk.#
+#############)",
+                   72);
+    Executor::run(part2, input18);
+
     return 0;
 }

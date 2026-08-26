@@ -60,11 +60,11 @@ In this example, after 18 days, there are a total of 26 fish. After 80 days, the
 Find a way to simulate lanternfish. How many lanternfish would there be after 80 days?
 */
 
-uint64_t part1(const int iteration = 80) {
+uint64_t part1(const char* input, const int iteration) {
     std::array<uint64_t, 9> fishes;
     fishes.fill(0);
 
-    for (const std::ranges::subrange fish : input6 | std::views::split(',')) {
+    for (const std::ranges::subrange fish : std::string_view(input) | std::views::split(',')) {
         fishes[*fish.begin() - '0']++;
     }
     for (int i = 0; i < iteration; i++) {
@@ -84,9 +84,16 @@ After 256 days in the example above, there would be a total of 26984457539 lante
 How many lanternfish would there be after 256 days?
 */
 
-uint64_t part2() { return part1(256); }
+uint64_t part2(const char* input) { return part1(input, 256); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(3,4,3,1,2)", 80, 5934);
+    Executor::run(part1, input6, 80);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(3,4,3,1,2)", 26984457539);
+    Executor::run(part2, input6);
+
     return 0;
 }

@@ -31,16 +31,17 @@ To make sure the image wasn't corrupted during transmission, the Elves would lik
 layer, what is the number of 1 digits multiplied by the number of 2 digits?
 */
 
-std::string part1(const bool print = false) {
+std::string part1(const char* input, const bool print) {
     static constexpr Vec2 dimension = {6, 25};
-    static constexpr int image_size = dimension.x * dimension.y, layer_size = sizeof input8 / image_size;
+    static constexpr int image_size = dimension.x * dimension.y;
+    const int layer_size = std::strlen(input) / image_size;
     int i = 0;
     std::vector image(layer_size, std::vector(dimension.x, std::vector<uint8_t>(dimension.y)));
 
     for (int j = 0; j < layer_size; j++) {
         for (int k = 0; k < dimension.x; k++) {
             for (int l = 0; l < dimension.y; l++) {
-                image[j][k][l] = input8[i++] - '0';
+                image[j][k][l] = input[i++] - '0';
             }
         }
     }
@@ -100,9 +101,14 @@ So, the final image looks like this:
 What message is produced after decoding your image?
 */
 
-std::string part2() { return part1(true); }
+std::string part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::run(part1, input8, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input8);
+
     return 0;
 }

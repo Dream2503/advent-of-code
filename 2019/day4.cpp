@@ -19,9 +19,9 @@ Other than the range rule, the following are true:
 How many different passwords within the range given in your puzzle input meet these criteria?
 */
 
-int part1(const bool updated = false) {
+int part1(const char* input, const bool updated) {
     int start, end, res = 0;
-    std::sscanf(input4, "%d-%d", &start, &end);
+    std::sscanf(input, "%d-%d", &start, &end);
 
     for (int i = start; i <= end; ++i) {
         std::string str = std::to_string(i);
@@ -65,9 +65,20 @@ Given this additional criterion, but still ignoring the range rule, the followin
 How many different passwords within the range given in your puzzle input meet all of the criteria?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "111111-111111", false, 1);
+    Executor::test(part1, "223450-223450", false, 0);
+    Executor::test(part1, "123789-123789", false, 0);
+    Executor::run(part1, input4, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, "112233-112233", 1);
+    Executor::test(part2, "123444-123444", 0);
+    Executor::test(part2, "111122-111122", 1);
+    Executor::run(part2, input4);
+
     return 0;
 }

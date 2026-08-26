@@ -162,15 +162,13 @@ resource value after ten minutes: 37 * 31 = 1147.
 What will the total resource value of the lumber collection area be after 10 minutes?
 */
 
-constexpr int size = 50;
-
-int part1(const int iteration = 10) {
+int part1(const char* input, const int size, const int iteration) {
     int i = 0, cycle_start = -1, cycle_len = -1;
     std::string line;
-    std::array<std::string, size> graph;
+    std::vector<std::string> graph(size);
     std::vector<int> values;
     std::unordered_map<std::string, int> seen;
-    std::stringstream file(input18);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         graph[i++] = line;
@@ -183,7 +181,7 @@ int part1(const int iteration = 10) {
             cycle_len = k - cycle_start;
             break;
         }
-        std::array<std::string, size> copy = graph;
+        std::vector<std::string> copy = graph;
         seen[key] = k;
 
         for (i = 0; i < size; i++) {
@@ -263,9 +261,26 @@ int part1(const int iteration = 10) {
 --- Part Two ---
 */
 
-int part2() { return part1(1'000'000'000); }
+int part2(const char* input) { return part1(input, 50, 1'000'000'000); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(.#.#...|#.
+.....#|##|
+.|..|...#.
+..|#.....#
+#.#|||#|#|
+...#.||...
+.|....|...
+||...#|.#|
+|.||||..|.
+...#.|..|.)",
+                   10, 10, 1147);
+    Executor::run(part1, input18, 50, 10);
+
+    std::println("Part 2:");
+    Executor::run(part2, input18);
+
     return 0;
 }

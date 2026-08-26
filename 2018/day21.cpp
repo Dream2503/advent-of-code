@@ -32,7 +32,7 @@ What is the lowest non-negative integer value for register 0 that causes the pro
 same instruction multiple times counts as multiple instructions executed.)
 */
 
-int part1(const bool upper_bound = false) {
+int part1(const char* input, const bool upper_bound) {
     std::unordered_set<uint64_t> seen;
     uint64_t last = 0, r5 = 0;
 
@@ -66,9 +66,14 @@ What is the lowest non-negative integer value for register 0 that causes the pro
 actually halt; running forever does not count as halting.)
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::run(part1, input21, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input21);
+
     return 0;
 }

@@ -4,17 +4,22 @@ if [[ $# -eq 0 ]]; then
     echo "Usage: $0 [-debug] <year1> [year2] [year3] ..."
     exit 1
 fi
+
+exec > >(tee -a stats.txt) 2>&1
+
 optimization=false
 
 if [[ $1 == "-optimize" ]]; then
     optimization=true
     shift
 fi
+
 if [[ $# -eq 0 ]]; then
     echo "Error: No year directories provided."
     echo "Usage: $0 [-debug] <year1> [year2] [year3] ..."
     exit 1
 fi
+
 executables=()
 total_compile_time=0
 total_run_time=0
@@ -33,6 +38,7 @@ for year in "$@"; do
             else
                 g++ -std=c++23 -include utils.hpp "$file" -lcrypto -o "$exe"
             fi
+
             if [[ $? -eq 0 ]]; then
                 executables+=("$exe")
             else
@@ -41,9 +47,12 @@ for year in "$@"; do
         fi
     done
 done
+
 echo "---------------------------------"
+
 compile_end=$(date +%s.%N)
 total_compile_time=$(echo "$compile_end - $compile_start" | bc)
+
 run_start=$(date +%s.%N)
 
 for exe in "${executables[@]}"; do
@@ -51,8 +60,10 @@ for exe in "${executables[@]}"; do
     ./"$exe"
     echo "---------------------------------"
 done
+
 run_end=$(date +%s.%N)
 total_run_time=$(echo "$run_end - $run_start" | bc)
+
 echo "Total compilation time: $total_compile_time seconds"
 echo "Total execution time:   $total_run_time seconds"
 

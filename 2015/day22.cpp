@@ -193,10 +193,10 @@ void simulate(State state, const bool player_turn, int& best, const bool hard) {
     }
 }
 
-int part1(const bool hard = false) {
+int part1(const char* input, const int player_hp, const int player_mana, const bool hard) {
     int hp, damage, best = INT32_MAX;
-    std::sscanf(input22, "Hit Points: %d\nDamage: %d", &hp, &damage);
-    simulate({50, 500, hp, damage, 0, 0, 0, 0}, true, best, hard);
+    std::sscanf(input, "Hit Points: %d\nDamage: %d", &hp, &damage);
+    simulate({player_hp, player_mana, hp, damage, 0, 0, 0, 0}, true, best, hard);
     return best;
 }
 
@@ -209,9 +209,16 @@ At the start of each player turn (before any other effects apply), you lose 1 hi
 With the same starting stats for you and the boss, what is the least amount of mana you can spend and still win the fight?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, 50, 500, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "Hit Points: 13\nDamage: 8", 10, 250, false, 226);
+    Executor::test(part1, "Hit Points: 14\nDamage: 8", 10, 250, false, 641);
+    Executor::run(part1, input22, 50, 500, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input22);
+
     return 0;
 }

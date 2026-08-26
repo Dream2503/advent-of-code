@@ -103,11 +103,11 @@ int resolve_weight(const Tower& tower, const Weight& weights, const std::string&
     return std::reduce(disc_weights.begin(), disc_weights.end(), weights.at(disc));
 }
 
-std::string part1(const bool inbalance = false) {
+std::string part1(const char* input, const bool unbalance) {
     std::string line;
     Tower tower;
     Weight weights;
-    std::stringstream file(input7);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int weight;
@@ -133,7 +133,7 @@ std::string part1(const bool inbalance = false) {
     const std::string& root = std::ranges::max_element(tower, {}, [](const Tower::value_type& value) -> int { return value.second.first; })->first;
     int res = -1;
     resolve_weight(tower, weights, root, res);
-    return inbalance ? std::to_string(res) : root;
+    return unbalance ? std::to_string(res) : root;
 }
 
 /*
@@ -158,10 +158,42 @@ too heavy: it needs to be 8 units lighter for its stack to weigh 243 and keep th
 Given that exactly one program is the wrong weight, what would its weight need to be to balance the entire tower?
 */
 
-std::string part2() { return part1(true); }
-
+std::string part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(pbga (66)
+xhth (57)
+ebii (61)
+havc (66)
+ktlj (57)
+fwft (72) -> ktlj, cntj, xhth
+qoyq (66)
+padx (45) -> pbga, havc, qoyq
+tknk (41) -> ugml, padx, fwft
+jptl (61)
+ugml (68) -> gyxo, ebii, jptl
+gyxo (61)
+cntj (57))",
+                   false, "tknk");
+    Executor::run(part1, input7, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(pbga (66)
+xhth (57)
+ebii (61)
+havc (66)
+ktlj (57)
+fwft (72) -> ktlj, cntj, xhth
+qoyq (66)
+padx (45) -> pbga, havc, qoyq
+tknk (41) -> ugml, padx, fwft
+jptl (61)
+ugml (68) -> gyxo, ebii, jptl
+gyxo (61)
+cntj (57))",
+                   "60");
+    Executor::run(part2, input7);
+
     return 0;
 }

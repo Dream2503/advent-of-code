@@ -202,11 +202,11 @@ std::pair<std::array<Vec3<int>, 4>, std::array<Vec3<int>, 4>> parse_input(const 
     return {position, {0, 0, 0, 0}};
 }
 
-int part1() {
+int part1(const char* input, const int steps) {
     int TE = 0;
-    auto [position, velocity] = parse_input(input12);
+    auto [position, velocity] = parse_input(input);
 
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < steps; i++) {
         for (int j = 0; j < 4; j++) {
             for (int k = 0; k < 4; k++) {
                 velocity[j] += {
@@ -291,14 +291,43 @@ uint64_t detect_cycle(std::array<int, 4> axis) {
     return iterations;
 }
 
-uint64_t part2() {
-    const std::array<Vec3<int>, 4> position = parse_input(input12).first;
+uint64_t part2(const char* input) {
+    const std::array<Vec3<int>, 4> position = parse_input(input).first;
     return std::lcm(detect_cycle({position[0].x, position[1].x, position[2].x, position[3].x}),
                     std::lcm(detect_cycle({position[0].y, position[1].y, position[2].y, position[3].y}),
                              detect_cycle({position[0].z, position[1].z, position[2].z, position[3].z})));
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(<x=-1, y=0, z=2>
+<x=2, y=-10, z=-7>
+<x=4, y=-8, z=8>
+<x=3, y=5, z=-1>)",
+                   10, 179);
+    Executor::test(part1,
+                   R"(<x=-8, y=-10, z=0>
+<x=5, y=5, z=10>
+<x=2, y=-7, z=3>
+<x=9, y=-8, z=-3>)",
+                   100, 1940);
+    Executor::run(part1, input12, 1000);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(<x=-1, y=0, z=2>
+<x=2, y=-10, z=-7>
+<x=4, y=-8, z=8>
+<x=3, y=5, z=-1>)",
+                   2772);
+    Executor::test(part2,
+                   R"(<x=-8, y=-10, z=0>
+<x=5, y=5, z=10>
+<x=2, y=-7, z=3>
+<x=9, y=-8, z=-3>)",
+                   4686774924ULL);
+    Executor::run(part2, input12);
+
     return 0;
 }

@@ -97,13 +97,13 @@ After a total of 10000 bursts of activity, 5587 bursts will have caused an infec
 Given your actual map, after 10000 bursts of activity, how many bursts cause a node to become infected? (Do not count nodes that begin infected.)
 */
 
-int part1(const int iteration = 10'000, const bool evolve = false) {
+int part1(const char* input, const int iteration, const bool evolve) {
     enum class Condition { CLEAN, WEAKENED, INFECTED, FLAGGED };
     enum class Direction { UP, RIGHT, DOWN, LEFT } current = Direction::UP;
     int i = 0, j = 0, total = 0;
     std::string line;
     std::unordered_map<Vec2<int>, Condition> graph;
-    std::stringstream file(input22);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         for (const char ch : line) {
@@ -249,9 +249,30 @@ Of the first 100 bursts, 26 will result in infection. Unfortunately, another fea
 Given your actual map, after 10000000 bursts of activity, how many bursts cause a node to become infected? (Do not count nodes that begin infected.)
 */
 
-int part2() { return part1(10'000'000, true); }
+int part2(const char* input, const int iteration) { return part1(input, iteration, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(..#
+#..
+...)",
+                   70, false, 41);
+    Executor::test(part1, R"(..#
+#..
+...)",
+                   10'000, false, 5587);
+    Executor::run(part1, input22, 10'000, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(..#
+#..
+...)",
+                   100, 26);
+    Executor::test(part2, R"(..#
+#..
+...)",
+                   10'000'000, 2'511'944);
+    Executor::run(part2, input22, 10'000'000);
+
     return 0;
 }

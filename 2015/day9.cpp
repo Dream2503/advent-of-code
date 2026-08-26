@@ -31,7 +31,7 @@ void search(const std::unordered_map<std::string, std::unordered_map<std::string
     if (!max && current_distance >= best) {
         return;
     }
-    if (graph.size() == seen.size() + 1) {
+    if (graph.size() == seen.size()) {
         best = max ? std::max(best, current_distance) : std::min(best, current_distance);
         return;
     }
@@ -44,12 +44,15 @@ void search(const std::unordered_map<std::string, std::unordered_map<std::string
     }
 }
 
-int part1(const bool max = false) {
+int part1(const char* input, const bool max) {
     std::string line;
     std::unordered_map<std::string, std::unordered_map<std::string, int>> graph;
-    std::stringstream file(input9);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
+        if (line.empty()) {
+            continue;
+        }
         int distance;
         std::string lhs, rhs;
         ((std::stringstream(line) >> lhs).ignore(4) >> rhs).ignore(3) >> distance;
@@ -76,9 +79,22 @@ For example, given the distances above, the longest route would be 982 via (for 
 What is the distance of the longest route?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(London to Dublin = 464
+London to Belfast = 518
+Dublin to Belfast = 141)",
+                   false, 605);
+    Executor::run(part1, input9, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(London to Dublin = 464
+London to Belfast = 518
+Dublin to Belfast = 141)",
+                   982);
+    Executor::run(part2, input9);
+
     return 0;
 }

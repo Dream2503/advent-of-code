@@ -33,13 +33,12 @@ Given the initial block counts in your puzzle input, how many redistribution cyc
 seen before?
 */
 
-int part1(const bool loop = false) {
+int part1(const char* input, const bool loop) {
     int temp;
     std::vector<int> blocks;
-    std::stringstream input(input6);
+    std::stringstream file(input);
 
-    while (!input.eof()) {
-        input >> temp;
+    while (file >> temp) {
         blocks.push_back(temp);
     }
     const int size = blocks.size();
@@ -73,9 +72,16 @@ In the example above, 2 4 1 2 is seen again after four cycles, and so the answer
 How many cycles are in the infinite loop that arises from the configuration in your puzzle input?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "0 2 7 0", false, 5);
+    Executor::run(part1, input6, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, "0 2 7 0", 4);
+    Executor::run(part2, input6);
+
     return 0;
 }

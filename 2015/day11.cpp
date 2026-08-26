@@ -28,12 +28,13 @@ For example:
     Given Santa's current password (your puzzle input), what should his next password be?
 */
 
-std::string part1(std::string input = input11) {
+std::string part1(std::string input) {
     const int size = input.length();
 
     while (true) {
-        bool contains_increasing_straight = false, on_pair = false;
-        int pair_count = 0;
+        bool straight = false;
+        char first_pair = '\0';
+        int pairs = 0;
 
         for (auto itr = input.rbegin(); itr != input.rend(); ++itr) {
             if (*itr != 'z') {
@@ -41,14 +42,12 @@ std::string part1(std::string input = input11) {
 
                 if (*itr == 'i' || *itr == 'o' || *itr == 'l') {
                     (*itr)++;
+                }
 
-                    if (itr == input.rbegin()) {
-                        break;
+                if (itr != input.rbegin()) {
+                    for (auto reset = input.rbegin(); reset != itr; ++reset) {
+                        *reset = 'a';
                     }
-                    for (--itr; itr != input.rbegin(); --itr) {
-                        *itr = 'a';
-                    }
-                    *itr = 'a';
                 }
                 break;
             }
@@ -56,19 +55,27 @@ std::string part1(std::string input = input11) {
         }
         for (int i = 0; i < size - 2; i++) {
             if (input[i] + 1 == input[i + 1] && input[i + 1] + 1 == input[i + 2]) {
-                contains_increasing_straight = true;
+                straight = true;
+                break;
             }
-            if (input[i] == input[i + 1] && !on_pair) {
-                on_pair = true;
-                pair_count++;
+        }
+        if (!straight || input.find_first_of("iol") != std::string::npos) {
+            continue;
+        }
+        for (int i = 0; i < size - 1;) {
+            if (input[i] == input[i + 1]) {
+                if (first_pair == '\0') {
+                    first_pair = input[i];
+                    pairs++;
+                } else if (input[i] != first_pair) {
+                    pairs++;
+                }
+                i += 2;
             } else {
-                on_pair = false;
+                i++;
             }
         }
-        if (input[size - 2] == input[size - 1] && !on_pair) {
-            pair_count++;
-        }
-        if (contains_increasing_straight && pair_count >= 2) {
+        if (pairs >= 2) {
             return input;
         }
     }
@@ -79,9 +86,18 @@ std::string part1(std::string input = input11) {
 Santa's password expired again. What's the next one?
 */
 
-std::string part2() { return part1(part1()); }
+std::string part2(const char* input) { return part1(part1(input)); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "abcdefgh", "abcdffaa");
+    Executor::test(part1, "ghijklmn", "ghjaabcc");
+    Executor::run(part1, input11);
+
+    std::println("Part 2:");
+    Executor::test(part2, "abcdefgh", "abcdffbb");
+    Executor::test(part2, "ghijklmn", "ghjbbcdd");
+    Executor::run(part2, input11);
+
     return 0;
 }

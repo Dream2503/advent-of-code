@@ -29,10 +29,10 @@ For example:
     - se,sw,se,sw,sw is 3 steps away (s,s,sw).
 */
 
-int part1(const bool furthest = false) {
+int part1(const char* input, const bool furthest) {
     int x = 0, y = 0, z = 0, max = 0;
     std::string direction;
-    std::stringstream file(input11);
+    std::stringstream file(input);
 
     while (std::getline(file, direction, ',')) {
         if (direction == "n") {
@@ -64,9 +64,22 @@ int part1(const bool furthest = false) {
 How many steps away is the furthest he ever got from his starting position?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "ne,ne,ne", false, 3);
+    Executor::test(part1, "ne,ne,sw,sw", false, 0);
+    Executor::test(part1, "ne,ne,s,s", false, 2);
+    Executor::test(part1, "se,sw,se,sw,sw", false, 3);
+    Executor::run(part1, input11, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, "ne,ne,ne", 3);
+    Executor::test(part2, "ne,ne,sw,sw", 2);
+    Executor::test(part2, "ne,ne,s,s", 2);
+    Executor::test(part2, "se,sw,se,sw,sw", 3);
+    Executor::run(part2, input11);
+
     return 0;
 }

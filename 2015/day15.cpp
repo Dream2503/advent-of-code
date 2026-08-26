@@ -62,9 +62,9 @@ void search(const std::vector<Ingredient>& ingredients, std::vector<int>& teaspo
     }
 }
 
-int part1(const bool check_calories = false) {
+int part1(const char* input, const bool check_calories) {
     std::string line;
-    std::stringstream file(input15);
+    std::stringstream file(input);
     std::vector<Ingredient> ingredients;
 
     while (std::getline(file, line)) {
@@ -92,9 +92,20 @@ Given the ingredients in your kitchen and their properties, what is the total sc
 500?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8
+Cinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3)",
+                   false, 62842880);
+    Executor::run(part1, input15, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8
+Cinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3)",
+                   57600000);
+    Executor::run(part2, input15);
+
     return 0;
 }

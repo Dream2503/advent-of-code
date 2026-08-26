@@ -16,10 +16,10 @@ In a valid triangle, the sum of any two sides must be larger than the remaining 
 In your puzzle input, how many of the listed triangles are possible?
 */
 
-int part1() {
+int part1(const char* input) {
     int count = 0;
     std::string line;
-    std::stringstream file(input3);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int a, b, c;
@@ -47,9 +47,9 @@ For example, given the following specification, numbers with the same hundreds d
 In your puzzle input, and instead reading by columns, how many of the listed triangles are possible?
 */
 
-int part2() {
+int part2(const char* input) {
     int count = 0;
-    std::stringstream file(input3);
+    std::stringstream file(input);
     std::array<std::array<int, 3>, 3> triangle_set;
 
     while (!file.eof()) {
@@ -69,6 +69,20 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "5 10 25", 0);
+    Executor::test(part1, "3 4 5", 1);
+    Executor::run(part1, input3);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(101 301 501
+102 302 502
+103 303 503
+201 401 601
+202 402 602
+203 403 603)",
+                   6);
+    Executor::run(part2, input3);
+
     return 0;
 }

@@ -14,12 +14,10 @@ For example, suppose you have containers of size 20, 15, 10, 5, and 5 liters. If
 Filling all containers entirely, how many different combinations of containers can exactly fit all 150 liters of eggnog?
 */
 
-
-int part1(const bool min = false) {
-    constexpr int liters = 150;
+int part1(const char* input, const int liters, const bool min) {
     std::string line;
     std::vector<int> containers;
-    std::stringstream file(input17);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         containers.push_back(std::stoi(line));
@@ -71,9 +69,26 @@ and still hold exactly 150 litres?
 In the example above, the minimum number of containers was two. There were three ways to use that many containers, and so the answer there would be 3.
 */
 
-int part2() { return part1(true); }
+int part2(const char* input, const int liters) { return part1(input, liters, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(20
+15
+10
+5
+5)",
+                   25, false, 4);
+    Executor::run(part1, input17, 150, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(20
+15
+10
+5
+5)",
+                   25, 3);
+    Executor::run(part2, input17, 150);
+
     return 0;
 }

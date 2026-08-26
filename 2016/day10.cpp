@@ -37,13 +37,14 @@ struct Bot {
 
 constexpr Bot terminate(17, 61);
 
-int resolve(std::unordered_map<int, Bot>& hash, const int bot, std::unordered_map<int, int>& outputs, const bool find_terminate) {
+int resolve(std::unordered_map<int, Bot>& hash, const int bot, std::unordered_map<int, int>& outputs, const bool find_terminate,
+            const int terminate_low, const int terminate_high) {
     auto& [left, right, low, high] = hash[bot];
 
     if (left && right) {
         auto [min_val, max_val] = std::minmax(left, right);
 
-        if (find_terminate && min_val == terminate.left && max_val == terminate.right) {
+        if (find_terminate && min_val == terminate_low && max_val == terminate_high) {
             return bot;
         }
         if (low < 0) {
@@ -56,7 +57,7 @@ int resolve(std::unordered_map<int, Bot>& hash, const int bot, std::unordered_ma
             } else {
                 target.right = min_val;
             }
-            const int res = resolve(hash, low, outputs, find_terminate);
+            const int res = resolve(hash, low, outputs, find_terminate, terminate_low, terminate_high);
 
             if (find_terminate && res != -1) {
                 return res;
@@ -72,7 +73,7 @@ int resolve(std::unordered_map<int, Bot>& hash, const int bot, std::unordered_ma
             } else {
                 target.right = max_val;
             }
-            const int res = resolve(hash, high, outputs, find_terminate);
+            const int res = resolve(hash, high, outputs, find_terminate, terminate_low, terminate_high);
 
             if (find_terminate && res != -1) {
                 return res;
@@ -83,11 +84,11 @@ int resolve(std::unordered_map<int, Bot>& hash, const int bot, std::unordered_ma
     return -1;
 }
 
-int part1(const bool output = false) {
+int part1(const char* input, const int terminate_low, const int terminate_high, const bool output = false) {
     std::string line;
     std::unordered_map<int, Bot> hash;
     std::unordered_map<int, int> outputs;
-    std::stringstream file(input10);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         std::stringstream ss(line);
@@ -118,7 +119,7 @@ int part1(const bool output = false) {
         }
     }
     for (const int bot : hash | std::views::keys) {
-        const int res = resolve(hash, bot, outputs, !output);
+        const int res = resolve(hash, bot, outputs, !output, terminate_low, terminate_high);
 
         if (!output && res != -1) {
             return res;
@@ -132,9 +133,28 @@ int part1(const bool output = false) {
 What do you get if you multiply together the values of one chip in each of outputs 0, 1, and 2?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input, const int terminate_low, const int terminate_high) { return part1(input, terminate_low, terminate_high, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(value 5 goes to bot 2
+bot 2 gives low to bot 1 and high to bot 0
+value 3 goes to bot 1
+bot 1 gives low to output 1 and high to bot 0
+bot 0 gives low to output 2 and high to output 0
+value 2 goes to bot 2)",
+                   2, 5, false, 2);
+    Executor::run(part1, input10, 17, 61, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(value 5 goes to bot 2
+bot 2 gives low to bot 1 and high to bot 0
+value 3 goes to bot 1
+bot 1 gives low to output 1 and high to bot 0
+bot 0 gives low to output 2 and high to output 0
+value 2 goes to bot 2)",
+                   2, 5, 30);
+    Executor::run(part2, input10, 17, 61);
+
     return 0;
 }

@@ -35,12 +35,12 @@ Multiplying these together produces a checksum of 4 * 3 = 12.
 What is the checksum for your list of box IDs?
 */
 
-std::string part1(const bool id = false) {
+std::string part1(const char* input, const bool id) {
     int twice = 0, thrice = 0;
     std::string line;
     std::array<int, 26> hash;
     std::vector<std::string> ids;
-    std::stringstream file(input2);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         ids.push_back(line);
@@ -59,10 +59,14 @@ std::string part1(const bool id = false) {
             for (int k = 0; k < id_size; k++) {
                 if (ids[i][k] != ids[j][k]) {
                     if (mis_match != -1) {
-                        return ids[i].erase(mis_match, 1);
+                        mis_match = -2;
+                        break;
                     }
                     mis_match = k;
                 }
+            }
+            if (mis_match >= 0) {
+                return ids[i].erase(mis_match, 1);
             }
         }
     }
@@ -89,9 +93,32 @@ What letters are common between the two correct box IDs? (In the example above, 
 producing fgij.)
 */
 
-std::string part2() { return part1(true); }
+std::string part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(abcdef
+bababc
+abbcde
+abcccd
+aabcdd
+abcdee
+ababab)",
+                   false, "12");
+    Executor::run(part1, input2, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(abcde
+fghij
+klmno
+pqrst
+fguij
+axcye
+wvxyz)",
+                   "fgij");
+    Executor::run(part2, input2);
+
     return 0;
 }

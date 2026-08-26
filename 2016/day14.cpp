@@ -28,13 +28,13 @@ So, using our example salt of abc, index 22728 produces the 64th key.
 Given the actual salt in your puzzle input, what index produces your 64th one-time pad key?
 */
 
-int part1(const int stretch = 1) {
+int part1(const char* input, const int stretch) {
     int i = 0;
     std::unordered_map<char, std::deque<int>> candidates;
     std::set<int> seen;
 
     while (seen.size() < 64) {
-        std::string hash = input14 + std::to_string(i);
+        std::string hash = input + std::to_string(i);
 
         for (int j = 0; j < stretch; j++) {
             hash = md5_hash(hash);
@@ -94,9 +94,16 @@ The rest of the process remains the same, but now the keys are entirely differen
 Given the actual salt in your puzzle input and using 2016 extra MD5 calls of key stretching, what index now produces your 64th one-time pad key?
 */
 
-int part2() { return part1(2017); }
+int part2(const char* input) { return part1(input, 2017); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "abc", 1, 22728);
+    Executor::run(part1, input14, 1);
+
+    std::println("Part 2:");
+    Executor::test(part2, "abc", 22551);
+    Executor::run(part2, input14);
+
     return 0;
 }

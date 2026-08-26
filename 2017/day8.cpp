@@ -27,10 +27,10 @@ registers are named, and leaves that to you to determine.
 What is the largest value in any register after completing the instructions in your puzzle input?
 */
 
-int part1(const bool max = false) {
+int part1(const char* input, const bool max) {
     int res = 0;
     std::string line;
-    std::stringstream file(input8);
+    std::stringstream file(input);
     std::unordered_map<std::string, int> hash;
 
     while (std::getline(file, line)) {
@@ -56,9 +56,24 @@ these operations. For example, in the above instructions, the highest value ever
 evaluated).
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(b inc 5 if a > 1
+a inc 1 if b < 5
+c dec -10 if a >= 1
+c inc -20 if c == 10)",
+                   false, 1);
+    Executor::run(part1, input8, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(b inc 5 if a > 1
+a inc 1 if b < 5
+c dec -10 if a >= 1
+c inc -20 if c == 10)",
+                   10);
+    Executor::run(part2, input8);
+
     return 0;
 }

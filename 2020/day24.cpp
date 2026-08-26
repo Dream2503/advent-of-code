@@ -75,10 +75,10 @@ void resolve(const std::unordered_set<Vec2<int>>& tiles, const Vec2<int>& tile, 
     }
 }
 
-int part1(const bool recurse = false) {
+int part1(const char* input, const bool recurse) {
     std::string line;
     std::unordered_set<Vec2<int>> tiles;
-    std::stringstream file(input24);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         const int size = line.size();
@@ -169,9 +169,37 @@ After executing this process a total of 100 times, there would be 2208 black til
 How many tiles will be black after 100 days?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    constexpr const char* example = R"(sesenwnenenewseeswwswswwnenewsewsw
+neeenesenwnwwswnenewnwwsewnenwseswesw
+seswneswswsenwwnwse
+nwnwneseeswswnenewneswwnewseswneseene
+swweswneswnenwsewnwneneseenw
+eesenwseswswnenwswnwnwsewwnwsene
+sewnenenenesenwsewnenwwwse
+wenwwweseeeweswwwnwwe
+wsweesenenewnwwnwsenewsenwwsesesenwne
+neeswseenwwswnwswswnw
+nenwswwsewswnenenewsenwsenwnesesenew
+enewnwewneswsewnwswenweswnenwsenwsw
+sweneswneswneneenwnewenewwneswswnese
+swwesenesewenwneswnwwneseswwne
+enesenwswwswneneswsenwnewswseenwsese
+wnwnesenesenenwwnenwsewesewsesesew
+nenewswnwewswnenesenwnesewesw
+eneswnwswnwsenenwnwnwwseeswneewsenese
+neswnwewnwnwseenwseesewsenwsweewe
+wseweeenwnesenwwwswnew)";
+
+    std::println("Part 1:");
+    Executor::test(part1, example, false, 10);
+    Executor::run(part1, input24, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, example, 2208);
+    Executor::run(part2, input24);
+
     return 0;
 }

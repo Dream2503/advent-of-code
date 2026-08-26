@@ -82,10 +82,10 @@ pot 34. Adding up all the numbers of plant-containing pots after the 20th genera
 After 20 generations, what is the sum of the numbers of all pots which contain a plant?
 */
 
-int64_t part1(const int64_t generations = 20) {
+int64_t part1(const char* input, const int64_t generations) {
     int64_t start = 0, last_sum = 0, delta = 0;
     std::string line, state;
-    std::stringstream file(input12);
+    std::stringstream file(input);
     std::unordered_map<std::string, char> rules;
     file.ignore(15) >> state;
     std::getline(file, line);
@@ -145,9 +145,32 @@ mention your future.
 After fifty billion (50000000000) generations, what is the sum of the numbers of all pots which contain a plant?
 */
 
-int64_t part2() { return part1(50'000'000'000ll); }
+int64_t part2(const char* input) { return part1(input, 50'000'000'000ll); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(initial state: #..#.#..##......###...###
+
+...## => #
+..#.. => #
+.#... => #
+.#.#. => #
+.#.## => #
+.##.. => #
+.#### => #
+#.#.# => #
+#.### => #
+##.#. => #
+##.## => #
+###.. => #
+###.# => #
+####. => #)",
+                   20, 325);
+    Executor::run(part1, input12, 20);
+
+    std::println("Part 2:");
+    Executor::run(part2, input12);
+
     return 0;
 }

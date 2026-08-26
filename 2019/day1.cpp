@@ -27,10 +27,10 @@ puzzle input), then add together all the fuel values.
 What is the sum of the fuel requirements for all of the modules on your spacecraft?
 */
 
-int part1() {
+int part1(const char* input) {
     int res = 0;
     std::string line;
-    std::stringstream file(input1);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         res += std::stoi(line) / 3 - 2;
@@ -60,10 +60,10 @@ What is the sum of the fuel requirements for all of the modules on your spacecra
 (Calculate the fuel requirements for each module separately, then add them all up at the end.)
 */
 
-int part2() {
+int part2(const char* input) {
     int res = 0;
     std::string line;
-    std::stringstream file(input1);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int module = std::stoi(line);
@@ -81,6 +81,18 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "12", 2);
+    Executor::test(part1, "14", 2);
+    Executor::test(part1, "1969", 654);
+    Executor::test(part1, "100756", 33583);
+    Executor::run(part1, input1);
+
+    std::println("Part 2:");
+    Executor::test(part2, "14", 2);
+    Executor::test(part2, "1969", 966);
+    Executor::test(part2, "100756", 50346);
+    Executor::run(part2, input1);
+
     return 0;
 }

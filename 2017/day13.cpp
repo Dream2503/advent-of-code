@@ -181,12 +181,12 @@ int triangle_wave(const int t, const int range) {
     return pos <= range - 1 ? pos : period - pos;
 }
 
-int part1(const int safe = false) {
+int part1(const char* input, const int safe = false) {
     constexpr int max_depth = 93;
     int severity;
     std::array<uint8_t, max_depth> firewall = {};
     std::string line;
-    std::stringstream file(input13);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int depth, range;
@@ -336,9 +336,24 @@ Because all smaller delays would get you caught, the fewest number of picosecond
 What is the fewest number of picoseconds that you need to delay the packet to pass through the firewall without being caught?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(0: 3
+1: 2
+4: 4
+6: 4)",
+                   false, 24);
+    Executor::run(part1, input13, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(0: 3
+1: 2
+4: 4
+6: 4)",
+                   10);
+    Executor::run(part2, input13);
+
     return 0;
 }

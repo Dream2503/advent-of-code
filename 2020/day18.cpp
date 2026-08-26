@@ -51,11 +51,10 @@ int precedence(const char ch, const bool reverse) {
     }
 }
 
-
-int64_t part1(const bool reverse = false) {
+int64_t part1(const char* input, const bool reverse) {
     int64_t res = 0;
     std::string expression;
-    std::stringstream file(input18);
+    std::stringstream file(input);
 
     while (std::getline(file, expression)) {
         std::string postfix;
@@ -138,9 +137,26 @@ Here are the other examples from above:
 What do you get if you add up the results of evaluating the homework problems using these new rules?
 */
 
-int64_t part2() { return part1(true); }
+int64_t part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "1 + 2 * 3 + 4 * 5 + 6", false, 71);
+    Executor::test(part1, "1 + (2 * 3) + (4 * (5 + 6))", false, 51);
+    Executor::test(part1, "2 * 3 + (4 * 5)", false, 26);
+    Executor::test(part1, "5 + (8 * 3 + 9 + 3 * 4 * 3)", false, 437);
+    Executor::test(part1, "5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))", false, 12240);
+    Executor::test(part1, "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2", false, 13632);
+    Executor::run(part1, input18, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, "1 + 2 * 3 + 4 * 5 + 6", 231);
+    Executor::test(part2, "1 + (2 * 3) + (4 * (5 + 6))", 51);
+    Executor::test(part2, "2 * 3 + (4 * 5)", 46);
+    Executor::test(part2, "5 + (8 * 3 + 9 + 3 * 4 * 3)", 1445);
+    Executor::test(part2, "5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))", 669060);
+    Executor::test(part2, "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2", 23340);
+    Executor::run(part2, input18);
+
     return 0;
 }

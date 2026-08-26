@@ -47,10 +47,10 @@ Here are some other boarding passes:
 As a sanity check, look through your list of boarding passes. What is the highest seat ID on a boarding pass?
 */
 
-int part1(const bool find = false) {
+int part1(const char* input, const bool find) {
     std::vector<int> seats;
     std::string pass;
-    std::stringstream file(input5);
+    std::stringstream file(input);
 
     while (std::getline(file, pass)) {
         int low = 0, high = 128;
@@ -105,9 +105,18 @@ Your seat wasn't at the very front or back, though; the seats with IDs +1 and -1
 What is the ID of your seat?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(FBFBBFFRLR)", false, 357);
+    Executor::test(part1, R"(BFFFBBFRRR)", false, 567);
+    Executor::test(part1, R"(FFFBBBFRRR)", false, 119);
+    Executor::test(part1, R"(BBFFBBFRLL)", false, 820);
+    Executor::run(part1, input5, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input5);
+
     return 0;
 }

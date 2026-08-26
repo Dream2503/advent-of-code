@@ -52,7 +52,7 @@ Count the number of valid passports - those that have all required fields. Treat
 */
 
 
-int part1(const bool check = false) {
+int part1(const char* input, const bool check) {
     static constexpr std::array<std::string_view, 7> EYE_COLOUR = {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"};
     auto is_digit = [](const unsigned char ch) -> bool { return std::isdigit(ch); };
     auto is_hex = [](const unsigned char ch) -> bool { return std::isdigit(ch) || (ch >= 'a' && ch <= 'f'); };
@@ -64,7 +64,7 @@ int part1(const bool check = false) {
     int res = 0;
     std::string line;
     std::vector<std::string> keys;
-    std::stringstream file(input4);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         if (line.empty()) {
@@ -103,6 +103,7 @@ int part1(const bool check = false) {
             }
         }
     }
+    res += valid && (keys.size() == 8 || (keys.size() == 7 && !std::ranges::contains(keys, "cid")));
     return res;
 }
 
@@ -175,9 +176,73 @@ Count the number of valid passports - those that have all required fields and va
 many passports are valid?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
+byr:1937 iyr:2017 cid:147 hgt:183cm
+
+iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884
+hcl:#cfa07d byr:1929
+
+hcl:#ae17e1 iyr:2013
+eyr:2024
+ecl:brn pid:760753108 byr:1931
+hgt:179cm
+
+hcl:#cfa07d eyr:2025 pid:166559648
+iyr:2011 ecl:brn hgt:59in)",
+                   false, 2);
+    Executor::run(part1, input4, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, "byr:2002 iyr:2015 eyr:2025 hgt:170cm hcl:#123abc ecl:brn pid:000000001", 1);
+    Executor::test(part2, "byr:2003 iyr:2015 eyr:2025 hgt:170cm hcl:#123abc ecl:brn pid:000000001", 0);
+    Executor::test(part2, "byr:2000 iyr:2015 eyr:2025 hgt:60in hcl:#123abc ecl:brn pid:000000001", 1);
+    Executor::test(part2, "byr:2000 iyr:2015 eyr:2025 hgt:190cm hcl:#123abc ecl:brn pid:000000001", 1);
+    Executor::test(part2, "byr:2000 iyr:2015 eyr:2025 hgt:190in hcl:#123abc ecl:brn pid:000000001", 0);
+    Executor::test(part2, "byr:2000 iyr:2015 eyr:2025 hgt:190 hcl:#123abc ecl:brn pid:000000001", 0);
+    Executor::test(part2, "byr:2000 iyr:2015 eyr:2025 hgt:170cm hcl:#123abc ecl:brn pid:000000001", 1);
+    Executor::test(part2, "byr:2000 iyr:2015 eyr:2025 hgt:170cm hcl:#123abz ecl:brn pid:000000001", 0);
+    Executor::test(part2, "byr:2000 iyr:2015 eyr:2025 hgt:170cm hcl:123abc ecl:brn pid:000000001", 0);
+    Executor::test(part2, "byr:2000 iyr:2015 eyr:2025 hgt:170cm hcl:#123abc ecl:brn pid:000000001", 1);
+    Executor::test(part2, "byr:2000 iyr:2015 eyr:2025 hgt:170cm hcl:#123abc ecl:wat pid:000000001", 0);
+    Executor::test(part2, "byr:2000 iyr:2015 eyr:2025 hgt:170cm hcl:#123abc ecl:brn pid:000000001", 1);
+    Executor::test(part2, "byr:2000 iyr:2015 eyr:2025 hgt:170cm hcl:#123abc ecl:brn pid:0123456789", 0);
+
+    Executor::test(part2,
+                   R"(eyr:1972 cid:100
+hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926
+
+iyr:2019
+hcl:#602927 eyr:1967 hgt:170cm
+ecl:grn pid:012533040 byr:1946
+
+hcl:dab227 iyr:2012
+ecl:brn hgt:182cm pid:021572410 eyr:2020 byr:1992 cid:277
+
+hgt:59cm ecl:zzz
+eyr:2038 hcl:74454a iyr:2023
+pid:3556412378 byr:2007)",
+                   0);
+
+    Executor::test(part2,
+                   R"(pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980
+hcl:#623a2f
+
+eyr:2029 ecl:blu cid:129 byr:1989
+iyr:2014 pid:896056539 hcl:#a97842 hgt:165cm
+
+hcl:#888785
+hgt:164cm byr:2001 iyr:2015 cid:88
+pid:545766238 ecl:hzl
+eyr:2022
+
+iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719)",
+                   4);
+    Executor::run(part2, input4);
+
     return 0;
 }

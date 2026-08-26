@@ -68,9 +68,9 @@ means the program finished. If all outputs were zero except the diagnostic code,
 After providing 1 to the only input instruction and passing all the tests, what diagnostic code does the program produce?
 */
 
-int64_t part1(const int64_t input = 1) {
-    VirtualMachine VM(input5);
-    VM.inputs.push(input);
+int64_t part1(const char* input, const int64_t input_value) {
+    VirtualMachine VM(input);
+    VM.inputs.push(input_value);
     VM.interpret();
 
     while (VM.outputs.size() > 1) {
@@ -126,9 +126,42 @@ thermal radiator controller. This diagnostic test suite only outputs one number,
 What is the diagnostic code for system ID 5?
 */
 
-int64_t part2() { return part1(5); }
+int64_t part2(const char* input, const int64_t input_value) { return part1(input, input_value); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(3,0,4,0,99)", 123, 123);
+    Executor::run(part1, input5, 1);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(3,9,8,9,10,9,4,9,99,-1,8)", 8, 1);
+    Executor::test(part2, R"(3,9,8,9,10,9,4,9,99,-1,8)", 5, 0);
+    Executor::test(part2, R"(3,9,7,9,10,9,4,9,99,-1,8)", 5, 1);
+    Executor::test(part2, R"(3,9,7,9,10,9,4,9,99,-1,8)", 8, 0);
+    Executor::test(part2, R"(3,3,1108,-1,8,3,4,3,99)", 8, 1);
+    Executor::test(part2, R"(3,3,1108,-1,8,3,4,3,99)", 5, 0);
+    Executor::test(part2, R"(3,3,1107,-1,8,3,4,3,99)", 5, 1);
+    Executor::test(part2, R"(3,3,1107,-1,8,3,4,3,99)", 8, 0);
+    Executor::test(part2, R"(3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9)", 0, 0);
+    Executor::test(part2, R"(3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9)", 5, 1);
+    Executor::test(part2, R"(3,3,1105,-1,9,1101,0,0,12,4,12,99,1)", 0, 0);
+    Executor::test(part2, R"(3,3,1105,-1,9,1101,0,0,12,4,12,99,1)", 5, 1);
+    Executor::test(part2,
+                   R"(3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,
+1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
+999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99)",
+                   8, 1000);
+    Executor::test(part2,
+                   R"(3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,
+1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
+999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99)",
+                   5, 999);
+    Executor::test(part2,
+                   R"(3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,
+1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
+999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99)",
+                   9, 1001);
+    Executor::run(part2, input5, 5);
+
     return 0;
 }

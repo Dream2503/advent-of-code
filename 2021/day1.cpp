@@ -53,11 +53,11 @@ In this example, there are 7 measurements that are larger than the previous meas
 How many measurements are larger than the previous measurement?
 */
 
-int part1(const int window = 1) {
+int part1(const char* input, const int window) {
     int prev = INT32_MAX, res = 0;
     std::string line;
     std::vector<int> values;
-    std::stringstream file(input1);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         values.push_back(std::stoi(line));
@@ -110,9 +110,36 @@ In this example, there are 5 sums that are larger than the previous sum.
 Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?
 */
 
-int part2() { return part1(3); }
+int part2(const char* input) { return part1(input, 3); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(199
+200
+208
+210
+200
+207
+240
+269
+260
+263)",
+                   1, 7);
+    Executor::run(part1, input1, 1);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(199
+200
+208
+210
+200
+207
+240
+269
+260
+263)",
+                   5);
+    Executor::run(part2, input1);
+
     return 0;
 }

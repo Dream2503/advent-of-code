@@ -144,10 +144,10 @@ int combat(std::deque<int>& player1, std::deque<int>& player2, const bool recurs
     return player1.empty() ? 2 : 1;
 }
 
-int part1(const bool recurse = false) {
+int part1(const char* input, const bool recurse) {
     std::string line;
     std::deque<int> player1, player2;
-    std::stringstream file(input22);
+    std::stringstream file(input);
     std::getline(file, line);
 
     for (std::deque<int>* player : {&player1, &player2}) {
@@ -449,9 +449,51 @@ Defend your honor as Raft Captain by playing the small crab in a game of Recursi
 player's score?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(Player 1:
+9
+2
+6
+3
+1
+
+Player 2:
+5
+8
+4
+7
+10)",
+                   false, 306);
+    Executor::run(part1, input22, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(Player 1:
+9
+2
+6
+3
+1
+
+Player 2:
+5
+8
+4
+7
+10)",
+                   291);
+    Executor::test(part2, R"(Player 1:
+43
+19
+
+Player 2:
+2
+29
+14)",
+                   105);
+    Executor::run(part2, input22);
+
     return 0;
 }

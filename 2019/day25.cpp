@@ -160,8 +160,8 @@ void traverse(VirtualMachine& VM, std::unordered_set<std::string>& seen, const s
     }
 }
 
-int part1() {
-    VirtualMachine VM(input25);
+int part1(const char* input) {
+    VirtualMachine VM(input);
     std::unordered_set<std::string> seen;
     std::vector<std::string> inv, path, checkpoint_path;
     VM.interpret();
@@ -237,28 +237,9 @@ Santa just smiles and nods his head toward the window. There, in the distance, y
 The navigation console beeps again.
 */
 
-int part2() { return 0; }
-
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::run(part1, input25);
+
     return 0;
 }
-
-
-/*
-
-
-
-== Hull Breach ==
-You got in through a hole in the floor here. To keep your ship from also freezing, the hole has been sealed.
-
-Doors here lead:
-- north
-- south
-- west
-
-Command?
-
-
-
-*/

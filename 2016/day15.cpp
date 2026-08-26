@@ -41,10 +41,10 @@ struct Disc {
     int positions, start;
 };
 
-int part1(const bool new_disc = false) {
+int part1(const char* input, const bool new_disc) {
     std::string line;
     std::vector<Disc> discs;
-    std::stringstream file(input15);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int positions, start;
@@ -84,9 +84,17 @@ With this new disc, and counting again starting from time=0 with the configurati
 button to get another capsule?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(Disc #1 has 5 positions; at time=0, it is at position 4.
+Disc #2 has 2 positions; at time=0, it is at position 1.)",
+                   false, 5);
+    Executor::run(part1, input15, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input15);
+
     return 0;
 }

@@ -56,11 +56,11 @@ itself). Therefore, in this example, the size of the largest area is 17.
 What is the size of the largest area that isn't infinite?
 */
 
-int part1(const bool safe = false) {
+int part1(const char* input, const int threshold, const bool safe) {
     int res = 0, i = 1;
     std::string line;
     std::unordered_map<int, Vec2<int>> area;
-    std::stringstream file(input6);
+    std::stringstream file(input);
     Vec2 max = 0, min = INT32_MAX;
 
     while (std::getline(file, line)) {
@@ -71,21 +71,25 @@ int part1(const bool safe = false) {
         max.y = std::max(max.y, y);
         min.y = std::min(min.y, y);
     }
-    Vec2 range = max - min;
+    min -= 1;
+    max += 1;
+    Vec2 range = max - min + 1;
     std::vector map(range.x, std::vector(range.y, 0));
     std::vector<Vec2<int>> manhattan_distances(area.size());
 
-    for (i = min.x; i < max.x; i++) {
-        for (int j = min.y; j < max.y; j++) {
+    for (i = min.x; i <= max.x; i++) {
+        for (int j = min.y; j <= max.y; j++) {
             std::ranges::transform(area, manhattan_distances.begin(), [i, j](const std::pair<int, Vec2<int>>& element) -> Vec2<int> {
                 return {element.first, std::abs(element.second.x - i) + std::abs(element.second.y - j)};
             });
-            const Vec2 min1 = *std::ranges::min_element(manhattan_distances, {}, &Vec2<int>::y);
-            const Vec2 min2 = *std::ranges::min_element(
-                manhattan_distances, {}, [&min1](const Vec2<int>& element) -> int { return element.y == min1.y ? INT32_MAX : element.y; });
-            map[i - min.x][j - min.y] = min1.y != min2.y ? min1.x : 0;
+            const int distance = std::ranges::min_element(manhattan_distances, {}, &Vec2<int>::y)->y;
+            const auto count = std::ranges::count_if(manhattan_distances, [distance](const Vec2<int>& element) { return element.y == distance; });
+
+            if (count == 1) {
+                map[i - min.x][j - min.y] = std::ranges::min_element(manhattan_distances, {}, &Vec2<int>::y)->x;
+            }
             res += std::transform_reduce(manhattan_distances.begin(), manhattan_distances.end(), 0, std::plus(),
-                                         [](const Vec2<int>& element) -> int { return element.y; }) < 10'000;
+                                         [](const Vec2<int>& element) -> int { return element.y; }) < threshold;
         }
     }
     std::unordered_set reject{0};
@@ -141,9 +145,30 @@ Your actual region will need to be much larger than this example, though, instea
 What is the size of the region containing all locations which have a total distance to all given coordinates of less than 10000?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input, const int threshold) { return part1(input, threshold, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(1, 1
+1, 6
+8, 3
+3, 4
+5, 5
+8, 9)",
+                   10'000, false, 17);
+    Executor::run(part1, input6, 10'000, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(1, 1
+1, 6
+8, 3
+3, 4
+5, 5
+8, 9)",
+                   32, 16);
+    Executor::run(part2, input6, 10'000);
+
     return 0;
 }

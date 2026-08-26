@@ -81,8 +81,8 @@ std::array<std::bitset<5>, 5> parse_input(const char* input) {
     return grid;
 }
 
-int part1() {
-    std::array<std::bitset<5>, 5> grid = parse_input(input24), next = grid;
+int part1(const char* input) {
+    std::array<std::bitset<5>, 5> grid = parse_input(input), next = grid;
     std::unordered_set<std::array<std::bitset<5>, 5>> seen;
 
     while (seen.insert(grid).second) {
@@ -309,12 +309,12 @@ bool resolve(std::unordered_map<int, std::array<std::bitset<5>, 5>>& grids, cons
     return grids[level][position.x][position.y] ? bugs == 1 : bugs == 1 || bugs == 2;
 }
 
-int part2() {
+int part2(const char* input, const int time) {
     int min = -1, max = 1;
     std::unordered_map<int, std::array<std::bitset<5>, 5>> grids, nexts;
-    grids[0] = nexts[0] = parse_input(input24);
+    grids[0] = nexts[0] = parse_input(input);
 
-    for (int i = 0; i < 200; i++) {
+    for (int i = 0; i < time; i++) {
         for (int level = min; level <= max; level++) {
             for (int j = 0; j < 5; j++) {
                 for (int k = 0; k < 5; k++) {
@@ -335,6 +335,25 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(....#
+#..#.
+#..##
+..#..
+#....)",
+                   2129920);
+    Executor::run(part1, input24);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(....#
+#..#.
+#..##
+..#..
+#....)",
+                   10, 99);
+    Executor::run(part2, input24, 200);
+
     return 0;
 }

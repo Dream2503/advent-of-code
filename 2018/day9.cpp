@@ -63,9 +63,9 @@ Here are a few more examples:
 What is the winning Elf's score?
 */
 
-uint64_t part1(const int multiplier = 1) {
+uint64_t part1(const char* input, const int multiplier) {
     int player, final;
-    std::sscanf(input9, "%d players; last marble is worth %d points", &player, &final);
+    std::sscanf(input, "%d players; last marble is worth %d points", &player, &final);
     std::vector<uint64_t> players(player);
     std::list marbles{0};
     auto current = marbles.begin();
@@ -107,9 +107,21 @@ Amused by the speed of your answer, the Elves are curious:
 What would the new winning Elf's score be if the number of the last marble were 100 times larger?
 */
 
-uint64_t part2() { return part1(100); }
+uint64_t part2(const char* input) { return part1(input, 100); }
+
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "9 players; last marble is worth 25 points", 1, 32);
+    Executor::test(part1, "10 players; last marble is worth 1618 points", 1, 8317);
+    Executor::test(part1, "13 players; last marble is worth 7999 points", 1, 146373);
+    Executor::test(part1, "17 players; last marble is worth 1104 points", 1, 2764);
+    Executor::test(part1, "21 players; last marble is worth 6111 points", 1, 54718);
+    Executor::test(part1, "30 players; last marble is worth 5807 points", 1, 37305);
+    Executor::run(part1, input9, 1);
+
+    std::println("Part 2:");
+    Executor::run(part2, input9);
+
     return 0;
 }

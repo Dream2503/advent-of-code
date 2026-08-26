@@ -29,8 +29,8 @@ For example, given the four strings above, the total number of characters of str
 memory for string values (0 + 3 + 7 + 1 = 11) is 23 - 11 = 12.
 */
 
-int part1() {
-    std::stringstream file(input8);
+int part1(const char* input) {
+    std::stringstream file(input);
     std::string line;
     int total = 0;
 
@@ -66,8 +66,8 @@ string literal. For example, for the strings above, the total encoded length (6 
 representation (23, just like in the first part of this puzzle) is 42 - 23 = 19.
 */
 
-int part2() {
-    std::stringstream file(input8);
+int part2(const char* input) {
+    std::stringstream file(input);
     std::string line;
     int total = 0;
 
@@ -88,6 +88,19 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "\"\"", 2);
+    Executor::test(part1, "\"abc\"", 2);
+    Executor::test(part1, "\"aaa\\\"aaa\"", 3);
+    Executor::test(part1, "\"\\x27\"", 5);
+    Executor::run(part1, input8);
+
+    std::println("Part 2:");
+    Executor::test(part2, "\"\"", 4);
+    Executor::test(part2, "\"abc\"", 4);
+    Executor::test(part2, "\"aaa\\\"aaa\"", 6);
+    Executor::test(part2, "\"\\x27\"", 5);
+    Executor::run(part2, input8);
+
     return 0;
 }

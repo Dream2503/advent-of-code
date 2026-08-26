@@ -82,11 +82,11 @@ uint16_t resolve(const std::unordered_map<std::string, Instruction>& hash, std::
     return result;
 }
 
-int part1(const bool override = false) {
+int part1(const char* input, const bool override) {
     std::string line;
     std::unordered_map<std::string, Instruction> hash;
     std::unordered_map<std::string, uint16_t> cache;
-    std::stringstream file(input7);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         std::string token, res, opr, rhs;
@@ -121,9 +121,14 @@ Now, take the signal you got on wire a, override wire b to that signal, and rese
 provided to wire a?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::run(part1, input7, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input7);
+
     return 0;
 }

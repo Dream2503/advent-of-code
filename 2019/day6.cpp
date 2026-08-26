@@ -80,7 +80,7 @@ int resolve(const std::unordered_multimap<std::string, std::string>& universe, c
     return total + depth;
 }
 
-int part1() { return resolve(parse_input(input6), "COM", 0); }
+int part1(const char* input) { return resolve(parse_input(input), "COM", 0); }
 
 /*
 --- Part Two ---
@@ -148,10 +148,10 @@ void trace_path(const std::unordered_multimap<std::string, std::string>& univers
     }
 }
 
-int part2() {
+int part2(const char* input) {
     int i = 0;
     std::vector<std::string> you_path, san_path;
-    const std::unordered_multimap<std::string, std::string> universe = parse_input(input6);
+    const std::unordered_multimap<std::string, std::string> universe = parse_input(input);
     trace_path(universe, "COM", you_path, "YOU");
     trace_path(universe, "COM", san_path, "SAN");
 
@@ -162,6 +162,39 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(COM)B
+B)C
+C)D
+D)E
+E)F
+B)G
+G)H
+D)I
+E)J
+J)K
+K)L)",
+                   42);
+    Executor::run(part1, input6);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(COM)B
+B)C
+C)D
+D)E
+E)F
+B)G
+G)H
+D)I
+E)J
+J)K
+K)L
+K)YOU
+I)SAN)",
+                   4);
+    Executor::run(part2, input6);
+
     return 0;
 }

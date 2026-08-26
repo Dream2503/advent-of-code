@@ -15,11 +15,11 @@ For example:
       hash of pqrstuv1048970 looks like 000006136ef....
 */
 
-int part1(const std::string& target = "00000") {
+int part1(const char* input, const char* target) {
     int i = 0;
 
     while (true) {
-        std::string hash = md5_hash(input4 + std::to_string(i));
+        std::string hash = md5_hash(input + std::to_string(i));
 
         if (hash.starts_with(target)) {
             return i;
@@ -33,9 +33,16 @@ int part1(const std::string& target = "00000") {
 Now find one that starts with six zeroes.
 */
 
-int part2() { return part1("000000"); }
+int part2(const char* input) { return part1(input, "000000"); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "abcdef", "00000", 609043);
+    Executor::test(part1, "pqrstuv", "00000", 1048970);
+    Executor::run(part1, input4, "00000");
+
+    std::println("Part 2:");
+    Executor::run(part2, input4);
+
     return 0;
 }

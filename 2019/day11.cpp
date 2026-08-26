@@ -76,10 +76,10 @@ Build a new emergency hull painting robot and run the Intcode program on it. How
 
 enum class Direction { NORTH, EAST, SOUTH, WEST };
 
-int part1(const bool white = false) {
+int part1(const char* input, const bool white) {
     auto direction = Direction::NORTH;
     Vec2 position = 0;
-    VirtualMachine VM(input11);
+    VirtualMachine VM(input);
     std::unordered_map panel({std::pair(position, white)});
 
     while (VM.status != VirtualMachine::Status::HALTED) {
@@ -141,9 +141,14 @@ Based on the Space Law Space Brochure that the Space Police attached to one of y
 letters. After starting the robot on a single white panel instead, what registration identifier does it paint on your hull?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::run(part1, input11, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input11);
+
     return 0;
 }

@@ -103,10 +103,10 @@ void resolve(std::vector<std::vector<std::string>>& rules, const int idx, std::v
     resolved[idx] = true;
 }
 
-int part1() {
+int part1(const char* input) {
     std::string line;
     std::vector<std::vector<std::string>> rules;
-    std::stringstream file(input19);
+    std::stringstream file(input);
 
     while (std::getline(file, line) && !line.empty()) {
         const int idx = std::stoi(line.substr(0, line.find(':')));
@@ -216,10 +216,10 @@ However, after updating rules 8 and 11, a total of 12 messages match:
 After updating rules 8 and 11, how many messages completely match rule 0?
 */
 
-int part2() {
+int part2(const char* input) {
     std::string line;
     std::vector<std::vector<std::string>> rules;
-    std::stringstream file(input19);
+    std::stringstream file(input);
 
     while (std::getline(file, line) && !line.empty()) {
         const int idx = std::stoi(line.substr(0, line.find(':')));
@@ -282,6 +282,74 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(0: 4 1 5
+1: 2 3 | 3 2
+2: 4 4 | 5 5
+3: 4 5 | 5 4
+4: "a"
+5: "b"
+
+ababbb
+bababa
+abbbab
+aaabbb
+aaaabbb)",
+                   2);
+    Executor::run(part1, input19);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(42: 9 14 | 10 1
+9: 14 27 | 1 26
+10: 23 14 | 28 1
+1: "a"
+11: 42 31
+5: 1 14 | 15 1
+19: 14 1 | 14 14
+12: 24 14 | 19 1
+16: 15 1 | 14 14
+31: 14 17 | 1 13
+6: 14 14 | 1 14
+2: 1 24 | 14 4
+0: 8 11
+13: 14 3 | 1 12
+15: 1 | 14
+17: 14 2 | 1 7
+23: 25 1 | 22 14
+28: 16 1
+4: 1 1
+20: 14 14 | 1 15
+3: 5 14 | 16 1
+27: 1 6 | 14 18
+14: "b"
+21: 14 1 | 1 14
+25: 1 1 | 1 14
+22: 14 14
+8: 42
+26: 14 22 | 1 20
+18: 15 15
+7: 14 5 | 1 21
+24: 14 1
+
+abbbbbabbbaaaababbaabbbbabababbbabbbbbbabaaaa
+bbabbbbaabaabba
+babbbbaabbbbbabbbbbbaabaaabaaa
+aaabbbbbbaaaabaababaabababbabaaabbababababaaa
+bbbbbbbaaaabbbbaaabbabaaa
+bbbababbbbaaaaaaaabbababaaababaabab
+ababaaaaaabaaab
+ababaaaaabbbaba
+baabbaaaabbaaaababbaababb
+abbbbabbbbaaaababbbbbbaaaababb
+aaaaabbaabaaaaababaa
+aaaabbaaaabbaaa
+aaaabbaabbaaaaaaabbbabbbaaabbaabaaa
+babaaabbbaaabaababbaabababaaab
+aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba)",
+                   12);
+    Executor::run(part2, input19);
+
     return 0;
 }

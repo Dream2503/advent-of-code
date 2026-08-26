@@ -55,11 +55,11 @@ ticket scanning error rate: 4 + 55 + 12 = 71.
 Consider the validity of the nearby tickets you scanned. What is your ticket scanning error rate?
 */
 
-int part1() {
+int part1(const char* input) {
     int res = 0;
     std::bitset<1000> values;
     std::string line;
-    std::stringstream file(input16);
+    std::stringstream file(input);
 
     while (std::getline(file, line) && line != "") {
         Vec2<int> range1, range2;
@@ -117,12 +117,12 @@ Once you work out which field is which, look for the six fields on your ticket t
 those six values together?
 */
 
-uint64_t part2() {
+uint64_t part2(const char* input) {
     int value;
     std::vector<int> my_tickets;
     std::vector<std::bitset<1000>> values;
     std::string line, tickets;
-    std::stringstream file(input16);
+    std::stringstream file(input);
 
     while (std::getline(file, line) && line != "") {
         Vec2<int> range1, range2;
@@ -209,6 +209,38 @@ uint64_t part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(class: 1-3 or 5-7
+row: 6-11 or 33-44
+seat: 13-40 or 45-50
+
+your ticket:
+7,1,14
+
+nearby tickets:
+7,3,47
+40,4,50
+55,2,20
+38,6,12)",
+                   71);
+    Executor::run(part1, input16);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(class: 0-1 or 4-19
+row: 0-5 or 8-19
+seat: 0-13 or 16-19
+
+your ticket:
+11,12,13
+
+nearby tickets:
+3,9,18
+15,1,5
+5,14,9)",
+                   1716);
+    Executor::run(part2, input16);
+
     return 0;
 }

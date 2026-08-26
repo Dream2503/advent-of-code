@@ -62,10 +62,10 @@ just before the last computer caught fire. To do this, before running the progra
 the value 2. What value is left at position 0 after the program halts?
 */
 
-int64_t part1() {
-    VirtualMachine VM(input2);
-    VM.opcodes[1] = 12;
-    VM.opcodes[2] = 2;
+int64_t part1(const char* input, const int noun, const int verb) {
+    VirtualMachine VM(input);
+    VM.opcodes[1] = noun;
+    VM.opcodes[2] = verb;
     VM.interpret();
     return VM.opcodes[0];
 }
@@ -104,25 +104,34 @@ Find the input noun and verb that cause the program to produce the output 196907
 the answer would be 1202.)
 */
 
-int64_t part2(const int target = 19690720) {
-    const VirtualMachine VM(input2);
+int64_t part2(const char* input, const int target) {
+    const VirtualMachine VM(input);
 
-    for (int i = 0; i <= 99; i++) {
-        for (int j = 0; j <= 99; j++) {
+    for (int noun = 0; noun <= 99; noun++) {
+        for (int verb = 0; verb <= 99; verb++) {
             VirtualMachine temp_VM = VM;
-            temp_VM.opcodes[1] = i;
-            temp_VM.opcodes[2] = j;
+            temp_VM.opcodes[1] = noun;
+            temp_VM.opcodes[2] = verb;
             temp_VM.interpret();
 
             if (temp_VM.opcodes[0] == target) {
-                return i * 100 + j;
+                return noun * 100 + verb;
             }
         }
     }
-    return -1;
+    std::unreachable();
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "1,0,0,0,99", 0, 0, 2);
+    Executor::test(part1, "2,3,0,3,99", 3, 0, 2);
+    Executor::test(part1, "2,4,4,5,99,0", 4, 4, 2);
+    Executor::test(part1, "1,1,1,4,99,5,6,0,99", 1, 1, 30);
+    Executor::run(part1, input2, 12, 2);
+
+    std::println("Part 2:");
+    Executor::run(part2, input2, 19690720);
+
     return 0;
 }

@@ -98,7 +98,7 @@ constexpr std::array<int (*)(const std::array<int, 4>&, const int, const int), 1
 constexpr std::array ALL_OPS = enum_to_array<OpCode, 16>();
 constexpr int OPC = ALL_OPS.size();
 
-int resolve(std::stringstream& file, std::array<OpCode, OPC>& final_map, const bool only_count3 = false) {
+int resolve(std::stringstream& file, std::array<OpCode, OPC>& final_map, const bool only_count3) {
     int result = 0;
     std::string line;
     std::vector<std::pair<int, std::vector<OpCode>>> table(OPC);
@@ -153,9 +153,9 @@ int resolve(std::stringstream& file, std::array<OpCode, OPC>& final_map, const b
     return result;
 }
 
-int part1() {
+int part1(const char* input) {
     std::array<OpCode, OPC> opcodes;
-    std::stringstream file(input16);
+    std::stringstream file(input);
     return resolve(file, opcodes, true);
 }
 
@@ -166,11 +166,11 @@ Using the samples you collected, work out the number of each opcode and execute 
 What value is contained in register 0 after executing the test program?
 */
 
-int part2() {
+int part2(const char* input) {
     std::array<int, 4> registers = {};
     std::array<OpCode, OPC> map;
     std::string line;
-    std::stringstream file(input16);
+    std::stringstream file(input);
     resolve(file, map, false);
     std::getline(file, line);
 
@@ -183,6 +183,16 @@ int part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(Before: [3, 2, 1, 1]
+9 2 1 2
+After:  [3, 2, 2, 1])",
+                   1);
+    Executor::run(part1, input16);
+
+    std::println("Part 2:");
+    Executor::run(part2, input16);
+
     return 0;
 }

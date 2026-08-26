@@ -33,10 +33,10 @@ Calculate the horizontal position and depth you would have after following the p
 position by your final depth?
 */
 
-int part1(const bool complicated = false) {
+int part1(const char* input, const bool complicated) {
     Vec3 position = 0;
     std::string line;
-    std::stringstream file(input2);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         const int space = line.find(' '), value = std::stoi(line.substr(space + 1));
@@ -86,9 +86,23 @@ Using this new interpretation of the commands, calculate the horizontal position
 you get if you multiply your final horizontal position by your final depth?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    constexpr const char* example = R"(forward 5
+down 5
+forward 8
+up 3
+down 8
+forward 2)";
+
+    std::println("Part 1:");
+    Executor::test(part1, example, false, 150);
+    Executor::run(part1, input2, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, example, 900);
+    Executor::run(part2, input2);
+
     return 0;
 }

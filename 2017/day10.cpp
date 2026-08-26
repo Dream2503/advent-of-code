@@ -49,14 +49,11 @@ However, you should instead use the standard list size of 256 (with values 0 to 
 process is complete, what is the result of multiplying the first two numbers in the list?
 */
 
-
-int part1() {
-    static constexpr int size = 256;
+int part1(const char* input, const int size) {
     int i = 0, skip = 0;
     std::string value;
-    std::array<uint8_t, size> list, temp;
-    std::vector<int> jumps;
-    std::stringstream file(input10);
+    std::vector<int> jumps, list(size), temp(size);
+    std::stringstream file(input);
     std::iota(list.begin(), list.end(), 0);
 
     while (std::getline(file, value, ',')) {
@@ -123,9 +120,19 @@ Treating your puzzle input as a string of ASCII characters, what is the Knot Has
 might encounter.
 */
 
-std::string part2() { return knot_hash(input10); }
+std::string part2(const char* input) { return knot_hash(input); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "3,4,1,5", 5, 12);
+    Executor::run(part1, input10, 256);
+
+    std::println("Part 2:");
+    Executor::test(knot_hash, "", "a2582a3a0e66e6e86e3812dcb672a272");
+    Executor::test(knot_hash, "AoC 2017", "33efeb34ea91902bb2f59c9920caa6cd");
+    Executor::test(knot_hash, "1,2,3", "3efbe78a8d82f29979031a4aa0b16a9d");
+    Executor::test(knot_hash, "1,2,4", "63960835bcdc130f0b66d7ff4f6a5a8e");
+    Executor::run(part2, input10);
+
     return 0;
 }

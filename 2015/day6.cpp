@@ -21,11 +21,11 @@ For example:
 After following the instructions, how many lights are lit?
 */
 
-int part1(const bool brightness = false) {
+int part1(const char* input, const bool brightness) {
     constexpr int size = 1000;
     std::string line;
     std::array<std::array<uint8_t, size>, size> lights = {};
-    std::stringstream file(input6);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         bool is_on = false, is_toggle = false;
@@ -75,9 +75,19 @@ For example:
     - toggle 0,0 through 999,999 would increase the total brightness by 2000000.
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "turn on 0,0 through 999,999", false, 1000000);
+    Executor::test(part1, "toggle 0,0 through 999,0", false, 1000);
+    Executor::test(part1, "turn off 499,499 through 500,500", false, 0);
+    Executor::run(part1, input6, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, "turn on 0,0 through 0,0", 1);
+    Executor::test(part2, "toggle 0,0 through 999,999", 2000000);
+    Executor::run(part2, input6);
+
     return 0;
 }

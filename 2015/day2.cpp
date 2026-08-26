@@ -18,10 +18,10 @@ For example:
 All numbers in the elves' list are in feet. How many total square feet of wrapping paper should they order?
 */
 
-int part1(const bool ribbon = false) {
+int part1(const char* input, const bool ribbon) {
     int res = 0;
     std::string line;
-    std::stringstream file(input2);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         int l, b, h;
@@ -50,9 +50,18 @@ For example:
 How many total feet of ribbon should they order?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "2x3x4", false, 58);
+    Executor::test(part1, "1x1x10", false, 43);
+    Executor::run(part1, input2, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, "2x3x4", 34);
+    Executor::test(part2, "1x1x10", 14);
+    Executor::run(part2, input2);
+
     return 0;
 }

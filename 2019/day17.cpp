@@ -152,13 +152,13 @@ std::array<std::string, 5> split_instruction_set(const std::string& instructions
     std::unreachable();
 }
 
-int part1(const bool move = false, const bool simulate = false) {
+int part1(const char* input, const bool move, const bool simulate) {
     static constexpr std::array LEFT_TURN = {Robot::Direction::LEFT, Robot::Direction::DOWN, Robot::Direction::UP, Robot::Direction::RIGHT};
     static constexpr std::array RIGHT_TURN = {Robot::Direction::RIGHT, Robot::Direction::UP, Robot::Direction::DOWN, Robot::Direction::LEFT};
     int res = 0, distance = 0;
     Robot robot = {};
     std::string instructions;
-    VirtualMachine VM(input17), temp_VM = VM;
+    VirtualMachine VM(input), temp_VM = VM;
     VM.interpret();
     const int frame_size = VM.outputs.size();
     std::vector<std::string> frame = extract_frame(VM);
@@ -230,7 +230,7 @@ int part1(const bool move = false, const bool simulate = false) {
     VM = std::move(temp_VM);
     VM.opcodes[0] = 2;
 
-    for (const std::string& coroutine : split_instruction_set(instructions, simulate ? "y" :"n")) {
+    for (const std::string& coroutine : split_instruction_set(instructions, simulate ? "y" : "n")) {
         for (const char ch : coroutine) {
             VM.inputs.push(ch);
         }
@@ -352,9 +352,14 @@ its docking station and report the amount of space dust it collected as a large,
 After visiting every part of the scaffold at least once, how much dust does the vacuum robot report it has collected?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true, false); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::run(part1, input17, false, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input17);
+
     return 0;
 }

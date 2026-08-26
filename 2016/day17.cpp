@@ -48,31 +48,37 @@ constexpr std::pair terminate = {3, 3};
 
 constexpr bool possible(const char ch) { return ch >= 'b' && ch <= 'f'; }
 
-void search(const std::string& passcode, const int i, const int j, std::string& path) {
-    if (i == terminate.first && j == terminate.second) {
-        path = passcode.substr(8);
-        return;
-    }
-    const std::string hash = md5_hash(passcode);
+std::string part1(const char* input) {
+    struct State {
+        int i, j;
+        std::string path;
+    };
+    std::queue<State> queue;
+    queue.emplace(0, 0, "");
 
-    if (i > 0 && possible(hash[0])) {
-        search(passcode + 'U', i - 1, j, path);
-    }
-    if (i < 3 && possible(hash[1])) {
-        search(passcode + 'D', i + 1, j, path);
-    }
-    if (j > 0 && possible(hash[2])) {
-        search(passcode + 'L', i, j - 1, path);
-    }
-    if (j < 3 && possible(hash[3])) {
-        search(passcode + 'R', i, j + 1, path);
-    }
-}
+    while (!queue.empty()) {
+        const auto [i, j, path] = queue.front();
+        queue.pop();
 
-std::string part1() {
-    std::string path;
-    search(input17, 0, 0, path);
-    return path;
+        if (i == terminate.first && j == terminate.second) {
+            return path;
+        }
+        const std::string hash = md5_hash(std::string(input) + path);
+
+        if (i > 0 && possible(hash[0])) {
+            queue.emplace(i - 1, j, path + 'U');
+        }
+        if (i < 3 && possible(hash[1])) {
+            queue.emplace(i + 1, j, path + 'D');
+        }
+        if (j > 0 && possible(hash[2])) {
+            queue.emplace(i, j - 1, path + 'L');
+        }
+        if (j < 3 && possible(hash[3])) {
+            queue.emplace(i, j + 1, path + 'R');
+        }
+    }
+    return "";
 }
 
 /*
@@ -110,9 +116,20 @@ std::string search(const std::string& passcode, const int i, const int j) {
     return *std::ranges::max_element(paths, [](const std::string& lhs, const std::string& rhs) -> bool { return lhs.length() < rhs.length(); });
 }
 
-int part2() { return search(input17, 0, 0).length(); }
+int part2(const char* input) { return search(input, 0, 0).length(); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "ihgpwlah", "DDRRRD");
+    Executor::test(part1, "kglvqrro", "DDUDRLRRUDRD");
+    Executor::test(part1, "ulqzkmiv", "DRURDRUDDLLDLUURRDULRLDUUDDDRR");
+    Executor::run(part1, input17);
+
+    std::println("Part 2:");
+    Executor::test(part2, "ihgpwlah", 370);
+    Executor::test(part2, "kglvqrro", 492);
+    Executor::test(part2, "ulqzkmiv", 830);
+    Executor::run(part2, input17);
+
     return 0;
 }

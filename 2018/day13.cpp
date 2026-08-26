@@ -177,12 +177,12 @@ struct Cart {
     int x, y;
 };
 
-Vec2<int> part1(const bool remove = false) {
+Vec2<int> part1(const char* input, const bool remove) {
     int i = 0, j;
     std::string line;
     std::vector<std::string> map;
     std::vector<Cart> carts;
-    std::stringstream file(input13);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         const int size = line.length();
@@ -367,14 +367,36 @@ For example:
   |   |
   \---/
 
-After four very expensive crashes, a tick ends with only one cart remaining; its final location is 6,4.
+After four very expensive crashes, a tick ends with only one cart remaining; its final location is 7,4.
 
 What is the location of the last cart at the end of the first tick where it is the only cart left?
 */
 
-Vec2<int> part2() { return part1(true); }
+Vec2<int> part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(/->-\
+|   |  /----\
+| /-+--+-\  |
+| | |  | v  |
+\-+-/  \-+--/
+  \------/)",
+                   false, Vec2{7, 3});
+    Executor::run(part1, input13, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"( />-<\
+ |   |
+ | /<+-\
+ | | | v
+ \>+</ |
+   |   ^
+   \<->/)",
+                   Vec2{7, 4});
+    Executor::run(part2, input13);
+
     return 0;
 }

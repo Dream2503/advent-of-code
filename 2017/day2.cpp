@@ -22,9 +22,9 @@ In this example, the spreadsheet's checksum would be 8 + 4 + 6 = 18.
 What is the checksum for the spreadsheet in your puzzle input?
 */
 
-int part1(const bool divisble = false) {
+int part1(const char* input, const bool divisible = false) {
     std::string line;
-    std::stringstream file(input2);
+    std::stringstream file(input);
     int res = 0;
 
     while (std::getline(file, line)) {
@@ -36,7 +36,7 @@ int part1(const bool divisble = false) {
             row >> value;
             data.push_back(value);
         }
-        if (!divisble) {
+        if (!divisible) {
             const auto [min, max] = std::ranges::minmax_element(data);
             res += *max - *min;
         } else {
@@ -79,9 +79,22 @@ In this example, the sum of the results would be 4 + 3 + 2 = 9.
 What is the sum of each row's result in your puzzle input?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, R"(5 1 9 5
+7 5 3
+2 4 6 8)",
+                   false, 18);
+    Executor::run(part1, input2, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, R"(5 9 2 8
+9 4 7 3
+3 8 6 5)",
+                   9);
+    Executor::run(part2, input2);
+
     return 0;
 }

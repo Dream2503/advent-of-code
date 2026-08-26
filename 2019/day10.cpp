@@ -127,13 +127,13 @@ Vec2<int> normalize(const Vec2<int>& asteroid, const Vec2<int>& other) {
     return delta / gcd;
 }
 
-int part1(const bool laser = false) {
+int part1(const char* input, const bool laser) {
     int max = 0;
     Vec2 position = 0, station = 0;
     std::unordered_set<Vec2<int>> asteroids;
     std::unordered_map<Vec2<int>, std::vector<std::pair<int, Vec2<int>>>> buckets;
 
-    for (const char ch : input10) {
+    for (const char ch : std::string_view(input)) {
         if (ch == '\n') {
             position.y++;
             position.x = 0;
@@ -301,9 +301,101 @@ Step-by-step Laser Vaporization algorithm (Part 2)
                     this asteroid is the answer
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(.#..#
+.....
+#####
+....#
+...##)",
+                   false, 8);
+    Executor::test(part1,
+                   R"(......#.#.
+#..#.#....
+..#######.
+.#.#.###..
+.#..#.....
+..#....#.#
+#..#....#.
+.##.#..###
+##...#..#.
+.#....####)",
+                   false, 33);
+    Executor::test(part1,
+                   R"(#.#...#.#.
+.###....#.
+.#....#...
+##.#.#.#.#
+....#.#.#.
+.##..###.#
+..#...##..
+..##....##
+......#...
+.####.###.)",
+                   false, 35);
+    Executor::test(part1,
+                   R"(.#..#..###
+####.###.#
+....###.#.
+..###.##.#
+##.##.#.#.
+....###..#
+..#.#..#.#
+#..#.#.###
+.##...##.#
+.....#.#..)",
+                   false, 41);
+    Executor::test(part1,
+                   R"(.#..##.###...#######
+##.############..##.
+.#.######.########.#
+.###.#######.####.#.
+#####.##.#.##.###.##
+..#####..#.#########
+####################
+#.####....###.#.#.##
+##.#################
+#####.##.###..####..
+..######..##.#######
+####.##.####...##..#
+.#####..#.######.###
+##...#.##########...
+#.##########.#######
+.####.#.###.###.#.##
+....##.##.###..#####
+.#.#.###########.###
+#.#.#.#####.####.###
+###.##.####.##.#..##)",
+                   false, 210);
+    Executor::run(part1, input10, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(.#..##.###...#######
+##.############..##.
+.#.######.########.#
+.###.#######.####.#.
+#####.##.#.##.###.##
+..#####..#.#########
+####################
+#.####....###.#.#.##
+##.#################
+#####.##.###..####..
+..######..##.#######
+####.##.####...##..#
+.#####..#.######.###
+##...#.##########...
+#.##########.#######
+.####.#.###.###.#.##
+....##.##.###..#####
+.#.#.###########.###
+#.#.#.#####.####.###
+###.##.####.##.#..##)",
+                   802);
+    Executor::run(part2, input10);
+
     return 0;
 }

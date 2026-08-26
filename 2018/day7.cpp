@@ -46,12 +46,12 @@ So, in this example, the correct order is CABDFE.
 In what order should the steps in your instructions be completed?
 */
 
-std::string part1() {
+std::string part1(const char* input) {
     std::string line, res;
     std::bitset<26> seen, queued;
     std::array<std::bitset<26>, 26> graph;
     std::priority_queue<char, std::vector<char>, std::greater<char>> queue;
-    std::stringstream file(input7);
+    std::stringstream file(input);
 
     for (int i = 0; i < 26; i++) {
         seen[i] = true;
@@ -150,15 +150,14 @@ struct Task {
     int time_remaining;
 };
 
-int part2() {
-    constexpr int worker_count = 5;
+int part2(const char* input, const int worker_count, const int base_time) {
     int time = 0;
     std::string line;
     std::bitset<26> done, queued;
     std::array<std::bitset<26>, 26> graph;
     std::vector<Task> workers(worker_count);
     std::priority_queue<char, std::vector<char>, std::greater<char>> queue;
-    std::stringstream file(input7);
+    std::stringstream file(input);
 
     for (int i = 0; i < 26; i++) {
         done[i] = true;
@@ -191,7 +190,7 @@ int part2() {
             if (!work && !queue.empty()) {
                 work = queue.top();
                 queue.pop();
-                time_remaining = 60 + (work - 'A' + 1);
+                time_remaining = base_time + (work - 'A' + 1);
             }
         }
         time++;
@@ -229,8 +228,30 @@ int part2() {
     return time;
 }
 
-
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(Step C must be finished before step A can begin.
+Step C must be finished before step F can begin.
+Step A must be finished before step B can begin.
+Step A must be finished before step D can begin.
+Step B must be finished before step E can begin.
+Step D must be finished before step E can begin.
+Step F must be finished before step E can begin.)",
+                   "CABDFE");
+    Executor::run(part1, input7);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(Step C must be finished before step A can begin.
+Step C must be finished before step F can begin.
+Step A must be finished before step B can begin.
+Step A must be finished before step D can begin.
+Step B must be finished before step E can begin.
+Step D must be finished before step E can begin.
+Step F must be finished before step E can begin.)",
+                   2, 0, 15);
+    Executor::run(part2, input7, 5, 60);
+
     return 0;
 }

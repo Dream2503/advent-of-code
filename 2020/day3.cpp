@@ -59,11 +59,11 @@ In this example, traversing the map using this slope would cause you to encounte
 Starting at the top-left corner of your map and following a slope of right 3 and down 1, how many trees would you encounter?
 */
 
-uint64_t part1(const bool all = false) {
+uint64_t part1(const char* input, const bool all) {
     bool toggle = true;
     std::array<Vec2<int>, 5> trees = {};
     std::string line;
-    std::stringstream file(input3);
+    std::stringstream file(input);
 
     while (std::getline(file, line)) {
         const int size = line.size();
@@ -101,9 +101,40 @@ In the above example, these slopes would find 2, 7, 3, 4, and 2 tree(s) respecti
 What do you get if you multiply together the number of trees encountered on each of the listed slopes?
 */
 
-uint64_t part2() { return part1(true); }
+uint64_t part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1,
+                   R"(..##.......
+#...#...#..
+.#....#..#.
+..#.#...#.#
+.#...##..#.
+..#.##.....
+.#.#.#....#
+.#........#
+#.##...#...
+#...##....#
+.#..#...#.#)",
+                   false, 7);
+    Executor::run(part1, input3, false);
+
+    std::println("Part 2:");
+    Executor::test(part2,
+                   R"(..##.......
+#...#...#..
+.#....#..#.
+..#.#...#.#
+.#...##..#.
+..#.##.....
+.#.#.#....#
+.#........#
+#.##...#...
+#...##....#
+.#..#...#.#)",
+                   336);
+    Executor::run(part2, input3);
+
     return 0;
 }

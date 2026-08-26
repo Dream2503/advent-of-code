@@ -18,28 +18,28 @@ For example:
 Starting with the digits in your puzzle input, apply this process 40 times. What is the length of the result?
 */
 
-int part1(const int repeat = 40) {
-    std::string input(input10), res;
+int part1(const char* input, const int repeat) {
+    std::string str(input), res;
 
     for (int k = 0; k < repeat; k++) {
-        const int size = input.length();
+        const int size = str.length();
         int i = 0;
 
         while (i < size) {
-            const char ch = input[i];
+            const char ch = str[i];
             int j = 0;
 
-            while (j < size && input[i] == ch) {
+            while (j < size && str[i] == ch) {
                 i++;
                 j++;
             }
             res += j + '0';
-            res += input[i - 1];
+            res += str[i - 1];
         }
-        input = res;
+        str = res;
         res.clear();
     }
-    return input.length();
+    return str.length();
 }
 
 /*
@@ -49,9 +49,19 @@ Neat, right? You might also enjoy hearing John Conway talking about this sequenc
 Now, starting again with the digits in your puzzle input, apply this process 50 times. What is the length of the new result?
 */
 
-int part2() { return part1(50); }
+int part2(const char* input) { return part1(input, 50); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "1", 1, 2);
+    Executor::test(part1, "11", 1, 2);
+    Executor::test(part1, "21", 1, 4);
+    Executor::test(part1, "1211", 1, 6);
+    Executor::test(part1, "111221", 1, 6);
+    Executor::run(part1, input10, 40);
+
+    std::println("Part 2:");
+    Executor::run(part2, input10);
+
     return 0;
 }

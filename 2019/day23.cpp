@@ -29,11 +29,11 @@ input instructions should receive -1.
 Boot up all 50 computers and attach them to your network. What is the Y value of the first packet sent to address 255?
 */
 
-int part1(const bool NAT = false) {
+int part1(const char* input, const bool NAT) {
     bool valid = false;
     int last_y = 0;
     Vec2<int> nat;
-    VirtualMachine VM(input23);
+    VirtualMachine VM(input);
     std::vector<VirtualMachine> network;
     std::array<std::queue<int64_t>, 50> recipients;
     network.reserve(50);
@@ -117,9 +117,14 @@ Monitor packets released to the computer at address 0 by the NAT. What is the fi
 a row?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::run(part1, input23, false);
+
+    std::println("Part 2:");
+    Executor::run(part2, input23);
+
     return 0;
 }

@@ -46,11 +46,11 @@ bool update(std::unordered_set<std::pair<int, int>>& seen, int& i, int& j, const
     return false;
 }
 
-int part1(const bool twice = false) {
+int part1(const char* input, const bool twice) {
     enum class Face { N, E, S, W } facing = Face::N;
     int i = 0, j = 0;
     std::unordered_set<std::pair<int, int>> seen;
-    std::stringstream ss(input1);
+    std::stringstream ss(input);
 
     while (!ss.eof()) {
         bool state = false;
@@ -93,9 +93,18 @@ For example, if your instructions are R8, R4, R4, R8, the first location you vis
 How many blocks away is the first location you visit twice?
 */
 
-int part2() { return part1(true); }
+int part2(const char* input) { return part1(input, true); }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "R2, L3", false, 5);
+    Executor::test(part1, "R2, R2, R2", false, 2);
+    Executor::test(part1, "R5, L5, R5, R3", false, 12);
+    Executor::run(part1, input1, false);
+
+    std::println("Part 2:");
+    Executor::test(part2, "R8, R4, R4, R8", 4);
+    Executor::run(part2, input1);
+
     return 0;
 }

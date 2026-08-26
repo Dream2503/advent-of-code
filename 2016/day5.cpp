@@ -21,12 +21,12 @@ In this example, after continuing this search a total of eight times, the passwo
 Given the actual Door ID, what is the password?
 */
 
-std::string part1() {
+std::string part1(const char* input) {
     std::string password;
     int i = 0;
 
     while (password.length() != 8) {
-        std::string hash = md5_hash(input5 + std::to_string(i));
+        std::string hash = md5_hash(input + std::to_string(i));
 
         if (hash.starts_with("00000")) {
             password.push_back(hash[5]);
@@ -58,12 +58,12 @@ You almost choke on your popcorn as the final character falls into place, produc
 Given the actual Door ID and this new method, what is the password? Be extra proud of your solution if it uses a cinematic "decrypting" animation.
 */
 
-std::string part2() {
+std::string part2(const char* input) {
     std::string password(8, 0);
     int i = 1, count = 0;
 
     while (count < 8) {
-        std::string hash = md5_hash(input5 + std::to_string(i));
+        std::string hash = md5_hash(input + std::to_string(i));
 
         if (hash.starts_with("00000") && hash[5] >= '0' && hash[5] <= '7' && !password[hash[5] - '0']) {
             password[hash[5] - '0'] = hash[6];
@@ -75,6 +75,13 @@ std::string part2() {
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "abc", "18f47a30");
+    Executor::run(part1, input5);
+
+    std::println("Part 2:");
+    Executor::test(part2, "abc", "05ace8e3");
+    Executor::run(part2, input5);
+
     return 0;
 }

@@ -24,8 +24,8 @@ So, with five Elves, the Elf that sits starting in position 3 gets all the prese
 With the number of Elves given in your puzzle input, which Elf gets all the presents?
 */
 
-int part1() {
-    const int elves = std::atoi(input19);
+int part1(const char* input) {
+    const int elves = std::atoi(input);
     std::vector<int> elfs;
     elfs.reserve(elves);
     std::ranges::copy(std::ranges::views::iota(1, elves + 1), std::back_inserter(elfs));
@@ -85,23 +85,30 @@ With the number of Elves given in your puzzle input, which Elf now gets all the 
 
 // idk what is this, but this is surely something
 
-int part2() {
-    const int input = std::atoi(input19);
+int part2(const char* input) {
+    const int input_value = std::atoi(input);
     int current = 1;
 
-    while (current * 3 <= input) {
+    while (current * 3 <= input_value) {
         current *= 3;
     }
-    if (input == current) {
-        return input;
+    if (input_value == current) {
+        return input_value;
     }
-    if (input <= 2 * current) {
-        return input - current;
+    if (input_value <= 2 * current) {
+        return input_value - current;
     }
-    return 2 * input - 3 * current;
+    return 2 * input_value - 3 * current;
 }
 
 int main() {
-    std::cout << part1() << std::endl << part2() << std::endl;
+    std::println("Part 1:");
+    Executor::test(part1, "5", 3);
+    Executor::run(part1, input19);
+
+    std::println("Part 2:");
+    Executor::test(part2, "5", 2);
+    Executor::run(part2, input19);
+
     return 0;
 }
