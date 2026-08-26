@@ -5548,7 +5548,31 @@ constexpr char input11[] = R"(5665114554
 7758751157
 1828544563)";
 
-constexpr char input12[] = R"()";
+constexpr char input12[] = R"(fw-ll
+end-dy
+tx-fw
+tx-tr
+dy-jb
+ZD-dy
+dy-BL
+dy-tr
+dy-KX
+KX-start
+KX-tx
+fw-ZD
+tr-end
+fw-jb
+fw-yi
+ZD-nr
+start-fw
+tx-ll
+ll-jb
+yi-jb
+yi-ll
+yi-start
+ZD-end
+ZD-jb
+tx-ZD)";
 
 constexpr char input13[] = R"()";
 
