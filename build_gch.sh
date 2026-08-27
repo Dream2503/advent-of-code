@@ -12,9 +12,6 @@ OUTDIR="${BASENAME}.gch"
 
 mkdir -p "$OUTDIR"
 
-echo "[+] building run gch"
-time g++ -std=c++23 "$HEADER" -o "$OUTDIR/run.gch"
-
 echo "[+] building debug gch"
 time g++ -std=c++23 -Wall -Wextra -Wpedantic -g2 "$HEADER" -o "$OUTDIR/debug.gch"
 
