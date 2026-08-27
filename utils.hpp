@@ -477,48 +477,95 @@ public:
 namespace std {
     template <typename T>
     struct formatter<Vec2<T>> {
-        constexpr format_parse_context::const_iterator parse(const std::format_parse_context& ctx) { return ctx.begin(); }
-        auto format(const Vec2<T>& vec2, std::format_context& ctx) const { return std::format_to(ctx.out(), "{},{}", vec2.x, vec2.y); }
+        constexpr format_parse_context::const_iterator parse(const format_parse_context& ctx) { return ctx.begin(); }
+        auto format(const Vec2<T>& vec2, format_context& ctx) const { return format_to(ctx.out(), "{},{}", vec2.x, vec2.y); }
     };
 
     template <typename T>
     struct formatter<Vec3<T>> {
-        constexpr format_parse_context::const_iterator parse(const std::format_parse_context& ctx) { return ctx.begin(); }
-        auto format(const Vec3<T>& vec3, std::format_context& ctx) const { return std::format_to(ctx.out(), "{},{},{}", vec3.x, vec3.y, vec3.z); }
+        constexpr format_parse_context::const_iterator parse(const format_parse_context& ctx) { return ctx.begin(); }
+        auto format(const Vec3<T>& vec3, format_context& ctx) const { return format_to(ctx.out(), "{},{},{}", vec3.x, vec3.y, vec3.z); }
+    };
+
+    template <typename T> concept FormattableRange = ranges::range<T> && !convertible_to<T, string_view>;
+
+    template <FormattableRange T>
+    struct formatter<T> {
+        vector<string> delimiters;
+
+        constexpr format_parse_context::const_iterator parse(const format_parse_context& ctx) {
+            auto itr = ctx.begin();
+            const auto end = ctx.end();
+            delimiters.clear();
+            string delimiter;
+
+            while (itr != end && *itr != '}') {
+                if (*itr == '|') {
+                    delimiters.push_back(delimiter);
+                    delimiter.clear();
+                } else {
+                    delimiter += *itr;
+                }
+                itr++;
+            }
+            delimiters.push_back(delimiter);
+            return itr;
+        }
+
+        template <typename U>
+        format_context::iterator format_range(const U& range, format_context& ctx, const size_t level) const {
+            auto out = ctx.out();
+            const string& delimiter = level < delimiters.size() ? delimiters[level] : delimiters.back();
+            size_t i = 0;
+
+            for (const auto& value : range) {
+                if (i++ > 0) {
+                    out = format_to(out, "{}", delimiter);
+                }
+                if constexpr (FormattableRange<decltype(value)>) {
+                    out = format_range(value, ctx, level + 1);
+                } else {
+                    out = format_to(out, "{}", value);
+                }
+            }
+            return out;
+        }
+
+        format_context::iterator format(const T& range, format_context& ctx) const { return format_range(range, ctx, 0); }
     };
 
     template <typename T>
     constexpr Vec2<T> min(const Vec2<T>& lhs, const Vec2<T>& rhs) noexcept {
-        return {std::min(lhs.x, rhs.x), std::min(lhs.y, rhs.y)};
+        return {min(lhs.x, rhs.x), min(lhs.y, rhs.y)};
     }
 
     template <typename T>
     constexpr Vec2<T> max(const Vec2<T>& lhs, const Vec2<T>& rhs) noexcept {
-        return {std::max(lhs.x, rhs.x), std::max(lhs.y, rhs.y)};
+        return {max(lhs.x, rhs.x), max(lhs.y, rhs.y)};
     }
 
     template <typename T>
     constexpr Vec3<T> abs(const Vec3<T>& vec3) noexcept {
-        return {std::abs(vec3.x), std::abs(vec3.y), std::abs(vec3.z)};
+        return {abs(vec3.x), abs(vec3.y), abs(vec3.z)};
     }
 
     template <typename T>
     constexpr T min(const Vec3<T>& vec3) noexcept {
-        return std::min({vec3.x, vec3.y, vec3.z});
+        return min({vec3.x, vec3.y, vec3.z});
     }
 
     template <typename T>
     constexpr Vec3<T> min(const Vec3<T>& lhs, const Vec3<T>& rhs) noexcept {
-        return {std::min(lhs.x, rhs.x), std::min(lhs.y, rhs.y), std::min(lhs.z, rhs.z)};
+        return {min(lhs.x, rhs.x), min(lhs.y, rhs.y), min(lhs.z, rhs.z)};
     }
 
     template <typename T>
     constexpr T max(const Vec3<T>& vec3) noexcept {
-        return std::max({vec3.x, vec3.y, vec3.z});
+        return max({vec3.x, vec3.y, vec3.z});
     }
 
     template <typename T>
     constexpr Vec3<T> max(const Vec3<T>& lhs, const Vec3<T>& rhs) noexcept {
-        return {std::max(lhs.x, rhs.x), std::max(lhs.y, rhs.y), std::max(lhs.z, rhs.z)};
+        return {max(lhs.x, rhs.x), max(lhs.y, rhs.y), max(lhs.z, rhs.z)};
     }
 } // namespace std
