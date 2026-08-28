@@ -60,7 +60,7 @@ int part1(const char* input, const bool complete) {
             const std::vector<int> original = temp[i];
 
             for (int j = 1; j < 5; j++) {
-                std::vector<int> row = original | std::views::transform([j](const int risk) -> int { return (risk + j - 1) % 9 + 1; }) |
+                auto row = original | std::views::transform([j](const int risk) -> int { return (risk + j - 1) % 9 + 1; }) |
                     std::ranges::to<std::vector<int>>();
                 temp[i].insert(temp[i].end(), row.begin(), row.end());
             }

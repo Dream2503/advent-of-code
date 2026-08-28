@@ -40,8 +40,8 @@ Determine the horizontal position that the crabs can align to using the least fu
 */
 
 int part1(const char* input) {
-    std::vector<int> values = std::string_view(input) | split(',') |
-        std::views::transform([](const std::string& number) -> int { return std::stoi(number); }) | std::ranges::to<std::vector>();
+    auto values = std::string_view(input) | split(',') |
+        std::views::transform([](const std::string& number) -> int { return std::stoi(number); }) | std::ranges::to<std::vector<int>>();
     std::ranges::sort(values);
     const int median = values[values.size() / 2];
     return std::ranges::fold_left(values, 0, [median](const int sum, const int value) { return sum + std::abs(median - value); });
@@ -74,8 +74,8 @@ they spend to align to that position?
 */
 
 int part2(const char* input) {
-    std::vector<int> values = std::string_view(input) | split(',') | std::views::transform([](const std::string& number) -> int { return std::stoi(number); }) |
-        std::ranges::to<std::vector>();
+    auto values = std::string_view(input) | split(',') | std::views::transform([](const std::string& number) -> int { return std::stoi(number); }) |
+        std::ranges::to<std::vector<int>>();
     const double mean = std::ranges::fold_left(values, 0.0, std::plus{}) / values.size();
     return std::ranges::min(std::array{std::floor(mean), std::ceil(mean)} | std::views::transform([&values](const int position) -> int {
                                 return std::ranges::fold_left(values, 0, [position](const int sum, const int value) -> int {

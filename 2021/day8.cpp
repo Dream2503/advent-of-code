@@ -112,7 +112,7 @@ int part1(const char* input, const bool resolve) {
             };
             int value = 0;
             std::vector<std::string> later;
-            std::vector<std::string> combinations = line.substr(0, line.find('|') - 1) | split(' ') | std::ranges::to<std::vector>();
+            auto combinations = line.substr(0, line.find('|') - 1) | split(' ') | std::ranges::to<std::vector<std::string>>();
             std::array<std::string, 10> resolved;
             later.reserve(2);
 
