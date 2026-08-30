@@ -333,6 +333,10 @@ struct Vec2 {
     constexpr double euclidean_distance(const Vec2<U> vec2) const noexcept {
         return std::sqrt(std::pow(x - vec2.x, 2) + std::pow(y - vec2.y, 2));
     }
+
+    constexpr T min() const noexcept { return std::min(x, y); }
+
+    constexpr T max() const noexcept { return std::max(x, y); }
 };
 
 template <typename T>
