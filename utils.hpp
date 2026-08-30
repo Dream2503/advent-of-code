@@ -387,6 +387,11 @@ struct Vec3 {
     }
 
     template <typename U>
+    constexpr bool operator<=(const Vec3<U>& vec3) const noexcept {
+        return x <= vec3.x && y <= vec3.y && z <= vec3.z;
+    }
+
+    template <typename U>
     constexpr auto manhattan_distance(const Vec3<U> vec3) const noexcept -> decltype(x - vec3.x) {
         auto difference = *this - vec3;
         return std::abs(difference.x) + std::abs(difference.y) + std::abs(difference.z);
