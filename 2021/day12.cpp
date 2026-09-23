@@ -110,7 +110,7 @@ void resolve(const std::unordered_map<std::string, std::vector<std::string>>& gr
         return;
     }
     if (std::islower(node.front())) {
-        if (seen[node] == 2 || multiple && seen[node] == 1 && std::ranges::contains(seen | std::views::values, 2) || !multiple && seen[node] == 1) {
+        if (seen[node] == 2 || (multiple && seen[node] == 1 && std::ranges::contains(seen | std::views::values, 2)) || (!multiple && seen[node] == 1)) {
             return;
         }
         seen[node]++;

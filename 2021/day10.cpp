@@ -75,8 +75,8 @@ uint64_t part1(const char* input, const bool auto_complete) {
         for (int i = 0; i < size; i++) {
             if (line[i] == '(' || line[i] == '[' || line[i] == '{' || line[i] == '<') {
                 stack.push(line[i]);
-            } else if (line[i] == ')' && stack.top() == '(' || line[i] == ']' && stack.top() == '[' || line[i] == '}' && stack.top() == '{' ||
-                       line[i] == '>' && stack.top() == '<') {
+            } else if ((line[i] == ')' && stack.top() == '(') || (line[i] == ']' && stack.top() == '[') || (line[i] == '}' && stack.top() == '{') ||
+                       (line[i] == '>' && stack.top() == '<')) {
                 stack.pop();
             } else {
                 if (auto_complete) {

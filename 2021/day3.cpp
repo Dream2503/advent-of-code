@@ -58,7 +58,7 @@ int part1(const char* input, const bool part2) {
         const int res = std::ranges::fold_left(
             bits_list | std::views::transform([bits_size](const std::string& bits) -> int { return std::ranges::count(bits, '1') > bits_size / 2; }),
             0, [](const int value, const int bit) -> int { return value << 1 | bit; });
-        return res * (res ^ (1 << size) - 1);
+        return res * (res ^ ((1 << size) - 1));
     }
     std::vector<std::string> oxygen_generator_list = bits_list, &co2_scrubber_list = bits_list;
 
@@ -85,9 +85,9 @@ int part1(const char* input, const bool part2) {
         }
     }
     return std::ranges::fold_left(oxygen_generator_list | std::views::join, 0,
-                                  [](const int value, const char bit) -> int { return value << 1 | bit - '0'; }) *
+                                  [](const int value, const char bit) -> int { return value << 1 | (bit - '0'); }) *
         std::ranges::fold_left(co2_scrubber_list | std::views::join, 0,
-                               [](const int value, const char bit) -> int { return value << 1 | bit - '0'; });
+                               [](const int value, const char bit) -> int { return value << 1 | (bit - '0'); });
 }
 
 /*

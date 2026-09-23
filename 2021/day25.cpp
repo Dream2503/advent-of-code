@@ -292,7 +292,6 @@ Find somewhere safe to land your submarine. What is the first step on which no s
 */
 
 int part1(const char* input) {
-    constexpr std::hash<std::vector<std::string>> hash;
     std::string line;
     std::vector<std::string> prev;
     std::unordered_set<size_t> seen;
@@ -361,8 +360,6 @@ Boost strength due to matching signal phase: 1 star
 
 Only 49 stars to go.
 */
-
-int part2(const char* input) { return 0; }
 
 int main() {
     std::println("Part 1:");
