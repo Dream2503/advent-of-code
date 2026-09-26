@@ -302,6 +302,18 @@ struct Vec2 {
         return *this;
     }
 
+    constexpr Vec2& operator++() noexcept {
+        ++x;
+        ++y;
+        return *this;
+    }
+
+    constexpr Vec2& operator--() noexcept {
+        --x;
+        --y;
+        return *this;
+    }
+
     constexpr Vec2 operator*(const T& value) noexcept { return {x * value, y * value}; }
 
     template <typename U>
